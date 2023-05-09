@@ -1,0 +1,19 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Api Docs",
+    "description": "Api Description",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5005/api"
+    }
+  ],
+  "paths": {
+    "__comment": "TODO: define endpoints here"
+  },
+  "components": {
+    "__comment": "TODO: define schemas and dtos here"
+  }
+}
