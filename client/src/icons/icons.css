@@ -1,4 +1,5 @@
 svg.nav-icon:hover {
-    background-color: green;
-    color:green
+    background-color: grey;
+    color:green;
+    cursor: pointer;
 }

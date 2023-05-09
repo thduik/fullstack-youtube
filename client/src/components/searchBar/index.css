@@ -1,0 +1,9 @@
+/* input.search-bar::placeholder {
+    color:"blue";
+} */
+
+input.search-bar::-webkit-input-placeholder {
+    /*style placeholder text*/
+    color: gray;
+    font-size: 15px;
+}

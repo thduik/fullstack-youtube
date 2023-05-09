@@ -16,7 +16,7 @@ const Navbar = (props) => {
   const [showSidebar, setShowSidebar] = useState(true)
 
   const clickedBurgerMenu = (e) => {
-    props.changeShowSidebar()
+    props.clickedBurgerMenu()
   }
   const clickedLiveIcon = (e) => {
     console.log("clickedLiveIcon called")

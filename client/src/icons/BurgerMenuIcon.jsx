@@ -3,7 +3,8 @@ import React from "react";
 function BurgerMenuIcon() {
     return (
         <svg
-            className="style-scope yt-icon"
+            // className="style-scope yt-icon"
+            className="nav-icon"
             display="block"
             //   pointerEvents="none"
             viewBox="-3 -3 30 30"
