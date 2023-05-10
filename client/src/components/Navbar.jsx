@@ -9,14 +9,20 @@ import AccountIcon from "../icons/AccountIcon";
 import YoutubeIcon from "../icons/YoutubeIcon";
 import BurgerMenuIcon from "../icons/BurgerMenuIcon";
 import { useState } from "react";
+import { useSelector, useDispatch } from 'react-redux'
+import { changeShowSidebar } from "../features/uiState/uiStateSlice";
 // import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 
 const Navbar = (props) => {
-  const [showSidebar, setShowSidebar] = useState(true)
+  const dispatch = useDispatch()
+  const showSidebar = useSelector((state)=>state.uiState.showSidebar)
+  // const [showSidebar, setShowSidebar] = useState(true)
 
   const clickedBurgerMenu = (e) => {
-    props.clickedBurgerMenu()
+    const newState = !showSidebar
+    console.log("youtubeIconClicked newState is", newState)   
+    dispatch(changeShowSidebar(newState))
   }
   const clickedLiveIcon = (e) => {
     console.log("clickedLiveIcon called")

@@ -5,45 +5,43 @@ import { ChannelDetail, VideoDetail, SearchFeed, Navbar, Feed } from './componen
 import { useState } from "react";
 import { Sidebar } from "./components";
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchFromAPI } from "./utils/fetchFromAPI";
-import { useEffect } from "react";
+// import { fetchFromAPI } from "./utils/fetchFromAPI";
+// import { useEffect } from "react";
+
+import {changeShowSidebar} from './features/uiState/uiStateSlice.js'
+
 
 const App = () => {
-  
-  const selectedCategory = useSelector()
-  // const [selectedCategory, setSelectedCategory] = useState("New");
-  const [videos, setVideos] = useState(null);
+  const dispatch = useDispatch()
 
-  useEffect(() => {
-    setVideos(null);
-    fetchFromAPI(`search?part=snippet&q=${selectedCategory}`)
-      .then((data) => setVideos(data.items))
-    }, [selectedCategory]);
+  const showSidebar = useSelector((state)=>state.uiState.showSidebar)
+
+  // const [showSidebar, setShowSidebar] = useState(true)
   
-  const [showSidebar, setShowSidebar] = useState('1')
-  const clickedBurgerMenu = (e) => {
-    setShowSidebar(!showSidebar)
-  }
-  
-  
-return (
+
+
+
+  return (
 
     <BrowserRouter>
-      <Box sx={{ backgroundColor: '#000' }}>
+      
         
-        {showSidebar ? <Sidebar selectedCategory={selectedCategory} 
-        setSelectedCategory={setSelectedCategory} /> : null}
-        <Navbar clickedBurgerMenu={clickedBurgerMenu} />
-        <Routes>
-          <Route exact path='/' element={<Feed showSidebar={showSidebar}/>} />
-          <Route path='/video/:id' element={<VideoDetail />} />
-          <Route path='/channel/:id' element={<ChannelDetail />} />
-          <Route path='/search/:searchTerm' element={<SearchFeed />} />
-        </Routes>
-      </Box>
+        {showSidebar ? <Sidebar /> : null}
+
+        <Box sx={{ backgroundColor: '#000' }}>
+
+          <Navbar  />
+
+          <Routes>
+            <Route exact path='/' element={<Feed showSidebar={showSidebar} />} />
+            <Route path='/video/:id' element={<VideoDetail />} />
+            <Route path='/channel/:id' element={<ChannelDetail />} />
+            <Route path='/search/:searchTerm' element={<SearchFeed />} />
+          </Routes>
+        </Box>
     </BrowserRouter>
 
-    )
+  )
 
 
 }

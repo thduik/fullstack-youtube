@@ -21,6 +21,6 @@ export const appDataSlice = createSlice({
 })
 
 
-export const { changeSelectedCategory } = userSlice.actions
+export const { changeSelectedCategory } = appDataSlice.actions
 
 export default appDataSlice.reducer

@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux'
 const Feed = (props) => {
   const selectedCategory = useSelector((state)=>state.appData.selectedCategory)
   // // const [selectedCategory, setSelectedCategory] = useState("New");
-  // // const [videos, setVideos] = useState(null);
+  const [videos, setVideos] = useState(null);
 
   // useEffect(() => {
   //   setVideos(null);
