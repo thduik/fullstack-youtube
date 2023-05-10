@@ -1,15 +1,16 @@
 import React from "react";
 import './icons.css'
 
-function YoutubeIcon() {
+function YoutubeIcon({width="90px", height="20px", viewBox="0 0 90 20"}) {
+
     return (
         <svg
             //   className="style-scope yt-icon"
             className="nav-icon"
             display="block"
             pointerEvents="none"
-            viewBox="0 0 90 20"
-            style={{ width: "90px", height: "20px" }}
+            viewBox={viewBox}
+            style={{ width: width, height: height }}
         >
             <g className="style-scope yt-icon">
                 <g className="style-scope yt-icon">

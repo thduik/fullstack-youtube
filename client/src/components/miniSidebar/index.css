@@ -1,0 +1,7 @@
+.icon > * {
+    fill: white;
+}
+
+.icon > *:hover {
+    fill: #747474;
+}

@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import {changeShowSidebar} from './features/uiState/uiStateSlice.js'
 
+import MiniSidebar from './components/miniSidebar/MiniSidebar'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -27,7 +28,7 @@ const App = () => {
       
         
         {showSidebar ? <Sidebar /> : null}
-
+        <MiniSidebar/>
         <Box sx={{ backgroundColor: '#000' }}>
 
           <Navbar  />

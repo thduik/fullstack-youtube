@@ -1,5 +1,5 @@
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
-import HomeIcon from '@mui/icons-material/Home';
+// import HomeIcon from '@mui/icons-material/Home';
 import CodeIcon from '@mui/icons-material/Code';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
@@ -11,6 +11,11 @@ import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import DeveloperModeIcon from '@mui/icons-material/DeveloperMode';
+
+import HomeIcon from '../icons/HomeIcon';
+import ShortsIcon from '../icons/ShortsIcon';
+import SubscriptionIcon from '../icons/SubscriptionIcon';
+import LibraryIcon from '../icons/LibraryIcon';
 
 export const logo = 'https://i.ibb.co/s9Qys2j/logo.png';
 
@@ -35,10 +40,10 @@ export const categories = [
 ];
 
 export const miniCategories = [
-  { name: 'New', icon: <HomeIcon />}, 
-  { name: 'JS Mastery', icon: <CodeIcon />, },
-  { name: 'Coding', icon: <CodeIcon />, },
-  { name: 'ReactJS', icon: <CodeIcon />, },
+  { name: 'Home', icon: <HomeIcon />}, 
+  { name: 'Shorts', icon: <ShortsIcon />, },
+  { name: 'Subscriptions', icon: <SubscriptionIcon />, },
+  { name: 'Library', icon: <LibraryIcon />, },
 
 ]
 
