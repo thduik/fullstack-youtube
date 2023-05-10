@@ -4,17 +4,19 @@ import { Box, Stack, Typography } from "@mui/material";
 import { fetchFromAPI } from "../utils/fetchFromAPI";
 import { Videos, Sidebar } from "./";
 import MiniSidebar from './miniSidebar/MiniSidebar'
+import { useSelector, useDispatch } from 'react-redux'
 
 const Feed = (props) => {
-  const [selectedCategory, setSelectedCategory] = useState("New");
-  const [videos, setVideos] = useState(null);
+  const selectedCategory = useSelector((state)=>state.appData.selectedCategory)
+  // // const [selectedCategory, setSelectedCategory] = useState("New");
+  // // const [videos, setVideos] = useState(null);
 
-  useEffect(() => {
-    setVideos(null);
+  // useEffect(() => {
+  //   setVideos(null);
 
-    fetchFromAPI(`search?part=snippet&q=${selectedCategory}`)
-      .then((data) => setVideos(data.items))
-    }, [selectedCategory]);
+  //   fetchFromAPI(`search?part=snippet&q=${selectedCategory}`)
+  //     .then((data) => setVideos(data.items))
+  //   }, [selectedCategory]);
 
   return (
     <Stack style={{backgroundColor:"brown"}}
