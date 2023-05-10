@@ -1,6 +1,6 @@
 import React from "react";
 import { Stack } from "@mui/material";
-import { miniCategories } from "../utils/constants";
+import { miniCategories } from "../../utils/constants";
 
 const MiniSidebar = (props) => {
     const barButtons = miniCategories.map((obj) => {
@@ -17,7 +17,7 @@ const MiniSidebar = (props) => {
     })
     return (
         <Stack direction="column">
-
+            {barButtons}
         </Stack>
     )
 }

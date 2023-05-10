@@ -3,6 +3,7 @@ import { Box, Stack, Typography } from "@mui/material";
 
 import { fetchFromAPI } from "../utils/fetchFromAPI";
 import { Videos, Sidebar } from "./";
+import MiniSidebar from './miniSidebar/MiniSidebar'
 
 const Feed = (props) => {
   const [selectedCategory, setSelectedCategory] = useState("New");
@@ -17,11 +18,14 @@ const Feed = (props) => {
 
   return (
     <Stack style={{backgroundColor:"brown"}}
-     sx={{ flexDirection: { sx: "column", md: "row" } }}>
+    //stack of sidebar and main feed
+    //  sx={{ flexDirection: { sx: "column", md: "row" } }}>
+    sx={{ flexDirection: "row" }}>
+
       <Box style={{backgroundColor:"black"}} sx={{ height: { sx: "auto", md: "92vh" }, borderRight: "1px solid #3d3d3d", px: { sx: 0, md: 2 } }}>
       {/* props.showSidebar toggles sidebar display on/off, triggered by Navbar burger menu button */}
-        {props.showSidebar ? <Sidebar selectedCategory={selectedCategory} 
-        setSelectedCategory={setSelectedCategory} /> : null}
+        {/* {props.showSidebar ? <Sidebar selectedCategory={selectedCategory} 
+        setSelectedCategory={setSelectedCategory} /> : null} */}
         
         
         

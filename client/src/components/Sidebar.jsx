@@ -5,12 +5,12 @@ import { categories } from "../utils/constants";
 
 const Categories = ({ selectedCategory, setSelectedCategory }) => (
   <Stack
-    direction="row"
+    // direction="column"
     sx={{
       overflowY: "auto",
       height: { sx: "auto", md: "95%" },
-       flexDirection: { md: "column" },
-      
+      // flexDirection: { xs:"column", md: "column" },
+      width:"120px"
     }}
   >
     {categories.map((category) => (
