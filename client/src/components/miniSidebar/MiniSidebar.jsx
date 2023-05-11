@@ -3,7 +3,7 @@ import { Stack } from "@mui/material";
 import { miniCategories } from "../../utils/constants";
 import './index.css'
 
-const MiniSidebar = ({backgroundColor="grey",buttonBackgroundColor="rgba(0,0,0,0)"}) => {
+const MiniSidebar = ({backgroundColor="black",buttonBackgroundColor="rgba(0,0,0,0)"}) => {
     const handleClick = (name) => {
 
     }
@@ -50,7 +50,7 @@ const MiniSidebar = ({backgroundColor="grey",buttonBackgroundColor="rgba(0,0,0,0
     return (
         <div className = "wrapper"
          style={{float:"left", position:"fixed", zIndex:1,
-        marginTop:"60px"}}>
+        marginTop:"60px",backgroundColor:"black"}}>
         <Stack direction="column"
         sx={{ width: "63px"}}>
             {barButtons}

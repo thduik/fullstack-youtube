@@ -1,0 +1,10 @@
+.vid-detail-stack {
+    flex-direction: "row";
+}
+
+@media screen and (max-width: 900px) {
+    .vid-detail-stack {
+        flex-direction: "row";
+        background-color: "blue";
+    }
+  }
