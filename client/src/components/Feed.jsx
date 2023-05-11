@@ -24,7 +24,7 @@ const Feed = (props) => {
     //  sx={{ flexDirection: { sx: "column", md: "row" } }}>
     sx={{ flexDirection: "row" }}>
 
-      <Box style={{backgroundColor:"black"}} sx={{ height: { sx: "auto", md: "92vh" }, borderRight: "1px solid #3d3d3d", px: { sx: 0, md: 2 } }}>
+      <Box style={{backgroundColor:"black"}} sx={{ height: { sx: "auto", md: "92vh" }, px: { sx: 0, md: 2 } }}>
       {/* props.showSidebar toggles sidebar display on/off, triggered by Navbar burger menu button */}
         {/* {props.showSidebar ? <Sidebar selectedCategory={selectedCategory} 
         setSelectedCategory={setSelectedCategory} /> : null} */}
@@ -36,10 +36,11 @@ const Feed = (props) => {
         </Typography> */}
       </Box>
 
-      <Box style={{backgroundColor:"green"}} p={2} sx={{ overflowY: "auto", height: "90vh", flex: 2 }}>
-        <Typography variant="h4" fontWeight="bold" mb={2} sx={{ color: "white" }}>
+      <Box style={{backgroundColor:"black", border:"0px solid blue"
+        }} p={2} sx={{ overflowY: "auto", height: "90vh", flex: 2 }}>
+        {/* <Typography variant="h4" fontWeight="bold" mb={2} sx={{ color: "white", marginLeft:"40px" }}>
           {selectedCategory} <span style={{ color: "#FC1503" }}>videosss</span>
-        </Typography>
+        </Typography> */}
 
         <Videos videos={videos} />
       </Box>

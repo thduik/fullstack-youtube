@@ -42,9 +42,12 @@ const Navbar = (props) => {
         <button onClick={clickedBurgerMenu} style={{ backgroundColor: "black", border: "none" }}>
           <BurgerMenuIcon />
         </button>
+        <div style = {{paddingTop:"6px"}}>
         <Link to="/">
           <YoutubeIcon />
         </Link>
+        </div>
+        
       </Stack>
 
       <SearchBar />

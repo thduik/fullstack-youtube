@@ -4,8 +4,9 @@ import './icons.css'
 function HomeIcon({width="30px", height="30px", fillColor="white", viewBox="-3 -3 30 30"}) {
     return (
         <svg
-            className="style-scope yt-icon"
+            // className="nav-icon"
             display="block"
+            
             viewBox={viewBox}
             style={{ width: width, height: height, borderRadius: "15px" }}
         >
