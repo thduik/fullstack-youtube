@@ -6,10 +6,10 @@ import './index.css';
 
 import { store } from './store'
 import { Provider } from 'react-redux'
-import { createTheme } from '@mui/system';
 // import { ThemeProvider } from '@emotion/react';
 // import { ThemeProvider, createTheme } from '@mui/material/styles';
 
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 
 //theme customize https://mui.com/material-ui/customization/theming/#themeprovider
@@ -19,6 +19,7 @@ const theme = createTheme({
         xs: 0,
         sm: 600,
         md: 900,
+        md1: 1000,
         lg: 1200,
         xl: 1536,
       },
@@ -29,11 +30,11 @@ const theme = createTheme({
 ReactDOM.render(
 
     <React.StrictMode>
-        {/* <ThemeProvider theme={theme}> */}
+        <ThemeProvider theme={theme}>
             <Provider store={store}>
                 <App />
             </Provider>
-        {/* </ThemeProvider> */}
+        </ThemeProvider>
     </React.StrictMode>,
     document.getElementById("root")
 );

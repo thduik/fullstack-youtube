@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import { ChannelDetail, SearchFeed, Navbar, Feed } from './components';
 import VideoDetail from "./components/videoDetail/VideoDetail";
 import { useState } from "react";
-import { Sidebar } from "./components";
+import Sidebar from "./components/sidebar/Sidebar";
 import { useSelector, useDispatch } from 'react-redux'
 
 
@@ -16,6 +16,7 @@ const App = () => {
   const dispatch = useDispatch()
 
   const showSidebar = useSelector((state)=>state.uiState.showSidebar)
+  const showMiniSidebar = useSelector((state)=>state.uiState.showMiniSidebar)
 
   // const [showSidebar, setShowSidebar] = useState(true)
   
@@ -26,9 +27,11 @@ const App = () => {
 
     <BrowserRouter>
       
-        
+        {/* sidebar needs transition and animation */}
         {showSidebar ? <Sidebar /> : null}
-        <MiniSidebar/>
+
+        {/* miniSidebar is finished, does not need animation or transition */}
+        {showMiniSidebar ? <MiniSidebar/> : null}
         <Box sx={{ backgroundColor: '#000' }}>
 
           <Navbar  />

@@ -1,28 +1,28 @@
 import React from "react";
 import { Stack } from "@mui/material";
 
-import { categories } from "../utils/constants";
+import { categories } from "../../utils/constants";
 
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchFromAPI } from "../utils/fetchFromAPI";
+import { fetchFromAPI } from "../../utils/fetchFromAPI";
 import { useEffect, useState } from "react";
-import { changeShowSidebar } from '../features/uiState/uiStateSlice.js'
-import { changeSelectedCategory } from "../features/appData/appDataSlice";
-import YoutubeIcon from '../icons/YoutubeIcon'
-import BurgerMenuIcon from "../icons/BurgerMenuIcon";
+import { changeShowSidebar } from '../../features/uiState/uiStateSlice.js'
+import { changeSelectedCategory } from "../../features/appData/appDataSlice";
+import YoutubeIcon from '../../icons/YoutubeIcon'
+import BurgerMenuIcon from "../../icons/BurgerMenuIcon";
+import './index.css'
 
-const allBackgroundColor = "rgba(0,0,0,0)"
-const youtubeButtonBackgroundColor = "black"
-const youtubeButtonDivBackgroundColor = "rgba(0,0,0,0)"
 
-const Categories = (props) => {
+const allBackgroundColor = "#202020"   //div and stacks
+const youtubeButtonBackgroundColor = "#202020"   //youtube icon button
+const youtubeButtonDivBackgroundColor = "#202020"   //div containing youtube icon button
+
+const Sidebar = (props) => {
   const dispatch = useDispatch()
   const selectedCategory = useSelector((state) => state.appData.selectedCategory)
   const showSidebar = useSelector((state) => state.uiState.showSidebar)
-  // const [selectedCategory, setSelectedCategory] = useState("New");
   const [videos, setVideos] = useState(null);
 
-  // const setSelectedCategory = dispatch(changeSelectedCategory())
   useEffect(() => {
     setVideos(null);
     fetchFromAPI(`search?part=snippet&q=${selectedCategory}`)
@@ -53,7 +53,6 @@ const Categories = (props) => {
         sx={{
           overflowY: "auto",
           height: { sx: "auto", md: "95%" },
-          // flexDirection: { xs:"column", md: "column" },
           width: "180px",
           backgroundColor: "rgba(0,0,0,0)"
         }}
@@ -74,7 +73,7 @@ const Categories = (props) => {
           </div> */}
 
         </div>
-        <div style={{backgroundColor:"black"}}>
+        <div style={{backgroundColor:allBackgroundColor}}>
 
         
         {categories.map((category) => (
@@ -84,6 +83,8 @@ const Categories = (props) => {
             style={{
               // background: category.name === selectedCategory && "green",
               color: "white",
+              width: "150px",
+              marginLeft:"4px"
             }}
             key={category.name}
           >
@@ -101,4 +102,4 @@ const Categories = (props) => {
   );
 }
 
-export default Categories;
+export default Sidebar;

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 
 import { fetchFromAPI } from "../utils/fetchFromAPI";
-import { Videos, Sidebar } from "./";
-import MiniSidebar from './miniSidebar/MiniSidebar'
+import { Videos } from "./";
+import Sidebar from "./sidebar/Sidebar";
 import { useSelector, useDispatch } from 'react-redux'
 
 const Feed = (props) => {

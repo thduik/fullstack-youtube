@@ -20,7 +20,10 @@ import LibraryIcon from '../icons/LibraryIcon';
 export const logo = 'https://i.ibb.co/s9Qys2j/logo.png';
 
 export const categories = [
-  { name: 'New', icon: <HomeIcon />, },
+  { name: 'Home', icon: <HomeIcon />}, 
+  { name: 'Shorts', icon: <ShortsIcon />, },
+  { name: 'Subscriptions', icon: <SubscriptionIcon />, },
+  { name: 'Library', icon: <LibraryIcon />, },
   { name: 'JS Mastery', icon: <CodeIcon />, },
   { name: 'Coding', icon: <CodeIcon />, },
   { name: 'ReactJS', icon: <CodeIcon />, },
@@ -32,11 +35,7 @@ export const categories = [
   { name: 'Gaming', icon: <SportsEsportsIcon />, },
   { name: 'Live', icon: <LiveTvIcon />, },
   { name: 'Sport', icon: <FitnessCenterIcon />, },
-  { name: 'Fashion', icon: <CheckroomIcon />, },
-  { name: 'Beauty', icon: <FaceRetouchingNaturalIcon />, },
-  { name: 'Comedy', icon: <TheaterComedyIcon />, },
-  { name: 'Gym', icon: <FitnessCenterIcon />, },
-  { name: 'Crypto', icon: <DeveloperModeIcon />, },
+  
 ];
 
 export const miniCategories = [

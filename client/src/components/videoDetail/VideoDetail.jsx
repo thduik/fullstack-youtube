@@ -6,16 +6,35 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import { Videos, Loader } from "..";
 import { fetchFromAPI } from "../../utils/fetchFromAPI";
-import './index.css'
+
+import { useSelector, useDispatch } from 'react-redux'
+
+import { changeShowMiniSidebar } from '../../features/uiState/uiStateSlice.js'
+
 const VideoDetail = () => {
+  const dispatch = useDispatch()
   const [videoDetail, setVideoDetail] = useState(null);
   const [videos, setVideos] = useState(null);
   const { id } = useParams();
 
+  
+    useEffect(() => {
+        // Anything in here is fired on component mount.
+        dispatch(changeShowMiniSidebar(false))
+
+        return () => {
+          dispatch(changeShowMiniSidebar(true))
+            // Anything in here is fired on component unmount.
+        }
+    }, [])
+
   useEffect(() => {
     
     fetchFromAPI(`videos?part=snippet,statistics&id=${id}`)
-      .then((data) => setVideoDetail(data.items[0]))
+      .then((data) => {
+        console.log("videoStatisticsIs: ", data.items)
+        setVideoDetail(data.items[0])
+      })
 
     fetchFromAPI(`search?part=snippet&relatedToVideoId=${id}&type=video`)
       .then((data) => setVideos(data.items))
@@ -27,7 +46,7 @@ const VideoDetail = () => {
 
   return (
     <Box minHeight="95vh">
-      <Stack className="vid-detail-stack">
+      <Stack direction={{xs:"column", md1:"row"}} >
         <Box flex={1}>
           <Box sx={{ width: "100%", position: "sticky", top: "86px" }}>
             <ReactPlayer url={`https://www.youtube.com/watch?v=${id}`} className="react-player" controls />
