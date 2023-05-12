@@ -1,0 +1,5 @@
+{
+    "domain": "dev-2xe23yeghizxs3ro.us.auth0.com",
+    "clientId": "kDUeAhhIDpHE7yKsvHHZU7Snm6ATH6O4",
+    "audience": "http://localhost:3001/api/external"
+  }
