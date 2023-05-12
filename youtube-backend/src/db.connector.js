@@ -18,15 +18,15 @@ class DatabaseConnector {
   }
 
   // example methods
-  // async connectMongo() {
-  //   // add mongo/mongoose connect to database
-  // }
+  async connectMongo() {
+    // add mongo/mongoose connect to database
+  }
 
-  // async connectPG() {
-  //   // add postgres connection
-  // }
+  async connectPG() {
+    // add postgres connection
+  }
 
-  // add more needed connections here
+  add more needed connections here
 }
 
 module.exports = DatabaseConnector
