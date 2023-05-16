@@ -11,7 +11,9 @@ import BurgerMenuIcon from "../icons/BurgerMenuIcon";
 import { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { changeShowSidebar } from "../features/uiState/uiStateSlice";
-// import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LoginDropdown from "./loginDropdown/LoginDropdown";
+
+import BasicDropdown from "../testComponents/BasicDropdown";
 
 
 const Navbar = (props) => {
@@ -34,10 +36,10 @@ const Navbar = (props) => {
     console.log("clickedAccountIcon called")
   }
   return (
-    <Stack direction="row" alignItems="center" p={2} sx={{ position: "fixed", width:"100%", background: '#000', top: 0, justifyContent: "space-between" }}>
-      {/* <Link to="/" style={{ display: "flex", alignItems: "center" }}>
-      <img src={logo} alt="logo" height={45} />
-    </Link> */}
+    <Stack direction="row" alignItems="center" p={2} sx={{ position: "fixed", 
+    width:"100%", background: '#000', top: 0, justifyContent: "space-between",
+    paddingRight:"10px", paddingLeft:"10px" }}>
+    
       <Stack direction="row" spacing={2} sx={{ marginRight: "20px" }}>
         <button onClick={clickedBurgerMenu} style={{ backgroundColor: "black", border: "none" }}>
           <BurgerMenuIcon />
@@ -59,9 +61,11 @@ const Navbar = (props) => {
         <button onClick={clickedNotiIcon} style={{ backgroundColor: "black", border: "none" }}>
           <NotiIcon />
         </button>
-        <button onClick={clickedAccountIcon} style={{ backgroundColor: "black", border: "none" }}>
-          <AccountIcon />
-        </button>
+        <div style={{backgroundColor:"rgba(0,0,0,0)", color:"white"}}>
+          <LoginDropdown accountIcon={<AccountIcon />}/>
+        </div>
+        
+       
       </Stack>
 
     </Stack>

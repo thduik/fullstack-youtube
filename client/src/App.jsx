@@ -12,6 +12,27 @@ import {changeShowSidebar} from './features/uiState/uiStateSlice.js'
 
 import MiniSidebar from './components/miniSidebar/MiniSidebar'
 
+
+// import { getConfig } from "./config";
+
+// const config = getConfig();
+// const onRedirectCallback = (appState) => {
+//   history.push(
+//     appState && appState.returnTo ? appState.returnTo : window.location.pathname
+//   );
+// };
+
+// const providerConfig = {
+//   domain: config.domain,
+//   clientId: config.clientId,
+//   onRedirectCallback,
+//   authorizationParams: {
+//         redirect_uri: 'http://localhost:3000',
+//         audience:'http://localhost:3001/api/external',
+//         scope: "read:current_user update:current_user_metadata"
+//       }
+ 
+// };
 const App = () => {
   const dispatch = useDispatch()
 

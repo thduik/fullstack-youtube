@@ -11,30 +11,36 @@ import { Provider } from 'react-redux'
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 //theme customize https://mui.com/material-ui/customization/theming/#themeprovider
 const theme = createTheme({
-    breakpoints: {
-      values: {
-        xs: 0,
-        sm: 600,
-        md: 900,
-        md1: 1000,
-        lg: 1200,
-        xl: 1536,
-      },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      md1: 1000,
+      lg: 1200,
+      xl: 1536,
     },
-  });
+  },
+});
+
+
+console.log("import.meta.env.GOOGLE_CREDENTIALS_CLIENT_ID", import.meta.env.VITE_GOOGLE_CREDENTIALS_CLIENT_ID)
 
 
 ReactDOM.render(
 
-    <React.StrictMode>
-        <ThemeProvider theme={theme}>
-            <Provider store={store}>
-                <App />
-            </Provider>
-        </ThemeProvider>
-    </React.StrictMode>,
-    document.getElementById("root")
+  <React.StrictMode>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CREDENTIALS_CLIENT_ID}>
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </ThemeProvider>
+      </GoogleOAuthProvider>
+  </React.StrictMode>,
+  document.getElementById("root")
 );

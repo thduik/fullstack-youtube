@@ -13,13 +13,15 @@ const options = {
 };
 
 export const fetchFromAPI = async (url) => {
-  try {
-    const { data } = await axios.get(`${BASE_URL}/${url}`, options);
-    console.log("fetchFromAPI success: ", data )
-    return data;
-  } catch(err) {
-    console.log("fetchFromAPI fail: ", err)
-  }
+
+  
+  // try {
+  //   const { data } = await axios.get(`${BASE_URL}/${url}`, options);
+  //   console.log("fetchFromAPI success: ", data )
+  //   return data;
+  // } catch(err) {
+  //   console.log("fetchFromAPI fail: ", err)
+  // }
   
   
 };

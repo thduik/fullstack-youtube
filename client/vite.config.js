@@ -15,9 +15,12 @@ export default defineConfig({
   server: {
     fs: {
       // Allow serving files from one level up to the project root
-      allow: ['..'],
+      allow: ['..','.'],
     },
-    port: 5234
+    port: 5234,
+    hmr: {
+      port: 5234 // vite@2.5.2 and newer: clientPort
+    }
   }
 })
 

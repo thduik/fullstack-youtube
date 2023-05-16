@@ -1,0 +1,12 @@
+div.comp-wrapper {
+    background-color: black;
+}
+
+div.comp-wrapper:hover {
+    background-color: gray
+}
+
+
+div.button-wrapper:hover {
+    background-color: gray
+}

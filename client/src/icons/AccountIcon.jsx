@@ -3,7 +3,7 @@ import './icons.css'
 function AccountIcon({width="30px", height="30px", fillColor="white", viewBox="0 0 24 24"}) {
     return (
         <svg
-            ariaHidden="true"
+            
             // className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
             className="nav-icon"
             data-testid="AccountCircleIcon"
