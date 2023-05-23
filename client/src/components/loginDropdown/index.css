@@ -8,5 +8,18 @@ div.comp-wrapper:hover {
 
 
 div.button-wrapper:hover {
-    background-color: gray
+    background-color: gray;
+    cursor:pointer;
+
 }
+
+button.sign-in:hover {
+    cursor:pointer;
+    
+}
+
+button.sign-in {
+    background-color: rgba(0,0,0,0)
+}
+
+

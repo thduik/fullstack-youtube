@@ -9,11 +9,12 @@ const backgroundColor = "rgba(0,0,0,0)"
 const buttonHeight = "36px"
 const textPaddingTop = "4px"
 
-const GoogleSignInButton = ({dropdownMenuWidth, loginWithGoogle}) => {
+const GoogleSignInButton = ({dropdownMenuWidth, loginWithGoogle,marginTopBottom}) => {
 
     return (
         <div className="button-wrapper"
-         style={{ width: dropdownMenuWidth, height:buttonHeight,border: "1px solid gray",
+         style={{marginTop:marginTopBottom, marginBottom:marginTopBottom,
+             width: dropdownMenuWidth, height:buttonHeight,border: "1px solid gray",
          borderRadius:"18px" }}>
             <button style={{backgroundColor:backgroundColor,
                 width: "100%", height:buttonHeight,

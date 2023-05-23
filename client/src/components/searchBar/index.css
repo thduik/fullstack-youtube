@@ -7,3 +7,13 @@ input.search-bar::-webkit-input-placeholder {
     color: gray;
     font-size: 15px;
 }
+
+.IconButton:hover .IconClass {
+    background-color: red;
+  }
+
+@media screen and (max-width:600px) {
+    input.search-bar {
+        /* width:100px */
+    }
+}

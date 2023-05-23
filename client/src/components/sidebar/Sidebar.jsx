@@ -11,6 +11,7 @@ import { changeSelectedCategory } from "../../features/appData/appDataSlice";
 import YoutubeIcon from '../../icons/YoutubeIcon'
 import BurgerMenuIcon from "../../icons/BurgerMenuIcon";
 import './index.css'
+import { Link } from "react-router-dom";
 
 
 const allBackgroundColor = "#202020"   //div and stacks
@@ -23,11 +24,11 @@ const Sidebar = (props) => {
   const showSidebar = useSelector((state) => state.uiState.showSidebar)
   const [videos, setVideos] = useState(null);
 
-  useEffect(() => {
-    setVideos(null);
-    fetchFromAPI(`search?part=snippet&q=${selectedCategory}`)
-      .then((data) => setVideos(data.items))
-  }, [selectedCategory]);
+  // useEffect(() => {
+  //   setVideos(null);
+  //   fetchFromAPI(`search?part=snippet&q=${selectedCategory}`)
+  //     .then((data) => setVideos(data.items))
+  // }, [selectedCategory]);
 
   const categoryClicked = (catName) => {
     console.log("categoryClicked catName is", catName)
@@ -47,7 +48,7 @@ const Sidebar = (props) => {
   }
 
   return (
-    <div style={{ float: "left", position: "fixed", zIndex: 3, background:allBackgroundColor }}>
+    <div style={{ float: "left", position: "fixed", zIndex: 3, background: allBackgroundColor }}>
       <Stack
         // direction="column"
         sx={{
@@ -58,44 +59,50 @@ const Sidebar = (props) => {
         }}
 
       >
-        <div style={{ display: "flex", height: "60px", backgroundColor:youtubeButtonDivBackgroundColor }}>
-          <div style={{paddingLeft:"16px", paddingTop:"18px",backgroundColor:youtubeButtonDivBackgroundColor}}>
+        <div style={{ display: "flex", height: "60px", backgroundColor: youtubeButtonDivBackgroundColor }}>
+          <div style={{
+            paddingLeft: "16px", paddingTop: "18px", backgroundColor: youtubeButtonDivBackgroundColor
+          }}>
+
             <button
-              style={{ backgroundColor:youtubeButtonBackgroundColor, border: "none" }}
+              style={{ backgroundColor: youtubeButtonBackgroundColor, border: "none" }}
               onClick={() => { youtubeIconClicked() }}
             >
               <BurgerMenuIcon />
             </button>
           </div>
 
-          {/* <div style={{paddingTop:"22px"}}>
-            <YoutubeIcon />
-          </div> */}
+          <div style={{ paddingTop: "24px", paddingLeft:"13px" }}>
+            
+            <Link to="/">
+              <YoutubeIcon />
+            </Link>
+          </div>
 
         </div>
-        <div style={{backgroundColor:allBackgroundColor}}>
+        <div style={{ backgroundColor: allBackgroundColor }}>
 
-        
-        {categories.map((category) => (
-          <button
-            className="category-btn"
-            onClick={() => categoryClicked(category.name)}
-            style={{
-              // background: category.name === selectedCategory && "green",
-              color: "white",
-              width: "150px",
-              marginLeft:"4px"
-            }}
-            key={category.name}
-          >
-            <span style={{ color: category.name === selectedCategory ? "white" : "white", marginRight: "12px" }}>
-              {category.icon}
-            </span>
-            <span style={{ opacity: category.name === selectedCategory ? "1" : "0.8" }}>
-              {category.name}
-            </span>
-          </button>
-        ))}
+
+          {categories.map((category) => (
+            <button
+              className="category-btn"
+              onClick={() => categoryClicked(category.name)}
+              style={{
+                // background: category.name === selectedCategory && "green",
+                color: "white",
+                width: "150px",
+                marginLeft: "4px"
+              }}
+              key={category.name}
+            >
+              <span style={{ color: category.name === selectedCategory ? "white" : "white", marginRight: "12px" }}>
+                {category.icon}
+              </span>
+              <span style={{ opacity: category.name === selectedCategory ? "1" : "0.8" }}>
+                {category.name}
+              </span>
+            </button>
+          ))}
         </div>
       </Stack>
     </div>

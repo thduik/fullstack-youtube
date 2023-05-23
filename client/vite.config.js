@@ -21,7 +21,15 @@ export default defineConfig({
     hmr: {
       port: 5234 // vite@2.5.2 and newer: clientPort
     }
-  }
+  },
+  proxy: {
+    '/api': {
+         target: 'https://holysheet2831.hopto.org/',
+         changeOrigin: true,
+         secure: false,      
+         ws: true,
+     }
+}
 })
 
 

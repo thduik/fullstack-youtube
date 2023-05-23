@@ -10,6 +10,8 @@ import './index.css'
 import BlueAccountIcon from '../../icons/BlueAccountIcon';
 import GoogleSignInButton from './GoogleSignInButton';
 import PasswordSignInButton from './PasswordSignInButton';
+import { handleGoogleToken } from '../../utils/handleGoogleToken';
+import { testPost } from '../../utils/testApi';
 
 
 const backgroundColor = "rgba(0,0,0,0)" //important because all elements being transparent allow effects to work
@@ -18,17 +20,26 @@ const buttonFontColor = "#3ea6ff"
 
 
 const dropdownMenuWidth = "180px"
-const dropdownMenuMarginLeft = "-120px"
-const dropdownBackgroundColor = "rgba(0,0,0,0)"
+const dropdownMenuMarginLeft = "-110px"
+const dropdownBackgroundColor = "#171717"
 
 function LoginDropdown({ accountIcon }) {
+  const testApi = () => {
+    testPost()
+  }
   const [showDropdown, setShowDropdown] = useState(false)
   const logOutGoogleClicked = () => {
     console.log("logOutGoogleClicked")
     googleLogout()
   }
+  const handleGoogleTokenSuccess = (tokenResponse) => {
+    handleGoogleToken(tokenResponse)
+  }
   const loginWithGoogle = useGoogleLogin({
-    onSuccess: tokenResponse => console.log(tokenResponse),
+    onSuccess: tokenResponse => handleGoogleTokenSuccess(tokenResponse),
+    scope: "openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email"
+    //https://www.googleapis.com/auth/userinfo.email
+    //https://www.googleapis.com/auth/userinfo.profile
   });
 
   const toggleMenuDisplay = () => {
@@ -38,45 +49,40 @@ function LoginDropdown({ accountIcon }) {
   return (
     <div className="comp-wrapper" style={{
       width: totalWidth, paddingTop: "3px",
-      paddingLeft: "3px", borderRadius: "20px", border: "1px solid gray"
+      paddingLeft: "3px", borderRadius: "26px", border: "1px solid gray"
+      ,marginRight:"10px"
     }}>
-      <button className="sign-in" style={{ backgroundColor: backgroundColor, border: "none" }}
+      <button className="sign-in" style={{  border: "none" 
+      }}
         onClick={toggleMenuDisplay}>
         <div style={{
-          backgroundColor: backgroundColor, width: totalWidth, display: "flex",
+          backgroundColor: "rgba(0,0,0,0)", width: totalWidth, display: "flex",
           flexDirection: "row"
         }}>
-          {/* {accountIcon}  */}
           <BlueAccountIcon fillColor={buttonFontColor} />
           <p style={{
             color: buttonFontColor, paddingTop: "4px", paddingLeft: "3px",
             fontWeight: "bold"
+            
           }}>Sign In</p>
         </div>
 
       </button>
 
       <div style={{
-        position: "fixed", justifyContent: "end", backgroundColor: dropdownBackgroundColor,
+        position: "fixed", justifyContent: "end", backgroundColor:dropdownBackgroundColor,
         width: dropdownMenuWidth, marginLeft: dropdownMenuMarginLeft, marginTop: "10px",
         border: "1px solid gray",  
-        //testing css
-        display: showDropdown ? "flex" : "none", flexDirection:"column"
+        display: showDropdown ? "flex" : "none", flexDirection:"column",
+        padding: "5px 6px 2px 6px", borderRadius:"22px"
       }} >
-        <GoogleSignInButton loginWithGoogle={loginWithGoogle} />
-          <PasswordSignInButton />
-        {/* <Stack direction="column"
-          style={{
-            display: showDropdown ? "block" : "none", flexDirection: "column",
-            backgroundColor: "black", width: "100%"
-          }}
-        >
-          <GoogleSignInButton loginWithGoogle={loginWithGoogle} />
-          <PasswordSignInButton />
-
-        </Stack> */}
+        <GoogleSignInButton loginWithGoogle={loginWithGoogle} marginTopBottom="3px" />
+        <PasswordSignInButton marginTopBottom="6px" />
+        <button onClick={testApi}>Test Api</button>
       </div>
     </div>
+
+
 
   );
 }

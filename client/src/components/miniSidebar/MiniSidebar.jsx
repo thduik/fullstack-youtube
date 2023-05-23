@@ -21,11 +21,11 @@ const MiniSidebar = ({backgroundColor="black",buttonBackgroundColor="rgba(0,0,0,
                 className="buttonWrapper"
                 style={{
                 // backgroundColor:backgroundColor,
-                paddingLeft:"2px",
+                paddingLeft:"0px",
                 paddingTop:"10px",
                 paddingRight:"45px",
                 paddingBottom:"14px",
-                marginLeft:"5px",
+                marginLeft:"8px",
                 marginTop:"5px",
                 borderRadius:"10px",
                 border:"none",

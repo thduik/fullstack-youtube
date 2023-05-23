@@ -4,12 +4,25 @@ import { Typography, Card, CardContent, CardMedia } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import { demoThumbnailUrl, demoVideoUrl, demoVideoTitle, demoChannelUrl, demoChannelTitle } from "../utils/constants";
-
+const cardWidthSmall = window.innerWidth - 30
+console.log("cardWidthSmall is", `${cardWidthSmall}px`)
+const widthStyle = { xs: `${cardWidthSmall}px`, sm: '270px',sm770:'290px', md: "320px",
+      md1000:"290px", lg:"370px" }
 const VideoCard = ({ video: { id: { videoId }, snippet } }) => (
-  <Card sx={{ width: { xs: '100%', sm: '358px', md: "320px", }, boxShadow: "none", borderRadius: 0 }}>
+  <Card sx={{ 
+
+    width: widthStyle, 
+    // width: { xs: '100%', sm: '44%', md: "30%", }, 
+
+  boxShadow: "none", borderRadius: 0 }}>
+
     <Link to={videoId ? `/video/${videoId}` : `/video/cV2gBU6hKfY` }>
       <CardMedia image={snippet?.thumbnails?.high?.url || demoThumbnailUrl} alt={snippet?.title} 
-        sx={{ width: { xs: '100%', sm: '358px'}, height: 180 }} 
+
+        // sx={{ width: { xs: '100%', sm: '358px'}, 
+        sx={{ 
+          width: widthStyle,  
+        height: 180 }} 
       />
     </Link>
     <CardContent sx={{ backgroundColor: "#1E1E1E", height: '106px' }}>

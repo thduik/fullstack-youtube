@@ -2,14 +2,15 @@ import React from "react";
 import './icons.css'
 
 
-function LiveIcon({width="30px", height="30px", fillColor="white", viewBox="-5 -4 32 32", borderRadius="15px"}) {
+function LiveIcon({marginRight="0px",
+    width="30px", height="30px", fillColor="white", viewBox="-5 -4 32 32", borderRadius="15px"}) {
     return (
         <svg
             className="nav-icon"
             // display="block"
 
             viewBox={viewBox}
-            style={{ width: width, height: height, borderRadius:borderRadius}}
+            style={{ marginRight:marginRight,width: width, height: height, borderRadius:borderRadius}}
         >
             <g className="style-scope yt-icon">
                 <path
