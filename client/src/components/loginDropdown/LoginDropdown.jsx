@@ -11,7 +11,7 @@ import BlueAccountIcon from '../../icons/BlueAccountIcon';
 import GoogleSignInButton from './GoogleSignInButton';
 import PasswordSignInButton from './PasswordSignInButton';
 import { handleGoogleToken } from '../../utils/handleGoogleToken';
-import { testPost } from '../../utils/testApi';
+import { testApi } from '../../utils/testApi';
 
 
 const backgroundColor = "rgba(0,0,0,0)" //important because all elements being transparent allow effects to work
@@ -24,8 +24,8 @@ const dropdownMenuMarginLeft = "-110px"
 const dropdownBackgroundColor = "#171717"
 
 function LoginDropdown({ accountIcon }) {
-  const testApi = () => {
-    testPost()
+  const testApiii = () => {
+    testApi()
   }
   const [showDropdown, setShowDropdown] = useState(false)
   const logOutGoogleClicked = () => {
@@ -78,7 +78,7 @@ function LoginDropdown({ accountIcon }) {
       }} >
         <GoogleSignInButton loginWithGoogle={loginWithGoogle} marginTopBottom="3px" />
         <PasswordSignInButton marginTopBottom="6px" />
-        <button onClick={testApi}>Test Api</button>
+        <button onClick={testApiii}>Test Api</button>
       </div>
     </div>
 

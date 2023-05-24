@@ -7,8 +7,12 @@ import axios from "axios"
 //     key: fs.readFileSync("./key.pem"),
 //     passphrase: "YYY"
 //   })
-  
-export const testPost = async (url="/auth/google/login") => {
+export const testApi = async () => {
+    await testPost()
+    await testGet()
+}
+
+const testPost = async (url="/test") => {
     
     
     const destUrl = "https://holysheet2831.hopto.org/api" + url
@@ -27,12 +31,10 @@ export const testPost = async (url="/auth/google/login") => {
 
 }
 
-export const testGet = async () => {
+const testGet = async (url="/test") => {
     console.log("testPost called")
     try {
-        const res = await axios.post("https://holysheet2831.hopto.org/api", {
-            googleToken: "testTOken"
-        })
+        const res = await axios.get("https://holysheet2831.hopto.org/api" + url)
         console.log("testPost success, res is", res)
     } catch (err) {
         console.log("testPost err, err is", err)

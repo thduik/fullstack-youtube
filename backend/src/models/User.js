@@ -1,8 +1,7 @@
 const mongoose = require('mongoose')
 
 
-const userSchema = new mongoose.Schema({
-   
+const userSchema = new mongoose.Schema({ 
     userid: {
         type:String,
         required:[true,"mongo model no userid"],
@@ -36,7 +35,6 @@ const userSchema = new mongoose.Schema({
     pictureurl: {
         type: String
     }
-   
 })
 
 module.exports = mongoose.model("YoutubeUser", userSchema);

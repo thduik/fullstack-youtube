@@ -25,7 +25,6 @@ const testGoogleTokenVerify = async () => {
         const result = await googleCheckCredentialsAndCreateTokens("testToken", mockGoogleVerifyToken)
         //{userData:userData, accessToken:accessToken, refreshToken:refreshToken}
         testOutput(result)
-
         console.log("testGoogleTokenVerify completed result is:", result)
 
     } catch (err) {
@@ -113,6 +112,9 @@ const testOutput = async (result) => {
         throw("JWT verify testing failed")
     }
 }
+
+
+module.exports = {}
 
 testGoogleTokenVerify()
 
