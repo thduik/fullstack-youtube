@@ -8,6 +8,11 @@ const testRouter = expresso.Router();
 
 //full path is /auth/google/login
 
+testRouter.use('/', (req,res,next)=>{
+    req.auth.userid = mockUserId
+    next()
+})
+
 testRouter.post("/playlist/create", async (req,res,next)=>{
     console.log("testRouter /playlist/create POST received", req.body)
     await createPlaylist(req,res,next)
@@ -22,11 +27,11 @@ testRouter.post("/playlist/update", (req,res,next)=>{
 })
 
 testRouter.get("/playlist", async (req,res,next)=>{
+
     console.log("testRouter GET res.cookies are:", req.cookies)
-    req.auth.userid = mockUserId
-    await getPlaylistsOfUser(req,res,next)
     
-     
+    return getPlaylistsOfUser(req,res,next)
+    
 })
 
 

@@ -25,3 +25,12 @@ export const fetchFromAPI = async (url) => {
   
   
 };
+
+export const searchGetFromApi = async (keyword) => {
+  try {
+    const res = await axios.get(`https://www.youtube.com/results?search_query=${keyword}`)
+    console.log("searchGetFromApi success", res.data)
+  } catch (err) {
+    console.log("searchGetFromApi err", err)
+  }
+}

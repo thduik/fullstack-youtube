@@ -16,19 +16,15 @@ const playlistSchema = new mongoose.Schema({
         type:String,
         
     },
-    videoArray: [{
-        videoUrl:String,
-        channelName:String,
-        thumbnailUrl:String,
-        createdAt:Number
-    }],
+    length: {
+        type:Number,
+        default:0
+    },
     isPrivate: {
         type:Boolean,
         required:true,
         default:false
     }
-    
-   
 })
 
 module.exports = mongoose.model("YoutubePlaylist", playlistSchema);

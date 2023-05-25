@@ -1,4 +1,5 @@
 const Playlist = require('../models/Playlist')
+const PlaylistVideoInfo = require('../models/PlaylistVideoInfo')
 
 const getAllPlaylistsOfUser = async (userid) => {
     try {
@@ -9,22 +10,27 @@ const getAllPlaylistsOfUser = async (userid) => {
     }
 }
 
-const createPlaylistDb = async (playlist) => {
+const createPlaylistDb = async (playlist, videoData) => {
     //return the _id of document
     //playlistName is not unique, unique identifier is _id of mongoose document
     //because data is not sensitive anyways
     try {
-        const doc = await Playlist.create({
+        const playlistDoc = await Playlist.create({
             playlistName: playlist.playlistName,
             userid: playlist.userid,
             userName: playlist.userName,
-            videoArray: playlist.videoArray,
             isPrivate:playlist.isPrivate ?? false
         })
-        console.log("createPlaylist success doc is", doc)
-        return doc._id.toString()
+        const videoRes = await PlaylistVideoInfo.create({
+            playlistId:playlistDoc._id.toString(),
+            videoId:videoData.videoId,
+            thumbnailUrl:videoData.thumbnailUrl,
+            createdAt:videoData.createdAt
+        })
+        console.log("createPlaylist success doc is", playlistDoc, videoRes)
+        return playlistDoc._id.toString()
     } catch (err) {
-        throw("createPlaylist err", err) 
+        throw("createPlaylist err", err.message) 
     }
 }
 

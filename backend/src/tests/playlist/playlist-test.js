@@ -4,36 +4,36 @@
 //to /test/playlist endpoint 
 
 const Playlist = require('../../models/Playlist')
+const PlaylistVideoInfo = require('../../models/PlaylistVideoInfo')
 const axios = require('axios')
 const { mockUserId, mockPlaylistName } = require('../data')
 const connectDB = require('../../db/connect-db')
 const request = require("supertest")
-const {testCreatePlaylistWithError,videoDataArr, testPostAxios, testGetPlaylist } = require('./playlist-functions')
+const {testCreatePlaylistWithError,videoDataArr, testPostAxios, testGetPlaylist, setupTest, cleanupTest } = require('./playlist-functions')
 
 const baseUrl = 'http://localhost:4444/test'
 
 
 
 
-const mockUsername = 'testusername'
+const playlistArray = []
 
 
 
-const cleanupTest = async () => {
-    await Playlist.deleteMany({userid:mockUserId})
-}
 
 const test = async () => {
 
     try {
-        await connectDB()
+        await setupTest()
         // const expectError = await testCreatePlaylistWithError()
-        const docc = await testPostAxios()
-        const docs = await testGetPlaylist()
-        
+        const postRes = await testPostAxios()
+        const playlistArrRes = await testGetPlaylist()
+        console.log("playlistRes success", playlistArrRes)
+        playlistArray.concat(playlistArrRes)
+
         await cleanupTest()
     } catch (err) {
-        throw ("error test", err)
+        throw ("error test", err.message)
     }
 
     process.exit()

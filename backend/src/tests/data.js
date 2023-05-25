@@ -1,3 +1,5 @@
 const mockUserId = 'testUserId'
 const mockPlaylistName = 'PLaylistFUCKKK'
-module.exports = {mockUserId, mockPlaylistName}
+const mockUsername = 'testusername'
+
+module.exports = {mockUserId, mockPlaylistName, mockUsername}

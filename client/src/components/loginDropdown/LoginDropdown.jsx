@@ -82,8 +82,6 @@ function LoginDropdown({ accountIcon }) {
       </div>
     </div>
 
-
-
   );
 }
 

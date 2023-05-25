@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Typography, Box } from "@mui/material";
 import { useParams } from "react-router-dom";
 
-import { fetchFromAPI } from "../utils/fetchFromAPI";
+import { fetchFromAPI, searchGetFromApi } from "../utils/fetchFromAPI";
 import  FeedVideos  from "./feedVideos/FeedVideos";
 
 
@@ -15,7 +15,8 @@ const SearchFeed = () => {
 
   useEffect(async() => {
     try {
-      const res = await fetchFromAPI(`search?part=snippet&q=${searchTerm}`)
+      // const res = await fetchFromAPI(`search?part=snippet&q=${searchTerm}`)
+      const res = await searchGetFromApi(searchTerm)
       console.log("SearchFeed fetch success:", res.items)
       for (var i=0;i<50;i++) {
         const resObject = res.items[i]
@@ -32,6 +33,7 @@ const SearchFeed = () => {
 
   return (
     <Box p={2} minHeight="95vh" 
+    //marginLeftRight leave space for miniSidebar when screen width >= 800px
     sx={{marginLeft:marginLeftRight, marginRight:marginLeftRight}}>
       <Box display="flex">
         <Box sx={{ mr: { sm: '0' } }}/>
