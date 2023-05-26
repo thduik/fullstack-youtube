@@ -1,6 +1,15 @@
 const Playlist = require('../models/Playlist')
 const PlaylistVideoInfo = require('../models/PlaylistVideoInfo')
 
+const getAllVideosOfPlaylist = async (playlistid) => {
+    try {
+        const docs = await PlaylistVideoInfo.find({playlistId:playlistid})
+        return docs
+    } catch (err) {
+        throw("error getAllVideosOfPlaylist", err)
+    }
+}
+
 const getAllPlaylistsOfUser = async (userid) => {
     try {
         const docs = await Playlist.find({userid:userid}).lean()
@@ -24,6 +33,7 @@ const createPlaylistDb = async (playlist, videoData) => {
         const videoRes = await PlaylistVideoInfo.create({
             playlistId:playlistDoc._id.toString(),
             videoId:videoData.videoId,
+            videoName:videoData.videoName,
             thumbnailUrl:videoData.thumbnailUrl,
             createdAt:videoData.createdAt
         })
@@ -34,4 +44,26 @@ const createPlaylistDb = async (playlist, videoData) => {
     }
 }
 
-module.exports = {createPlaylistDb, getAllPlaylistsOfUser}
+const addVideoToPlaylistDb = async (playlistid, videoData, playlistData) => {
+    console.log("videData is", videoData)
+    try {
+        const videoRes = await PlaylistVideoInfo.create({
+            playlistId:playlistid,
+            videoId:videoData.videoId,
+            videoName:videoData.videoName,
+            thumbnailUrl:videoData.thumbnailUrl,
+            createdAt:videoData.createdAt
+        })
+        return videoRes
+    } catch (err) {
+        throw("err addVideoToPlaylistDb", err)
+    }
+    
+}
+
+const deleteVideoFromPlaylistDb = (video, orderIndex) => {
+    
+}
+
+module.exports = {createPlaylistDb, getAllPlaylistsOfUser, getAllVideosOfPlaylist,
+    addVideoToPlaylistDb, deleteVideoFromPlaylistDb}

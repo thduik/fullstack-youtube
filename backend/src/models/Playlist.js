@@ -25,6 +25,7 @@ const playlistSchema = new mongoose.Schema({
         required:true,
         default:false
     }
+    
 })
 
 module.exports = mongoose.model("YoutubePlaylist", playlistSchema);

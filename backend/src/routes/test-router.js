@@ -1,30 +1,49 @@
 const expresso = require('express');
 const { setCookiesAndSendResPostLogin } = require('../controllers/auth/utils');
-const { createPlaylist, getPlaylistsOfUser } = require('../controllers/playlist');
+const { createPlaylist, getPlaylistsOfUser, getVideosListOfPlaylist, addVideoToPlaylist, deleteVideoFromPlaylist } = require('../controllers/playlist/playlist');
 const { mockUserId } = require('../tests/data');
 const testRouter = expresso.Router();
-
+const {testVerifyAuthId} = require('./test-utils.js')
 
 
 //full path is /auth/google/login
 
 testRouter.use('/', (req,res,next)=>{
+    
     req.auth.userid = mockUserId
     next()
 })
 
 testRouter.post("/playlist/create", async (req,res,next)=>{
     console.log("testRouter /playlist/create POST received", req.body)
-    await createPlaylist(req,res,next)
+    createPlaylist(req,res,next)
 
     //
 })
 
-testRouter.post("/playlist/update", (req,res,next)=>{
-    console.log("testRouter /playlist/update POST received")
-    const playlist = req.body.playlist
+testRouter.post("/playlist/update/:playlistid", testVerifyAuthId, (req,res,next)=>{
+    //this is meant to add new video to certain playlist
+    const playlistid = req.params.playlistid
+    const video = req.body.video
+    const playlistData = req.body.playlistData
+    console.log("testRouter /playlist/update POST received", playlistData)
+
+    addVideoToPlaylist(req,res,next)
     //
 })
+
+testRouter.post("/playlist/:playlistid/videos/delete", testVerifyAuthId,  (req,res,next)=>{
+    //this is meant to add new video to certain playlist
+    console.log("testRouter /playlist/:playlistid/videos/delete POST received", req.body)
+    const playlistid = req.params.playlistid
+    const video = req.body.video
+    const playlistData = req.body.playlistData
+    const videoOrderIndex = req.body.videoOrderIndex
+    deleteVideoFromPlaylist(req,res,next)
+    //
+})
+
+testRouter.get("/playlist/:playlistid/videos", getVideosListOfPlaylist)
 
 testRouter.get("/playlist", async (req,res,next)=>{
 

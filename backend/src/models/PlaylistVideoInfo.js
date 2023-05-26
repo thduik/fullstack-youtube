@@ -9,10 +9,18 @@ const PlaylistVideoInfoSchema = new mongoose.Schema({
         index:true,
         required:true
     },
-    videoId:String,
+    videoName:{
+        required:true,
+        type:String
+    },
+    videoId:{
+        required:true,
+        type:String
+    },
     channelName:String,
     thumbnailUrl:String,
-    createdAt:Number
+    createdAt:Number //createdAt here is actually addedAt, non-sensitive data so whatever
+    
 })
 
 module.exports = mongoose.model("PlaylistVideoInfo", PlaylistVideoInfoSchema);
