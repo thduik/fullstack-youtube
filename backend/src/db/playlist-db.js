@@ -61,8 +61,14 @@ const addVideoToPlaylistDb = async (playlistid, videoData, playlistData) => {
     
 }
 
-const deleteVideoFromPlaylistDb = (video, orderIndex) => {
-    
+const deleteVideoFromPlaylistDb = async (video, orderIndex) => {
+    console.log("deleteVideoFromPlaylistDb video._id:", video._id, video)
+    try {
+        const res = await PlaylistVideoInfo.deleteMany({_id:video._id})
+        return res
+    } catch (err) {
+        throw("deleteVideoFromPlaylistDb err", err)
+    }
 }
 
 module.exports = {createPlaylistDb, getAllPlaylistsOfUser, getAllVideosOfPlaylist,

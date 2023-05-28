@@ -8,7 +8,8 @@ var bodyParser = require('body-parser');
 const { sanitizeRequest } = require('./utils/sanitizeRequest');
 const { testRouter } = require('./routes/test-router');
 
-var cookieParser = require('cookie-parser')
+var cookieParser = require('cookie-parser');
+const { verifyJwtAccessTokenRequest, logoutApp } = require('./auth-module');
 
 var app = express()
 
@@ -20,25 +21,22 @@ app.use(cookieParser())
 app.use(helmet());
 
 
+app.post('/logout', logoutApp)
+
+
 app.use('/', sanitizeRequest)
+app.use('/', verifyJwtAccessTokenRequest)
+
+app.use('/cookies',(req,res,next)=>{console.log("req.cookies are", req.cookies);res.send("1")})
 
 app.post('/',(req,res,next)=>{
   console.log("app.post sucess")
-  // console.log("req.baseurl	",req.baseurl)
-  // console.log("	req.hostname", 	req.hostname)
-  // console.log("req.protocol",req.protocol)
-  // console.log("req.headers", req.headers)
-  // console.log("req.secure", req.secure)
-  // res.send("hehe fuck you from serverBITCHH")
   next()
 })
 
 app.use('/test', testRouter)
 
-app.get('/',(req,res,next)=>{
-  console.log("req.auth is", req.auth)
-  next()
-})
+
 
 
 // app.use('/api', appRouter)

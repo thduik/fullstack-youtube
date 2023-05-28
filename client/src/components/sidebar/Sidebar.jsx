@@ -41,9 +41,6 @@ const Sidebar = (props) => {
 
   const youtubeIconClicked = () => {
     const newState = !showSidebar
-
-    console.log("youtubeIconClicked newState is", newState)
-
     dispatch(changeShowSidebar(newState))
   }
 

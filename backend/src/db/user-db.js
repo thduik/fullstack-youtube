@@ -35,7 +35,7 @@ const createNewUserGoogleId = async (googleid, userEmail, userData) => {
             email: userEmail,
             givenname: userData.given_name,
             familyname: userData.family_name,
-            pictureurl: userData.pictureurl ?? trollFaceUrl
+            pictureurl: userData.picture_url ?? trollFaceUrl
         })
         console.log("createNewUserGoogleId success doc is", doc)
         return doc

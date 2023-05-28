@@ -11,7 +11,9 @@ import BlueAccountIcon from '../../icons/BlueAccountIcon';
 import GoogleSignInButton from './GoogleSignInButton';
 import PasswordSignInButton from './PasswordSignInButton';
 import { handleGoogleToken } from '../../utils/handleGoogleToken';
-import { testApi } from '../../utils/testApi';
+import TestDropdown from '../testComponent/TestDropdown';
+import { login, logout } from "../../features/user/userSlice"
+import { useDispatch } from 'react-redux';
 
 
 const backgroundColor = "rgba(0,0,0,0)" //important because all elements being transparent allow effects to work
@@ -24,22 +26,20 @@ const dropdownMenuMarginLeft = "-110px"
 const dropdownBackgroundColor = "#171717"
 
 function LoginDropdown({ accountIcon }) {
-  const testApiii = () => {
-    testApi()
-  }
+  const dispatch = useDispatch()
   const [showDropdown, setShowDropdown] = useState(false)
   const logOutGoogleClicked = () => {
     console.log("logOutGoogleClicked")
     googleLogout()
   }
   const handleGoogleTokenSuccess = (tokenResponse) => {
-    handleGoogleToken(tokenResponse)
+    handleGoogleToken(tokenResponse, (res)=>{
+      dispatch(login(res.data))
+    })
   }
   const loginWithGoogle = useGoogleLogin({
     onSuccess: tokenResponse => handleGoogleTokenSuccess(tokenResponse),
     scope: "openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email"
-    //https://www.googleapis.com/auth/userinfo.email
-    //https://www.googleapis.com/auth/userinfo.profile
   });
 
   const toggleMenuDisplay = () => {
@@ -78,7 +78,10 @@ function LoginDropdown({ accountIcon }) {
       }} >
         <GoogleSignInButton loginWithGoogle={loginWithGoogle} marginTopBottom="3px" />
         <PasswordSignInButton marginTopBottom="6px" />
-        <button onClick={testApiii}>Test Api</button>
+
+
+        <TestDropdown/>
+       
       </div>
     </div>
 

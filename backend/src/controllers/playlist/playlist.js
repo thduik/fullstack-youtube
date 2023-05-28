@@ -1,4 +1,5 @@
-const { createPlaylistDb, getAllPlaylistsOfUser, getAllVideosOfPlaylist, addVideoToPlaylistDb } = require("../../db/playlist-db")
+const { createPlaylistDb, getAllPlaylistsOfUser, getAllVideosOfPlaylist, 
+    addVideoToPlaylistDb, deleteVideoFromPlaylistDb } = require("../../db/playlist-db")
 const {postProcessDocArr} = require('./utils')
 
 const createPlaylist = async (req,res,next) => {
@@ -63,9 +64,11 @@ const deleteVideoFromPlaylist = async (req,res,next) => {
     const videoOrderIndex = req.body.videoOrderIndex
     console.log("deleteVideoFromPlaylist video:", video)
     try {
-        const res = await deleteVideoFromPlaylistDb(video, videoOrderIndex)
+        const result = await deleteVideoFromPlaylistDb(video, videoOrderIndex)
+        res.json({success:true})
     } catch(err) {
         console.log("deleteVideoFromPlaylist err", err)
+        res.status(402).json({success:false})
     }
 }
 

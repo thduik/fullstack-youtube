@@ -18,10 +18,12 @@ import LoginDropdown from "../loginDropdown/LoginDropdown";
 import BasicDropdown from "../../testComponents/BasicDropdown";
 import SmSearchBar from "../searchBar/SmSearchBar";
 import { Box } from "@mui/system";
+import UserInfoDropdown from "../userInfoDropdown/UserInfoDropdown";
 
 
 
 const Navbar = (props) => {
+  const { isLoggedIn } =  useSelector((state) => state.user)
   const [smSearchBarDisplay, setSmSearchBarDisplay] = useState(false)
   const changeSmSearchBarDisplay = () => {
     console.log("changeSmSearchBarDisplay called")
@@ -97,7 +99,11 @@ const Navbar = (props) => {
           <NotiIcon />
         </button>
         <div style={{ backgroundColor: "rgba(0,0,0,0)", color: "white" }}>
-          <LoginDropdown accountIcon={<AccountIcon />} />
+          {isLoggedIn ? 
+           <UserInfoDropdown/>:
+          <LoginDropdown accountIcon={<AccountIcon />} /> 
+          }
+          
         </div>
 
 

@@ -16,11 +16,13 @@
 //     console.log("test took", Date.now() - startTime, "ms")
 // }
 
-
+const maplol = new Map()
+maplol.set('a','b')
 const testlolol = () => {
-    const res = {a:'e'}
-    modifyRes(res)
-    console.log("res is", res)
+    console.log(maplol.get('b'))
+    if (!maplol.get('b')) {
+        console.log("YESS  UFCKKCK")
+    }
 }
 const modifyRes = (obj) => {
     obj.a = {}

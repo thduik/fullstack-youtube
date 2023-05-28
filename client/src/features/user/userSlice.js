@@ -3,33 +3,40 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
 
     username: 'none', //string
+    name: 'none',
+    pictureUrl:'none',
     isLoggedIn: false,
-    accessToken: 'none',
+    email:'none',
+    googleid:'none',
     subscriptions: [] //sidebar, implement later
 
-
 }
-
+    
 export const userSlice = createSlice({
     name:'userReducer',
     initialState,
     reducers: {
         login: (state, action) => {
-            const { accessToken, username } = action.payload
+            const { email, googleid, name, pictureUrl, userId, userName } = action.payload
+            state.isLoggedIn = true 
+            state.email = email ?? "defval"
+            state.googleid = googleid ?? "defval"
+            state.name = name ?? "defval"
+            state.pictureUrl = pictureUrl ?? "defval"
+            state.userId = userId ?? "defval"
+            state.userName = userName ?? "defval"
+            console.log("userSlice login called isLoggedIn:",state.isLoggedIn)
 
-            state.username = username
-            state.isLoggedIn = true
-            state.accessToken = accessToken
         },
         logout: (state) => {
-            state.username = 'none'
             state.isLoggedIn = false
-            state.accessToken = 'none'
-        },
-        receivedAccessToken: (state, action) => {
-            const accessToken = action.payload.accessToken
-
-            state.accessToken = accessToken
+            state.email = 'none'
+            state.googleid = 'none'
+            state.name = 'none'
+            state.pictureUrl = 'none'
+            state.userId = 'none'
+            state.userName = 'none'
+            console.log("userSlice logout called isLoggedIn:",state.isLoggedIn)
         }
     }
 

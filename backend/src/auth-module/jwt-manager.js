@@ -2,6 +2,7 @@ const { generateRandomString } = require("../utils/strings/generateRandomString"
 const jwt = require('jsonwebtoken')
 const fs = require('fs')
 const path = require('path')
+const { setCookiesAndSendResPostLogin, setCookiesAfterRefreshAccessToken } = require("./utils-cookies")
 
 require('dotenv').config()
 
@@ -14,6 +15,7 @@ const private_key = fs.readFileSync(path.resolve(__dirname, '../jwt-keys/private
 //caching used to store refreshTokenz in memory
 //{"user123456":"refreshToken123456"}
 const idToRefreshTokenMap = new Map()
+const refreshTokenToIdMap = new Map()
 
 const createRefreshToken = () => {
     return generateRandomString(refreshTokenLength)
@@ -45,24 +47,45 @@ const verifyJwtAccessToken = (accessToken) => {
     } catch (err) {
         throw("verifyJwtAccessToken error:", err)
     }
-    // await jwt.verify(accessToken, public_key, { algorithm: 'RS256'}, function(err, decoded) {
-    //     if (err) {
-    //         throw("verifyJwtAccessToken error:", err)
-    //     }
-    //     console.log("verifyJwtAccessToken success", decoded)
-    //     return decoded
-    //   });
 }
 
 const createRefreshAndAccessToken = (userid) => {
     //accessToken is JWT, refreshToken is stateful
     const refreshToken = createRefreshToken()
     idToRefreshTokenMap.set(userid, refreshToken)
+    refreshTokenToIdMap.set(refreshToken, userid)
     const accessToken = createAccessTokenJWT(userid)
     return {refreshToken:refreshToken, accessToken:accessToken}
+}
+
+const verifyRefreshTokenAndCreateAccessToken = (refreshToken) => {
+    const useridRes = refreshTokenToIdMap.get(refreshToken)
+    if (!useridRes) {
+        throw("verifyRefreshTokenAndCreateAccessToken error not found")
+    }
+    //delete old stuff as best practice
+    refreshTokenToIdMap.delete(refreshToken)
+    idToRefreshTokenMap.delete(useridRes)
+    //create new refreshToken+AccessToken and return them
+    return createRefreshAndAccessToken(useridRes)
+
+}   
+
+const verifyRefreshTokenAndGetNewAccessTokenRequest = (req,res,next) => {
+    console.log("verifyRefreshTokenAndGetNewAccessTokenRequest req.cookies:", req.cookies)
+    try {
+        const {accessToken, refreshToken} = verifyRefreshTokenAndCreateAccessToken(req.cookies.refreshToken)
+        setCookiesAfterRefreshAccessToken(accessToken, refreshToken, res)
+        next()
+    } catch(err) {
+        console.log("requestTOken failed")
+        // res.status(401).send("bad error happened, please log in again")
+        next()
+    }
 }
 
 const deleteRefreshTokenOfUser = (userid) => {
     idToRefreshTokenMap.delete(userid)
 }
-module.exports = {createRefreshAndAccessToken, deleteRefreshTokenOfUser, verifyJwtAccessToken}
+module.exports = {createRefreshAndAccessToken, deleteRefreshTokenOfUser, verifyJwtAccessToken
+,verifyRefreshTokenAndGetNewAccessTokenRequest}

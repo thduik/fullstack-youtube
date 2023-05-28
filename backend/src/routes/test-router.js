@@ -9,7 +9,7 @@ const {testVerifyAuthId} = require('./test-utils.js')
 //full path is /auth/google/login
 
 testRouter.use('/', (req,res,next)=>{
-    
+    console.log("testRouter GET called")
     req.auth.userid = mockUserId
     next()
 })

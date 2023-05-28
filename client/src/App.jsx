@@ -11,6 +11,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import {changeShowSidebar} from './features/uiState/uiStateSlice.js'
 
 import MiniSidebar from './components/miniSidebar/MiniSidebar'
+import { useEffect } from "react";
+import { login } from "./features/user/userSlice";
 
 
 
@@ -20,8 +22,15 @@ const App = () => {
   const showSidebar = useSelector((state)=>state.uiState.showSidebar)
   const showMiniSidebar = useSelector((state)=>state.uiState.showMiniSidebar)
 
+  const isDev = import.meta.env.DEV
+  console.log("import.meta.env.DEV:", isDev)
+  const baseUrl = isDev ? '/testapp' : '/'
   // const [showSidebar, setShowSidebar] = useState(true)
-  
+  useEffect(()=>{
+    cookieLogin((resJson)=>{
+      dispatch(login(resJson))
+    })
+  },[])
 
 
  
