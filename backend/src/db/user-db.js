@@ -43,14 +43,16 @@ const createNewUserGoogleId = async (googleid, userEmail, userData) => {
         console.log("createNewUserGoogleId err", err)
     }
 }
-
+const returnUserInfoFromDbWithUserIdPromise = (userid) => {
+    return User.find({userid:userid})
+}
 const getUserInfoFromDb = async (googleid, userEmail) => {
     //temporarily will fetch directly from db
     //later on should be from cache
     try {
         res = await User.find({ googleid: googleid })
         console.log("getUserInfoFromCacheOrDb success")
-        if (res.length === 0) {
+        if (res.length == 0) {
             return { found: 0, message: 'user not created' }
         }
         const userData = res[0]
@@ -61,4 +63,4 @@ const getUserInfoFromDb = async (googleid, userEmail) => {
     }
 }
 
-module.exports = { checkUserAgainstDbGoogleId }
+module.exports = { checkUserAgainstDbGoogleId, returnUserInfoFromDbWithUserIdPromise }

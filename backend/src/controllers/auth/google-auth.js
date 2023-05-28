@@ -1,5 +1,6 @@
 const { googleCheckCredentialsAndCreateTokens } = require("../../auth-module/auth-manager")
 const { setCookiesAndSendResPostLogin } = require('../../auth-module/utils-cookies')
+const {converUserDataToJson} = require('../utils')
 
 const googleLogin = async (req, res) => {
 
@@ -25,16 +26,6 @@ const googleLogin = async (req, res) => {
 
 }
 
-const converUserDataToJson = (userData) => {
-    const res = {
-        userId: userData.userid,
-        googleid: userData.googleid,
-        name: userData.name,
-        userName: userData.username,
-        email: userData.email,
-        pictureUrl: userData.pictureurl
-    }
-    return res
-}
+
 
 module.exports = { googleLogin }

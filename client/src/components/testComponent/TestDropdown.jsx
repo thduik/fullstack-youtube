@@ -5,7 +5,7 @@ import { testApi, logoutApp, testCookies } from '../../utils/testApi';
 const TestDropdown = () => {
     const dispatch = useDispatch()
     const logoutClicked = () => { 
-        dispatch(logout)
+        dispatch(logout())
         logoutApp() 
     }
     const testApiii = () => {

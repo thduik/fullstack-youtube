@@ -13,6 +13,7 @@ import {changeShowSidebar} from './features/uiState/uiStateSlice.js'
 import MiniSidebar from './components/miniSidebar/MiniSidebar'
 import { useEffect } from "react";
 import { login } from "./features/user/userSlice";
+import { cookieLogin } from "./utils/testApi";
 
 
 
@@ -27,12 +28,13 @@ const App = () => {
   const baseUrl = isDev ? '/testapp' : '/'
   // const [showSidebar, setShowSidebar] = useState(true)
   useEffect(()=>{
+    
     cookieLogin((resJson)=>{
       dispatch(login(resJson))
     })
   },[])
 
-
+ 
  
   return (
 

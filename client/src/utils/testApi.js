@@ -2,13 +2,7 @@ import axios from "axios"
 import { useDispatch } from "react-redux"
 import { logout } from "../features/user/userSlice"
 
-// const httpsAgent = new httpsAgent({
-    
-//     rejectUnauthorized: true, // (NOTE: this will disable client verification)
-//     cert: fs.readFileSync("./usercert.pem"),
-//     key: fs.readFileSync("./key.pem"),
-//     passphrase: "YYY"
-//   })
+
 export const testApi = async () => {
     await testPost()
     await testGet()
@@ -20,7 +14,7 @@ export const cookieLogin = async (callback) => {
         const res = await axios.post(
             destUrl,{}
         )
-        console.log("cookieLogin success, res is", res)
+        console.log("cookieLogin success, res is", res.data)
         callback(res.data)
     } catch (err) {
         console.log("cookieLogin err, err is", err)
@@ -42,14 +36,12 @@ export const testCookies = async () => {
 
 
 export const logoutApp = async () => {
-    const dispatch = useDispatch()
     const destUrl = "https://holysheet2831.hopto.org/api/logout" 
     console.log("testPost called destUrl is", destUrl)
     try {
         const res = await axios.post(
             destUrl, {type:200, error:0}
         )
-        dispatch(logout)
         console.log("logoutApp success, res is", res)
     } catch (err) {
         console.log("logoutApp err, err is", err)

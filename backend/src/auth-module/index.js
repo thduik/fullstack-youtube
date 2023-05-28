@@ -1,31 +1,37 @@
-const {verifyJwtAccessToken, verifyRefreshTokenAndGetNewAccessTokenRequest} = require('./jwt-manager')
-const {deleteRefreshAccessTokenCookies} = require('./utils-cookies')
+const { verifyJwtAccessToken, verifyRefreshTokenAndGetNewAccessTokenRequest } = require('./jwt-manager')
+const { deleteRefreshAccessTokenCookies } = require('./utils-cookies')
 
-const verifyJwtAccessTokenRequest = (req,res,next) => {
-    if (!req.cookies.accessToken) {
-        if (req.cookies.requestToken) {
-            console.log("log this requestTOken should not be here")
-            return res.status(401).send("error why u hacker")
-            
+const verifyJwtAccessTokenRequest = (req, res, next) => {
+    console.log("verifyJwtAccessTokenRequest called")
+    if (req.cookies.refreshToken) {
+        if (req.cookies.accessToken) {
+            return verifyAccessTokenFlow(req, res, next)
         }
-        console.log("verifyJwtAccessTokenRequest no cookies", next)
-        next()
-        return
+        return verifyRefreshTokenAndGetNewAccessTokenRequest(req, res, next)
     }
 
+    if (req.cookies.accessToken) {
+        returnres.status(401).send("error HACKER BITH")
+    }
+
+    next()
+
+}
+
+const verifyAccessTokenFlow = (req, res, next) => {
     try {
         const resultos = verifyJwtAccessToken(req.cookies.accessToken)
         req.auth.userid = resultos.sub
+        console.log("verifyJwtAccessTokenRequest success", req.auth)
         next()
     } catch (err) {
-        verifyRefreshTokenAndGetNewAccessTokenRequest(req,res,next)
+        verifyRefreshTokenAndGetNewAccessTokenRequest(req, res, next)
         return
     }
-
 }
 
-const logoutApp = (req,res) => {
+const logoutApp = (req, res) => {
     console.log("logoutApp called")
-    deleteRefreshAccessTokenCookies(req,res)
+    deleteRefreshAccessTokenCookies(req, res)
 }
-module.exports = {verifyJwtAccessTokenRequest, logoutApp}
+module.exports = { verifyJwtAccessTokenRequest, logoutApp }

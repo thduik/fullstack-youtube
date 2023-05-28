@@ -13,6 +13,9 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
+setTimeout(()=>{
+  process.exit()
+}, 1200000)
 //theme customize https://mui.com/material-ui/customization/theming/#themeprovider
 const theme = createTheme({
   breakpoints: {

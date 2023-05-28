@@ -5,4 +5,16 @@ const postProcessDocArr = (playlistArr) => {
     }
 }
 
-module.exports = {postProcessDocArr}
+const converUserDataToJson = (userData) => {
+    const res = {
+        userId: userData.userid,
+        googleid: userData.googleid,
+        name: userData.name,
+        userName: userData.username,
+        email: userData.email,
+        pictureUrl: userData.pictureurl
+    }
+    return res
+}
+
+module.exports = {postProcessDocArr, converUserDataToJson}
