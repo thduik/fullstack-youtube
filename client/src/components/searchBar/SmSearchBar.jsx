@@ -82,7 +82,7 @@ const SmSearchBar = ({ changeSmallSearchBarDisplay,
             onChange={(e) => setSearchTerm(e.target.value)}
           />
 
-          <MySearchButton iconBackgroundColor={iconBackgroundColor} marginLeft={{ xs: '0px', md: '0', lg: '150px' }} />
+          <MySearchButton iconBackgroundColor={iconBackgroundColor} marginLeft={{ xs: '0px', md: '0', lg: '0px' }} />
         </Stack>
       </Paper>
 

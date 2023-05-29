@@ -27,13 +27,12 @@ const createAccessTokenJWT = (userid) => {
     const jwtSecret = process.env.JWT_PRIVATE_KEY_OPENID
     const jwtId = generateRandomString(27)
     //jwtId is optional and experimental feature
-    console.log("JWT_PRIVATE_KEY", private_key)
     const jwtBody = { 
         sub:userid,
         iat:jwtNumericDate,
         aud:'https://holysheet2831.hopto.org/api',
         jit:jwtId,
-        exp:jwtNumericDate + 60*20 //20 minutes converted to seconds
+        exp:jwtNumericDate + 5 //20 minutes converted to seconds
      }
 
     var token = jwt.sign(jwtBody, private_key, { algorithm: 'RS256' });
@@ -67,18 +66,22 @@ const verifyRefreshTokenAndCreateAccessToken = (refreshToken) => {
     refreshTokenToIdMap.delete(refreshToken)
     idToRefreshTokenMap.delete(useridRes)
     //create new refreshToken+AccessToken and return them
+    console.log("verifyRefreshTokenAndCreateAccessToken succcess useridRes", useridRes)
     return createRefreshAndAccessToken(useridRes)
 
 }   
 
 const verifyRefreshTokenAndGetNewAccessTokenRequest = (req,res,next) => {
-    console.log("verifyRefreshTokenAndGetNewAccessTokenRequest req.cookies:", req.cookies)
+    // console.log("verifyRefreshTokenAndGetNewAccessTokenRequest req.cookies:", req.cookies)
     try {
         const {accessToken, refreshToken} = verifyRefreshTokenAndCreateAccessToken(req.cookies.refreshToken)
         setCookiesAfterRefreshAccessToken(accessToken, refreshToken, res)
+        const resultos = verifyJwtAccessToken(accessToken)
+        console.log("verifyRefreshTokenAndGetNewAccessTokenRequest success, resultos",resultos)
+        req.auth.userid = resultos.sub
         next()
     } catch(err) {
-        console.log("requestTOken failed")
+        console.log("refreshToken failed", err)
         // res.status(401).send("bad error happened, please log in again")
         next()
     }

@@ -17,3 +17,9 @@ input.search-bar::-webkit-input-placeholder {
         /* width:100px */
     }
 }
+
+@media screen and (min-width:1200px) {
+    input.search-bar {
+        margin-left:0px;
+    }
+}

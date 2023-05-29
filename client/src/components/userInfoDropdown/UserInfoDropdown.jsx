@@ -16,7 +16,7 @@ const buttonFontColor = "#3ea6ff"
 
 
 const dropdownMenuWidth = "180px"
-const dropdownMenuMarginLeft = "-110px"
+const dropdownMenuMarginLeft = "-140px"
 const dropdownBackgroundColor = "#171717"
 const wrapperStyle = {
     width: totalWidth, paddingTop: "3px",
@@ -32,7 +32,6 @@ const dropdownDivStyle = {
     position: "fixed", justifyContent: "end", backgroundColor: dropdownBackgroundColor,
     width: dropdownMenuWidth, marginLeft: dropdownMenuMarginLeft, marginTop: "10px",
     border: "1px solid gray",
-    flexDirection: "column",
     padding: "5px 6px 2px 6px", borderRadius: "22px"
 }
 
@@ -57,23 +56,24 @@ function UserInfoDropdown() {
         <div className="comp-wrapper" style={wrapperStyle}>
             <button className="sign-in" style={{ border: "none" }} onClick={toggleMenuDisplay}>
                 <div style={accountIconDivStyle}>
-
                     <img height='30px' width='30px' src={pictureUrl} />
                 </div>
 
             </button>
 
             <div style={{...dropdownDivStyle, borderBottom:"1px solid gray"
-            ,display: showDropdown ? "flex" : "none", flexDirection:"row"}} >
-                <div>
+            ,display: showDropdown ? "flex" : "none", flexDirection:"column"}} >
+
+                <div style={{display:"flex",flexDirection:"row"}}>
                     <div style={{height:"40px",width:"40px"}}> 
                     <img height='30px' width='30px' src={pictureUrl} />
                     </div>
                     <div style={{display:"flex", flexDirection:"column"}}>
-                        <h4 style={{color:"white"}}>{name}</h4>
-                        <h4 style={{color:"white"}}>{userName}</h4>
+                        <p style={{color:"white"}}>{name}</p>
+                        <p style={{color:"white"}}>{userName}</p>
                     </div>
                 </div>
+
                 <UserDropdownButton/>
                 <TestDropdown />
 

@@ -15,20 +15,18 @@ const SearchFeed = () => {
 
   useEffect(async() => {
     try {
-      // const res = await fetchFromAPI(`search?part=snippet&q=${searchTerm}`)
-      const res = await searchGetFromApi(searchTerm)
+      const res = await fetchFromAPI(`search?part=snippet&q=${searchTerm}`)
       console.log("SearchFeed fetch success:", res.items)
       for (var i=0;i<50;i++) {
         const resObject = res.items[i]
         console.log("res number",i, "id is", resObject.id.kind,resObject.id.kind == "youtube#video")
       }
       const videoOnlyArr = res.items.filter(obj=>obj.id.kind == "youtube#video")
+      console.log("videoOnlyArr[0]",videoOnlyArr[0],videoOnlyArr[1])
       setVideos(videoOnlyArr)
     } catch(err) {
       console.log("SearchFeed fetch error: ", err)
-    }
-  
-      
+    }    
   }, [searchTerm]);
 
   return (

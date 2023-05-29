@@ -12,7 +12,7 @@ import GoogleSignInButton from './GoogleSignInButton';
 import PasswordSignInButton from './PasswordSignInButton';
 import { handleGoogleToken } from '../../utils/handleGoogleToken';
 import TestDropdown from '../testComponent/TestDropdown';
-import { login, logout } from "../../features/user/userSlice"
+import { login, logout, setGoogleAccessToken } from "../../features/user/userSlice"
 import { useDispatch } from 'react-redux';
 
 
@@ -33,7 +33,9 @@ function LoginDropdown({ accountIcon }) {
     googleLogout()
   }
   const handleGoogleTokenSuccess = (tokenResponse) => {
+    
     handleGoogleToken(tokenResponse, (res)=>{
+      dispatch(setGoogleAccessToken(tokenResponse))
       dispatch(login(res.data))
     })
   }

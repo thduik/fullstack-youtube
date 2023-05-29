@@ -8,8 +8,8 @@ const initialState = {
     isLoggedIn: false,
     email:'none',
     googleid:'none',
-    subscriptions: [] //sidebar, implement later
-
+    subscriptions: [], //sidebar, implement later
+    googleAccessToken:null
 }
     
 export const userSlice = createSlice({
@@ -37,12 +37,15 @@ export const userSlice = createSlice({
             state.userId = 'none'
             state.userName = 'none'
             console.log("userSlice logout called isLoggedIn:",state.isLoggedIn)
+        },
+        setGoogleAccessToken: (state, action) => {
+            state.googleAccessToken = action.payload
         }
     }
 
 })
 
 
-export const { login, logout, receivedAccessToken } = userSlice.actions
+export const { login, logout, receivedAccessToken, setGoogleAccessToken } = userSlice.actions
 
 export default userSlice.reducer

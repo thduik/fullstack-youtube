@@ -78,3 +78,21 @@ const testGet = async (url="/test") => {
     }
 
 }
+
+export const testYoutubeSearchWithToken = async (googleToken) => {
+    console.log("testYoutubeSearchWithToken token is", googleToken)
+    try {
+        const res = await axios.get(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${keyword}&type=${resultType}`
+            , {}, {
+            headers: {
+                Authorization: 'Bearer ' + googleToken,
+                Accept: 'application/json'
+            }
+        }
+        )
+        return res
+
+    } catch (err) {
+        throw ("err testSearchYoutube", err)
+    }
+}

@@ -7,7 +7,7 @@ require('dotenv').config()
 var bodyParser = require('body-parser');
 const { sanitizeRequest } = require('./utils/sanitizeRequest');
 const { testRouter } = require('./routes/test-router');
-
+const {youtubeRouter} = require('./routes/youtube-router')
 var cookieParser = require('cookie-parser');
 const { verifyJwtAccessTokenRequest, logoutApp } = require('./auth-module');
 
@@ -42,7 +42,7 @@ app.use('/test', testRouter)
 // app.use('/api', appRouter)
 // nginx /api proxy_pass removes the original /api from url
 app.use('/auth', authRouter)
-
+app.use('/youtube', youtubeRouter)
 // you need to set mergeParams: true on the router,
 // if you want to access params from the parent router
 
