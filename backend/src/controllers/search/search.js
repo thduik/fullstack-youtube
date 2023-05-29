@@ -1,25 +1,19 @@
-
-
 const axios = require('axios')
-const { mockUserId, mockPlaylistName, mockUsername } = require('../data')
-
 require('dotenv').config()
 
-const baseUrl = 'http://localhost:4444'
-
-const testSearch = async (keyword="lol") => {
+const searchVideos = async (req, res, next) => {
+    const keyword = req.query.q
     try {
-        const searchUrl = baseUrl + `/youtube/video/search/?q=${keyword}&limit=5&type=video`
-    const res = await axios.get(searchUrl)
-    console.log("testSearch success", res.data)
-    return res.data
+        const result = await testSearchYoutube(keyword)
+        console.log("searchVideos success, res.items[0]:", result.items[0])
+        res.json(result.items)
     } catch (err) {
-        console.log("testSearch err", err)
+        console.log("searchVideos error", err)
+        res.status(403).send("FUCK YOU")
     }
-    
 }
 
-const testSearchYoutube = async (keyword="surfing", resultType="video") => {
+const testSearchYoutube = async (keyword = "surfing", resultType = "video") => {
     //resultType can be "channel", "playlist" or "video"
     try {
         console.log("process.env.YOUTUBE_API_KEY", process.env.YOUTUBE_API_KEY)
@@ -39,4 +33,4 @@ const testSearchYoutube = async (keyword="surfing", resultType="video") => {
 
 }
 
-module.exports = { testSearch, testSearchYoutube }
+module.exports = {searchVideos}

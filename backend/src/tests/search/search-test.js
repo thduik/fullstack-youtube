@@ -12,7 +12,7 @@ const testLol = async () => {
         // await setupTest()
         // await cleanupTest()
 
-        const searchRes = await testSearchYoutube()
+        const searchRes = await testSearch()
         const video =  searchRes.items[0]
         console.log("res is", searchRes.items[0].snippet)
         // await test('playlist object id type == string', () => {
