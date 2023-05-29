@@ -22,15 +22,19 @@ export const fetchFromAPI = async (url) => {
   } catch(err) {
     console.log("fetchFromAPI fail: ", err)
   }
-  
-  
 };
 
-export const searchGetFromApi = async (keyword) => {
+export const searchVideosFromApiYoutube = async (keyword = "lol") => {
+  
+  const baseUrl = import.meta.env.VITE_BASE_API_URL
+  console.log("baseUrl is", baseUrl)
   try {
-    const res = await axios.get(`https://www.youtube.com/results?search_query=${keyword}`)
-    console.log("searchGetFromApi success", res.data)
+      const searchUrl = baseUrl + `/youtube/video/search/?q=${keyword}&limit=5&type=video`
+      const res = await axios.get(searchUrl)
+      // console.log("searchVideosFromApiYoutube success", res.data)
+      return res.data
   } catch (err) {
-    console.log("searchGetFromApi err", err)
+      throw("searchVideosFromApiYoutube err", err)
   }
+
 }

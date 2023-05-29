@@ -7,17 +7,18 @@ import Sidebar from "./sidebar/Sidebar";
 import { useSelector, useDispatch } from 'react-redux'
 
 const backgroundColor = "black"
-const Feed = (props) => {
+const Feed = ({videos}) => {
   const selectedCategory = useSelector((state)=>state.appData.selectedCategory)
   // // const [selectedCategory, setSelectedCategory] = useState("New");
-  const [videos, setVideos] = useState(null);
+  // const [videos, setVideos] = useState(null);
 
   // useEffect(() => {
+  //   console.log("Feed useEffect only-once called")
   //   setVideos(null);
   //   console.log("selectedCategory is", selectedCategory)
   //   fetchFromAPI(`search?part=snippet&q=${selectedCategory}`)
   //     .then((data) => setVideos(data.items))
-  //   }, [selectedCategory]);
+  //   }, []);
 
   return (
     <Stack 

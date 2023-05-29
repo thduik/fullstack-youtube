@@ -8,6 +8,7 @@ function SearchIcon(
         <svg
             className="nav-icon"
             viewBox={viewBox}
+            
             style={{ width: width, height: height, borderRadius: borderRadius }}
         >
             <path fill="white"

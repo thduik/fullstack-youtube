@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Typography, Box } from "@mui/material";
 import { useParams } from "react-router-dom";
 
-import { fetchFromAPI, searchGetFromApi, searchVideosFromApiYoutube } from "../utils/fetchFromAPI";
+import { fetchFromAPI, searchVideosFromApiYoutube } from "../utils/fetchFromAPI";
 import  FeedVideos  from "./feedVideos/FeedVideos";
 
 
@@ -16,13 +16,8 @@ const SearchFeed = () => {
   useEffect(async() => {
     try {
       const res = await searchVideosFromApiYoutube(searchTerm)
-      console.log("SearchFeed fetch success:", res.items)
-      // for (var i=0;i<2;i++) {
-      //   const resObject = res.items[i]
-      //   console.log("res number",i, "id is", resObject.id.kind,resObject.id.kind == "youtube#video")
-      // }
-      const videoOnlyArr = res.items.filter(obj=>obj.id.kind == "youtube#video")
-      // console.log("videoOnlyArr[0]",videoOnlyArr[0],videoOnlyArr[1])
+      const videoOnlyArr = res.items
+      console.log("SearchFeed fetch success:", videoOnlyArr)
       setVideos(videoOnlyArr)
     } catch(err) {
       console.log("SearchFeed fetch error: ", err)

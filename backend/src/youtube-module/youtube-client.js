@@ -1,23 +1,25 @@
 const {google} = require('googleapis');
 const path = require('path');
-const {authenticate} = require('@google-cloud/local-auth');
+const axios = require('axios')
 
-async function searchKeywordYoutube(keyword) {
-    // const auth = await authenticate({
-    //   keyfilePath: path.join(__dirname, '../oauth2.keys.json'),
-    //   scopes: ['https://www.googleapis.com/auth/youtube'],
-    // });
-    // google.options({auth});
-  
-    const res = await youtube.search.list({
-      part: 'id,snippet',
-      q: 'keyword',
-    });
-    console.log(res.data);
-    return res.data
+const searchVideosWithKeyword = async (keyword = "surfing", resultType = "video") => {
+  //resultType can be "channel", "playlist" or "video"
+  try {
+      console.log("process.env.YOUTUBE_API_KEY", process.env.YOUTUBE_API_KEY)
+      const res = await axios.get(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${keyword}&key=${process.env.YOUTUBE_API_KEY}&type=${resultType}`
+          , {}, {
+          headers: {
+              // Authorization: 'Bearer ' + token,
+              Accept: 'application/json'
+          }
+      }
+      )
+      return res.data
+
+  } catch (err) {
+      throw ("err testSearchYoutube", err)
   }
+
+}
   
-  if (module === require.main) {
-    runSample().catch(console.error);
-  }
-  module.exports = searchKeywordYoutube;
+  module.exports = {searchVideosWithKeyword};

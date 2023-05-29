@@ -100,14 +100,3 @@ export const testYoutubeSearchWithToken = async (googleToken, keyword = "surfer"
 
 
 
-export const searchVideosFromApiYoutube = async (keyword = "lol") => {
-    try {
-        const searchUrl = baseUrl + `/youtube/video/search/?q=${keyword}&limit=5&type=video`
-        const res = await axios.get(searchUrl)
-        // console.log("searchVideosFromApiYoutube success", res.data)
-        return res.data
-    } catch (err) {
-        console.log("searchVideosFromApiYoutube err", err)
-    }
-
-}
