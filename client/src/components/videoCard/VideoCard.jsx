@@ -7,6 +7,12 @@ import { demoThumbnailUrl, demoVideoUrl, demoVideoTitle, demoChannelUrl, demoCha
 import VerticalThreeDotIcon from '../../icons/VerticalThreeDotIcon';
 import VideoCardDropdown from './VideoCardDropdown';
 import PlaylistSelectMenu from './PlaylistSelectMenu';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { changeShowPlaylistSelectDropdown } from '../../features/uiState/uiStateSlice';
+
+
+
 const cardWidthSmall = window.innerWidth - 30
 console.log("cardWidthSmall is", `${cardWidthSmall}px`)
 const widthStyle = {
@@ -14,13 +20,16 @@ const widthStyle = {
   md1000: "290px", lg: "370px"
 }
 const VideoCard = ({ video: { id: { videoId }, snippet } }) => {
+  const dispatch = useDispatch()
   const [showDropdown, setShowDropdown] = useState(false)
-    const toggleMenuDisplay = () => {
-        const newState = !showDropdown
-        setShowDropdown(newState)
-    }
   const startSaveVideoToPlaylist = () => {
-
+    console.log("startSaveVideoToPlaylist called")
+    setShowDropdown(false)
+    dispatch(changeShowPlaylistSelectDropdown(true))
+  }
+  const closeMenuFunc = () => {
+    console.log("closeMenuFunc called")
+    dispatch(changeShowPlaylistSelectDropdown(false))
   }
   return (
     <Card sx={{
@@ -52,7 +61,8 @@ const VideoCard = ({ video: { id: { videoId }, snippet } }) => {
             </Typography>
           </Link>
           <div>
-            <VideoCardDropdown saveVideoToPlaylist={startSaveVideoToPlaylist} />
+            <VideoCardDropdown showDropdown={showDropdown} setShowDropdown={setShowDropdown}
+            saveVideoToPlaylist={startSaveVideoToPlaylist} />
           </div>
 
         </div>
@@ -63,8 +73,8 @@ const VideoCard = ({ video: { id: { videoId }, snippet } }) => {
           </Typography>
         </Link>
       </CardContent>
-      <PlaylistSelectMenu showDropdown={showDropdown} setShowDropdown={setShowDropdown}/>
-     
+      
+
     </Card>
 
   )

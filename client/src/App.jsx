@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import { login } from "./features/user/userSlice";
 import { cookieLogin } from "./utils/testApi";
 import { fetchFromAPI } from "./utils/fetchFromAPI";
+import PlaylistSelectMenu from "./components/videoCard/PlaylistSelectMenu";
 
 
 
@@ -58,6 +59,7 @@ const App = () => {
 
         <Navbar />
         <div style={{ paddingTop: '80px' }}>
+          <PlaylistSelectMenu/>
           <Routes>
             <Route exact path='/' element={<Feed videos={feedVideos} showSidebar={showSidebar} />} />
             <Route path='/video/:id' element={<VideoDetail />} />

@@ -2,25 +2,31 @@ import { useState } from 'react';
 import { Stack } from "@mui/material";
 // import './index.css'
 
-import { useSelector, useDispatch } from 'react-redux'
 import PlaylistSelectItem from './PlaylistSelectItem';
+import { useEffect } from 'react';
+
+import { useSelector, useDispatch } from 'react-redux'
+import { changeShowPlaylistSelectDropdown } from '../../features/uiState/uiStateSlice';
 
 
 
 
 
 const dropdownMenuWidth = "180px"
-const dropdownMenuMarginLeft = "-190px"
-const dropdownBackgroundColor = "#363636"
+// const dropdownBackgroundColor = "#363636"
+const dropdownBackgroundColor = "green"
+
 
 
 const dropdownDivStyle = {
     justifyContent: "end", backgroundColor: dropdownBackgroundColor,
-    width: dropdownMenuWidth, marginLeft: dropdownMenuMarginLeft,
     border: "1px solid gray",
     padding: "9px 0px 9px 0px", borderRadius: "8px"
-    , margin:"auto"
-    , height: "120px"
+    , marginTop:"auto"
+    , height: "320px"
+    ,width:"200px"
+    , position: "fixed"
+    , zIndex: "1000"
 }
 
 const dropdownButtonStyle = {
@@ -28,34 +34,33 @@ const dropdownButtonStyle = {
 }
 
 
-function PlaylistSelectMenu({saveVideoToPlaylist, setShowDropdown, showDropdown}) {
+function PlaylistSelectMenu({saveVideoToPlaylist}) {
     
-
+    const {showPlaylistSelectDropdown} = useSelector((state)=>state.uiState)
     const dispatch = useDispatch()
-    const { email, googleid, name, pictureUrl, userId, userName, isLoggedIn } = useSelector((state) => state.user)
+    useEffect(()=>{
 
-    const toggleMenuDisplay = () => {
-        const newState = !showDropdown
-        setShowDropdown(newState)
-    }
+    }, [showPlaylistSelectDropdown])
     const toggleDisplayOff = () => {
+        console.log("toggleDisplayOff PlaylistSelectMenu called")
         // console.log("obBluc toggleDisplayOff called")
-        setShowDropdown(false)
+        dispatch(changeShowPlaylistSelectDropdown(false))
     }
 
     
-    return (
-            <div style = {{ position: "fixed" , margin:"0", backgroundColor:"rgba(0,0,0,0.3)"}}>
-            <div style={{
-                ...dropdownDivStyle, borderBottom: "1px solid gray"
-                , display: showDropdown ? "flex" : "none", flexDirection: "column"
 
-            }} onBlur={toggleDisplayOff}>
+    return (
+            // <div style = {{ position: "fixed" , margin:"0", backgroundColor:"rgba(0,0,0,1)"}}>
+            <div style={{
+                ...dropdownDivStyle, borderBottom: "1px solid gray", flexDirection: "column"
+                , display: showPlaylistSelectDropdown ? "flex" : "none"
+
+            }} tabIndex={-1} onBlur={toggleDisplayOff}>
                
                 <PlaylistSelectItem/> 
                 <PlaylistSelectItem/>                      
             </div>
-            </div>
+            // </div>
     );
 }
 

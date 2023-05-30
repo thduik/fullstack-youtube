@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import VerticalThreeDotIcon from '../../icons/VerticalThreeDotIcon';
 import SaveToPlaylistIcon from '../../icons/SaveToPlaylistIcon';
 import VideoDropdownButton from './VideoDropdownButton';
+import { changeShowPlaylistSelectDropdown } from '../../features/uiState/uiStateSlice';
 
 
 const wrapperBackgroundColor = "rgba(0,0,0,0)" //important because all elements being transparent allow effects to work
@@ -39,9 +40,9 @@ const dropdownButtonStyle = {
 }
 
 
-function VideoCardDropdown({saveVideoToPlaylist}) {
-    const [showDropdown, setShowDropdown] = useState(false)
-
+function VideoCardDropdown({saveVideoToPlaylist, showDropdown, setShowDropdown}) {
+    // const [showDropdown, setShowDropdown] = useState(false)
+    
     const dispatch = useDispatch()
     const { email, googleid, name, pictureUrl, userId, userName, isLoggedIn } = useSelector((state) => state.user)
 
@@ -51,9 +52,9 @@ function VideoCardDropdown({saveVideoToPlaylist}) {
         setShowDropdown(newState)
     }
 
-    const saveToPlaylistClicked = () => {
+    const saveToPlaylistClicked = async () => {
         console.log("saveToPlaylistClicked")
-        setShowDropdown(false)
+        await setShowDropdown(false)
         saveVideoToPlaylist()
     }
 
@@ -62,14 +63,15 @@ function VideoCardDropdown({saveVideoToPlaylist}) {
     }
 
     const toggleDisplayOff = () => {
-        console.log("obBluc toggleDisplayOff called")
+        console.log(" toggleDisplayOff called")
         setShowDropdown(false)
+        dispatch(changeShowPlaylistSelectDropdown(false))
     }
 
     
 
     return (
-        <div className="" style={wrapperStyle} tabIndex={0} onBlur={toggleDisplayOff}>
+        <div className="" style={wrapperStyle} tabIndex={-1} onBlur={toggleDisplayOff}>
             <div style={accountIconDivStyle} onClick={toggleMenuDisplay}>
                 <VerticalThreeDotIcon />
             </div>
