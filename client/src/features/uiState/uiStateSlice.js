@@ -4,6 +4,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     showSidebar:true,
     showMiniSidebar:true
+    
 }
 
 export const uiStateSlice = createSlice({
