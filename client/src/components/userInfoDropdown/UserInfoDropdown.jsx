@@ -1,6 +1,6 @@
 import { GoogleLogin } from '@react-oauth/google';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Stack } from "@mui/material";
 // import './index.css'
 import BlueAccountIcon from '../../icons/BlueAccountIcon';
@@ -37,9 +37,25 @@ const dropdownDivStyle = {
 
 function UserInfoDropdown() {
     const [showDropdown, setShowDropdown] = useState(false)
-    
+
     const dispatch = useDispatch()
     const { email, googleid, name, pictureUrl, userId, userName, isLoggedIn } = useSelector((state) => state.user)
+
+    const ref = useRef(null);
+    const onClickOutside = () => {
+        setShowDropdown(false)
+    }
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (ref.current && !ref.current.contains(event.target)) {
+                onClickOutside && onClickOutside();
+            }
+        };
+        document.addEventListener('click', handleClickOutside, true);
+        return () => {
+            document.removeEventListener('click', handleClickOutside, true);
+        };
+    }, [onClickOutside]);
 
     const logOutGoogleClicked = () => {
         console.log("logOutGoogleClicked")
@@ -61,20 +77,22 @@ function UserInfoDropdown() {
 
             </button>
 
-            <div style={{...dropdownDivStyle, borderBottom:"1px solid gray"
-            ,display: showDropdown ? "flex" : "none", flexDirection:"column"}} >
+            <div ref={ref} style={{
+                ...dropdownDivStyle, borderBottom: "1px solid gray"
+                , display: showDropdown ? "flex" : "none", flexDirection: "column"
+            }} >
 
-                <div style={{display:"flex",flexDirection:"row"}}>
-                    <div style={{height:"40px",width:"40px"}}> 
-                    <img height='30px' width='30px' src={pictureUrl} />
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                    <div style={{ height: "40px", width: "40px" }}>
+                        <img height='30px' width='30px' src={pictureUrl} />
                     </div>
-                    <div style={{display:"flex", flexDirection:"column"}}>
-                        <p style={{color:"white"}}>{name}</p>
-                        <p style={{color:"white"}}>{userName}</p>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                        <p style={{ color: "white" }}>{name}</p>
+                        <p style={{ color: "white" }}>{userName}</p>
                     </div>
                 </div>
 
-                <UserDropdownButton/>
+                <UserDropdownButton />
                 <TestDropdown />
 
             </div>

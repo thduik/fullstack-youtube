@@ -65,7 +65,6 @@ function VideoCardDropdown({saveVideoToPlaylist, showDropdown, setShowDropdown})
     const toggleDisplayOff = () => {
         console.log(" toggleDisplayOff called")
         setShowDropdown(false)
-        dispatch(changeShowPlaylistSelectDropdown(false))
     }
 
     

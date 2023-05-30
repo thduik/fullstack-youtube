@@ -3,7 +3,7 @@ import { Stack } from "@mui/material";
 // import './index.css'
 
 import PlaylistSelectItem from './PlaylistSelectItem';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux'
 import { changeShowPlaylistSelectDropdown } from '../../features/uiState/uiStateSlice';
@@ -22,8 +22,7 @@ const dropdownDivStyle = {
     justifyContent: "end", backgroundColor: dropdownBackgroundColor,
     border: "1px solid gray",
     padding: "9px 0px 9px 0px", borderRadius: "8px"
-    , height: "320px"
-    ,width:"200px"
+    , width: "200px"
     , position: "fixed"
     , zIndex: "1000"
     , margin: "auto"
@@ -34,34 +33,42 @@ const dropdownButtonStyle = {
 }
 
 
-function PlaylistSelectMenu({saveVideoToPlaylist}) {
+function PlaylistSelectMenu({ saveVideoToPlaylist }) {
+    const { showPlaylistSelectDropdown } = useSelector((state) => state.uiState)
     
-    const {showPlaylistSelectDropdown} = useSelector((state)=>state.uiState)
+    // const { onClickOutside } = props;
     const dispatch = useDispatch()
-    useEffect(()=>{
 
-    }, [showPlaylistSelectDropdown])
-    const toggleDisplayOff = () => {
-        console.log("toggleDisplayOff PlaylistSelectMenu called")
-        // console.log("obBluc toggleDisplayOff called")
+    const ref = useRef(null);
+    const onClickOutside = () => {
+        console.log("onClickOutside PlaylistSelectMenu called")
         dispatch(changeShowPlaylistSelectDropdown(false))
     }
-
-    
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (ref.current && !ref.current.contains(event.target)) {
+                onClickOutside && onClickOutside();
+            }
+        };
+        document.addEventListener('click', handleClickOutside, true);
+        return () => {
+            document.removeEventListener('click', handleClickOutside, true);
+        };
+    }, [onClickOutside]);
 
     return (
-            <div className="playlist-select-wrapper" 
-            style = {{display: showPlaylistSelectDropdown ? "flex" : "none"}}>
+        <div className="playlist-select-wrapper"
+            style={{ display: showPlaylistSelectDropdown ? "flex" : "none" }}>
             <div style={{
                 ...dropdownDivStyle, borderBottom: "1px solid gray", flexDirection: "column"
                 , display: showPlaylistSelectDropdown ? "flex" : "none"
 
-            }} tabIndex={-1} onBlur={toggleDisplayOff}>
-               
-                <PlaylistSelectItem/> 
-                <PlaylistSelectItem/>                      
+            }} ref={ref}>
+
+                <PlaylistSelectItem />
+                <PlaylistSelectItem />
             </div>
-            </div>
+        </div>
     );
 }
 

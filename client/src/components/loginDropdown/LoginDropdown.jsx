@@ -4,7 +4,7 @@
 
 import { GoogleLogin } from '@react-oauth/google';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Stack } from "@mui/material";
 import './index.css'
 import BlueAccountIcon from '../../icons/BlueAccountIcon';
@@ -28,13 +28,30 @@ const dropdownBackgroundColor = "#171717"
 function LoginDropdown({ accountIcon }) {
   const dispatch = useDispatch()
   const [showDropdown, setShowDropdown] = useState(false)
+
+  const ref = useRef(null);
+  const onClickOutside = () => {
+    setShowDropdown(false)
+  }
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        onClickOutside && onClickOutside();
+      }
+    };
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  }, [onClickOutside]);
+
   const logOutGoogleClicked = () => {
     console.log("logOutGoogleClicked")
     googleLogout()
   }
   const handleGoogleTokenSuccess = (tokenResponse) => {
-    
-    handleGoogleToken(tokenResponse, (res)=>{
+
+    handleGoogleToken(tokenResponse, (res) => {
       dispatch(setGoogleAccessToken(tokenResponse))
       dispatch(login(res.data))
     })
@@ -52,9 +69,10 @@ function LoginDropdown({ accountIcon }) {
     <div className="comp-wrapper" style={{
       width: totalWidth, paddingTop: "3px",
       paddingLeft: "3px", borderRadius: "26px", border: "1px solid gray"
-      ,marginRight:"10px"
+      , marginRight: "10px"
     }}>
-      <button className="sign-in" style={{  border: "none" 
+      <button className="sign-in" style={{
+        border: "none"
       }}
         onClick={toggleMenuDisplay}>
         <div style={{
@@ -65,25 +83,25 @@ function LoginDropdown({ accountIcon }) {
           <p style={{
             color: buttonFontColor, paddingTop: "4px", paddingLeft: "3px",
             fontWeight: "bold"
-            
+
           }}>Sign In</p>
         </div>
 
       </button>
 
-      <div style={{
-        position: "fixed", justifyContent: "end", backgroundColor:dropdownBackgroundColor,
+      <div ref={ref} style={{
+        position: "fixed", justifyContent: "end", backgroundColor: dropdownBackgroundColor,
         width: dropdownMenuWidth, marginLeft: dropdownMenuMarginLeft, marginTop: "10px",
-        border: "1px solid gray",  
-        display: showDropdown ? "flex" : "none", flexDirection:"column",
-        padding: "5px 6px 2px 6px", borderRadius:"22px"
+        border: "1px solid gray",
+        display: showDropdown ? "flex" : "none", flexDirection: "column",
+        padding: "5px 6px 2px 6px", borderRadius: "22px"
       }} >
         <GoogleSignInButton loginWithGoogle={loginWithGoogle} marginTopBottom="3px" />
         <PasswordSignInButton marginTopBottom="6px" />
 
 
-        <TestDropdown/>
-       
+        <TestDropdown />
+
       </div>
     </div>
 
