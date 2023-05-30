@@ -9,18 +9,20 @@ import { useSelector, useDispatch } from 'react-redux'
 import { changeShowPlaylistSelectDropdown } from '../../features/uiState/uiStateSlice';
 
 import './playlistSelectMenu.css'
+import CreateNewPlaylistComponent from './CreateNewPlaylistComponent';
 
 
 
 const dropdownMenuWidth = "180px"
-// const dropdownBackgroundColor = "#363636"
-const dropdownBackgroundColor = "green"
+const dropdownBackgroundColor = "#363636"
+// const dropdownBackgroundColor = "#1E1E1E"
+
 
 
 
 const dropdownDivStyle = {
     justifyContent: "end", backgroundColor: dropdownBackgroundColor,
-    border: "1px solid gray",
+    border: "1px solid #1E1E1E",
     padding: "9px 0px 9px 0px", borderRadius: "8px"
     , width: "200px"
     , position: "fixed"
@@ -56,17 +58,25 @@ function PlaylistSelectMenu({ saveVideoToPlaylist }) {
         };
     }, [onClickOutside]);
 
+    useEffect(() => {
+        return () => {
+            // Anything in here is fired on component unmount.
+            //only call api after component unmount
+        }
+    }, [])
+
     return (
         <div className="playlist-select-wrapper"
             style={{ display: showPlaylistSelectDropdown ? "flex" : "none" }}>
             <div style={{
-                ...dropdownDivStyle, borderBottom: "1px solid gray", flexDirection: "column"
+                ...dropdownDivStyle, borderBottom: "1px solid #1E1E1E", flexDirection: "column"
                 , display: showPlaylistSelectDropdown ? "flex" : "none"
 
             }} ref={ref}>
 
                 <PlaylistSelectItem />
                 <PlaylistSelectItem />
+                <CreateNewPlaylistComponent/>
             </div>
         </div>
     );

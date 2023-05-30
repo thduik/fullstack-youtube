@@ -1,18 +1,38 @@
 import { useState } from "react"
 import CheckmarkIcon from "../../icons/CheckmarkIcon"
 import SquareIcon from "../../icons/SquareIcon"
+import './index.css'
 
-const PlaylistSelectItem = ({playlist}) => {
+const PlaylistSelectItem = ({ playlist }) => {
     const [selected, setSelected] = useState(false)
+    const [hovering, setHovering] = useState(false)
     const changeSetSelected = () => {
         setSelected(!selected)
     }
+    const mouseEntered = () => { setHovering(true) }
+    const mouseLeft = () => { setHovering(false) }
     return (
-        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
-            <div onClick = {changeSetSelected}>
-                {selected ? <CheckmarkIcon/> : <SquareIcon/>}
+        <div className="hover-pointer" onMouseEnter={mouseEntered} onMouseLeave={mouseLeft}
+            style={{
+                display: "flex", flexDirection: "row", justifyContent: "space-around"
+                // ,padding: "8px 5px 0px 5px"
+                , backgroundColor: hovering ? "gray" : "rgba(0,0,0,0)"
+                ,
+            }}  onClick={changeSetSelected}>
+            <div style={{ height: "32px" }}
+            >
+                {selected ?
+                    <div
+                        style={{
+                            marginTop: selected ? "-2px" : "0"
+                            , marginLeft: selected ? "-2px" : "0"
+                        }}><CheckmarkIcon viewbox="0 0 30 30" /></div> : <SquareIcon />}
             </div>
-            <p>{"playlist name here"}</p>
+            <div>
+                <p style={{ color: "white", fontSize:"14px", marginTop:"3px"
+            ,textAlign:"left" }}>{"playlist name here"}</p>
+            </div>
+
         </div>
     )
 }

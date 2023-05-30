@@ -41,16 +41,17 @@ const VideoCard = ({ video: { id: { videoId }, snippet } }) => {
     }}>
 
       <Link to={videoId ? `/video/${videoId}` : `/video/cV2gBU6hKfY`}>
-        <CardMedia image={snippet?.thumbnails?.high?.url || demoThumbnailUrl} alt={snippet?.title}
+        <CardMedia  image={snippet?.thumbnails?.high?.url || demoThumbnailUrl} alt={snippet?.title}
 
           // sx={{ width: { xs: '100%', sm: '358px'}, 
           sx={{
             width: widthStyle,
             height: 180
+            
           }}
         />
       </Link>
-      <CardContent sx={{ backgroundColor: "#1E1E1E", height: '106px' }}>
+      <CardContent sx={{ backgroundColor: "black", height: '106px' }}>
         <div style={{
           display: "flex", flexDirection: "row", width: "100%",
           justifyContent: "space-between"
@@ -60,7 +61,7 @@ const VideoCard = ({ video: { id: { videoId }, snippet } }) => {
               {snippet?.title.slice(0, 60) || demoVideoTitle.slice(0, 60)}
             </Typography>
           </Link>
-          <div>
+          <div style={{marginRight:"-17px"}}>
             <VideoCardDropdown showDropdown={showDropdown} setShowDropdown={setShowDropdown}
             saveVideoToPlaylist={startSaveVideoToPlaylist} />
           </div>

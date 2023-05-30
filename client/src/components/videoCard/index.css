@@ -1,0 +1,30 @@
+.video-drop-button-div:hover {
+    cursor: pointer;
+}
+
+.hover-pointer:hover {
+    cursor: pointer;
+}
+
+input.create-playlist::-webkit-input-placeholder {
+    /*style placeholder text*/
+    color: white;
+    font-size: 13px;
+    padding-left: 15px;
+}
+
+div.create-playlist {
+    /* padding:8px 10px 0px 10px; */
+}
+
+input.create-playlist {
+    background-color:#363636 ;
+    border: 2px solid white;
+    border-radius: 4px;
+    height:24px;
+    width:87%;
+    margin:auto;
+    color:white
+    /* width:162px; */
+}
+

@@ -38,3 +38,8 @@ export const searchVideosFromApiYoutube = async (keyword = "lol") => {
   }
 
 }
+
+export const getPlaylist = async(callback) => {
+  //cred is cookie based
+  
+}

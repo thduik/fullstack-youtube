@@ -41,7 +41,11 @@ const App = () => {
 
     cookieLogin((resJson) => {
       dispatch(login(resJson))
+      getPlaylist((res)=>{
+        
+      })
     })
+
   }, [])
 
 
