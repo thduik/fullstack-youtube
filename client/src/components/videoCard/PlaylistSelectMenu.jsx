@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { changeShowPlaylistSelectDropdown } from '../../features/uiState/uiStateSlice';
 
-
+import './playlistSelectMenu.css'
 
 
 
@@ -22,11 +22,11 @@ const dropdownDivStyle = {
     justifyContent: "end", backgroundColor: dropdownBackgroundColor,
     border: "1px solid gray",
     padding: "9px 0px 9px 0px", borderRadius: "8px"
-    , marginTop:"auto"
     , height: "320px"
     ,width:"200px"
     , position: "fixed"
     , zIndex: "1000"
+    , margin: "auto"
 }
 
 const dropdownButtonStyle = {
@@ -50,7 +50,8 @@ function PlaylistSelectMenu({saveVideoToPlaylist}) {
     
 
     return (
-            // <div style = {{ position: "fixed" , margin:"0", backgroundColor:"rgba(0,0,0,1)"}}>
+            <div className="playlist-select-wrapper" 
+            style = {{display: showPlaylistSelectDropdown ? "flex" : "none"}}>
             <div style={{
                 ...dropdownDivStyle, borderBottom: "1px solid gray", flexDirection: "column"
                 , display: showPlaylistSelectDropdown ? "flex" : "none"
@@ -60,7 +61,7 @@ function PlaylistSelectMenu({saveVideoToPlaylist}) {
                 <PlaylistSelectItem/> 
                 <PlaylistSelectItem/>                      
             </div>
-            // </div>
+            </div>
     );
 }
 
