@@ -2,9 +2,11 @@ import { useState } from "react"
 import GlobeIcon from "../../icons/GlobeIcon"
 import PrivacyDropdownButton from "./PrivacyDropdownButton"
 
-const backgroundColor = "#212121"
+const backgroundColor =  "#363636" //"#212121"
 
-const dropdownDivStyle = {width:"180px", marginLeft:"20px", marginTop:"-20px"}
+
+const dropdownDivStyle = {position:"absolute",
+    backgroundColor:backgroundColor, width:"180px", marginLeft:"20px", marginTop:"-20px"}
 
 const PrivacyDropdown = () => {
     const [showDropdown, setShowDropdown] = useState(false)
@@ -19,6 +21,7 @@ const PrivacyDropdown = () => {
     return (
         <div style={{display:"flex",justifyContent:"center", backgroundColor:backgroundColor}}>
             <div style={{...dropdownDivStyle
+                ,flexDirection:"column"
                 ,display:showDropdown ? "flex" : "none"}}>
                 <PrivacyDropdownButton iconComp={<GlobeIcon/>} text="Public" onClick={clickedDropdown}/>
                 <PrivacyDropdownButton iconComp={<GlobeIcon/>} text="Private" onClick={clickedDropdown}/>

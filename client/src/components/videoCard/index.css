@@ -8,9 +8,9 @@
 
 input.create-playlist::-webkit-input-placeholder {
     /*style placeholder text*/
-    color: white;
+    color: rgba(255,255,255,0.7);
     font-size: 13px;
-    padding-left: 15px;
+    padding-left: 1px;
 }
 
 div.create-playlist {
@@ -22,9 +22,19 @@ input.create-playlist {
     border: 2px solid rgba(0, 0, 0, 0);
     border-radius: 4px;
     height:24px;
-    width:87%;
+    width:167px;
     margin:auto;
-    color:white
-    /* width:162px; */
+    color:white;
+    outline:none;
 }
 
+
+input.create-playlist:focus {
+    border: 2px solid rgba(0, 0, 0, 0);
+    border-bottom: 2px solid white;
+}
+
+input.create-playlist:active {
+    border: 2px solid rgba(0, 0, 0, 0);
+    border-bottom: 2px solid white;
+}
