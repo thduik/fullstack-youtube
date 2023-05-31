@@ -3,11 +3,18 @@ import './index.css'
 import PrivacyDropdown from "./PrivacyDropdown"
 
 const pStyle = {color:"white", margin:"6px auto 2px 17px", fontSize:"14px"}
-
+const createButtonStyle = {marginRight:"16px", marginLeft:"auto",
+width:"68px",borderRadius:"15px", height:"34px", textAlign:"center"}
 const CreateNewPlaylistInput = ({ createPlaylist }) => {
     const [name, setName] = useState("")
-    const [privacy, setPrivacy] = useState("Private")
+    const [privacyText, setPrivacyText] = useState("Private")
+    
+    const [buttonHover, setButtonHover] = useState(false)
+    const createNewPlaylistClicked = () => {
 
+    }
+    const mouseEnteredButton = () => {setButtonHover(true)}
+    const mouseLeftButton = () => {setButtonHover(false)}
     return (
         <div style={{display:"flex", flexDirection:"column",justifyContent:"center"}}>
             <div style={{
@@ -21,8 +28,14 @@ const CreateNewPlaylistInput = ({ createPlaylist }) => {
 
             <div style={{marginTop:"10px"}}>
                 <PrivacyDropdown/>
-            </div>
 
+            </div>
+            <div>
+                <div style={{...createButtonStyle, backgroundColor:buttonHover ? "rgba(6, 95, 212, 0.4)" : "rgba(0,0,0,0)"}} 
+                onClick={createNewPlaylistClicked} onMouseEnter={mouseEnteredButton} onMouseLeave={mouseLeftButton}>
+                   <p style={{color:"#3ea6ff", fontSize:"15px", paddingTop:"10px"}}> {"Create"} </p> 
+                </div>
+            </div>
 
         </div>
     )
