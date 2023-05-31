@@ -1,21 +1,28 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import CheckmarkIcon from "../../icons/CheckmarkIcon"
 import SquareIcon from "../../icons/SquareIcon"
 import './index.css'
 
-const PlaylistSelectItem = ({ playlist }) => {
-    const [selected, setSelected] = useState(false)
+const PlaylistSelectItem = ({ playlist, selectThisItem }) => {
+    const [selected, setSelected] = useState(false) //whether this item (playlist) is selected add the video to
     const [hovering, setHovering] = useState(false)
     const changeSetSelected = () => {
         setSelected(!selected)
+        console.log("PlaylistSelectItem changeSetSelected", selected)
     }
     const mouseEntered = () => { setHovering(true) }
     const mouseLeft = () => { setHovering(false) }
+
+    useEffect(()=>{
+        if (selected==true) {
+            selectThisItem(playlist)
+        }
+    },[selected])
     return (
         <div className="hover-pointer" onMouseEnter={mouseEntered} onMouseLeave={mouseLeft}
             style={{
                 display: "flex", flexDirection: "row", justifyContent: "space-around"
-                // ,padding: "8px 5px 0px 5px"
+                ,padding: "8px 5px 0px 5px"
                 , backgroundColor: hovering ? "gray" : "rgba(0,0,0,0)"
                 ,
             }}  onClick={changeSetSelected}>

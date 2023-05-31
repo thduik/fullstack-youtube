@@ -2,19 +2,21 @@ const expresso = require('express');
 const { createPlaylist, getPlaylistsOfUser, getVideosListOfPlaylist, addVideoToPlaylist, deleteVideoFromPlaylist } = require('../controllers/playlist/playlist');
 const { mockUserId } = require('../tests/data');
 const playlistRouter = expresso.Router();
-const {testVerifyAuthId} = require('./test-utils.js')
+const {testVerifyAuthId} = require('./test-utils.js');
+const { authUserOnly } = require('./utils');
 
 
 //full path is /playlist/create
 
-playlistRouter.post("/playlist/create", async (req,res,next)=>{
+playlistRouter.post("/",authUserOnly)
+
+playlistRouter.post("/create", async (req,res,next)=>{
     console.log("testRouter /playlist/create POST received", req.body)
     createPlaylist(req,res,next)
-
     //
 })
 
-testRouter.post("/playlist/update/:playlistid", testVerifyAuthId, (req,res,next)=>{
+playlistRouter.post("/update/:playlistid", (req,res,next)=>{
     //this is meant to add new video to certain playlist
     const playlistid = req.params.playlistid
     const video = req.body.video
@@ -25,7 +27,7 @@ testRouter.post("/playlist/update/:playlistid", testVerifyAuthId, (req,res,next)
     //
 })
 
-testRouter.post("/playlist/:playlistid/videos/delete", testVerifyAuthId,  (req,res,next)=>{
+testRouter.post("/playlist/:playlistid/videos/delete",  (req,res,next)=>{
     //this is meant to add new video to certain playlist
     console.log("testRouter /playlist/:playlistid/videos/delete POST received", req.body)
     const playlistid = req.params.playlistid
@@ -39,9 +41,6 @@ testRouter.post("/playlist/:playlistid/videos/delete", testVerifyAuthId,  (req,r
 testRouter.get("/playlist/:playlistid/videos", getVideosListOfPlaylist)
 
 testRouter.get("/playlist", async (req,res,next)=>{
-
     console.log("testRouter GET res.cookies are:", req.cookies)
-    
     return getPlaylistsOfUser(req,res,next)
-    
 })
