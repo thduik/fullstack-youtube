@@ -1,7 +1,7 @@
 import React from "react";
 
 function UnlistedIcon(
-    {width="30px", height="30px", fillColor="white", viewBox="0 0 24 24", borderRadius="15px"}
+    {width="24px", height="24px", fillColor="white", viewBox="0 0 24 24", borderRadius="15px"}
 ) {
   return (
     <svg

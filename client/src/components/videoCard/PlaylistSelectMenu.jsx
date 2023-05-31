@@ -10,6 +10,7 @@ import { changeShowPlaylistSelectDropdown } from '../../features/uiState/uiState
 
 import './playlistSelectMenu.css'
 import CreateNewPlaylistComponent from './CreateNewPlaylistComponent';
+import PlaylistSelectHeader from './PlaylistSelectHeader';
 
 
 
@@ -65,6 +66,8 @@ function PlaylistSelectMenu({ saveVideoToPlaylist }) {
         }
     }, [])
 
+    const closeMenu = () => {dispatch(changeShowPlaylistSelectDropdown(false))}
+
     return (
         <div className="playlist-select-wrapper"
             style={{ display: showPlaylistSelectDropdown ? "flex" : "none" }}>
@@ -73,7 +76,8 @@ function PlaylistSelectMenu({ saveVideoToPlaylist }) {
                 , display: showPlaylistSelectDropdown ? "flex" : "none"
 
             }} ref={ref}>
-
+                
+                <PlaylistSelectHeader onClickClose={closeMenu}/>
                 <PlaylistSelectItem />
                 <PlaylistSelectItem />
                 <CreateNewPlaylistComponent/>

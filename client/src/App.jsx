@@ -16,6 +16,7 @@ import { login } from "./features/user/userSlice";
 import { cookieLogin } from "./utils/testApi";
 import { fetchFromAPI } from "./utils/fetchFromAPI";
 import PlaylistSelectMenu from "./components/videoCard/PlaylistSelectMenu";
+import { getPlaylist } from "./apiFetch/playlistApi";
 
 
 
@@ -38,11 +39,10 @@ const App = () => {
   // const [showSidebar, setShowSidebar] = useState(true)
 
   useEffect(() => {
-
     cookieLogin((resJson) => {
       dispatch(login(resJson))
       getPlaylist((res)=>{
-        
+        console.log("getPlaylist success", res)
       })
     })
 

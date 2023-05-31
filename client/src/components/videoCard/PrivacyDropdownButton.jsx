@@ -3,7 +3,8 @@ import CreateNewPlaylistIcon from "../../icons/CreateNewPlaylist"
 
 import './index.css'
 
-const PrivacyDropdownButton = ({iconComp, text, onClick}) => {
+const PrivacyDropdownButton = ({iconComp, text, onClick
+    , pMarginTop="0px", iconMarginTop="0px"}) => {
    
     const [hovering, setHovering] = useState(false)
    
@@ -16,17 +17,17 @@ const PrivacyDropdownButton = ({iconComp, text, onClick}) => {
     return (
         <div className="create-playlist hover-pointer" onMouseEnter={mouseEntered} onMouseLeave={mouseLeft}
             style={{
-                display: "flex", flexDirection: "row", justifyContent: "space-around",
-                padding: "8px 5px 0px 5px"
+                display: "flex", flexDirection: "row", justifyContent: "space-evenly",
+                padding: "8px 5px 6px 5px"
                 , backgroundColor: hovering ? "gray" : "rgba(0,0,0,0)"
                 
             }}  onClick={clickedThisItem}>
-            <div style={{  }}>
+            <div style={{marginLeft:"10px", marginTop:iconMarginTop}}>
                 {iconComp}
             </div>
             <div style={{width:"87%"}}>
                 <p style={{ color: "white", fontSize:"14px", marginTop:"3px"
-            ,textAlign:"left" }}>{text}</p>
+            ,textAlign:"left", marginLeft:"15px", marginTop:pMarginTop }}>{text}</p>
             </div>
 
         </div>
