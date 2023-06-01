@@ -10,6 +10,7 @@ import PlaylistSelectMenu from './PlaylistSelectMenu';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { changeShowPlaylistSelectDropdown } from '../../features/uiState/uiStateSlice';
+import { changeSelectedVideo } from '../../features/appData/playlistSlice';
 
 
 
@@ -26,6 +27,8 @@ const VideoCard = ({ video: { id: { videoId }, snippet } }) => {
     console.log("startSaveVideoToPlaylist called")
     setShowDropdown(false)
     dispatch(changeShowPlaylistSelectDropdown(true))
+    console.log("snippet is", snippet)
+    dispatch(changeSelectedVideo({...snippet, videoId:videoId}))
   }
   const closeMenuFunc = () => {
     console.log("closeMenuFunc called")

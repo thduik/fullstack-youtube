@@ -18,9 +18,6 @@ const dropdownMenuWidth = "180px"
 const dropdownBackgroundColor = "#363636"
 // const dropdownBackgroundColor = "#1E1E1E"
 
-
-
-
 const dropdownDivStyle = {
     justifyContent: "end", backgroundColor: dropdownBackgroundColor,
     border: "1px solid #1E1E1E",
@@ -38,7 +35,7 @@ const dropdownButtonStyle = {
 
 function PlaylistSelectMenu({ saveVideoToPlaylist }) {
     const { showPlaylistSelectDropdown } = useSelector((state) => state.uiState)
-    
+    const { selectedVideo } = useSelector((state) => state.playlist)
     // const { onClickOutside } = props;
     const dispatch = useDispatch()
 
@@ -67,7 +64,10 @@ function PlaylistSelectMenu({ saveVideoToPlaylist }) {
     }, [])
 
     const closeMenu = () => {dispatch(changeShowPlaylistSelectDropdown(false))}
-
+    const itemSelected = (text) => {
+        console.log("PlaylistSelectMenu itemSelected text+video snippet are", text, 
+        selectedVideo)
+    }
     return (
         <div className="playlist-select-wrapper"
             style={{ display: showPlaylistSelectDropdown ? "flex" : "none" }}>
@@ -78,8 +78,8 @@ function PlaylistSelectMenu({ saveVideoToPlaylist }) {
             }} ref={ref}>
                 
                 <PlaylistSelectHeader onClickClose={closeMenu}/>
-                <PlaylistSelectItem />
-                <PlaylistSelectItem />
+                <PlaylistSelectItem selectThisItem={itemSelected}/>
+                <PlaylistSelectItem selectThisItem={itemSelected}/>
                 <CreateNewPlaylistComponent/>
             </div>
         </div>

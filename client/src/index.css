@@ -67,3 +67,17 @@ a {
   
 }
 
+
+
+/* Remove outline for non-keyboard :focus */
+*:focus:not(.focus-visible) {
+  outline: none;
+}
+
+/* Optional: Customize .focus-visible */
+.focus-visible {
+  outline-color: lightgreen;
+}
+element:active:focus {
+    outline: 0;
+}
