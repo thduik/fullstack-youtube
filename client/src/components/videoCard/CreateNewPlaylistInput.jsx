@@ -51,17 +51,17 @@ const CreateNewPlaylistInput = ({ createPlaylistConfirmed }) => {
                             :
                             "2px solid rgba(0,0,0,0)"
                     }}></input>
-                <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", flexDirection: "row" }}>
                     <p style={{
                         color: inputTextEmpty ? "red" : "white"
-                        , fontSize: "12px", marginLeft: "18px"
+                        , fontSize: "12px", marginLeft: "18px", marginRight:"auto"
                         , display: createButtonWasClicked ? "inline" : "none"
                     }}>
                         Required
                     </p>
                     <p style={{
                         color: inputTextEmpty ? "red" : "white"
-                        , fontSize: "12px", marginRight: "18px"
+                        , fontSize: "12px", marginRight: "18px", marginLeft:"auto"
                     }}>{name.length}{"//150"}</p>
                 </div>
             </div>

@@ -7,7 +7,7 @@ import './index.css'
 
 const backgroundColor = "rgba(0,0,0,0)"
 const buttonHeight = "36px"
-const textPaddingTop = "4px"
+const textPaddingTop = "6px"
 
 const GoogleSignInButton = ({dropdownMenuWidth, loginWithGoogle,marginTopBottom}) => {
 
@@ -25,7 +25,7 @@ const GoogleSignInButton = ({dropdownMenuWidth, loginWithGoogle,marginTopBottom}
                     flexDirection: "row"
                 }}>
                     <img src={googleIconUrl} height="24px" />
-                    <p style={{ color: "white", paddingTop: textPaddingTop, paddingLeft: "10px" }}>Login with Googlez</p>
+                    <p style={{ color: "white", paddingTop: textPaddingTop, paddingLeft: "10px", fontSize:"13px" }}>Login with Googlez</p>
                 </div>
             </button>
         </div>

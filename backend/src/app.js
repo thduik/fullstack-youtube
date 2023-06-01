@@ -10,6 +10,7 @@ const { testRouter } = require('./routes/test-router');
 const {youtubeRouter} = require('./routes/youtube-router')
 var cookieParser = require('cookie-parser');
 const { verifyJwtAccessTokenRequest, logoutApp } = require('./auth-module');
+const { playlistRouter } = require('./routes/playlist-router');
 
 var app = express()
 
@@ -41,6 +42,7 @@ app.use('/test', testRouter)
 
 // app.use('/api', appRouter)
 // nginx /api proxy_pass removes the original /api from url
+app.use('/playlist', playlistRouter)
 app.use('/auth', authRouter)
 app.use('/youtube', youtubeRouter)
 // you need to set mergeParams: true on the router,

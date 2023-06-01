@@ -4,8 +4,18 @@ import { miniCategories } from "../../utils/constants";
 import './index.css'
 
 const MiniSidebar = ({backgroundColor="black",buttonBackgroundColor="rgba(0,0,0,0)"}) => {
-    const handleClick = (name) => {
+    const navigate = useNavigate();
+    const nameToUrlMap = {
+        "Home":"/",
+        "Shorts":"/search/tyler1",
+        "Subscriptions":"/",
+        "Library":"/"
+    }
 
+    const handleClick = (name) => {
+        const pathurl = nameToUrlMap[name]
+        console.log("handleClickMiniSidebar called", pathurl)
+        if (pathurl) {navigate(pathurl)}
     }
 
     const pMarginLeftMap = (name)=>{

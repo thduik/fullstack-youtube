@@ -2,15 +2,20 @@ import axios from 'axios'
 
 const baseUrl = 'https://holysheet2831.hopto.org/api'
 
-export const getPlaylist = async () => {
+export const getPlaylist = async (callback) => {
+    //// resJson = {email,googleid,name,pictureUrl,userId,userName}
     //return array of playlist objects
+    //creds is stored in cookies
+    
     try {
         const getUrl = baseUrl + '/playlist'
         const res = await axios.get(getUrl)
-        // console.log("testGetPlaylist success playlists are", res.data.playlists)
-        return res.data.playlists
+        console.log("getPlaylist success playlists are", res.data.playlists)
+        callback(res.data.playlists)
+        return
     } catch (err) {
         console.log("err getPlaylist", err)
+        return
     }
 
 }

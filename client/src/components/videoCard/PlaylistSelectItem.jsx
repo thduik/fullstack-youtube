@@ -14,15 +14,13 @@ const PlaylistSelectItem = ({ playlist, selectThisItem }) => {
     const mouseLeft = () => { setHovering(false) }
 
     useEffect(()=>{
-        if (selected==true) {
-            selectThisItem(playlist)
-        }
+        if (selected==true) {  selectThisItem(playlist) }
     },[selected])
     return (
         <div className="hover-pointer" onMouseEnter={mouseEntered} onMouseLeave={mouseLeft}
             style={{
-                display: "flex", flexDirection: "row", justifyContent: "space-around"
-                ,padding: "8px 5px 0px 5px"
+                display: "flex", flexDirection: "row"
+                ,padding: "8px 5px 0px 18px"
                 , backgroundColor: hovering ? "gray" : "rgba(0,0,0,0)"
                 ,
             }}  onClick={changeSetSelected}>
@@ -36,8 +34,8 @@ const PlaylistSelectItem = ({ playlist, selectThisItem }) => {
                         }}><CheckmarkIcon viewbox="0 0 30 30" /></div> : <SquareIcon />}
             </div>
             <div>
-                <p style={{ color: "white", fontSize:"14px", marginTop:"3px"
-            ,textAlign:"left" }}>{"playlist name here"}</p>
+                <p style={{ color: "white", fontSize:"14px", marginTop:"3px",marginLeft:"18px"
+            ,textAlign:"left" }}>{playlist.playlistName}</p>
             </div>
 
         </div>

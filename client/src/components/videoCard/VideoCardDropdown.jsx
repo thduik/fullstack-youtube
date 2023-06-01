@@ -42,7 +42,6 @@ const dropdownButtonStyle = {
 
 function VideoCardDropdown({saveVideoToPlaylist, showDropdown, setShowDropdown}) {
     // const [showDropdown, setShowDropdown] = useState(false)
-    
     const dispatch = useDispatch()
     const { email, googleid, name, pictureUrl, userId, userName, isLoggedIn } = useSelector((state) => state.user)
 
@@ -80,7 +79,8 @@ function VideoCardDropdown({saveVideoToPlaylist, showDropdown, setShowDropdown})
                 ...dropdownDivStyle, borderBottom: "1px solid gray"
                 , display: showDropdown ? "flex" : "none", flexDirection: "column"
             }} >
-                <VideoDropdownButton iconComponent={<SaveToPlaylistIcon />} text='Save to Playlist' onClick={saveToPlaylistClicked} />
+
+                {isLoggedIn ? <VideoDropdownButton iconComponent={<SaveToPlaylistIcon />} text='Save to Playlist' onClick={saveToPlaylistClicked} /> : null}
                 <VideoDropdownButton iconComponent={<SaveToPlaylistIcon />} text='Add to QUeue' onClick={addToQueueClicked} />
             </div>
         </div>

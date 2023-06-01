@@ -23,7 +23,7 @@ const PrivacyDropdown = ({privacyChanged}) => {
         console.log("PrivacyDropdown clicked text is",text)
         setShowDropdown(false)
         setPrivacyText(text)
-        privacyChanged(changed)
+        privacyChanged(text)
     }
     const showDaDropdown = () => {setShowDropdown(true)}
     

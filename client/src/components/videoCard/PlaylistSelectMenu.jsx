@@ -35,10 +35,11 @@ const dropdownButtonStyle = {
 
 
 function PlaylistSelectMenu({ saveVideoToPlaylist }) {
+    
     const { showPlaylistSelectDropdown } = useSelector((state) => state.uiState)
     const { email, googleid, name, pictureUrl, userId, userName, isLoggedIn } = useSelector((state) => state.user)
-
-    const { selectedVideo } = useSelector((state) => state.playlist)
+    const { selectedVideo, playlists } = useSelector((state) => state.playlist)
+    // const { playlists } = useSelector((state) => state.playlist)
     // const { onClickOutside } = props;
     const dispatch = useDispatch()
 
@@ -59,7 +60,6 @@ function PlaylistSelectMenu({ saveVideoToPlaylist }) {
             document.removeEventListener('click', handleClickOutside, true);
         };
     }, [onClickOutside]);
-
     useEffect(() => {
         return () => {
             // Anything in here is fired on component unmount.
@@ -78,6 +78,7 @@ function PlaylistSelectMenu({ saveVideoToPlaylist }) {
         const user = {userid:userId, name:name}
         postPlaylistCreate(user, playlist, selectedVideo)
     }
+
     return (
         <div className="playlist-select-wrapper"
             style={{ display: showPlaylistSelectDropdown ? "flex" : "none" }}>
@@ -88,8 +89,8 @@ function PlaylistSelectMenu({ saveVideoToPlaylist }) {
             }} ref={ref}>
                 
                 <PlaylistSelectHeader onClickClose={closeMenu}/>
-                <PlaylistSelectItem selectThisItem={itemSelected}/>
-                <PlaylistSelectItem selectThisItem={itemSelected}/>
+                {playlists.map((obj)=><PlaylistSelectItem playlist={obj} selectThisItem={itemSelected}/>)}
+                {/* <PlaylistSelectItem selectThisItem={itemSelected}/> */}
                 <CreateNewPlaylistComponent createPlaylistConfirmed={createPlaylistConfirmed}/>
             </div>
         </div>

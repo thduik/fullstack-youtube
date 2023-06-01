@@ -1,7 +1,5 @@
 // import Dropdown from 'react-bootstrap/Dropdown';
 
-
-
 import { GoogleLogin } from '@react-oauth/google';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import { useState, useRef, useEffect } from 'react';
@@ -12,8 +10,9 @@ import GoogleSignInButton from './GoogleSignInButton';
 import PasswordSignInButton from './PasswordSignInButton';
 import { handleGoogleToken } from '../../utils/handleGoogleToken';
 import TestDropdown from '../testComponent/TestDropdown';
-import { login, logout, setGoogleAccessToken } from "../../features/user/userSlice"
+import { login, logout } from "../../features/user/userSlice"
 import { useDispatch } from 'react-redux';
+import { getPlaylist } from '../../apiFetch/playlistApi';
 
 
 const backgroundColor = "rgba(0,0,0,0)" //important because all elements being transparent allow effects to work
@@ -28,7 +27,6 @@ const dropdownBackgroundColor = "#171717"
 function LoginDropdown({ accountIcon }) {
   const dispatch = useDispatch()
   const [showDropdown, setShowDropdown] = useState(false)
-
   const ref = useRef(null);
   const onClickOutside = () => {
     setShowDropdown(false)
@@ -52,10 +50,16 @@ function LoginDropdown({ accountIcon }) {
   const handleGoogleTokenSuccess = (tokenResponse) => {
 
     handleGoogleToken(tokenResponse, (res) => {
-      dispatch(setGoogleAccessToken(tokenResponse))
       dispatch(login(res.data))
+
+      getPlaylist((playlists) => {
+        console.log("getPlaylist success", playlists)
+        dispatch(setPlaylistArray(playlists))
+      })
     })
   }
+
+
   const loginWithGoogle = useGoogleLogin({
     onSuccess: tokenResponse => handleGoogleTokenSuccess(tokenResponse),
     scope: "openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email"

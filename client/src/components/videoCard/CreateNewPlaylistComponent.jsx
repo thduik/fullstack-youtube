@@ -7,11 +7,11 @@ import './index.css'
 const CreateNewPlaylistComponent = ({createPlaylistConfirmed}) => {
     const [showCreatePlaylistInput, setShowCreatePlaylistInput] = useState(false)
     const showDaInputHere = () => {setShowCreatePlaylistInput(true)}
-    const createPlaylistConfirmed = () => {createPlaylistConfirmed()}
+    const createPlaylistConfirm = (res) => {createPlaylistConfirmed(res)}
     return (
         <div>
             {showCreatePlaylistInput ?
-                <CreateNewPlaylistInput createPlaylistConfirmed={createPlaylistConfirmed} />
+                <CreateNewPlaylistInput createPlaylistConfirmed={createPlaylistConfirm} />
                 :
                 <CreateNewPlaylistButton showDaInput={showDaInputHere} />
             }

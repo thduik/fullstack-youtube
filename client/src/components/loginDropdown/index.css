@@ -22,4 +22,7 @@ button.sign-in {
     background-color: rgba(0,0,0,0)
 }
 
+button.sign-in * {
+   font-size:14px
+}
 

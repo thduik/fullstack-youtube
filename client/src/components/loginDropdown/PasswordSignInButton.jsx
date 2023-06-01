@@ -20,7 +20,7 @@ const PasswordSignInButton = ({dropdownMenuWidth, loginWithPassword, marginTopBo
                 width: "100%", height:buttonHeight,
                 border:"none", padding: "5px 5px 5px 5px"
             }} onClick={loginWithPassword}>
-                    <p style={{ color: "white", paddingTop: textPaddingTop, paddingLeft: "0px" }}>{buttonText}</p>
+                    <p style={{ fontSize:"13px",color: "white", paddingTop: textPaddingTop, paddingLeft: "0px" }}>{buttonText}</p>
             </button>
         </div>
     )

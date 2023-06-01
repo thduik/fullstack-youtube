@@ -34,7 +34,7 @@ const createPlaylistDb = async (playlist, videoData) => {
             playlistId:playlistDoc._id.toString(),
             videoId:videoData.videoId,
             videoName:videoData.videoName,
-            thumbnailUrl:videoData.thumbnailUrl,
+            thumbnailUrl:videoData.thumbnailUrl.url,
             createdAt:videoData.createdAt
         })
         console.log("createPlaylist success doc is", playlistDoc, videoRes)

@@ -9,17 +9,24 @@ const initialState = {
 }
 
 export const playlistSlice = createSlice({
-    name:'userReducer',
+    name:'playlistReducer',
     initialState,
     reducers: {
         changeSelectedVideo: (state, action) => {
             state.selectedVideo = action.payload
+        },
+        setPlaylistArray: (state, action) => {
+            console.log("setPlaylistArrayReduxSlice called", action.payload)
+            state.playlists = action.payload
+        },
+        addPlaylist: (state, action) => {
+            state.playlists.append(action.payload)
         }
     }
 
 })
 
 
-export const { changeSelectedVideo } = playlistSlice.actions
+export const { changeSelectedVideo, setPlaylistArray, addPlaylist } = playlistSlice.actions
 
 export default playlistSlice.reducer

@@ -26,7 +26,7 @@ const PrivacyDropdownButton = ({iconComp, text, onClick
                 {iconComp}
             </div>
             <div style={{width:"87%"}}>
-                <p style={{ color: "white", fontSize:"14px", marginTop:"3px"
+                <p style={{ color: "white", fontSize:"14px"
             ,textAlign:"left", marginLeft:"15px", marginTop:pMarginTop }}>{text}</p>
             </div>
 

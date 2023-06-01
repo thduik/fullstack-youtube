@@ -6,7 +6,13 @@ const {testVerifyAuthId} = require('./test-utils.js');
 const { authUserOnly } = require('./utils');
 
 
-//full path is /playlist/create
+//base path is /playlist
+
+playlistRouter.get("/", async (req,res,next)=>{
+    console.log("testRouter GET res.cookies are:", req.cookies)
+    getPlaylistsOfUser(req,res,next)
+})
+
 
 playlistRouter.post("/",authUserOnly)
 
@@ -27,20 +33,28 @@ playlistRouter.post("/update/:playlistid", (req,res,next)=>{
     //
 })
 
-testRouter.post("/playlist/:playlistid/videos/delete",  (req,res,next)=>{
-    //this is meant to add new video to certain playlist
-    console.log("testRouter /playlist/:playlistid/videos/delete POST received", req.body)
-    const playlistid = req.params.playlistid
-    const video = req.body.video
-    const playlistData = req.body.playlistData
-    const videoOrderIndex = req.body.videoOrderIndex
-    deleteVideoFromPlaylist(req,res,next)
-    //
-})
 
-testRouter.get("/playlist/:playlistid/videos", getVideosListOfPlaylist)
 
-testRouter.get("/playlist", async (req,res,next)=>{
-    console.log("testRouter GET res.cookies are:", req.cookies)
-    return getPlaylistsOfUser(req,res,next)
-})
+// testRouter.get("/playlist/:playlistid/videos", getVideosListOfPlaylist)
+
+
+module.exports = {playlistRouter}
+
+// testRouter.post("/playlist/:playlistid/videos/delete",  (req,res,next)=>{
+//     //this is meant to add new video to certain playlist
+//     console.log("testRouter /playlist/:playlistid/videos/delete POST received", req.body)
+//     const playlistid = req.params.playlistid
+//     const video = req.body.video
+//     const playlistData = req.body.playlistData
+//     const videoOrderIndex = req.body.videoOrderIndex
+//     deleteVideoFromPlaylist(req,res,next)
+//     //
+// })
+
+// testRouter.get("/playlist/:playlistid/videos", getVideosListOfPlaylist)
+
+// testRouter.get("/playlist", async (req,res,next)=>{
+//     console.log("testRouter GET res.cookies are:", req.cookies)
+//     return getPlaylistsOfUser(req,res,next)
+// })
+

@@ -17,6 +17,7 @@ import { cookieLogin } from "./utils/testApi";
 import { fetchFromAPI } from "./utils/fetchFromAPI";
 import PlaylistSelectMenu from "./components/videoCard/PlaylistSelectMenu";
 import { getPlaylist } from "./apiFetch/playlistApi";
+import { setPlaylistArray } from "./features/appData/playlistSlice";
 
 
 
@@ -25,6 +26,8 @@ const App = () => {
 
   const showSidebar = useSelector((state) => state.uiState.showSidebar)
   const showMiniSidebar = useSelector((state) => state.uiState.showMiniSidebar)
+  const { showPlaylistSelectDropdown } = useSelector((state) => state.uiState)
+
   const [feedVideos, setFeedVideos] = useState(null);
   const isDev = import.meta.env.DEV
   console.log("import.meta.env.DEV:", isDev)
@@ -41,8 +44,11 @@ const App = () => {
   useEffect(() => {
     cookieLogin((resJson) => {
       dispatch(login(resJson))
-      getPlaylist((res)=>{
-        console.log("getPlaylist success", res)
+      console.log("resJson is:", resJson)
+      //{email,googleid,name,pictureUrl,userId,userName}
+      getPlaylist((playlists)=>{
+        console.log("getPlaylist success", playlists)
+        dispatch(setPlaylistArray(playlists))
       })
     })
 
@@ -63,7 +69,7 @@ const App = () => {
 
         <Navbar />
         <div style={{ paddingTop: '80px' }}>
-          <PlaylistSelectMenu/>
+          {showPlaylistSelectDropdown ? <PlaylistSelectMenu/> : null}
           <Routes>
             <Route exact path='/' element={<Feed videos={feedVideos} showSidebar={showSidebar} />} />
             <Route path='/video/:id' element={<VideoDetail />} />
