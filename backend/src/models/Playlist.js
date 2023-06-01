@@ -12,15 +12,19 @@ const playlistSchema = new mongoose.Schema({
         required:[true,"mongo model no userid"],
         index:true
     },
-    username: {
+    creatorName: {
         type:String,
-        
     },
     length: {
         type:Number,
         default:0
     },
     isPrivate: {
+        type:Boolean,
+        required:true,
+        default:false
+    },
+    isUnlisted: {
         type:Boolean,
         required:true,
         default:false

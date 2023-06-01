@@ -64,7 +64,7 @@ const testPostAxios = async () => {
             playlist: {
                 playlistName: mockPlaylistName,
                 userid: mockUserId,
-                userName: mockUsername,
+                creatorName: mockUsername,
                 isPrivate: false
             },
             videoInfo: videoDataArr[0]

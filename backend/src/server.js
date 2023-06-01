@@ -3,9 +3,9 @@ const app = require('./app')
 
 
 
-// setTimeout(()=>{
-//   process.exit()
-// }, 2400000)
+setTimeout(()=>{
+  process.exit()
+}, 2400000)
 
 
 const start = async () => {

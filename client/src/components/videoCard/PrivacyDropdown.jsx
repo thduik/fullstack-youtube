@@ -16,14 +16,14 @@ const dropdownDivStyle = {position:"absolute", flexDirection:"column"
     ,backgroundColor:dropdownBackgroundColor, width:"200px", marginLeft:"20px", marginTop:"-20px"
     ,boxShadow:"1px 1px #000000"}
 
-const PrivacyDropdown = () => {
+const PrivacyDropdown = ({privacyChanged}) => {
     const [showDropdown, setShowDropdown] = useState(false)
     const [privacyText, setPrivacyText] = useState("Private")
     const clickedDropdown = (text) => {
         console.log("PrivacyDropdown clicked text is",text)
         setShowDropdown(false)
         setPrivacyText(text)
-        
+        privacyChanged(changed)
     }
     const showDaDropdown = () => {setShowDropdown(true)}
     

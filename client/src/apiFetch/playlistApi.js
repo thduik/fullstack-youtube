@@ -17,6 +17,10 @@ export const getPlaylist = async () => {
 
 export const postPlaylistCreate = async (user, playlist, video) => {
     //user = {userid}
+    //playlist.name, playlist.privacy
+    var playlistPrivate = playlist.privacy == "Private" ? true : false
+    var playlistUnlisted = playlist.privacy == "Unlisted" ? true : false
+
     const createUrl = baseUrl + '/playlist/create'
     const res = await axios.post(createUrl,
         {
@@ -24,7 +28,8 @@ export const postPlaylistCreate = async (user, playlist, video) => {
                 playlistName: playlist.name,
                 userid: user.userid,
                 creatorName: user.name,
-                isPrivate: false
+                isPrivate: playlistPrivate,
+                isUnlisted: playlistUnlisted
             },
             videoInfo: {
                 videoId: video.videoId,

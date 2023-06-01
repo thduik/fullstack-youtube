@@ -34,6 +34,7 @@ const testLol = async () => {
 
         const postRes = await testPostAxios()
         const playlistArrRes = await testGetPlaylist()
+        console.log("playlistArrRes is playlistArrRes", playlistArrRes)
         await test('playlist object id type == string', () => {
             return assert.equal(typeof playlistArrRes[0]._id, 'string');
         })

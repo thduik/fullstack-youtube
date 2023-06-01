@@ -11,6 +11,7 @@ import { changeShowPlaylistSelectDropdown } from '../../features/uiState/uiState
 import './playlistSelectMenu.css'
 import CreateNewPlaylistComponent from './CreateNewPlaylistComponent';
 import PlaylistSelectHeader from './PlaylistSelectHeader';
+import { postPlaylistCreate } from '../../apiFetch/playlistApi';
 
 
 
@@ -35,11 +36,14 @@ const dropdownButtonStyle = {
 
 function PlaylistSelectMenu({ saveVideoToPlaylist }) {
     const { showPlaylistSelectDropdown } = useSelector((state) => state.uiState)
+    const { email, googleid, name, pictureUrl, userId, userName, isLoggedIn } = useSelector((state) => state.user)
+
     const { selectedVideo } = useSelector((state) => state.playlist)
     // const { onClickOutside } = props;
     const dispatch = useDispatch()
 
     const ref = useRef(null);
+
     const onClickOutside = () => {
         console.log("onClickOutside PlaylistSelectMenu called")
         dispatch(changeShowPlaylistSelectDropdown(false))
@@ -68,6 +72,12 @@ function PlaylistSelectMenu({ saveVideoToPlaylist }) {
         console.log("PlaylistSelectMenu itemSelected text+video snippet are", text, 
         selectedVideo)
     }
+    const createPlaylistConfirmed = (playlist) => {
+        console.log("createPlaylistConfirmed playlistSelectMenu called", playlist.name, playlist.privacy)
+        setTimeout(()=>{closeMenu()}, 1000)
+        const user = {userid:userId, name:name}
+        postPlaylistCreate(user, playlist, selectedVideo)
+    }
     return (
         <div className="playlist-select-wrapper"
             style={{ display: showPlaylistSelectDropdown ? "flex" : "none" }}>
@@ -80,7 +90,7 @@ function PlaylistSelectMenu({ saveVideoToPlaylist }) {
                 <PlaylistSelectHeader onClickClose={closeMenu}/>
                 <PlaylistSelectItem selectThisItem={itemSelected}/>
                 <PlaylistSelectItem selectThisItem={itemSelected}/>
-                <CreateNewPlaylistComponent/>
+                <CreateNewPlaylistComponent createPlaylistConfirmed={createPlaylistConfirmed}/>
             </div>
         </div>
     );

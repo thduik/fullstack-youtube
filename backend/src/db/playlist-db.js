@@ -27,7 +27,7 @@ const createPlaylistDb = async (playlist, videoData) => {
         const playlistDoc = await Playlist.create({
             playlistName: playlist.playlistName,
             userid: playlist.userid,
-            userName: playlist.userName,
+            creatorName: playlist.creatorName,
             isPrivate:playlist.isPrivate ?? false
         })
         const videoRes = await PlaylistVideoInfo.create({
