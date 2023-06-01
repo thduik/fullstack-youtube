@@ -1,4 +1,8 @@
+
 const setCookiesAfterRefreshAccessToken = (accessToken, refreshToken,res) => {
+    console.log("setCookiesAfterRefreshAccessToken refreshToken"
+    , refreshToken.substring(0,10), "accessToken", accessToken.substring(0,10))
+
     res.cookie("accessToken", accessToken, {
         secure:true,
         httpOnly:true,
@@ -8,7 +12,7 @@ const setCookiesAfterRefreshAccessToken = (accessToken, refreshToken,res) => {
     res.cookie("refreshToken", refreshToken, {
         secure:true,
         httpOnly:true,
-        maxAge:Date.now()+ 24*60*60*1000 // 1 day = 24h * 60m * 60s * 1000 milisec
+        maxAge:24*60*60*1000 // 1 day = 24h * 60m * 60s * 1000 milisec
     })
 }
 
@@ -20,17 +24,17 @@ const deleteRefreshAccessTokenCookies = (req, res) => {
 }
 
 const setCookiesAndSendResPostLogin = (result, res) => {
-    // console.log("setCookiesAndSendResPostLogin", res.cookie)
+    console.log("setCookiesAndSendResPostLogin", result.refreshToken.substring(0,10))
     res.cookie("accessToken", result.accessToken, {
         secure:true,
         httpOnly:true,
-        maxAge:20*60*1000
+        maxAge: 20*60*1000
         // expire:Date.now()+20*60*1000 // 20 minutes
     })
     res.cookie("refreshToken",result.refreshToken, {
         secure:true,
         httpOnly:true,
-        maxAge:Date.now()+ 24*60*60*1000 // 1 day = 24h * 60m * 60s * 1000 milisec
+        maxAge:7*24*60*60*1000 // 7 days = 7 * 1 day = 7 * 24h * 60m * 60s * 1000 milisec
     })
 }
 

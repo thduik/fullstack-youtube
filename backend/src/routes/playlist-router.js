@@ -9,7 +9,7 @@ const { authUserOnly } = require('./utils');
 //base path is /playlist
 
 playlistRouter.get("/", async (req,res,next)=>{
-    console.log("testRouter GET res.cookies are:", req.cookies)
+    // console.log("playlistRouter GET res.cookies are:", req.cookies)
     getPlaylistsOfUser(req,res,next)
 })
 
@@ -17,7 +17,7 @@ playlistRouter.get("/", async (req,res,next)=>{
 playlistRouter.post("/",authUserOnly)
 
 playlistRouter.post("/create", async (req,res,next)=>{
-    console.log("testRouter /playlist/create POST received", req.body)
+    console.log("playlistRouter /playlist/create POST received", req.body)
     createPlaylist(req,res,next)
     //
 })

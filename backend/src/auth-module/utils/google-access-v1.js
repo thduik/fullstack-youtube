@@ -10,7 +10,7 @@ const verifyAccessTokenGoogle = async (accessToken) => {
     });
     try {
         const res = await oauth2.userinfo.get(); 
-        console.log("verifyAccessTokenGoogle success res.data is",res.data)
+        // console.log("verifyAccessTokenGoogle success res.data is",res.data)
         return res.data
     } catch (err) {
         throw("verifyAccessTokenGoogle error", err)

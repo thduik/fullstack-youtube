@@ -16,7 +16,7 @@ const generateRandomString = (length=25) => {
     //length = 62, start_i = 0 ("a"), end_i = 61 ("9"), tested
     var res = ""
     for (var i = 0; i < length;i++) {
-        res += alp[getRandomInt(0,62)]
+        res += alp[getRandomInt(0,61)]
     }
     return res
 

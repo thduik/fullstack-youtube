@@ -13,6 +13,7 @@ import TestDropdown from '../testComponent/TestDropdown';
 import { login, logout } from "../../features/user/userSlice"
 import { useDispatch } from 'react-redux';
 import { getPlaylist } from '../../apiFetch/playlistApi';
+import { setPlaylistArray } from '../../features/appData/playlistSlice';
 
 
 const backgroundColor = "rgba(0,0,0,0)" //important because all elements being transparent allow effects to work
@@ -55,6 +56,7 @@ function LoginDropdown({ accountIcon }) {
       getPlaylist((playlists) => {
         console.log("getPlaylist success", playlists)
         dispatch(setPlaylistArray(playlists))
+
       })
     })
   }

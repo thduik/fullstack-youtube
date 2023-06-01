@@ -12,6 +12,10 @@ var cookieParser = require('cookie-parser');
 const { verifyJwtAccessTokenRequest, logoutApp } = require('./auth-module');
 const { playlistRouter } = require('./routes/playlist-router');
 
+
+
+console.log("NODE_ENV", process.env.NODE_ENV)
+
 var app = express()
 
 

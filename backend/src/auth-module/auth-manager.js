@@ -10,7 +10,7 @@ const googleCheckCredentialsAndCreateTokens = async (googleToken, verifyGoogleTo
     //verifyGoogleToken used for dependency injection for testing
     try {
         const realUserData = await verifyGoogleToken(googleToken.access_token)
-        console.log("googleCheckCredentialsAndCreateTokens success", realUserData)
+        // console.log("googleCheckCredentialsAndCreateTokens success", realUserData)
         //realUserData={id:'s',email:'s','name':'s',given_name: 's',family_name: 's',picture: 'https:/'}
         
         const userData = await checkUserAgainstDbGoogleId(googleid=realUserData.id, realUserData.email, realUserData)

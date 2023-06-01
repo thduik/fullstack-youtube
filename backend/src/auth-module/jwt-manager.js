@@ -32,7 +32,7 @@ const createAccessTokenJWT = (userid) => {
         iat:jwtNumericDate,
         aud:'https://holysheet2831.hopto.org/api',
         jit:jwtId,
-        exp:jwtNumericDate + 5 //20 minutes converted to seconds
+        exp:jwtNumericDate + 1200 //20 minutes converted to seconds
      }
 
     var token = jwt.sign(jwtBody, private_key, { algorithm: 'RS256' });
@@ -51,37 +51,41 @@ const verifyJwtAccessToken = (accessToken) => {
 const createRefreshAndAccessToken = (userid) => {
     //accessToken is JWT, refreshToken is stateful
     const refreshToken = createRefreshToken()
+    console.log("newRefreshToken is", refreshToken)
     idToRefreshTokenMap.set(userid, refreshToken)
     refreshTokenToIdMap.set(refreshToken, userid)
     const accessToken = createAccessTokenJWT(userid)
+    // console.log("createRefreshAndAccessToken complete",refreshToken.length, accessToken.length )
     return {refreshToken:refreshToken, accessToken:accessToken}
 }
 
 const verifyRefreshTokenAndCreateAccessToken = (refreshToken) => {
     const useridRes = refreshTokenToIdMap.get(refreshToken)
     if (!useridRes) {
-        throw("verifyRefreshTokenAndCreateAccessToken error not found")
+        throw(" error refreshTokenToIdMap.get(refreshToken) failed")
     }
     //delete old stuff as best practice
     refreshTokenToIdMap.delete(refreshToken)
     idToRefreshTokenMap.delete(useridRes)
     //create new refreshToken+AccessToken and return them
-    console.log("verifyRefreshTokenAndCreateAccessToken succcess useridRes", useridRes)
-    return createRefreshAndAccessToken(useridRes)
+    // console.log("verifyRefreshTokenAndCreateAccessToken succcess useridRes", useridRes)
+    const resultes = createRefreshAndAccessToken(useridRes)
+    return resultes
 
 }   
 
 const verifyRefreshTokenAndGetNewAccessTokenRequest = (req,res,next) => {
     // console.log("verifyRefreshTokenAndGetNewAccessTokenRequest req.cookies:", req.cookies)
+    console.log("verifyRefreshToken refreshToken is", req.cookies.refreshToken.substring(0,10))
     try {
         const {accessToken, refreshToken} = verifyRefreshTokenAndCreateAccessToken(req.cookies.refreshToken)
         setCookiesAfterRefreshAccessToken(accessToken, refreshToken, res)
         const resultos = verifyJwtAccessToken(accessToken)
-        console.log("verifyRefreshTokenAndGetNewAccessTokenRequest success, resultos",resultos)
         req.auth.userid = resultos.sub
+        setCookiesAfterRefreshAccessToken(accessToken, refreshToken, res)
         next()
     } catch(err) {
-        console.log("refreshToken failed", err)
+        console.log("refreshToken failed", err, refreshTokenToIdMap )
         // res.status(401).send("bad error happened, please log in again")
         next()
     }

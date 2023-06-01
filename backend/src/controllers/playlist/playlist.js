@@ -18,6 +18,7 @@ const createPlaylist = async (req,res,next) => {
 }
 
 const getPlaylistsOfUser = async (req,res,next) => {
+    // console.log("getPlaylistsOfUser req.auth is", req.auth)
     const userid = req.auth.userid
     try {
         const playlistsDocs = await getAllPlaylistsOfUser(userid)

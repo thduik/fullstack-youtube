@@ -2,7 +2,7 @@ const { verifyJwtAccessToken, verifyRefreshTokenAndGetNewAccessTokenRequest } = 
 const { deleteRefreshAccessTokenCookies } = require('./utils-cookies')
 
 const verifyJwtAccessTokenRequest = (req, res, next) => {
-    console.log("verifyJwtAccessTokenRequest called")
+    // console.log("verifyJwtAccessTokenRequest called")
     if (req.cookies.refreshToken) {
         if (req.cookies.accessToken) {
             return verifyAccessTokenFlow(req, res, next)
@@ -22,7 +22,7 @@ const verifyAccessTokenFlow = (req, res, next) => {
     try {
         const resultos = verifyJwtAccessToken(req.cookies.accessToken)
         req.auth.userid = resultos.sub
-        console.log("verifyJwtAccessTokenRequest success", req.auth)
+        // console.log("verifyJwtAccessTokenRequest success", req.auth)
         next()
     } catch (err) {
         verifyRefreshTokenAndGetNewAccessTokenRequest(req, res, next)

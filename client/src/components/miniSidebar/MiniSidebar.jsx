@@ -2,6 +2,7 @@ import React from "react";
 import { Stack } from "@mui/material";
 import { miniCategories } from "../../utils/constants";
 import './index.css'
+import { useNavigate } from "react-router-dom";
 
 const MiniSidebar = ({backgroundColor="black",buttonBackgroundColor="rgba(0,0,0,0)"}) => {
     const navigate = useNavigate();
@@ -42,7 +43,7 @@ const MiniSidebar = ({backgroundColor="black",buttonBackgroundColor="rgba(0,0,0,
             }}>
                 <button style={{
                     backgroundColor:buttonBackgroundColor, border:"none"
-                }} onClick={handleClick(obj.name)}>
+                }} onClick={ ()=>{handleClick(obj.name)} }>
                     <div className="buttonWrapper" style={{paddingLeft:"5px"}}>
                         {obj.icon}
                     </div>

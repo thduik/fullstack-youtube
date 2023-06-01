@@ -13,7 +13,7 @@ const checkUserAgainstDbGoogleId = async (googleid, userEmail, userData) => {
             return userDataRes
         }
         if (res.found == 1) {
-            console.log("checkUserAgainstDbGoogleId success", res.userData)
+            // console.log("checkUserAgainstDbGoogleId success", res.userData)
             return res.userData
         }
     } catch (err) {
@@ -51,12 +51,12 @@ const getUserInfoFromDb = async (googleid, userEmail) => {
     //later on should be from cache
     try {
         res = await User.find({ googleid: googleid })
-        console.log("getUserInfoFromCacheOrDb success")
+        // console.log("getUserInfoFromCacheOrDb success")
         if (res.length == 0) {
             return { found: 0, message: 'user not created' }
         }
         const userData = res[0]
-        console.log("getUserInfoFromCacheOrDbGoogle success: ", res[0])
+        // console.log("getUserInfoFromCacheOrDbGoogle success: ", res[0])
         return { found: 1, userData: userData }
     } catch (err) {
         throw ("getUserInfoFromCacheOrDb mongodb error", err)
