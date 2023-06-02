@@ -2,9 +2,10 @@ import React from 'react';
 import { Box, CardContent, CardMedia, Typography } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Link } from 'react-router-dom';
-import { demoProfilePicture } from '../utils/constants';
+import { demoProfilePicture } from '../../utils/constants';
 
-const ChannelCard = ({ channelDetail, marginTop }) => (
+const ChannelCard = ({ channelDetail, marginTop, isCustom = false }) => (
+  //isCustom = data from my own app, not youtube api data, so url is diff
   <Box
     sx={{
       boxShadow: 'none',

@@ -9,6 +9,7 @@ import TestDropdown from '../testComponent/TestDropdown';
 import { useSelector, useDispatch } from 'react-redux'
 import UserDropdownButton from './UserDropdownButton';
 import ChannelIcon from '../../icons/ChannelIcon';
+import { useNavigate } from 'react-router-dom';
 
 
 const backgroundColor = "rgba(0,0,0,0)" //important because all elements being transparent allow effects to work
@@ -37,6 +38,7 @@ const dropdownDivStyle = {
 }
 
 function UserInfoDropdown() {
+    const navigate = useNavigate()
     const [showDropdown, setShowDropdown] = useState(false)
 
     const dispatch = useDispatch()
@@ -69,6 +71,11 @@ function UserInfoDropdown() {
         const newState = !showDropdown
         setShowDropdown(newState)
     }
+
+    const userChannelClicked = () => {
+        setShowDropdown(false)
+        navigate(`/user/custom/${userId}`)
+    }
     return (
         <div className="comp-wrapper" style={wrapperStyle}>
             <button className="sign-in" style={{ border: "none" }} onClick={toggleMenuDisplay}>
@@ -93,7 +100,7 @@ function UserInfoDropdown() {
                     </div>
                 </div>
 
-                <UserDropdownButton iconSvg={<ChannelIcon/>} title={"Your Channel"}  />
+                <UserDropdownButton iconSvg={<ChannelIcon/>} title={"Your Channel"}  onClick={userChannelClicked}/>
                 <UserDropdownButton iconSvg={<ChannelIcon/>}  title={"Log Out"} />
                 <TestDropdown />
 

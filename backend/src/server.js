@@ -8,6 +8,7 @@ if (process.env.NODE_ENV == 'development') {
   }, 2400000)
 }
 
+process.on('exit', ()=>{console.log("processMemoryUsage:",  process.memoryUsage() )})
 
 const start = async () => {
     const portes = process.env.API_PORTES

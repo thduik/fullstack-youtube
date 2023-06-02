@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 
 import { Videos, ChannelCard } from "..";
 import { fetchFromAPI } from "../../utils/fetchFromAPI";
+import ChannelNavMenu from "./ChannelNavMenu";
 
 const ChannelDetail = () => {
   const [channelDetail, setChannelDetail] = useState();
@@ -17,7 +18,7 @@ const ChannelDetail = () => {
 
       setChannelDetail(data?.items[0]);
 
-      const videosData = await fetchFromAPI(`search?channelId=${id}&part=snippet%2Cid&order=date&limit=8`);
+      const videosData = await fetchFromAPI(`search?channelId=${id}&part=snippet%2Cid&order=date&maxResults=10`);
 
       setVideos(videosData?.items);
     };
@@ -35,16 +36,14 @@ const ChannelDetail = () => {
         }} />
         <ChannelCard channelDetail={channelDetail} marginTop="-93px" />
       </Box>
-      <div style={{marginLeft:"-50px"}}>
+      <ChannelNavMenu />
+      <div style={{paddingTop:"20px",
+        backgroundColor:"rgba(0,0,0,0)",display:"fex",justifyContent:"center"}}>
         <Videos videos={videos} />
       </div>
-
-
-
-
-
+      
     </Box>
-  );
+      );
 };
 
-export default ChannelDetail;
+      export default ChannelDetail;

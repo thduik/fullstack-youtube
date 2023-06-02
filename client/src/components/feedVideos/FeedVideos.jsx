@@ -1,7 +1,7 @@
 import React from "react";
 import { Stack, Box } from "@mui/material";
 
-import { ChannelCard, Loader, VideoCard } from "../";
+import { Loader, VideoCard, ChannelCard } from "../";
 import { useEffect } from "react";
 
 const FeedVideos = ({ videos, direction }) => {

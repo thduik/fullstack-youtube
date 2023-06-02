@@ -6,9 +6,7 @@ import './index.css'
 const CreateNewPlaylistButton = ({showDaInput}) => {
    
     const [hovering, setHovering] = useState(false)
-    const changeSetSelected = () => {
-        setSelected(!selected)
-    }
+   
     const mouseEntered = () => { setHovering(true) }
     const mouseLeft = () => { setHovering(false) }
     return (
