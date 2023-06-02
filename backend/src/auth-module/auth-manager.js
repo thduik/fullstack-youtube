@@ -16,7 +16,7 @@ const googleCheckCredentialsAndCreateTokens = async (googleToken, verifyGoogleTo
         const userData = await checkUserAgainstDbGoogleId(googleid=realUserData.id, realUserData.email, realUserData)
         
         const {accessToken, refreshToken } = createRefreshAndAccessToken(userData.userid)
-        console.log("createRefreshAndAccessToken success")
+        // console.log("createRefreshAndAccessToken success")
         return {userData:userData, accessToken:accessToken, refreshToken:refreshToken}
         
         

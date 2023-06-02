@@ -5,7 +5,6 @@ const {postProcessDocArr} = require('./utils')
 const createPlaylist = async (req,res,next) => {
     const playlist = req.body.playlist
     const videoInfo = req.body.videoInfo
-    console.log("createPlaylist")
     try {
         const docID = await createPlaylistDb(playlist, videoInfo)
         res.json({docid:docID, success:true})
@@ -25,7 +24,7 @@ const getPlaylistsOfUser = async (req,res,next) => {
         postProcessDocArr(playlistsDocs)
         res.json({playlists:playlistsDocs, success:true})
     } catch (err) {
-        console.log("error getPlaylistsOfUser", err)
+        // console.log("error getPlaylistsOfUser", err)
         res.status(402).send("error gettingPlaylist")
     }
     
@@ -36,10 +35,10 @@ const getVideosListOfPlaylist = async (req,res,next) => {
     try {
         const videoDocs = await getAllVideosOfPlaylist(playlistid)
         postProcessDocArr(videoDocs)
-        console.log("getVideosListOfPlaylist success", videoDocs)
+        // console.log("getVideosListOfPlaylist success", videoDocs)
         res.json({videos:videoDocs})
     } catch (err) {
-        console.log("getVideosListOfPlaylist", err)
+        // console.log("getVideosListOfPlaylist", err)
         res.status(402).send("error getVideosListOfPlaylist")
     }
 }

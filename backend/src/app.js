@@ -34,10 +34,6 @@ app.use('/', verifyJwtAccessTokenRequest)
 
 app.use('/cookies',(req,res,next)=>{console.log("req.cookies are", req.cookies);res.send("1")})
 
-app.post('/',(req,res,next)=>{
-  console.log("app.post sucess")
-  next()
-})
 
 app.use('/test', testRouter)
 

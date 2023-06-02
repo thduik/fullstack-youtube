@@ -8,6 +8,7 @@ import { handleGoogleToken } from '../../utils/handleGoogleToken';
 import TestDropdown from '../testComponent/TestDropdown';
 import { useSelector, useDispatch } from 'react-redux'
 import UserDropdownButton from './UserDropdownButton';
+import ChannelIcon from '../../icons/ChannelIcon';
 
 
 const backgroundColor = "rgba(0,0,0,0)" //important because all elements being transparent allow effects to work
@@ -92,7 +93,8 @@ function UserInfoDropdown() {
                     </div>
                 </div>
 
-                <UserDropdownButton />
+                <UserDropdownButton iconSvg={<ChannelIcon/>} title={"Your Channel"}  />
+                <UserDropdownButton iconSvg={<ChannelIcon/>}  title={"Log Out"} />
                 <TestDropdown />
 
             </div>

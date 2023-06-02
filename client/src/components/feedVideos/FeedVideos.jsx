@@ -5,7 +5,8 @@ import { ChannelCard, Loader, VideoCard } from "../";
 import { useEffect } from "react";
 
 const FeedVideos = ({ videos, direction }) => {
-  if(!videos?.length) return <Loader />;
+  // if(!videos?.length) return <Loader />;
+  if(!videos?.length) return null;
   return (
     <Stack direction={direction || "row"} flexWrap="wrap" justifyContent="center" alignItems="start" gap={2}>
       {videos.map((item, idx) => (
