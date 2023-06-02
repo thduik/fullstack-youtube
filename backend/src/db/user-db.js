@@ -44,7 +44,7 @@ const createNewUserGoogleId = async (googleid, userEmail, userData) => {
     }
 }
 const returnUserInfoFromDbWithUserIdPromise = (userid) => {
-    return User.find({userid:userid})
+    return User.find({userid:userid}).lean()
 }
 const getUserInfoFromDb = async (googleid, userEmail) => {
     //temporarily will fetch directly from db

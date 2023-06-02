@@ -3,7 +3,7 @@ const PlaylistVideoInfo = require('../models/PlaylistVideoInfo')
 
 const getAllVideosOfPlaylist = async (playlistid) => {
     try {
-        const docs = await PlaylistVideoInfo.find({playlistId:playlistid})
+        const docs = await PlaylistVideoInfo.find({playlistId:playlistid}).lean()
         return docs
     } catch (err) {
         throw("error getAllVideosOfPlaylist", err)

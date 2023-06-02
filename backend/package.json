@@ -18,7 +18,7 @@
     "openid-client": "^5.4.2"
   },
   "scripts": {
-    "start": "nodemon src/server.js --delay 1",
+    "start": "node src/server.js --delay 1",
     "dev": "NODE_ENV=development nodemon src/server.js --delay 1",
     "test": "echo \"Error: no test specified\" && exit 1",
     "testplaylist": "node src/tests/playlist/playlist-test.js",
