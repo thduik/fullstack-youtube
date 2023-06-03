@@ -44,9 +44,6 @@ const testLol = async () => {
         await test('playlist array length == 1', () => {
             return assert.strictEqual(playlistArrRes.length, 1);
         })
-
-
-
         
         const playlist = playlistArrRes[0]
         const videoArrayRes = await testGetVideosOfPlaylist(playlist)

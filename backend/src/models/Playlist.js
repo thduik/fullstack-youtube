@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const { defaultPlaylistThumbnailUrl } = require('./constants');
 
 
 const playlistSchema = new mongoose.Schema({
@@ -22,6 +23,10 @@ const playlistSchema = new mongoose.Schema({
     length: {
         type:Number,
         default:0
+    },
+    thumbnailUrl: {
+        type:String,
+        default:defaultPlaylistThumbnailUrl
     },
     isPrivate: {
         type:Boolean,

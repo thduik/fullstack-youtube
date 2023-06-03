@@ -3,19 +3,20 @@ import CheckmarkIcon from "../../icons/CheckmarkIcon"
 import SquareIcon from "../../icons/SquareIcon"
 import './index.css'
 
-const PlaylistSelectItem = ({ playlist, selectThisItem }) => {
+const PlaylistSelectItem = ({ playlist, selectPlaylistItem, unselectPlaylistItem, idx }) => {
     const [selected, setSelected] = useState(false) //whether this item (playlist) is selected add the video to
     const [hovering, setHovering] = useState(false)
     const changeSetSelected = () => {
+        if (!selected) {selectPlaylistItem(idx)}
+        if (selected) {unselectPlaylistItem(idx)}
         setSelected(!selected)
-        console.log("PlaylistSelectItem changeSetSelected", selected)
     }
     const mouseEntered = () => { setHovering(true) }
     const mouseLeft = () => { setHovering(false) }
 
-    useEffect(()=>{
-        if (selected==true) {  selectThisItem(playlist) }
-    },[selected])
+    // useEffect(()=>{
+    //     if (selected==true) {  selectThisItem(playlist) }
+    // },[selected])
     return (
         <div className="hover-pointer" onMouseEnter={mouseEntered} onMouseLeave={mouseLeft}
             style={{

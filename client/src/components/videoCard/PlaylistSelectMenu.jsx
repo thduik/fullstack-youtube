@@ -14,7 +14,9 @@ import PlaylistSelectHeader from './PlaylistSelectHeader';
 import { postPlaylistCreate } from '../../apiFetch/playlistApi';
 import { addPlaylist } from '../../features/appData/playlistSlice';
 
-
+//for playlist array state management, we use an index system
+//selected and unselecting index of playlist array
+//because for lifecycle of playlistSelecteMenu, state.playlist.playlists is guaranteed to stay the same
 
 const dropdownMenuWidth = "180px"
 const dropdownBackgroundColor = "#363636"
@@ -40,8 +42,8 @@ function PlaylistSelectMenu({ saveVideoToPlaylist }) {
     const { showPlaylistSelectDropdown } = useSelector((state) => state.uiState)
     const { email, googleid, name, pictureUrl, userId, userName, isLoggedIn } = useSelector((state) => state.user)
     const { selectedVideo, playlists } = useSelector((state) => state.playlist)
-    // const { playlists } = useSelector((state) => state.playlist)
-    // const { onClickOutside } = props;
+    const { selectedIndexArray, setSelectedIndexArray } = useState(playlists.map((x)=>0))
+    
     const dispatch = useDispatch()
 
     const ref = useRef(null);
@@ -64,16 +66,24 @@ function PlaylistSelectMenu({ saveVideoToPlaylist }) {
     useEffect(() => {
         return () => {
             // Anything in here is fired on component unmount.
-            //only call api after component unmount
+            selectedIndexArray.map((isTrue, idx)=>{
+                if (isTrue) {
+                    console.log("selected playlist name is", playlists[idx].playlistName, "idx is". idx)
+                }
+            })
         }
     }, [])
 
     const closeMenu = () => {dispatch(changeShowPlaylistSelectDropdown(false))}
-    const itemSelected = (text) => {
-        console.log("PlaylistSelectMenu itemSelected text+video snippet are", text, 
-        selectedVideo)
+    const modifySelectedIndexArray = (idx, setTrue) => {const idxArr = selectedIndexArray; selectedIndexArray[idx] = setTrue; setSelectedIndexArray(idxArr)}
+    const itemSelected = (idx) => {
+        console.log("PlaylistSelectMenu itemSelected idx is", idx)
+        modifySelectedIndexArray(idx, 1)
     }
-    
+    const itemUnselected = (idx) => {
+        console.log("PlaylistSelectMenu itemSelected idx is", idx)
+        modifySelectedIndexArray(idx, 1)
+    }
     const createPlaylistConfirmed = (playlist) => {
         console.log("createPlaylistConfirmed playlistSelectMenu called", playlist.name, playlist.privacy)
         setTimeout(()=>{closeMenu()}, 1000)
@@ -93,7 +103,7 @@ function PlaylistSelectMenu({ saveVideoToPlaylist }) {
             }} ref={ref}>
                 
                 <PlaylistSelectHeader onClickClose={closeMenu}/>
-                {playlists.map((obj)=><PlaylistSelectItem playlist={obj} selectThisItem={itemSelected}/>)}
+                {playlists.map((obj, idx)=><PlaylistSelectItem playlist={obj} idx={idx} selectPlaylistItem={itemSelected} unselectPlaylistItem={itemUnselected}/>)}
                 {/* <PlaylistSelectItem selectThisItem={itemSelected}/> */}
                 <CreateNewPlaylistComponent createPlaylistConfirmed={createPlaylistConfirmed}/>
             </div>
