@@ -11,7 +11,7 @@ import { changeShowPlaylistSelectDropdown } from '../../features/uiState/uiState
 import './playlistSelectMenu.css'
 import CreateNewPlaylistComponent from './CreateNewPlaylistComponent';
 import PlaylistSelectHeader from './PlaylistSelectHeader';
-import { postPlaylistCreate } from '../../apiFetch/playlistApi';
+import { postPlaylistCreate, postAddVideoToPlaylists } from '../../apiFetch/playlistApi';
 import { addPlaylist } from '../../features/appData/playlistSlice';
 
 //for playlist array state management, we use an index system
@@ -42,7 +42,7 @@ function PlaylistSelectMenu({ saveVideoToPlaylist }) {
     const { showPlaylistSelectDropdown } = useSelector((state) => state.uiState)
     const { email, googleid, name, pictureUrl, userId, userName, isLoggedIn } = useSelector((state) => state.user)
     const { selectedVideo, playlists } = useSelector((state) => state.playlist)
-    const { selectedIndexArray, setSelectedIndexArray } = useState(playlists.map((x)=>0))
+    const [ selectedIndexArray, setSelectedIndexArray ] = useState(playlists.map((x)=>{return 0}))
     
     const dispatch = useDispatch()
 
@@ -66,23 +66,27 @@ function PlaylistSelectMenu({ saveVideoToPlaylist }) {
     useEffect(() => {
         return () => {
             // Anything in here is fired on component unmount.
-            selectedIndexArray.map((isTrue, idx)=>{
-                if (isTrue) {
-                    console.log("selected playlist name is", playlists[idx].playlistName, "idx is". idx)
-                }
+            //[0,1,0,1] means indexes 1 and 3 are selected
+            const resIdxArr = []
+            const arr = selectedIndexArray.map((isTrue, idx)=>{
+                if (isTrue) { resIdxArr.push(idx) }
             })
+            console.log("res idx arr:", resIdxArr)
+            const playlistArr = resIdxArr.map((idx)=>playlists[idx])
+            postAddVideoToPlaylists(selectedVideo, playlistArr)
         }
     }, [])
 
     const closeMenu = () => {dispatch(changeShowPlaylistSelectDropdown(false))}
-    const modifySelectedIndexArray = (idx, setTrue) => {const idxArr = selectedIndexArray; selectedIndexArray[idx] = setTrue; setSelectedIndexArray(idxArr)}
+    const modifySelectedIndexArray = (idx, setTrue) => {console.log("modifySelectedIndexArray", idx, setTrue)
+        const idxArr = selectedIndexArray; idxArr[idx] = setTrue; setSelectedIndexArray(idxArr)}
     const itemSelected = (idx) => {
         console.log("PlaylistSelectMenu itemSelected idx is", idx)
         modifySelectedIndexArray(idx, 1)
     }
     const itemUnselected = (idx) => {
         console.log("PlaylistSelectMenu itemSelected idx is", idx)
-        modifySelectedIndexArray(idx, 1)
+        modifySelectedIndexArray(idx, 0)
     }
     const createPlaylistConfirmed = (playlist) => {
         console.log("createPlaylistConfirmed playlistSelectMenu called", playlist.name, playlist.privacy)

@@ -20,6 +20,11 @@ export const getPlaylist = async (callback) => {
 
 }
 
+export const postAddVideoToPlaylists = async (video, playlistarr) => {
+    if (!playlistarr.length) { return }
+    console.log("postAddVideoToPlaylists called", video, playlistarr.map(o=>o.playlistName))
+}
+
 export const postPlaylistCreate = async (user, playlist, video, callback) => {
     //user = {userid}
     //playlist.name, playlist.privacy
