@@ -10,6 +10,7 @@ const ChannelNavButton = ({title, onClick, idx, selectedIdx
     const clickedButton = () => onClick()
     const mouseDowned = () => {setMouseDown(true)}
     const mouseUpped = () => {setMouseDown(false)}
+    
     return (
         <div style={{width:width, height:height, display:"flex", justifyContent:"center"
             ,borderBottom:"2px solid white"

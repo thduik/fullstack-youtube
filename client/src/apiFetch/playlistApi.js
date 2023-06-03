@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import ObjectID from 'bson-objectid'
 const baseUrl = 'https://holysheet2831.hopto.org/api'
 
 export const getPlaylist = async (callback) => {
@@ -20,22 +20,29 @@ export const getPlaylist = async (callback) => {
 
 }
 
-export const postPlaylistCreate = async (user, playlist, video) => {
+export const postPlaylistCreate = async (user, playlist, video, callback) => {
     //user = {userid}
     //playlist.name, playlist.privacy
+    try {
+
+    
     var playlistPrivate = playlist.privacy == "Private" ? true : false
     var playlistUnlisted = playlist.privacy == "Unlisted" ? true : false
+    const mongooseId = ObjectID()
+    const newPlaylist = {
+        _id:mongooseId.toHexString(),
+        playlistName: playlist.name,
+        userid: user.userid,
+        creatorName: user.name,
+        isPrivate: playlistPrivate,
+        isUnlisted: playlistUnlisted
+    }
+    callback(newPlaylist)
 
     const createUrl = baseUrl + '/playlist/create'
     const res = await axios.post(createUrl,
         {
-            playlist: {
-                playlistName: playlist.name,
-                userid: user.userid,
-                creatorName: user.name,
-                isPrivate: playlistPrivate,
-                isUnlisted: playlistUnlisted
-            },
+            playlist: newPlaylist,
             videoInfo: {
                 videoId: video.videoId,
                 videoName: video.title,
@@ -45,8 +52,11 @@ export const postPlaylistCreate = async (user, playlist, video) => {
             
 
         })
-    // console.log("testPostAxios success docid is", res.data)
-    return res.data
+        console.log("postPlaylistCreate success docid is", res.data)
+        return res.data
+    } catch (err) {
+        console.log("postPlaylistCreate error", err)
+    }
 }
 
 const videoDataArr = [

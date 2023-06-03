@@ -8,30 +8,13 @@ const { authUserOnly } = require('./utils');
 
 //base path is /playlist
 
-playlistRouter.get("/", async (req,res,next)=>{
-    // console.log("playlistRouter GET res.cookies are:", req.cookies)
-    getPlaylistsOfUser(req,res,next)
-})
-
+playlistRouter.get("/", getPlaylistsOfUser)
 
 playlistRouter.post("/",authUserOnly)
 
-playlistRouter.post("/create", async (req,res,next)=>{
-    console.log("playlistRouter /playlist/create POST received", req.body)
-    createPlaylist(req,res,next)
-    //
-})
-
-playlistRouter.post("/update/:playlistid", (req,res,next)=>{
-    //this is meant to add new video to certain playlist
-    const playlistid = req.params.playlistid
-    const video = req.body.video
-    const playlistData = req.body.playlistData
-    console.log("testRouter /playlist/update POST received", playlistData)
-
-    addVideoToPlaylist(req,res,next)
-    //
-})
+playlistRouter.post("/create", createPlaylist)
+//const playlistid = req.params.playlistid
+playlistRouter.post("/update/:playlistid", addVideoToPlaylist)
 
 
 

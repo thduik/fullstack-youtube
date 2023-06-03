@@ -1,5 +1,6 @@
 const Playlist = require('../models/Playlist')
 const PlaylistVideoInfo = require('../models/PlaylistVideoInfo')
+var ObjectID = require("bson-objectid");
 
 const getAllVideosOfPlaylist = async (playlistid) => {
     try {
@@ -23,8 +24,10 @@ const createPlaylistDb = async (playlist, videoData) => {
     //return the _id of document
     //playlistName is not unique, unique identifier is _id of mongoose document
     //because data is not sensitive anyways
+    console.log("createPlaylistDb db called")
     try {
         const playlistDoc = await Playlist.create({
+            _id:playlist._id,
             playlistName: playlist.playlistName,
             userid: playlist.userid,
             creatorName: playlist.creatorName,

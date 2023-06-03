@@ -3,6 +3,10 @@ const mongoose = require('mongoose')
 
 const playlistSchema = new mongoose.Schema({
 
+    _id: {
+        type:String,
+        required:true
+    },
     playlistName: {
         type:String,
         require:true

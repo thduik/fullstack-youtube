@@ -9,8 +9,8 @@ const axios = require('axios')
 const { mockUserId, mockPlaylistName } = require('../data')
 const connectDB = require('../../db/connect-db')
 const request = require("supertest")
-const { testCreatePlaylistWithError, videoDataArr, setupTest, cleanupTest,
-    testPostAxios, testGetPlaylist, testGetVideosOfPlaylist,
+const { videoDataArr, setupTest, cleanupTest,
+    testCreatePlaylist, testGetPlaylist, testGetVideosOfPlaylist,
     testAddVideoToPlaylist, testDeleteVideoFromPlaylist } = require('./playlist-functions')
 
 const baseUrl = 'http://localhost:4444/test'
@@ -32,7 +32,7 @@ const testLol = async () => {
         await setupTest()
         await cleanupTest()
 
-        const postRes = await testPostAxios()
+        const postRes = await testCreatePlaylist()
         const playlistArrRes = await testGetPlaylist()
         console.log("playlistArrRes is playlistArrRes", playlistArrRes)
         await test('playlist object id type == string', () => {
@@ -113,3 +113,4 @@ const testLol = async () => {
 }
 
 testLol()
+

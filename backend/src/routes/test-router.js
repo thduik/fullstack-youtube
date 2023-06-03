@@ -14,23 +14,32 @@ testRouter.use('/', (req,res,next)=>{
     next()
 })
 
-testRouter.post("/playlist/create", async (req,res,next)=>{
-    console.log("testRouter /playlist/create POST received", req.body)
-    createPlaylist(req,res,next)
+testRouter.get("/playlist", getPlaylistsOfUser)
 
-    //
-})
 
-testRouter.post("/playlist/update/:playlistid", testVerifyAuthId, (req,res,next)=>{
-    //this is meant to add new video to certain playlist
-    const playlistid = req.params.playlistid
-    const video = req.body.video
-    const playlistData = req.body.playlistData
-    console.log("testRouter /playlist/update POST received", playlistData)
+testRouter.post("/playlist/create", createPlaylist)
+//const playlistid = req.params.playlistid
+testRouter.post("/playlist/update/:playlistid", addVideoToPlaylist)
 
-    addVideoToPlaylist(req,res,next)
-    //
-})
+
+
+// testRouter.post("/playlist/create", async (req,res,next)=>{
+//     console.log("testRouter /playlist/create POST received", req.body)
+//     createPlaylist(req,res,next)
+
+//     //
+// })
+
+// testRouter.post("/playlist/update/:playlistid", testVerifyAuthId, (req,res,next)=>{
+//     //this is meant to add new video to certain playlist
+//     const playlistid = req.params.playlistid
+//     const video = req.body.video
+//     const playlistData = req.body.playlistData
+//     console.log("testRouter /playlist/update POST received", playlistData)
+
+//     addVideoToPlaylist(req,res,next)
+//     //
+// })
 
 testRouter.post("/playlist/:playlistid/videos/delete", testVerifyAuthId,  (req,res,next)=>{
     //this is meant to add new video to certain playlist

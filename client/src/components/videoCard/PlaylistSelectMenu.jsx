@@ -12,6 +12,7 @@ import './playlistSelectMenu.css'
 import CreateNewPlaylistComponent from './CreateNewPlaylistComponent';
 import PlaylistSelectHeader from './PlaylistSelectHeader';
 import { postPlaylistCreate } from '../../apiFetch/playlistApi';
+import { addPlaylist } from '../../features/appData/playlistSlice';
 
 
 
@@ -72,11 +73,14 @@ function PlaylistSelectMenu({ saveVideoToPlaylist }) {
         console.log("PlaylistSelectMenu itemSelected text+video snippet are", text, 
         selectedVideo)
     }
+    
     const createPlaylistConfirmed = (playlist) => {
         console.log("createPlaylistConfirmed playlistSelectMenu called", playlist.name, playlist.privacy)
         setTimeout(()=>{closeMenu()}, 1000)
         const user = {userid:userId, name:name}
-        postPlaylistCreate(user, playlist, selectedVideo)
+        postPlaylistCreate(user, playlist, selectedVideo,(newPlaylist)=>{
+            dispatch(addPlaylist(newPlaylist))
+        })   
     }
 
     return (

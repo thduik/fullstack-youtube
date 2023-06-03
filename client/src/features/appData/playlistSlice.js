@@ -20,7 +20,7 @@ export const playlistSlice = createSlice({
             state.playlists = action.payload
         },
         addPlaylist: (state, action) => {
-            state.playlists.append(action.payload)
+            state.playlists.push(action.payload)
         }
     }
 

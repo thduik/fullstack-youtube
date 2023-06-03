@@ -5,6 +5,7 @@ const axios = require('axios')
 const { mockUserId, mockPlaylistName, mockUsername } = require('../data')
 const connectDB = require('../../db/connect-db')
 const request = require("supertest")
+var ObjectID = require("bson-objectid");
 
 const baseUrl = 'http://localhost:4444/test'
 
@@ -57,15 +58,17 @@ const testGetPlaylist = async () => {
     return res.data.playlists
 }
 
-const testPostAxios = async () => {
+const testCreatePlaylist = async () => {
     const createUrl = baseUrl + '/playlist/create'
     const res = await axios.post(createUrl,
         {
             playlist: {
+                _id:ObjectID().toHexString(),
                 playlistName: mockPlaylistName,
                 userid: mockUserId,
                 creatorName: mockUsername,
                 isPrivate: false
+
             },
             videoInfo: videoDataArr[0]
             //{videoId,videoName,thumbnailUrl,createdAt}
@@ -150,6 +153,6 @@ const cleanupTest = async () => {
 
 module.exports = {
     testCreatePlaylistWithError, videoDataArr,
-    testPostAxios, testGetPlaylist, testUpdatePlaylist, setupTest, cleanupTest,
+    testCreatePlaylist, testGetPlaylist, testUpdatePlaylist, setupTest, cleanupTest,
     testAddVideoToPlaylist, testGetVideosOfPlaylist, testDeleteVideoFromPlaylist
 }

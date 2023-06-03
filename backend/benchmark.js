@@ -16,16 +16,21 @@
 //     console.log("test took", Date.now() - startTime, "ms")
 // }
 
-const maplol = new Map()
-maplol.set('a','b')
-const testlolol = () => {
-    console.log(maplol.get('b'))
-    if (!maplol.get('b')) {
-        console.log("YESS  UFCKKCK")
+var ObjectID = require("bson-objectid");
+const { testCreatePlaylist, testGetPlaylist,  cleanupTest, setupTest } = require("./src/tests/playlist");
+
+const ntimes = 1000
+const testlolol = async () => {
+    await setupTest()
+    const dateStart = Date.now()
+    await testCreatePlaylist()
+    for (var i = 0; i < ntimes; i ++) {
+        await testGetPlaylist()
     }
+    const timeTook = ( Date.now() - dateStart )
+    console.log(`test ${ntimes} times took ${timeTook} ms (or ${timeTook/1000}) seconds`)
+    await cleanupTest()
+    process.exit()
 }
-const modifyRes = (obj) => {
-    obj.a = {}
-    obj.b = 'bbbbb'
-}
+
 testlolol()
