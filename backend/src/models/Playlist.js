@@ -35,6 +35,10 @@ const playlistSchema = new mongoose.Schema({
         required:true,
         default:false
     },
+    createdAt: {
+        type:Number,
+        default:Date.now()
+    },
     count: { //for this field, remember to increment and decrement properly for each update/delete op
         type:Number,
         default:1 //when it's created always 1

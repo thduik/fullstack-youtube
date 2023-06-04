@@ -18,6 +18,7 @@ const baseUrl = 'http://localhost:4444/test'
 const assert = require('assert/strict');
 const test = require('node:test')
 const {  videoDataArr, testVideoArr, testPlaylistArr, testUserArr } = require('./data')
+const { stage1Test,stage2Test } = require('./test-cases')
 
 
 
@@ -33,50 +34,34 @@ const testLol = async () => {
         await setupTest()
         await cleanupTest()
         
+        //the 0th video of playlist 0 and and 0th video of playlist 1 created
         const postRes = await testCreatePlaylist(testUserArr[0].username, testPlaylistArr[0][0], testVideoArr[0][0][0])
-        const postRes1 = await testCreatePlaylist(testUserArr[0].username, testPlaylistArr[0][1], testVideoArr[0][0][1])
+        const postRes1 = await testCreatePlaylist(testUserArr[0].username, testPlaylistArr[0][1], testVideoArr[0][1][0])
         const playlistArrRes = await testGetPlaylist()
         //array pf playlist object json keys are {_id,playlistName,userid,videoId,thumbnailUrl}
        
         const videoArrayRes0 = await testGetVideosOfPlaylist(playlistArrRes[0])
         const videoArrayRes1 = await testGetVideosOfPlaylist(playlistArrRes[1])
         //array of video obj json keys are {_id, playlistId,videoName}
-        console.log("videoArrayRes", videoArrayRes)
-        await test('video array length == 1', () => {
-            return assert.strictEqual(videoArrayRes0.length==1 && videoArrayRes1.length==1, 1);
-        })
-        await test('video object id type == string', () => {
-            return assert.equal(typeof videoArrayRes[0]._id, 'string');
-        })
-        await test('video name == videoDataArr[0].videoName', () => {
-            return assert.equal(videoArrayRes[0].videoName, videoDataArr[0].videoName);
-        })
+        await stage1Test(videoArrayRes0, videoArrayRes1)
 
-        const videoAddRes = await testAddVideoToPlaylist([playlist], videoDataArr[1])
-        const videoAddRes11 = await testAddVideoToPlaylist([playlist], videoDataArr[2])
-        const videoArrayRes11 = await testGetVideosOfPlaylist(playlist)
-        playlistToVideoMapClientSide.set(playlist._id, videoArrayRes1)
-        console.log("playlistToVideoMapClientSide stage 1 is", playlistToVideoMapClientSide.get(playlist._id))
+        //add function
+        
+        const r1 = await testAddVideoToPlaylist([playlistArrRes[0]], testVideoArr[0][0][1])
+        const r2 = await testAddVideoToPlaylist([playlistArrRes[1]], testVideoArr[0][1][1])
+        const r3 = await testAddVideoToPlaylist([playlistArrRes[0], playlistArrRes[1]], testVideoArr[0][0][2])
+
+        const videoArrayRes11 = await testGetVideosOfPlaylist(playlistArrRes[0])
+        const videoArrayRes22 = await testGetVideosOfPlaylist(playlistArrRes[1])        
+        
         test('video array length == 3', () => {
-            return assert.strictEqual(videoArrayRes1.length, 3);
+            return assert.strictEqual(videoArrayRes11.length == 3 && videoArrayRes22.length == 3, true);
         })
 
-        for (var i = 0; i < 3; i++) {
-            const videoObj = videoArrayRes11[i]
-            console.log("videoArrayRes1[i] is", videoObj)
-            await test(`${i}th video object id type == string`, () => {
-                return assert.equal(typeof videoObj._id, 'string');
-            })
-            await test(`${i}th video name == videoDataArr${i}.videoName`, () => {
-                return assert.equal(videoObj.videoName, videoDataArr[i].videoName);
-            })
-            await test(`${i}th videoId == videoDataArr${i}.videoId`, () => {
-                return assert.equal(videoObj.videoId, videoDataArr[i].videoId);
-            })
-        }
-        const videoIndex = 1
+        await stage2Test(videoArrayRes11, videoArrayRes22)
+        
+
         //the 2nd video in [video] of playlist in playlistToVideoMapClientSide above
-        const videoToDelete = playlistToVideoMapClientSide.get(playlist._id)[1]
         console.log("videoToDelete videoName", videoToDelete.videoName)
         const deleteVideoRes = await testDeleteVideoFromPlaylist(playlist, videoToDelete, videoIndex)
         const videoArrayRes2 = await testGetVideosOfPlaylist(playlist)
