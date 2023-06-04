@@ -97,8 +97,8 @@ function PlaylistSelectMenu({ saveVideoToPlaylist }) {
             const userData = { userid: userId, name: name }
             const newPlaylist = utilCreateNewPlaylist(playlist, userData)
             const res = await postPlaylistCreate( newPlaylist, selectedVideo)
-            console.log("createPlaylistConfirmed playlistSelectMenu success res.data:", res.data)
-            dispatch(addPlaylist(res.data.doc))
+            console.log("createPlaylistConfirmed playlistSelectMenu success res.data:", res)
+            dispatch(addPlaylist(res.doc))
         } catch(err) {
             console.log("errorcreatePlaylistConfirmed", err)
         }

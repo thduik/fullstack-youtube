@@ -2,8 +2,9 @@ import React from "react";
 import { Stack, Box } from "@mui/material";
 
 import { ChannelCard, Loader, VideoCard } from "./";
+import { useOutletContext } from "react-router-dom";
 
-const Videos = ({ videos, direction="row", flexWrap="wrap"}) => {
+const Videos = ({ videos, direction = "row", flexWrap = "wrap" }) => {
   if(!videos?.length) return <Loader />;
   
   return (
@@ -18,7 +19,7 @@ const Videos = ({ videos, direction="row", flexWrap="wrap"}) => {
     <Stack direction={direction} flexWrap={flexWrap} justifyContent="center" gap={2}>
       {videos.map((item, idx) => (
         <Box key={idx}>
-          {item.id.videoId && <VideoCard video={item} /> }
+          {item.id.videoId && <VideoCard video={item} />}
           {item.id.channelId && <ChannelCard channelDetail={item} />}
         </Box>
       ))}

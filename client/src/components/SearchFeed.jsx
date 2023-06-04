@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Typography, Box } from "@mui/material";
 import { useParams } from "react-router-dom";
 
-import { fetchFromAPI, searchVideosFromApiYoutube } from "../utils/fetchFromAPI";
+import { fetchFromAPI, searchVideosFromApiYoutube } from "../apiFetch/fetchFromAPI";
 import  FeedVideos  from "./feedVideos/FeedVideos";
 
 

@@ -1,10 +1,11 @@
 import axios from 'axios';
+import { processResData } from './utils';
 
 export const BASE_URL = 'https://youtube-v31.p.rapidapi.com';
 
 const options = {
   params: {
-    maxResults: 50,
+    maxResults: 10,
   },
   headers: {
     'X-RapidAPI-Key': import.meta.env.VITE_RAPID_API_KEY,
@@ -29,13 +30,17 @@ export const searchVideosFromApiYoutube = async (keyword = "lol") => {
   const baseUrl = import.meta.env.VITE_BASE_API_URL
   console.log("baseUrl is", baseUrl)
   try {
-      const searchUrl = baseUrl + `/youtube/video/search/?q=${keyword}&limit=5&type=video`
+      const searchUrl = baseUrl + `/youtube/video/search/?q=${keyword}&type=video`
       const res = await axios.get(searchUrl)
       // console.log("searchVideosFromApiYoutube success", res.data)
-      return res.data
+      console.log("videoData is",res.data.items[0])
+      const res2 = processResData(res)
+      return res2.data
   } catch (err) {
       throw("searchVideosFromApiYoutube err", err)
   }
 
 }
+
+
 

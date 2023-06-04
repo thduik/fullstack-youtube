@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 
-import { fetchFromAPI } from "../utils/fetchFromAPI";
+import { fetchFromAPI } from "../apiFetch/fetchFromAPI";
 import FeedVideos from "./feedVideos/FeedVideos";
 import Sidebar from "./sidebar/Sidebar";
 import { useSelector, useDispatch } from 'react-redux'

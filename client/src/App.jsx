@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Box } from '@mui/material';
 
-import { ChannelDetail, SearchFeed, Navbar, Feed } from './components';
+import { ChannelDetail, SearchFeed, Navbar, Feed, ChannelVideos } from './components';
 import VideoDetail from "./components/videoDetail/VideoDetail";
 import { useState } from "react";
 import Sidebar from "./components/sidebar/Sidebar";
@@ -14,7 +14,7 @@ import MiniSidebar from './components/miniSidebar/MiniSidebar'
 import { useEffect } from "react";
 import { login } from "./features/user/userSlice";
 import { cookieLogin } from "./utils/testApi";
-import { fetchFromAPI } from "./utils/fetchFromAPI";
+import { fetchFromAPI } from "./apiFetch/fetchFromAPI";
 import PlaylistSelectMenu from "./components/videoCard/PlaylistSelectMenu";
 import { getPlaylist } from "./apiFetch/playlistApi";
 import { setPlaylistArray } from "./features/appData/playlistSlice";
@@ -73,9 +73,13 @@ const App = () => {
           <Routes>
             <Route exact path='/' element={<Feed videos={feedVideos} showSidebar={showSidebar} />} />
             <Route path='/video/:id' element={<VideoDetail />} />
-            <Route path='/channel/:id' element={<ChannelDetail />} />
+            <Route path='/channel/:id' element={<ChannelDetail basePath={"/channel"} />}>
+              <Route path={`videos`} element={ <ChannelVideos/>} />
+            </Route>
             <Route path='/search/:searchTerm' element={<SearchFeed />} />
-            <Route path='/user/custom/:userid' element={<ChannelDetail/>} />
+            <Route path='/user/custom/:userid' element={<ChannelDetail basePath={"/user/custom"}/>} >
+              {/* playlist component here */}
+            </Route>
           </Routes>
         </div>
       </Box>

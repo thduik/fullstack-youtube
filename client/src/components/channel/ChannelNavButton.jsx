@@ -13,7 +13,7 @@ const ChannelNavButton = ({title, onClick, idx, selectedIdx
     
     return (
         <div style={{width:width, height:height, display:"flex", justifyContent:"center"
-            ,borderBottom:"2px solid white"
+            ,borderBottom:hovering ? "2px solid white" : "none"
         }}
         onMouseEnter={mouseEntered} onMouseLeave={mouseLeft} onClick = {clickedButton} 
         onMouseDown={mouseDowned} onMouseUp={mouseUpped}

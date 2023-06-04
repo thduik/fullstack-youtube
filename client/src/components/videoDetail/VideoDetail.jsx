@@ -5,7 +5,7 @@ import { Typography, Box, Stack, createTheme } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import { Videos, Loader } from "..";
-import { fetchFromAPI } from "../../utils/fetchFromAPI";
+import { fetchFromAPI } from "../../apiFetch/fetchFromAPI";
 
 import { useSelector, useDispatch } from 'react-redux'
 

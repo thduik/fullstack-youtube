@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { processResData } from './utils'
 const baseUrl = 'https://holysheet2831.hopto.org/api'
 
 export const getPlaylist = async (callback) => {
@@ -10,7 +11,8 @@ export const getPlaylist = async (callback) => {
         const getUrl = baseUrl + '/playlist'
         const res = await axios.get(getUrl)
         console.log("getPlaylist success playlists are", res.data.playlists)
-        callback(res.data.playlists)
+        const res2 = processResData(res)
+        callback(res2.data.playlists)
         return
     } catch (err) {
         console.log("err getPlaylist", err)
@@ -73,18 +75,3 @@ export const postAddVideoToPlaylist = async (videoData, playlistArr) => {
 }
 
 
-const videoDataArr = [
-    {
-        videoId: 'YJTae5ScvQA',
-        videoName: 'Video 1 - Distrion & Electro-Light - Drakkar [NCS Release]',
-        thumbnailUrl: 'https://i.ytimg.com/vi/YJTae5ScvQA/hqdefault.jpg?sqp=-oaymwE2CPYBEIoBSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARhAIF8oZTAP&rs=AOn4CLAjKXBADPj9RjLfdyWvTZGREiwh7w',
-        createdAt: Date.now()
-    },
-    {
-        videoId: 'i3vrmI_7zq4',
-        videoName: 'Video 2 - Devon Larrat New!! ANTI FLOP PRESS TRAINING',
-        thumbnailUrl: 'https://i.ytimg.com/vi/i3vrmI_7zq4/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCh3L6QqUk-yoM4OP_9nHNDvbZAYg',
-        createdAt: Date.now()
-
-    }
-]

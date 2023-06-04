@@ -4,7 +4,7 @@ import { Stack } from "@mui/material";
 import { categories } from "../../utils/constants";
 
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchFromAPI } from "../../utils/fetchFromAPI";
+import { fetchFromAPI } from "../../apiFetch/fetchFromAPI";
 import { useEffect, useState } from "react";
 import { changeShowSidebar } from '../../features/uiState/uiStateSlice.js'
 import { changeSelectedCategory } from "../../features/appData/appDataSlice";
