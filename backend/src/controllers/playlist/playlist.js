@@ -1,5 +1,5 @@
 const { createPlaylistDb, getAllPlaylistsOfUser, getAllVideosOfPlaylist, 
-    addVideoToPlaylistDb, deleteVideoFromPlaylistDb } = require("../../db/playlist-db")
+    addVideoToPlaylistsConcurrentDb, deleteVideoFromPlaylistDb } = require("../../db/playlist-db")
 const {postProcessDocArr} = require('./utils')
 
 const createPlaylist = async (req,res,next) => {
@@ -7,8 +7,8 @@ const createPlaylist = async (req,res,next) => {
     const playlist = req.body.playlist
     const videoInfo = req.body.videoInfo
     try {
-        const docID = await createPlaylistDb(playlist, videoInfo)
-        res.json({docid:docID, success:true})
+        const doc = await createPlaylistDb(playlist, videoInfo)
+        res.json({doc:doc, success:true})
 
     } catch (err) {
         console.log("err createPlaylist", err)
@@ -45,12 +45,11 @@ const getVideosListOfPlaylist = async (req,res,next) => {
 }
 
 const addVideoToPlaylist = async (req,res,next) => {
-    const playlistid = req.params.playlistid
-    console.log("req.body:", req.body)
+    const playlistIdArr = req.body.playlistIdArr
     const videoLol = req.body.videoData
-    const playlistData = req.body.playlistData
     try {
-        const addRes = await addVideoToPlaylistDb(playlistid, videoLol, playlistData)
+        const addRes = await addVideoToPlaylistsConcurrentDb(playlistIdArr, videoLol)
+        
         res.json({success:true})
     } catch (err) {
         console.log("addVideoToPlaylist controller err", err)

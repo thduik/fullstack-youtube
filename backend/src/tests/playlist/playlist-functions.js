@@ -6,26 +6,11 @@ const { mockUserId, mockPlaylistName, mockUsername } = require('../data')
 const connectDB = require('../../db/connect-db')
 const request = require("supertest")
 var ObjectID = require("bson-objectid");
+const { testUserArr } = require('./data')
 
 const baseUrl = 'http://localhost:4444/test'
 
-const testCreatePlaylistWithError = async () => {
-    //videoArray is missing
-    try {
-        const newPlaylist = {
 
-            isPrivate: false
-        }
-        const createUrl = baseUrl + '/playlist/create'
-        const response = await request(createUrl).post("/").send(
-            { playlist: newPlaylist }
-        );
-        // console.log("testCreatePlaylist success docid is", response.body)
-        return response
-    } catch (err) {
-        throw ('testCreatePlaylistWithError', err)
-    }
-}
 
 const videoDataArr = [
     {
@@ -58,36 +43,43 @@ const testGetPlaylist = async () => {
     return res.data.playlists
 }
 
-const testCreatePlaylist = async () => {
-    const createUrl = baseUrl + '/playlist/create'
-    const res = await axios.post(createUrl,
-        {
-            playlist: {
-                _id:ObjectID().toHexString(),
-                playlistName: mockPlaylistName,
-                userid: mockUserId,
-                creatorName: mockUsername,
-                isPrivate: false
+const testCreatePlaylist = async (playlistName, {userid,username}, videoInfo) => {
+    try {
+        const createUrl = baseUrl + '/playlist/create'
+        const res = await axios.post(createUrl,
+            {
+                playlist: {
+                    playlistName: playlistName,
+                    userid: userid,
+                    creatorName: username,
+                    isPrivate: true,
+                    isUnlisted: true
+                },
+                videoInfo: videoInfo
+                //{videoId,videoName,thumbnailUrl,createdAt}
 
-            },
-            videoInfo: videoDataArr[0]
-            //{videoId,videoName,thumbnailUrl,createdAt}
-
-        })
-    // console.log("testPostAxios success docid is", res.data)
-    return res.data
+            })
+        // console.log("testPostAxios success docid is", res.data)
+        return res.data
+    } catch (err) {
+        throw ("err testCreatePlaylist", err)
+    }
 }
 
 const testUpdatePlaylist = async (videoData, playlistId) => {
-    videoData.playlistid = playlistId
-    const createUrl = baseUrl + '/playlist/update'
-    const res = await axios.post(createUrl,
-        {
-            videoData: videoData,
-            playlistid: playlistId
-        })
-    // console.log("testPostAxios success docid is", res.data)
-    return res.data
+    try {
+        videoData.playlistid = playlistId
+        const createUrl = baseUrl + '/playlist/update'
+        const res = await axios.post(createUrl,
+            {
+                videoData: videoData,
+                playlistid: playlistId
+            })
+        // console.log("testPostAxios success docid is", res.data)
+        return res.data
+    } catch (err) {
+        throw ("err testUpdatePlaylist", err)
+    }
 }
 
 const testGetVideosOfPlaylist = async (playlist) => {
@@ -102,18 +94,25 @@ const testGetVideosOfPlaylist = async (playlist) => {
     }
 }
 
-const testAddVideoToPlaylist = async (playlistData, videoData) => {
+const testAddVideoToPlaylist = async (playlistArr, videoData) => {
+    console.log("testAddVideoToPlaylist called", playlistArr)
+    try {
+        videoData._id = ObjectID().toHexString()
+        const updateUrl = baseUrl + `/playlist/update/`
+        const playlistIdArr = playlistArr.map(o => o._id)
+        console.log("testAddVideoToPlaylist", videoData, playlistIdArr)
+        const res = await axios.post(updateUrl,
+            {
+                videoData: videoData,
+                playlistIdArr: playlistIdArr
 
-    const playlistid = playlistData._id
-    const updateUrl = baseUrl + `/playlist/update/${playlistid}`
-    const res = await axios.post(updateUrl,
-        {
-            videoData: videoData,
-            playlistid: playlistid,
-            playlistData: playlistData
-        })
-    // console.log("testPostAxios success docid is", res.data)
-    return res.data
+            })
+        // console.log("testPostAxios success docid is", res.data)
+        return res.data
+
+    } catch (err) {
+        throw ("err testAddVideoToPlaylist", err)
+    }
 
 }
 
@@ -141,18 +140,39 @@ const setupTest = async () => {
 
 const cleanupTest = async () => {
     try {
-        await Playlist.deleteMany({ userid: mockUserId })
+        await Playlist.deleteMany({ userid: testUserArr[0].userid })
         const videoIds = videoDataArr.map(obj => obj.videoId)
-        // console.log("cleanupTest videoId are", videoIds)
-        PlaylistVideoInfo.deleteMany({ videoId: { $in: videoIds } })
+        await PlaylistVideoInfo.deleteMany({ videoId: { $in: videoIds } })
     } catch (err) {
         throw ("cleanupTest error", err)
     }
 
 }
 
+const testCreatePlaylistWithError = async () => {
+    //videoArray is missing
+    try {
+        const newPlaylist = {
+
+            isPrivate: false
+        }
+        const createUrl = baseUrl + '/playlist/create'
+        const response = await request(createUrl).post("/").send(
+            { playlist: newPlaylist }
+        );
+        // console.log("testCreatePlaylist success docid is", response.body)
+        return response
+    } catch (err) {
+        throw ('testCreatePlaylistWithError', err)
+    }
+}
+
 module.exports = {
-    testCreatePlaylistWithError, videoDataArr,
+    testCreatePlaylistWithError,
     testCreatePlaylist, testGetPlaylist, testUpdatePlaylist, setupTest, cleanupTest,
     testAddVideoToPlaylist, testGetVideosOfPlaylist, testDeleteVideoFromPlaylist
 }
+
+
+
+

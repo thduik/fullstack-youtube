@@ -19,7 +19,7 @@ testRouter.get("/playlist", getPlaylistsOfUser)
 
 testRouter.post("/playlist/create", createPlaylist)
 //const playlistid = req.params.playlistid
-testRouter.post("/playlist/update/:playlistid", addVideoToPlaylist)
+testRouter.post("/playlist/update", addVideoToPlaylist)
 
 
 

@@ -3,8 +3,9 @@ const mongoose = require('mongoose')
 
 
 const PlaylistVideoInfoSchema = new mongoose.Schema({
+    
     playlistId:{
-        //use the _id field of Playlist document, unsensitive data
+        //use the _id field of Playlist document, unsensitive data so feel free to pass that shit around
         type:String,
         index:true,
         required:true

@@ -4,10 +4,7 @@ const { defaultPlaylistThumbnailUrl } = require('./constants');
 
 const playlistSchema = new mongoose.Schema({
 
-    _id: {
-        type:String,
-        required:true
-    },
+    
     playlistName: {
         type:String,
         require:true
@@ -37,6 +34,10 @@ const playlistSchema = new mongoose.Schema({
         type:Boolean,
         required:true,
         default:false
+    },
+    count: { //for this field, remember to increment and decrement properly for each update/delete op
+        type:Number,
+        default:1 //when it's created always 1
     }
     
 })

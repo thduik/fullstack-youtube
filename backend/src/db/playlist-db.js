@@ -24,40 +24,48 @@ const createPlaylistDb = async (playlist, videoData) => {
     //return the _id of document
     //playlistName is not unique, unique identifier is _id of mongoose document
     //because data is not sensitive anyways
-    console.log("createPlaylistDb db called")
+    console.log("createPlaylistDb db called", videoData, playlist)
     try {
         const playlistDoc = await Playlist.create({
-            _id:playlist._id,
+            
             playlistName: playlist.playlistName,
             userid: playlist.userid,
             creatorName: playlist.creatorName,
             isPrivate:playlist.isPrivate ?? false
         })
         const videoRes = await PlaylistVideoInfo.create({
-            playlistId:playlistDoc._id.toString(),
+           
+            playlistId:playlistDoc._id,
             videoId:videoData.videoId,
             videoName:videoData.videoName,
             thumbnailUrl:videoData.thumbnailUrl.url,
             createdAt:videoData.createdAt
         })
         console.log("createPlaylist success doc is", playlistDoc, videoRes)
-        return playlistDoc._id.toString()
+        return playlistDoc
     } catch (err) {
         throw("createPlaylist err", err.message) 
     }
 }
 
-const addVideoToPlaylistDb = async (playlistid, videoData, playlistData) => {
+const returnCreatePlaylistVideoInfoPromise = (playlistid, videoData) => {
+    return PlaylistVideoInfo.create({
+        
+        playlistId:playlistid,
+        videoId:videoData.videoId,
+        videoName:videoData.videoName,
+        thumbnailUrl:videoData.thumbnailUrl,
+        createdAt:videoData.createdAt
+    })
+}
+
+
+const addVideoToPlaylistsConcurrentDb = async (playlistIdArr, videoData) => {
     console.log("videData is", videoData)
     try {
-        const videoRes = await PlaylistVideoInfo.create({
-            playlistId:playlistid,
-            videoId:videoData.videoId,
-            videoName:videoData.videoName,
-            thumbnailUrl:videoData.thumbnailUrl,
-            createdAt:videoData.createdAt
-        })
-        return videoRes
+        const promiseArr = playlistIdArr.map((x)=>returnCreatePlaylistVideoInfoPromise(x, videoData))
+        const res = await Promise.all(promiseArr)
+        return res
     } catch (err) {
         throw("err addVideoToPlaylistDb", err)
     }
@@ -67,7 +75,9 @@ const addVideoToPlaylistDb = async (playlistid, videoData, playlistData) => {
 const deleteVideoFromPlaylistDb = async (video, orderIndex) => {
     console.log("deleteVideoFromPlaylistDb video._id:", video._id, video)
     try {
-        const res = await PlaylistVideoInfo.deleteMany({_id:video._id})
+        //delete promise and increment -1 (decrement) playlist count 
+        const promiseArr = [()=>PlaylistVideoInfo.deleteMany({_id:video._id}), ()=>Playlist.findOneAndUpdate({$inc: {"count":-1} })]
+        const res = await Promise.all(promiseArr)
         return res
     } catch (err) {
         throw("deleteVideoFromPlaylistDb err", err)
@@ -75,4 +85,4 @@ const deleteVideoFromPlaylistDb = async (video, orderIndex) => {
 }
 
 module.exports = {createPlaylistDb, getAllPlaylistsOfUser, getAllVideosOfPlaylist,
-    addVideoToPlaylistDb, deleteVideoFromPlaylistDb}
+    addVideoToPlaylistsConcurrentDb, deleteVideoFromPlaylistDb}

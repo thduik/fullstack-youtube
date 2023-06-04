@@ -9,7 +9,7 @@ const axios = require('axios')
 const { mockUserId, mockPlaylistName } = require('../data')
 const connectDB = require('../../db/connect-db')
 const request = require("supertest")
-const { videoDataArr, setupTest, cleanupTest,
+const {  setupTest, cleanupTest,
     testCreatePlaylist, testGetPlaylist, testGetVideosOfPlaylist,
     testAddVideoToPlaylist, testDeleteVideoFromPlaylist } = require('./playlist-functions')
 
@@ -17,6 +17,7 @@ const baseUrl = 'http://localhost:4444/test'
 
 const assert = require('assert/strict');
 const test = require('node:test')
+const {  videoDataArr, testVideoArr, testPlaylistArr, testUserArr } = require('./data')
 
 
 
@@ -31,25 +32,18 @@ const testLol = async () => {
     try {
         await setupTest()
         await cleanupTest()
-
-        const postRes = await testCreatePlaylist()
-        const playlistArrRes = await testGetPlaylist()
-        console.log("playlistArrRes is playlistArrRes", playlistArrRes)
-        await test('playlist object id type == string', () => {
-            return assert.equal(typeof playlistArrRes[0]._id, 'string');
-        })
-        await test('playlist name == mockPlaylistName', () => {
-            return assert.equal(playlistArrRes[0].playlistName, mockPlaylistName);
-        })
-        await test('playlist array length == 1', () => {
-            return assert.strictEqual(playlistArrRes.length, 1);
-        })
         
-        const playlist = playlistArrRes[0]
-        const videoArrayRes = await testGetVideosOfPlaylist(playlist)
-
+        const postRes = await testCreatePlaylist(testUserArr[0].username, testPlaylistArr[0][0], testVideoArr[0][0][0])
+        const postRes1 = await testCreatePlaylist(testUserArr[0].username, testPlaylistArr[0][1], testVideoArr[0][0][1])
+        const playlistArrRes = await testGetPlaylist()
+        //array pf playlist object json keys are {_id,playlistName,userid,videoId,thumbnailUrl}
+       
+        const videoArrayRes0 = await testGetVideosOfPlaylist(playlistArrRes[0])
+        const videoArrayRes1 = await testGetVideosOfPlaylist(playlistArrRes[1])
+        //array of video obj json keys are {_id, playlistId,videoName}
+        console.log("videoArrayRes", videoArrayRes)
         await test('video array length == 1', () => {
-            return assert.strictEqual(videoArrayRes.length, 1);
+            return assert.strictEqual(videoArrayRes0.length==1 && videoArrayRes1.length==1, 1);
         })
         await test('video object id type == string', () => {
             return assert.equal(typeof videoArrayRes[0]._id, 'string');
@@ -58,9 +52,9 @@ const testLol = async () => {
             return assert.equal(videoArrayRes[0].videoName, videoDataArr[0].videoName);
         })
 
-        const videoAddRes = await testAddVideoToPlaylist(playlist, videoDataArr[1])
-        const videoAddRes1 = await testAddVideoToPlaylist(playlist, videoDataArr[2])
-        const videoArrayRes1 = await testGetVideosOfPlaylist(playlist)
+        const videoAddRes = await testAddVideoToPlaylist([playlist], videoDataArr[1])
+        const videoAddRes11 = await testAddVideoToPlaylist([playlist], videoDataArr[2])
+        const videoArrayRes11 = await testGetVideosOfPlaylist(playlist)
         playlistToVideoMapClientSide.set(playlist._id, videoArrayRes1)
         console.log("playlistToVideoMapClientSide stage 1 is", playlistToVideoMapClientSide.get(playlist._id))
         test('video array length == 3', () => {
@@ -68,7 +62,7 @@ const testLol = async () => {
         })
 
         for (var i = 0; i < 3; i++) {
-            const videoObj = videoArrayRes1[i]
+            const videoObj = videoArrayRes11[i]
             console.log("videoArrayRes1[i] is", videoObj)
             await test(`${i}th video object id type == string`, () => {
                 return assert.equal(typeof videoObj._id, 'string');
@@ -103,11 +97,11 @@ const testLol = async () => {
         })
         await cleanupTest()
     } catch (err) {
+        await cleanupTest()
         throw ("error test", err.message)
     }
 
     process.exit()
 }
 
-testLol()
-
+setTimeout(()=>{testLol()}, 2500)
