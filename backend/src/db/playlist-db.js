@@ -33,6 +33,7 @@ const createPlaylistDb = async (playlist, videoData) => {
             creatorName: playlist.creatorName,
             isPrivate:playlist.isPrivate ?? false
         })
+        
         const videoRes = await PlaylistVideoInfo.create({
            
             playlistId:playlistDoc._id,
@@ -59,7 +60,7 @@ const returnCreatePlaylistVideoInfoPromise = (playlistid, videoData) => {
     })
 }
 
-
+//{
 const addVideoToPlaylistsConcurrentDb = async (playlistIdArr, videoData) => {
     console.log("videData is", videoData)
     try {

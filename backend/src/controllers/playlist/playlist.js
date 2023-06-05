@@ -3,10 +3,13 @@ const { createPlaylistDb, getAllPlaylistsOfUser, getAllVideosOfPlaylist,
 const {postProcessDocArr} = require('./utils')
 
 const createPlaylist = async (req,res,next) => {
-    console.log("createPlaylist called", req.auth.userid)
-    const playlist = req.body.playlist
-    const videoInfo = req.body.videoInfo
+    const playlist = req.body.playlist //{videoId:string,videoName:string,thumbnailUrl:string,createdAt:int}
+    const videoInfo = req.body.videoInfo //{playlistName:string, userid:string, isPrivate:bool,isUnlisted:bool }
+
+    // console.log("createPlaylist called videoInfo", videoInfo, "playlist", playlist)
+
     try {
+        
         const doc = await createPlaylistDb(playlist, videoInfo)
         res.json({doc:doc, success:true})
 
@@ -18,8 +21,8 @@ const createPlaylist = async (req,res,next) => {
 }
 
 const getPlaylistsOfUser = async (req,res,next) => {
-    // console.log("getPlaylistsOfUser req.auth is", req.auth)
-    const userid = req.auth.userid
+    const userid = req.auth.userid //string
+
     try {
         const playlistsDocs = await getAllPlaylistsOfUser(userid)
         postProcessDocArr(playlistsDocs)
@@ -32,7 +35,7 @@ const getPlaylistsOfUser = async (req,res,next) => {
 }
 
 const getVideosListOfPlaylist = async (req,res,next) => {
-    const playlistid = req.params.playlistid
+    const playlistid = req.params.playlistid //string
     try {
         const videoDocs = await getAllVideosOfPlaylist(playlistid)
         postProcessDocArr(videoDocs)
@@ -45,8 +48,10 @@ const getVideosListOfPlaylist = async (req,res,next) => {
 }
 
 const addVideoToPlaylist = async (req,res,next) => {
-    const playlistIdArr = req.body.playlistIdArr
-    const videoLol = req.body.videoData
+    const playlistIdArr = req.body.playlistIdArr //[string] array of playlist id
+    const videoLol = req.body.videoData // {videoId:string, videoName:string, thumbnailUrl:string, createdAt:string}
+    // console.log("addVideoToPlaylist playlistIdArr",playlistIdArr,"videoLol",videoLol)
+
     try {
         const addRes = await addVideoToPlaylistsConcurrentDb(playlistIdArr, videoLol)
         
@@ -58,11 +63,10 @@ const addVideoToPlaylist = async (req,res,next) => {
 }
 
 const deleteVideoFromPlaylist = async (req,res,next) => {
-    const playlistid = req.params.playlistid
     const video = req.body.video
-    const playlistData = req.body.playlistData
     const videoOrderIndex = req.body.videoOrderIndex
     console.log("deleteVideoFromPlaylist video:", video)
+    
     try {
         const result = await deleteVideoFromPlaylistDb(video, videoOrderIndex)
         res.json({success:true})

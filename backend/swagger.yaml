@@ -1,0 +1,255 @@
+paths:
+# [POST] users
+  /signup:
+    post:
+      tags:
+      - users
+      summary: Signup new user
+      requestBody:
+        description: Signup a new user
+        required: true
+        content:
+            application/json:      
+              schema:
+                $ref: '#/definitions/signup'
+      responses:
+        201:
+          description: 'Created'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+# [POST] users
+  /login:
+    post:
+      tags:
+      - users
+      summary: Login user
+      requestBody:
+        description: Signup a new user
+        required: true
+        content:
+            application/json:      
+              schema:
+                $ref: '#/definitions/login'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Bad Request'
+        404:
+          description: 'Authentication token missing'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+# [POST] users
+  /logout:
+    post:
+      tags:
+      - users
+      summary: Logout user
+      security: 
+        - BearerAuth: []
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Bad Request'
+        404:
+          description: 'Authentication token missing'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+# [GET] healthcheck
+  /health:
+    get:
+      tags:
+      - health
+      summary: Responds if the app is up and running
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+# [GET] clients
+  /clients:
+    get:
+      tags:
+      - clients
+      summary: Find All Clients
+      security: 
+        - BearerAuth: []
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+
+# [POST] clients/query
+  /clients/query:
+    post:
+      tags:
+      - clients
+      summary: Find Client By Name
+      security: 
+        - BearerAuth: []
+      parameters:
+      - in: query
+        name: name
+        required: true
+        schema: 
+          type: string
+        description: Client Name
+      responses:
+        200:
+          description: 'Ok'
+        400:
+          description: 'Bad Request'
+        500:
+          description: 'Server Error'
+
+# [GET] clients/id
+  /clients/{id}:
+    get:
+      tags:
+      - clients
+      summary: Find Client By Id
+      security: 
+        - BearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        description: Client Id
+        required: true
+        type: integer
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+  /policies:
+    get:
+      tags:
+      - policies
+      summary: Find All Policies
+      security: 
+        - BearerAuth: []
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+
+# [POST] policies/query
+  /policies/query:
+    post:
+      tags:
+      - policies
+      summary: Find Policy By Client Name
+      security: 
+        - BearerAuth: []
+      parameters:
+      - in: query
+        name: clientName
+        required: true
+        schema: 
+          type: string
+        description: Client Name
+      responses:
+        200:
+          description: 'Ok'
+        400:
+          description: 'Bad Request'
+        500:
+          description: 'Server Error'
+# [POST] policies/query
+  /policies/search:
+    post:
+      tags:
+      - policies
+      summary: Find Client By Policy Id
+      security: 
+        - BearerAuth: []
+      parameters:
+      - in: query
+        name: policyId
+        required: true
+        schema: 
+          type: string
+        description: Policy Number
+      responses:
+        200:
+          description: 'Ok'
+        400:
+          description: 'Bad Request'
+        500:
+          description: 'Server Error'
+
+# definitions
+definitions:
+  signup:
+    type: object
+    required:
+        - name
+        - email
+        - password
+        - role
+    properties:
+      name: 
+        type: string
+        description: User name
+      email:
+        type: string
+        description: User email
+      password:
+        type: string
+        description: User password
+      role: 
+        type: string
+        description: User role
+  login:
+    type: object
+    required:
+        - email
+        - password
+    properties:
+      email:
+        type: string
+        description: User email
+      password:
+        type: string
+        description: User password
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    user:
+      type: object
+      required:
+        - name
+        - email
+        - password
+        - role
+      properties:
+        name:
+          type: string
+          description: User name
+        email:
+          type: string
+          description: User email
+        password: 
+          type: string
+          description: User password
+        role:
+          type: string
+          description: User role

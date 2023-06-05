@@ -20,44 +20,57 @@ const loginSchema = {}
 const bcrypt = {}
 
 var ObjectID = require("bson-objectid");
-const { testCreatePlaylist, testGetPlaylist,  cleanupTest, setupTest } = require("./src/tests/playlist");
+const { testCreatePlaylist, testGetPlaylist, cleanupTest, setupTest } = require("./src/tests/playlist");
 
 
-app.post("/dcm", loginUser)
+const redis = require('redis')
 
-const loginUser = (req,res,next) => {
-    const {email, password, newPassword } = req.body
+let redisClient;
+
+const connectCache = async () => {
+
     try {
-        const data = await loginSchema.find({email})
-        const hashedPassword = data.password
-        const {success} = await bcrypt.compare(password, hashedPassword)
-        const newHash = await bcrypt.hash(newPassword, 142)
-        if (success && newHash) {
-            loginSchema.update({email},{password:newPassword}) 
-            const xxxData = await fetchXXXData()
-        }
-        res.cookie('concac','ditme')
+        redisClient = redis.createClient();
+        await redisClient.connect();
     } catch (err) {
-        console.log("loi con me m r", err)
+        throw ("err connectCache", err)
+    }
+
+};
+
+
+const testlolol = async () => {
+    try {
+
+
+        await connectCache()
+        redisClient.hSet('abcdef', {
+            name: 'playlist1',
+            thumbnail: 'abssudhsjds'
+        })
+        redisClient.hSet('playlist:abcdefghi', {
+            name: 'playlist2',
+            thumbnail: 'abssudhsjdsasdasd'
+        })
+        const res = await redisClient.hGet('abcdef','name')
+        const res1 = await redisClient.hGetAll('abcdef')
+
+        console.log("ress", JSON.stringify(res))
+    } catch (err) {
+        console.log("errrr", err)
     }
 }
 
-const testlolol = () => {
-    const arr = [{x:3},{x:2},{x:-4},{x:6},{x:0}]
-    arr.sort((a,b)=>a.x-b.x)
-    console.log(arr)
-}
+const benchmarkCreatePlaylist = async (ntimes = 1000) => {
 
-const benchmarkCreatePlaylist = async (ntimes=1000) => {
-    
     await setupTest()
     const dateStart = Date.now()
     await testCreatePlaylist()
-    for (var i = 0; i < ntimes; i ++) {
+    for (var i = 0; i < ntimes; i++) {
         await testGetPlaylist()
     }
-    const timeTook = ( Date.now() - dateStart )
-    console.log(`test ${ntimes} times took ${timeTook} ms (or ${timeTook/1000}) seconds`)
+    const timeTook = (Date.now() - dateStart)
+    console.log(`test ${ntimes} times took ${timeTook} ms (or ${timeTook / 1000}) seconds`)
     await cleanupTest()
     process.exit()
 }

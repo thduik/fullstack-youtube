@@ -16,7 +16,8 @@ const PlaylistVideoInfoSchema = new mongoose.Schema({
     },
     videoId:{
         required:true,
-        type:String
+        type:String,
+        index:true
     },
     channelName:String,
     thumbnailUrl:String,

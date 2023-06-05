@@ -14,5 +14,9 @@ const getUserFromCacheOrDb = async (userid) => {
     }
 }
 
-module.exports = {getUserFromCacheOrDb, createPlaylistDb, getAllPlaylistsOfUser, getAllVideosOfPlaylist, 
-    addVideoToPlaylistsConcurrentDb, deleteVideoFromPlaylistDb}
+module.exports = {getUserFromCacheOrDb, 
+    createPlaylistDb, 
+    getAllPlaylistsOfUser, 
+    getAllVideosOfPlaylist, 
+    addVideoToPlaylistsConcurrentDb, 
+    deleteVideoFromPlaylistDb}
