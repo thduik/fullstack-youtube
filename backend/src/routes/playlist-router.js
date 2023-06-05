@@ -14,7 +14,7 @@ playlistRouter.post("/",authUserOnly)
 
 playlistRouter.post("/create", createPlaylist)
 //const playlistid = req.params.playlistid
-playlistRouter.post("/update/:playlistid", addVideoToPlaylist)
+playlistRouter.post("/update/", addVideoToPlaylist)
 
 
 

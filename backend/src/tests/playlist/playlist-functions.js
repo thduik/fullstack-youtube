@@ -95,9 +95,11 @@ const testGetVideosOfPlaylist = async (playlist) => {
 }
 
 const testAddVideoToPlaylist = async (playlistArr, videoData) => {
+    //this happens because in playlistSelectMenu frontend, 1 video can be added to multiple playlists
+    
     console.log("testAddVideoToPlaylist called", playlistArr)
     try {
-        videoData._id = ObjectID().toHexString()
+        
         const updateUrl = baseUrl + `/playlist/update/`
         const playlistIdArr = playlistArr.map(o => o._id)
         console.log("testAddVideoToPlaylist", videoData, playlistIdArr)

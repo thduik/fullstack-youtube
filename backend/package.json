@@ -22,7 +22,7 @@
     "start": "node src/server.js --delay 1",
     "dev": "NODE_ENV=development nodemon src/server.js --delay 1",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "testplaylist": "node src/tests/playlist/playlist-test.js",
+    "testplaylist": "nodemon src/tests/playlist/playlist-test.js",
     "testsearch": "node src/tests/search/search-test.js"
   },
   "keywords": [],

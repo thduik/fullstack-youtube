@@ -16,11 +16,40 @@
 //     console.log("test took", Date.now() - startTime, "ms")
 // }
 
+const loginSchema = {}
+const bcrypt = {}
+
 var ObjectID = require("bson-objectid");
 const { testCreatePlaylist, testGetPlaylist,  cleanupTest, setupTest } = require("./src/tests/playlist");
 
-const ntimes = 1000
-const testlolol = async () => {
+
+app.post("/dcm", loginUser)
+
+const loginUser = (req,res,next) => {
+    const {email, password, newPassword } = req.body
+    try {
+        const data = await loginSchema.find({email})
+        const hashedPassword = data.password
+        const {success} = await bcrypt.compare(password, hashedPassword)
+        const newHash = await bcrypt.hash(newPassword, 142)
+        if (success && newHash) {
+            loginSchema.update({email},{password:newPassword}) 
+            const xxxData = await fetchXXXData()
+        }
+        res.cookie('concac','ditme')
+    } catch (err) {
+        console.log("loi con me m r", err)
+    }
+}
+
+const testlolol = () => {
+    const arr = [{x:3},{x:2},{x:-4},{x:6},{x:0}]
+    arr.sort((a,b)=>a.x-b.x)
+    console.log(arr)
+}
+
+const benchmarkCreatePlaylist = async (ntimes=1000) => {
+    
     await setupTest()
     const dateStart = Date.now()
     await testCreatePlaylist()
