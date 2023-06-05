@@ -21,16 +21,13 @@ export const getPlaylist = async (callback) => {
 
 }
 
-export const postAddVideoToPlaylists = async (video, playlistarr) => {
-    if (!playlistarr.length) { return }
-    console.log("postAddVideoToPlaylists called", video, playlistarr.map(o => o.playlistName))
-}
 
-export const postPlaylistCreate = async ( newPlaylist, video) => {
+
+export const postPlaylistCreate = async (newPlaylist, video) => {
     //user = {userid}
     //playlist.name, playlist.privacy
     try {
-       
+
         const createUrl = baseUrl + '/playlist/create'
         const res = await axios.post(createUrl,
             {
@@ -51,14 +48,23 @@ export const postPlaylistCreate = async ( newPlaylist, video) => {
     }
 }
 
-export const postAddVideoToPlaylist = async (videoData, playlistArr) => {
+const processVideoData = (videoData) => {
+    const res = {
+        videoId: videoData.videoId,
+        videoName: videoData.tite,
+        thumbnailUrl: videoData.thumbnails.default.url,
+        createdAt: Date.now()
+    }
+    return res
+}
+
+export const postAddVideoToPlaylist = async (video, playlistArr) => {
     if (!playlistArr.length) { return }
-    console.log("testAddVideoToPlaylist called", playlistArr)
-    
+    console.log("postAddVideoToPlaylist called", videoData, playlistArr)
+    const videoData = processVideoData(video)
     try {
         const updateUrl = baseUrl + `/playlist/update/`
-        const playlistIdArr = playlistArr.map(o => o._id ?? "s")
-        console.log("testAddVideoToPlaylist", videoData, playlistIdArr)
+        const playlistIdArr = playlistArr.map(o => o._id)
         const res = await axios.post(updateUrl,
             {
                 videoData: videoData,
@@ -75,3 +81,26 @@ export const postAddVideoToPlaylist = async (videoData, playlistArr) => {
 }
 
 
+const testAddVideoToPlaylist = async (playlistArr, videoData) => {
+    //this happens because in playlistSelectMenu frontend, 1 video can be added to multiple playlists
+
+    console.log("testAddVideoToPlaylist called", playlistArr)
+    try {
+
+        const updateUrl = baseUrl + `/playlist/update/`
+        const playlistIdArr = playlistArr.map(o => o._id)
+        console.log("testAddVideoToPlaylist", videoData, playlistIdArr)
+        const res = await axios.post(updateUrl,
+            {
+                videoData: videoData,
+                playlistIdArr: playlistIdArr
+
+            })
+        // console.log("testPostAxios success docid is", res.data)
+        return res.data
+
+    } catch (err) {
+        throw ("err testAddVideoToPlaylist", err)
+    }
+
+}
