@@ -20,10 +20,11 @@ const createPlaylist = async (req, res, next) => {
 
 const getPlaylistsOfUser = async (req, res, next) => {
     const userid = req.auth.userid
-    
+    console.log("getPlaylistsOfUserController userid ", userid)
     try {
         const playlistsDocs = await getPlaylistsOfUserDataM(userid)
-        postProcessDocArr(playlistsDocs)
+        // postProcessDocArr(playlistsDocs)
+        // console.log("getPlaylistsOfUser success", playlistsDocs[0].thumbnailUrl)
         res.json({ playlists: playlistsDocs, success: true })
     } catch (err) {
         console.log("error getPlaylistsOfUser", err)

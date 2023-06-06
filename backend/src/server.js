@@ -9,13 +9,13 @@ if (process.env.NODE_ENV == 'development') {
   }, 2400000)
 }
 
-process.on('exit', ()=>{console.log("processMemoryUsage:",  process.memoryUsage() )})
+process.on('exit', ()=>{})
 
 const start = async () => {
     const portes = process.env.API_PORTES
     
     await connectDB()
-    await connectCache()
+    // await connectCache()
     app.listen(portes)
     console.log("app listening on port ", portes)
   }

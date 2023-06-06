@@ -2,6 +2,7 @@ const expresso = require('express');
 const { setCookiesAndSendResPostLogin } = require('../controllers/auth/utils');
 const { createPlaylist, getPlaylistsOfUser, getVideosListOfPlaylist, addVideoToPlaylist, deleteVideoFromPlaylist } = require('../controllers/playlist/playlist');
 const { mockUserId } = require('../tests/data');
+const { testUserArr } = require('../tests/playlist/data');
 const testRouter = expresso.Router();
 const {testVerifyAuthId} = require('./test-utils.js')
 
@@ -10,7 +11,7 @@ const {testVerifyAuthId} = require('./test-utils.js')
 
 testRouter.use('/', (req,res,next)=>{
     console.log("testRouter GET called")
-    req.auth.userid = mockUserId
+    req.auth.userid = testUserArr[0].userid
     next()
 })
 

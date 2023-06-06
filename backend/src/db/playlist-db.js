@@ -33,16 +33,18 @@ const createPlaylistDb = async (playlist, videoData) => {
             creatorName: playlist.creatorName,
             isPrivate:playlist.isPrivate ?? false
         })
+
+        const playlistId = playlistDoc._id.toString()
+        console.log("playlistDocDb _id", playlistDoc._id.toString())
         
         const videoRes = await PlaylistVideoInfo.create({
-           
-            playlistId:playlistDoc._id,
+            playlistId:playlistId,
             videoId:videoData.videoId,
             videoName:videoData.videoName,
             thumbnailUrl:videoData.thumbnailUrl.url,
             createdAt:videoData.createdAt
         })
-        console.log("createPlaylist success doc is", playlistDoc, videoRes)
+        console.log("createPlaylistDb success doc is", playlistDoc, videoRes)
         return playlistDoc
     } catch (err) {
         throw("createPlaylist err", err.message) 
@@ -62,7 +64,7 @@ const returnCreatePlaylistVideoInfoPromise = (playlistid, videoData) => {
 
 //{
 const addVideoToPlaylistsConcurrentDb = async (playlistIdArr, videoData) => {
-    console.log("videData is", videoData)
+    console.log("addVideoToPlaylistsConcurrentDb is", videoData, playlistIdArr)
     try {
         const promiseArr = playlistIdArr.map((x)=>returnCreatePlaylistVideoInfoPromise(x, videoData))
         const res = await Promise.all(promiseArr)

@@ -14,5 +14,6 @@ const connectCache = async () => {
   
 };
 
+connectCache()
 
 module.exports = { redisClient, connectCache }

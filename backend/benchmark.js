@@ -41,26 +41,25 @@ const connectCache = async () => {
 
 const testlolol = async () => {
     try {
-        const jsonObj = {
-            name: 'playlist2',
-            thumbnail: 'abssudhsjdsasdasd',
-            //fuck: ['abssudhsjdsasdasd','abssudhsjdsasdasd','abssudhsjdsasdasd','abssudhsjdsasdasd','abssudhsjdsasdasd','abssudhsjdsasdasd','abssudhsjdsasdasd','abssudhsjdsasdasd']
-        }
 
         await connectCache()
 
-        const ntimes = 800000
 
-        const add2 = await redisClient.sAdd('set11sds2', 'asds222d')
-        
-        const arr = ['adsdadadsaasdasd','adsdadadsaasdasdadsdadadsaasdasdb','cadsdadadsaasdasdadsdadadsaasdasdadsdadadsaasdasd','dadsdadadsaasdasdadsdadadsaasdasdadsdadadsaasdasd']
-        for (var i = 0;i<ntimes;i++) {arr.push(arr[2]) }
-        arr.map((s)=>redisClient.sAdd('set112', s))
-
-
-        const res2 = await redisClient.sMembers('set112')
-
-        console.log("set of key set112 values are", res2)
+        const obj = {
+            _id: '647f2e9296eaef1ef5984b4c',
+            playlistName: 'testUsername',
+            userid: 'testUserId',
+            length: 0,
+            thumbnailUrl: 'https://i.ytimg.com/vi/4QYm50O7QXI/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBltQ9qu0QKDSmwidGAtZnfDT2XZA',
+            //isPrivate: true,
+            //isUnlisted: false,
+            createdAt: 1686056592950,
+            count: 1,
+            __v: 0
+          }
+        const res2 = await redisClient.sMembers('set11ssasdasd2')
+        const res3 = await redisClient.hSet('key1', obj)
+        console.log("set of key set112 values are", res2, res3)
     } catch (err) {
         console.log("errrr", err)
     }
