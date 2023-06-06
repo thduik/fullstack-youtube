@@ -41,21 +41,26 @@ const connectCache = async () => {
 
 const testlolol = async () => {
     try {
-
+        const jsonObj = {
+            name: 'playlist2',
+            thumbnail: 'abssudhsjdsasdasd',
+            //fuck: ['abssudhsjdsasdasd','abssudhsjdsasdasd','abssudhsjdsasdasd','abssudhsjdsasdasd','abssudhsjdsasdasd','abssudhsjdsasdasd','abssudhsjdsasdasd','abssudhsjdsasdasd']
+        }
 
         await connectCache()
-        redisClient.hSet('abcdef', {
-            name: 'playlist1',
-            thumbnail: 'abssudhsjds'
-        })
-        redisClient.hSet('playlist:abcdefghi', {
-            name: 'playlist2',
-            thumbnail: 'abssudhsjdsasdasd'
-        })
-        const res = await redisClient.hGet('abcdef','name')
-        const res1 = await redisClient.hGetAll('abcdef')
 
-        console.log("ress", JSON.stringify(res))
+        const ntimes = 800000
+
+        const add2 = await redisClient.sAdd('set11sds2', 'asds222d')
+        
+        const arr = ['adsdadadsaasdasd','adsdadadsaasdasdadsdadadsaasdasdb','cadsdadadsaasdasdadsdadadsaasdasdadsdadadsaasdasd','dadsdadadsaasdasdadsdadadsaasdasdadsdadadsaasdasd']
+        for (var i = 0;i<ntimes;i++) {arr.push(arr[2]) }
+        arr.map((s)=>redisClient.sAdd('set112', s))
+
+
+        const res2 = await redisClient.sMembers('set112')
+
+        console.log("set of key set112 values are", res2)
     } catch (err) {
         console.log("errrr", err)
     }

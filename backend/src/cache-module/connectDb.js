@@ -7,6 +7,7 @@ const connectCache = async () => {
   try {
     redisClient = redis.createClient();
     await redisClient.connect();
+    console.log("connectCache success")
   } catch (err) {
     throw("err connectCache", err)
   }
