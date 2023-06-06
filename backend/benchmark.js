@@ -37,29 +37,31 @@ const connectCache = async () => {
     }
 
 };
-
+const obj = {
+    _id: '647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c',
+    playlistName: 'testUsername647f2e9296eaef1ef5testUserId647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4ctestUserId647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4ctestUserId647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4ctestUserId647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4ctestUserId647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c',
+    userid: 'testUserId647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4ctestUserId647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4ctestUserId647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4ctestUserId647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4ctestUserId647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4ctestUserId647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c647f2e9296eaef1ef5984b4c',
+    length: 0,
+    //isPrivate: true,
+    //isUnlisted: false,
+    createdAt: 1686056592950,
+    count: 1,
+    __v: 0
+  }
 
 const testlolol = async () => {
+    for (var i = 0;i<5;i++) {obj._id = obj._id+obj._id }
     try {
 
         await connectCache()
+        const date0 = Date.now()
+        redisClient.hSet('key1', obj)
 
+        for (var i = 0;i < 20000;i++) {
+            const aa = await redisClient.hGetAll('key1')
 
-        const obj = {
-            _id: '647f2e9296eaef1ef5984b4c',
-            playlistName: 'testUsername',
-            userid: 'testUserId',
-            length: 0,
-            thumbnailUrl: 'https://i.ytimg.com/vi/4QYm50O7QXI/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBltQ9qu0QKDSmwidGAtZnfDT2XZA',
-            //isPrivate: true,
-            //isUnlisted: false,
-            createdAt: 1686056592950,
-            count: 1,
-            __v: 0
-          }
-        const res2 = await redisClient.sMembers('set11ssasdasd2')
-        const res3 = await redisClient.hSet('key1', obj)
-        console.log("set of key set112 values are", res2, res3)
+        }
+        console.log("took", Date.now() - date0, "ms" )
     } catch (err) {
         console.log("errrr", err)
     }

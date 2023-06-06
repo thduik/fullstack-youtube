@@ -1,4 +1,4 @@
-const { getPlaylistsOfUserDataM } = require("../../data-manager")
+const { getPlaylistsOfUserDataM, getVideosListOfPlaylistDataM } = require("../../data-manager")
 const { createPlaylistDb, getAllPlaylistsOfUser, getAllVideosOfPlaylist,
     addVideoToPlaylistsConcurrentDb, deleteVideoFromPlaylistDb } = require("../../db/playlist-db")
 const { postProcessDocArr } = require('./utils')
@@ -9,6 +9,7 @@ const createPlaylist = async (req, res, next) => {
 
     try {
         const doc = await createPlaylistDb(playlist, videoInfo)
+        console.log("createPLaylistDoc",doc)
         res.json({ doc: doc, success: true })
 
     } catch (err) {
@@ -24,7 +25,7 @@ const getPlaylistsOfUser = async (req, res, next) => {
     try {
         const playlistsDocs = await getPlaylistsOfUserDataM(userid)
         // postProcessDocArr(playlistsDocs)
-        // console.log("getPlaylistsOfUser success", playlistsDocs[0].thumbnailUrl)
+        console.log("getPlaylistsOfUserController success", playlistsDocs[0].thumbnailUrl)
         res.json({ playlists: playlistsDocs, success: true })
     } catch (err) {
         console.log("error getPlaylistsOfUser", err)
@@ -47,16 +48,25 @@ const getPlaylistsOfUser = async (req, res, next) => {
 // }
 
 const getVideosListOfPlaylist = async (req, res, next) => {
+    
+
     const playlistid = req.params.playlistid //string
-    try {
-        const videoDocs = await getAllVideosOfPlaylist(playlistid)
-        postProcessDocArr(videoDocs)
-        // console.log("getVideosListOfPlaylist success", videoDocs)
-        res.json({ videos: videoDocs })
+    try {   
+        const videoDocs = await getVideosListOfPlaylistDataM(playlistid)
+        console.log("getVideosListOfPlaylistController success", videoDocs)
+        return videoDocs
     } catch (err) {
-        // console.log("getVideosListOfPlaylist", err)
-        res.status(402).send("error getVideosListOfPlaylist")
+        console.log("getVideosListOfPlaylist err", err)
     }
+    // try {
+    //     const videoDocs = await getAllVideosOfPlaylist(playlistid)
+    //     postProcessDocArr(videoDocs)
+    //     // console.log("getVideosListOfPlaylist success", videoDocs)
+    //     res.json({ videos: videoDocs })
+    // } catch (err) {
+    //     // console.log("getVideosListOfPlaylist", err)
+    //     res.status(402).send("error getVideosListOfPlaylist")
+    // }
 }
 
 const addVideoToPlaylist = async (req, res, next) => {

@@ -4,8 +4,9 @@ const { videoDataArr, testVideoArr, testPlaylistArr, testUserArr } = require('./
 
 
 const stage1Test = async (videoArrayRes0, videoArrayRes1) => {
+    console.log("videoArrayRes0",videoArrayRes0,"videoArrayRes1", videoArrayRes1)
     //test create playlist with initial video
-    await test('bot video arrays length == 1', () => {
+    await test('both video arrays length == 1', () => {
         return assert.strictEqual(videoArrayRes0.length == 1 && videoArrayRes1.length == 1, true);
     })
     await test('video object id type == string', () => {
