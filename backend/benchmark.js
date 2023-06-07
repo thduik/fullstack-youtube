@@ -47,19 +47,25 @@ const obj = {
 }
 
 const testlolol = async () => {
-    for (var i = 0; i < 5; i++) { obj._id = obj._id + obj._id }
-    try {
+    for (var i = 0; i < 5; i++) {
 
-        await connectCache()
-        const date0 = Date.now()
-        redisClient.hSet('key11', obj)
 
-        const aa = await redisClient.hGetAll('key11')
-        console.log(aa.createdAt)
 
-        console.log("took", Date.now() - date0, "ms")
-    } catch (err) {
-        console.log("errrr", err)
+        try {
+
+            await connectCache()
+            const date0 = Date.now()
+            await redisClient.hSet('key11', obj)
+            await redisClient.hSet('key11', obj)
+
+            const aa = await redisClient.hGetAll('key11')
+            console.log(aa)
+
+            console.log("took", Date.now() - date0, "ms")
+        } catch (err) {
+            console.log("errrr", err)
+        }
+
     }
 }
 

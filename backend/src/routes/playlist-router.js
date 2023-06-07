@@ -1,6 +1,5 @@
 const expresso = require('express');
 const { createPlaylist, getPlaylistsOfUser, getVideosListOfPlaylist, addVideoToPlaylist, deleteVideoFromPlaylist } = require('../controllers/playlist/playlist');
-const { mockUserId } = require('../tests/data');
 const playlistRouter = expresso.Router();
 const {testVerifyAuthId} = require('./test-utils.js');
 const { authUserOnly } = require('./utils');

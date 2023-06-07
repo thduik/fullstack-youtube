@@ -2,7 +2,6 @@ const Playlist = require('../../models/Playlist')
 const PlaylistVideoInfo = require('../../models/PlaylistVideoInfo')
 
 const axios = require('axios')
-const { mockUserId, mockPlaylistName, mockUsername } = require('../data')
 const connectDB = require('../../db/connect-db')
 const request = require("supertest")
 var ObjectID = require("bson-objectid");
@@ -98,12 +97,12 @@ const testGetVideosOfPlaylist = async (playlist) => {
 const testAddVideoToPlaylist = async (playlistArr, videoData) => {
     //this happens because in playlistSelectMenu frontend, 1 video can be added to multiple playlists
     
-    console.log("testAddVideoToPlaylist called", playlistArr)
+    // console.log("testAddVideoToPlaylist called", playlistArr)
     try {
         
         const updateUrl = baseUrl + `/playlist/update/`
         const playlistIdArr = playlistArr.map(o => o._id)
-        console.log("testAddVideoToPlaylist", videoData, playlistIdArr)
+        // console.log("testAddVideoToPlaylist", videoData, playlistIdArr)
         const res = await axios.post(updateUrl,
             {
                 videoData: videoData,

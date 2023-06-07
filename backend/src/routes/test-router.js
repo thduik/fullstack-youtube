@@ -1,7 +1,6 @@
 const expresso = require('express');
 const { setCookiesAndSendResPostLogin } = require('../controllers/auth/utils');
 const { createPlaylist, getPlaylistsOfUser, getVideosListOfPlaylist, addVideoToPlaylist, deleteVideoFromPlaylist } = require('../controllers/playlist/playlist');
-const { mockUserId } = require('../tests/data');
 const { testUserArr } = require('../tests/playlist/data');
 const testRouter = expresso.Router();
 const {testVerifyAuthId} = require('./test-utils.js')
@@ -68,17 +67,6 @@ testRouter.get("/playlist", async (req,res,next)=>{
 *Cookie testing needs to be done from browser
 */
 
-// const mockUserData = {
-//     userid:'mockUserId',
-//     googleid: 'mockGoogleId',
-//     email: 'mockEmail',
-//     verifiedemail: true,
-//     name: 'John Doe',
-//     givenname: 'John',
-//     familyname: 'Doe',
-//     picture: "https://imageio.forbes.com/specials-images/imageserve/5d35eacaf1176b0008974b54/2020-Chevrolet-Corvette-Stingray/0x0.jpg?format=jpg&crop=4560,2565,x790,y784,safe&width=960",
-//     locale: 'en'
-// }
 
 // testRouter.post("/cookies", (req,res,next)=>{
 

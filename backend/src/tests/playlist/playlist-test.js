@@ -6,7 +6,6 @@
 const Playlist = require('../../models/Playlist')
 const PlaylistVideoInfo = require('../../models/PlaylistVideoInfo')
 const axios = require('axios')
-const { mockUserId, mockPlaylistName } = require('../data')
 const connectDB = require('../../db/connect-db')
 const request = require("supertest")
 const {  setupTest, cleanupTest,

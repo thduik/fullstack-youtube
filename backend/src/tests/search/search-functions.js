@@ -1,7 +1,6 @@
 
 
 const axios = require('axios')
-const { mockUserId, mockPlaylistName, mockUsername } = require('../data')
 
 require('dotenv').config()
 
