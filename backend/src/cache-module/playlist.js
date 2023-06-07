@@ -1,16 +1,33 @@
 const { redisClient } = require('./connectDb')
 const { parseVideoDoc, parsePlaylistDoc } = require('./utils')
 
+const convertVideoDoc = (doc) => {
+    const res = {
+        playlistId: doc.playlistId,
+        videoName: doc.videoName,
+        videoId: doc.videoId,
+        thumbnailUrl: doc.thumbnailUrl,
+        createdAt: doc.createdAt,
+        _id: doc._id.toString(),
+        __v: 0
+    }
+    return res
+}
+
 const addVideoToPlaylistsCache = async (videoDocArr) => {
     console.log("addVideoToPlaylistsCache", videoDocArr)
-    videoDocArr.map((o)=>{
-        const doc = o
-        doc._id = doc._id.toString()
-        console.log("addVideoToPlaylistsCache map doc._id", doc._id)
-        redisClient.sAdd(`playlist:${doc.playlistId}>:videos`,doc._id) 
-        redisClient.hset(`playvideo':${doc.videoId}`) 
-
-    })
+    try {
+        for (var i = 0; i < videoDocArr.length; i++) {
+            
+            const doc = convertVideoDoc(videoDocArr[i])
+            console.log("addVideoToPlaylistsCache map doc._id", doc._id)
+            await redisClient.sAdd(`playlist:${doc.playlistId}:videos`, doc.videoId+":"+doc.createdAt.toString())
+            await redisClient.hSet(`playvideo':${doc.videoId}`, doc)
+        }
+        return { success: true }
+    } catch (err) {
+        console.log("addVideoToPlaylistsCache err", err)
+    }
 }
 
 const createPlaylistCache = async (result) => {
@@ -26,10 +43,10 @@ const createPlaylistCache = async (result) => {
 
         await redisClient.sAdd(`user:${playlist.userid}:playlists`, playlist._id)
         await redisClient.hSet(`playlist:${playlist._id}`, playlist)
-        await redisClient.sAdd(`playlist:${playlist._id}:videos`, video._id)
-        await redisClient.hSet(`playvideo:${video._id}`, video)
+        await redisClient.sAdd(`playlist:${playlist._id}:videos`, video.videoId+":"+video.createdAt.toString())
+        await redisClient.hSet(`playvideo:${video.videoId}`, video)
         // const res = await redisClient.sMembers(`playlist:${playlist._id}:videos`)
-        console.log("createPlaylistCache finished video._id and playlist._id", video._id, playlist._id)
+        console.log("createPlaylistCache finished video.videoId and playlist._id", video.videoId, playlist._id)
 
         return
     } catch (err) {
@@ -47,8 +64,8 @@ const addVideosOfPlaylistToCache = async (playlistid, videoDocs) => {
         for (var i = 0; i < videoDocs.length; i++) {
             const video = videoDocs[i]
             video._id = video._id.toString()
-            await redisClient.sAdd(`playlist:${playlistid}:videos`, video._id)
-            await redisClient.hSet(`playvideo:${video._id}`, video)
+            await redisClient.sAdd(`playlist:${playlistid}:videos`, video.videoId + ":" + video.createdAt.toString())
+            await redisClient.hSet(`playvideo:${video.videoId}`, video)
             console.log("addVideosOfPlaylistToCache success")
         }
         return { success: true }
@@ -125,11 +142,13 @@ const getAllVideosOfPlaylistFromCache = async (playlistid) => {
         const videoResArr = []
         for (var i = 0; i < videoIdArr.length; i++) {
             // console.log("videoIdArrMap",videoIdArr[i])
-            const videoRes = await redisClient.hGetAll(`playvideo:${videoIdArr[i]}`)
-            // console.log("cache videoRes", videoRes)
+            const [videoId, createdAtString] = videoIdArr[i].split(":")
+            const videoRes = await redisClient.hGetAll(`playvideo:${videoId}`)
+            videoRes.createdAt = parseInt(createdAtString)
+            console.log("cacheVideoRes", videoId, videoRes)
             if (videoRes) { videoResArr.push(videoRes) }
         }
-        return {isSet:true, data:videoResArr}
+        return { isSet: true, data: videoResArr }
 
     } catch (err) {
         console.log("error getAllVideosOfPlaylistFromCache, throw next line")

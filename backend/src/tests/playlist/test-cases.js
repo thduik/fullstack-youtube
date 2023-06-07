@@ -23,7 +23,7 @@ const stage1Test = async (videoArrayRes0, videoArrayRes1) => {
 
 const stage2Test = async (videoArrayRes11, videoArrayRes22) => {
     //test add Video to playlist
-    console.log("stage3 videonames are", videoArrayRes11.map(o => o.videoName), videoArrayRes22.map(o => o.videoName))
+    console.log("stage2 videonames are", videoArrayRes11.map(o => o.videoName), videoArrayRes22.map(o => o.videoName))
     await test('video array length == 3', () => {
         return assert.strictEqual(videoArrayRes11.length == 3 && videoArrayRes22.length == 3, true);
     })

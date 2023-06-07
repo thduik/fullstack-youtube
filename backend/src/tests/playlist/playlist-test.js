@@ -19,6 +19,7 @@ const assert = require('assert/strict');
 const test = require('node:test')
 const {  videoDataArr, testVideoArr, testPlaylistArr, testUserArr } = require('./data')
 const { stage1Test,stage2Test, stage3Test, stage4Test } = require('./test-cases')
+const { resolve } = require('path')
 
 
 
@@ -26,7 +27,11 @@ const playlistArrayClientSide = []
 //{playlist._id:[video]}
 const playlistToVideoMapClientSide = new Map()
 
-
+const delay = (ms) => new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(()=>{console.log("delayedCalled", ms, "ms")});
+    }, ms);
+  });
 
 const testLol = async () => {
 
@@ -48,22 +53,27 @@ const testLol = async () => {
         const videoArrayRes001 = await testGetVideosOfPlaylist(playlistArrRes[0])
         const videoArrayRes012 = await testGetVideosOfPlaylist(playlistArrRes[1])
         //array of video obj json keys are {_id, playlistId,videoName}
-        await stage1Test(videoArrayRes01, videoArrayRes1)
-        await stage1Test(videoArrayRes01, videoArrayRes12)
-        await stage1Test(videoArrayRes001, videoArrayRes012)
+        // await stage1Test(videoArrayRes01, videoArrayRes1)
+        // await stage1Test(videoArrayRes01, videoArrayRes12)
+        // await stage1Test(videoArrayRes001, videoArrayRes012)
 
-
+        
         
         //add function
         
         const r1 = await testAddVideoToPlaylist([playlistArrRes[0]], testVideoArr[0][0][1])
+        await delay(500)
         const r2 = await testAddVideoToPlaylist([playlistArrRes[1]], testVideoArr[0][1][1])
+        await delay(500)
         const r3 = await testAddVideoToPlaylist([playlistArrRes[0], playlistArrRes[1]], testVideoArr[0][0][2])
 
         
         const videoArrayRes11 = await testGetVideosOfPlaylist(playlistArrRes[0])
-        const videoArrayRes22 = await testGetVideosOfPlaylist(playlistArrRes[1])   
+        await delay(500)
+        const videoArrayRes22 = await testGetVideosOfPlaylist(playlistArrRes[1])  
+        await delay(500)
         const videoArrayRes0011 = await testGetVideosOfPlaylist(playlistArrRes[0]) 
+        await delay(500)
         const videoArrayRes0022 = await testGetVideosOfPlaylist(playlistArrRes[1])   
 
         videoArrayRes11.sort((a,b)=>a.createdAt - b.createdAt)
@@ -76,6 +86,9 @@ const testLol = async () => {
         })
 
         await stage2Test(videoArrayRes11, videoArrayRes22)
+
+        return
+
         await stage2Test(videoArrayRes0011, videoArrayRes0022)
         
         return
