@@ -67,13 +67,11 @@ const testLol = async () => {
         await delay(500)
         const r3 = await testAddVideoToPlaylist([playlistArrRes[0], playlistArrRes[1]], testVideoArr[0][0][2])
 
-        
+        await delay(1000)
+
         const videoArrayRes11 = await testGetVideosOfPlaylist(playlistArrRes[0])
-        await delay(500)
         const videoArrayRes22 = await testGetVideosOfPlaylist(playlistArrRes[1])  
-        await delay(500)
         const videoArrayRes0011 = await testGetVideosOfPlaylist(playlistArrRes[0]) 
-        await delay(500)
         const videoArrayRes0022 = await testGetVideosOfPlaylist(playlistArrRes[1])   
 
         videoArrayRes11.sort((a,b)=>a.createdAt - b.createdAt)
