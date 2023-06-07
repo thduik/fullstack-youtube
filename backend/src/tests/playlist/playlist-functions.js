@@ -7,6 +7,7 @@ const connectDB = require('../../db/connect-db')
 const request = require("supertest")
 var ObjectID = require("bson-objectid");
 const { testUserArr } = require('./data')
+const { redisClient } = require('../../cache-module/connectDb')
 
 const baseUrl = 'http://localhost:4444/test'
 
@@ -142,6 +143,7 @@ const setupTest = async () => {
 
 const cleanupTest = async () => {
     try {
+        await redisClient.flushAll()
         await Playlist.deleteMany({ userid: testUserArr[0].userid })
         const videoIds = videoDataArr.map(obj => obj.videoId)
         await PlaylistVideoInfo.deleteMany({ videoId: { $in: videoIds } })

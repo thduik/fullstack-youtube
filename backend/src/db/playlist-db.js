@@ -2,16 +2,16 @@ const Playlist = require('../models/Playlist')
 const PlaylistVideoInfo = require('../models/PlaylistVideoInfo')
 var ObjectID = require("bson-objectid");
 
-const getAllVideosOfPlaylist = async (playlistid) => {
+const getAllVideosOfPlaylistDb = async (playlistid) => {
     try {
         const docs = await PlaylistVideoInfo.find({playlistId:playlistid}).lean()
         return docs
     } catch (err) {
-        throw("error getAllVideosOfPlaylist", err)
+        throw("error getAllVideosOfPlaylistDb", err)
     }
 }
 
-const getAllPlaylistsOfUser = async (userid) => {
+const getAllPlaylistsOfUserDb = async (userid) => {
     try {
         const docs = await Playlist.find({userid:userid}).lean()
         return docs
@@ -24,27 +24,27 @@ const createPlaylistDb = async (playlist, videoData) => {
     //return the _id of document
     //playlistName is not unique, unique identifier is _id of mongoose document
     //because data is not sensitive anyways
-    console.log("createPlaylistDb db called", videoData, playlist)
+    console.log("createPlaylistDb db called", "videoData.length is", videoData.length, "playlist.length is",playlist.length)
     try {
         const playlistDoc = await Playlist.create({
             
             playlistName: playlist.playlistName,
             userid: playlist.userid,
             creatorName: playlist.creatorName,
-            isPrivate:playlist.isPrivate ?? false
+            isPrivate:playlist.isPrivate ?? false,
+            thumbnailUrl:videoData.thumbnailUrl
         })
 
         const playlistId = playlistDoc._id.toString()
-        console.log("playlistDocDb _id", playlistDoc._id.toString())
         
         const videoRes = await PlaylistVideoInfo.create({
             playlistId:playlistId,
             videoId:videoData.videoId,
             videoName:videoData.videoName,
-            thumbnailUrl:videoData.thumbnailUrl.url,
+            thumbnailUrl:videoData.thumbnailUrl,
             createdAt:videoData.createdAt
         })
-        console.log("createPlaylistDb success doc is", playlistDoc, videoRes)
+        console.log("createPlaylistDb success playlistDoc and VideoDoc docId are", playlistDoc._id, videoRes._id)
         return {playlist:playlistDoc, video:videoRes}
         
     } catch (err) {
@@ -88,5 +88,5 @@ const deleteVideoFromPlaylistDb = async (video, orderIndex) => {
     }
 }
 
-module.exports = {createPlaylistDb, getAllPlaylistsOfUser, getAllVideosOfPlaylist,
+module.exports = {createPlaylistDb, getAllPlaylistsOfUserDb, getAllVideosOfPlaylistDb,
     addVideoToPlaylistsConcurrentDb, deleteVideoFromPlaylistDb}

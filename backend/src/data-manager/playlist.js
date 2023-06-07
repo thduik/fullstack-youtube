@@ -1,12 +1,25 @@
 const { getPlaylistsOfUserFromCache, addPlaylistsOfUserToCache
     , getAllVideosOfPlaylistFromCache, addVideosOfPlaylistToCache
-,createPlaylistCache} = require("../cache-module")
-const { getAllPlaylistsOfUser, getAllVideosOfPlaylist, createPlaylistDb } = require("../db")
+,createPlaylistCache,addVideoToPlaylistsCache} = require("../cache-module")
+const { getAllPlaylistsOfUserDb, getAllVideosOfPlaylistDb, createPlaylistDb
+,addVideoToPlaylistsConcurrentDb } = require("../db")
+
+const addVideoToPlaylistsDataM = async (playlistIdArr, videoLol) => {
+    try {
+        
+        const videoDocArr = await addVideoToPlaylistsConcurrentDb(playlistIdArr, videoLol)
+        //videoDocArr = [{playlistId:string,videoName:string,videoId:string,thumbnailUrl:string,createdAt:string,_id:string}] array of PlaylistVideoSchema doc
+        const cacheRes = await addVideoToPlaylistsCache(videoDocArr)
+        return {success:true}
+    } catch (err) {
+        console.log("addVideoToPlaylist controller err", err)
+    }
+}
 
 const createPlaylistDataM = async (playlist, videoInfo) => {
     try {
         const result = await createPlaylistDb(playlist, videoInfo) //{playlist:playlistDoc, video:videoRes}
-        console.log("createPLaylistDoc",result.playlist)
+        console.log("createPLaylistDataM success result.playlist._id and result.video._d:",result.playlist._id, result.video._id)
         await createPlaylistCache(result) //{playlist:playlistDoc, video:videoRes}
         return result.playlist
         
@@ -22,28 +35,30 @@ const getVideosListOfPlaylistDataM = async (playlistid) => {
         //{isSet:bool, data:data}
         const result = await getAllVideosOfPlaylistFromCache(playlistid)
         if (!result.isSet) {
-            const videoDocs = await getAllVideosOfPlaylist(playlistid)
+            const videoDocs = await getAllVideosOfPlaylistDb(playlistid)
+            console.log("getVideosListOfPlaylistDbDataM success videoDocs.length", videoDocs.length)
             await addVideosOfPlaylistToCache(playlistid, videoDocs)
-            console.log("getVideosListOfPlaylistDbDataM success", videoDocs)
-
             return videoDocs
         }
-        console.log("getVideosListOfPlaylistCacheDataM success", videoDocs)
+        console.log("getVideosListOfPlaylistCacheDataM success result.isSet", result.isSet)
         return result.data
     } catch (err) {
         // console.log("getVideosListOfPlaylist", err)
-        throw("error getVideosListOfPlaylist", err)
+        throw("error getVideosListOfPlaylistCacheDataM", err)
     }
 }
 
 
 const getPlaylistsOfUserDataM = async (userid) => {
     try {
+        
+        
         const result = await getPlaylistsOfUserFromCache(userid) //return object is {isSet:bool, data:data}
+        console.log("")
         if (!result.isSet) {
-            const playlistsDocs = await getAllPlaylistsOfUser(userid)
+            const playlistsDocs = await getAllPlaylistsOfUserDb(userid)
             addPlaylistsOfUserToCache(playlistsDocs, userid)
-            // console.log("result isSet false",playlistsDocs, userid)
+            console.log("result isSet false",playlistsDocs, userid)
             return playlistsDocs
         }     
         //playlistsDocs and result.data should be exact same
@@ -57,4 +72,4 @@ const getPlaylistsOfUserDataM = async (userid) => {
 }
 
 module.exports = {getPlaylistsOfUserDataM, getVideosListOfPlaylistDataM
-,createPlaylistDataM}
+,createPlaylistDataM, addVideoToPlaylistsDataM}

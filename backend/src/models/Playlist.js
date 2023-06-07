@@ -14,9 +14,9 @@ const playlistSchema = new mongoose.Schema({
         required:[true,"mongo model no userid"],
         index:true
     },
-    creatorName: {
-        type:String,
-    },
+    // creatorName: {
+    //     type:String,
+    // },
     thumbnailUrl: {
         type:String,
         default:defaultPlaylistThumbnailUrl

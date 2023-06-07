@@ -1,5 +1,5 @@
 const { returnUserInfoFromDbWithUserIdPromise } = require("./user-db")
-const { createPlaylistDb, getAllPlaylistsOfUser, getAllVideosOfPlaylist, 
+const { createPlaylistDb, getAllPlaylistsOfUserDb, getAllVideosOfPlaylistDb, 
     addVideoToPlaylistsConcurrentDb, deleteVideoFromPlaylistDb } = require("./playlist-db")
 
 const getUserFromCacheOrDb = async (userid) => {
@@ -16,7 +16,7 @@ const getUserFromCacheOrDb = async (userid) => {
 
 module.exports = {getUserFromCacheOrDb, 
     createPlaylistDb, 
-    getAllPlaylistsOfUser, 
-    getAllVideosOfPlaylist, 
+    getAllPlaylistsOfUserDb, 
+    getAllVideosOfPlaylistDb, 
     addVideoToPlaylistsConcurrentDb, 
     deleteVideoFromPlaylistDb}

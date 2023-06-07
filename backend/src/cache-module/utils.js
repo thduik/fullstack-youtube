@@ -15,8 +15,7 @@ const parsePlaylistDoc = (doc) => {
     const res = {
         playlistName: doc.playlistName,
         userid: doc.userid,
-        creatorName: doc.creatorName,
-        thumbnailUrl: doc.thumbnailUrl,
+        thumbnailUrl: doc.thumbnailUrl ?? 'none',
         isPrivate: doc.isPrivate ? 1 : 0,
         isUnlisted: doc.isUnlisted ? 1 : 0,
         createdAt: doc.createdAt,

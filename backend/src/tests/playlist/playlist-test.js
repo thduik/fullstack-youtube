@@ -41,10 +41,19 @@ const testLol = async () => {
         //array pf playlist object json keys are {_id,playlistName,userid,videoId,thumbnailUrl}
         const videoArrayRes0 = await testGetVideosOfPlaylist(playlistArrRes[0])
         const videoArrayRes1 = await testGetVideosOfPlaylist(playlistArrRes[1])
-        //array of video obj json keys are {_id, playlistId,videoName}
-        await stage1Test(videoArrayRes0, videoArrayRes1)
 
-        return
+        //testing cache
+        const videoArrayRes01 = await testGetVideosOfPlaylist(playlistArrRes[0])
+        const videoArrayRes12 = await testGetVideosOfPlaylist(playlistArrRes[1])
+        const videoArrayRes001 = await testGetVideosOfPlaylist(playlistArrRes[0])
+        const videoArrayRes012 = await testGetVideosOfPlaylist(playlistArrRes[1])
+        //array of video obj json keys are {_id, playlistId,videoName}
+        await stage1Test(videoArrayRes01, videoArrayRes1)
+        await stage1Test(videoArrayRes01, videoArrayRes12)
+        await stage1Test(videoArrayRes001, videoArrayRes012)
+
+
+        
         //add function
         
         const r1 = await testAddVideoToPlaylist([playlistArrRes[0]], testVideoArr[0][0][1])
@@ -53,17 +62,23 @@ const testLol = async () => {
 
         
         const videoArrayRes11 = await testGetVideosOfPlaylist(playlistArrRes[0])
-        const videoArrayRes22 = await testGetVideosOfPlaylist(playlistArrRes[1])        
+        const videoArrayRes22 = await testGetVideosOfPlaylist(playlistArrRes[1])   
+        const videoArrayRes0011 = await testGetVideosOfPlaylist(playlistArrRes[0]) 
+        const videoArrayRes0022 = await testGetVideosOfPlaylist(playlistArrRes[1])   
+
         videoArrayRes11.sort((a,b)=>a.createdAt - b.createdAt)
         videoArrayRes22.sort((a,b)=>a.createdAt - b.createdAt)
+        videoArrayRes0011.sort((a,b)=>a.createdAt - b.createdAt)
+        videoArrayRes0022.sort((a,b)=>a.createdAt - b.createdAt)
 
         test('video array length == 3', () => {
             return assert.strictEqual(videoArrayRes11.length == 3 && videoArrayRes22.length == 3, true);
         })
 
         await stage2Test(videoArrayRes11, videoArrayRes22)
+        await stage2Test(videoArrayRes0011, videoArrayRes0022)
         
-
+        return
         //the 2nd video in [video] of playlist in playlistToVideoMapClientSide above
         const d1 = await testDeleteVideoFromPlaylist(playlistArrRes[0], videoArrayRes11[2], videoIndex=2)
         const d2 = await testDeleteVideoFromPlaylist(playlistArrRes[1], videoArrayRes22[2], videoIndex=2)

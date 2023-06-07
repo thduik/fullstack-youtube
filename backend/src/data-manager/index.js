@@ -1,3 +1,5 @@
-const {getPlaylistsOfUserDataM, getVideosListOfPlaylistDataM, createPlaylistDataM} = require('./playlist.js')
+const {getPlaylistsOfUserDataM, getVideosListOfPlaylistDataM, createPlaylistDataM
+,addVideoToPlaylistsDataM} = require('./playlist.js')
 
-module.exports = {getPlaylistsOfUserDataM, getVideosListOfPlaylistDataM, createPlaylistDataM}
+module.exports = {getPlaylistsOfUserDataM, getVideosListOfPlaylistDataM
+    , createPlaylistDataM,addVideoToPlaylistsDataM}
