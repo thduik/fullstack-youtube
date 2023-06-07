@@ -1,16 +1,20 @@
-const { getPlaylistsOfUserFromCache, addPlaylistsOfUserToCache, getAllVideosOfPlaylistFromCache, addVideosOfPlaylistToCache} = require("../cache-module")
-const { getAllPlaylistsOfUser, getAllVideosOfPlaylist } = require("../db")
+const { getPlaylistsOfUserFromCache, addPlaylistsOfUserToCache
+    , getAllVideosOfPlaylistFromCache, addVideosOfPlaylistToCache
+,createPlaylistCache} = require("../cache-module")
+const { getAllPlaylistsOfUser, getAllVideosOfPlaylist, createPlaylistDb } = require("../db")
 
-// const createPlaylist = (req, res, next) => {
-//     try {
-//         const doc = await createPlaylistDb(playlist, videoInfo)
-//         res.json({ doc: doc, success: true })
-
-//     } catch (err) {
-//         console.log("err createPlaylist", err)
-//         res.status(402).send("error creatingPlaylist")
-//     }
-// }
+const createPlaylistDataM = async (playlist, videoInfo) => {
+    try {
+        const result = await createPlaylistDb(playlist, videoInfo) //{playlist:playlistDoc, video:videoRes}
+        console.log("createPLaylistDoc",result.playlist)
+        await createPlaylistCache(result) //{playlist:playlistDoc, video:videoRes}
+        return result.playlist
+        
+    } catch (err) {
+        console.log("err createPlaylist", err)
+        res.status(402).send("error creatingPlaylist")
+    }
+}
 
 const getVideosListOfPlaylistDataM = async (playlistid) => {
 
@@ -19,10 +23,12 @@ const getVideosListOfPlaylistDataM = async (playlistid) => {
         const result = await getAllVideosOfPlaylistFromCache(playlistid)
         if (!result.isSet) {
             const videoDocs = await getAllVideosOfPlaylist(playlistid)
-            addVideosOfPlaylistToCache(playlistid, videoDocs)
+            await addVideosOfPlaylistToCache(playlistid, videoDocs)
+            console.log("getVideosListOfPlaylistDbDataM success", videoDocs)
+
             return videoDocs
         }
-        // console.log("getVideosListOfPlaylist success", videoDocs)
+        console.log("getVideosListOfPlaylistCacheDataM success", videoDocs)
         return result.data
     } catch (err) {
         // console.log("getVideosListOfPlaylist", err)
@@ -50,4 +56,5 @@ const getPlaylistsOfUserDataM = async (userid) => {
     
 }
 
-module.exports = {getPlaylistsOfUserDataM, getVideosListOfPlaylistDataM}
+module.exports = {getPlaylistsOfUserDataM, getVideosListOfPlaylistDataM
+,createPlaylistDataM}

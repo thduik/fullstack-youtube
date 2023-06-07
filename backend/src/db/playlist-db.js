@@ -45,7 +45,8 @@ const createPlaylistDb = async (playlist, videoData) => {
             createdAt:videoData.createdAt
         })
         console.log("createPlaylistDb success doc is", playlistDoc, videoRes)
-        return playlistDoc
+        return {playlist:playlistDoc, video:videoRes}
+        
     } catch (err) {
         throw("createPlaylist err", err.message) 
     }

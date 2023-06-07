@@ -17,10 +17,6 @@ const playlistSchema = new mongoose.Schema({
     creatorName: {
         type:String,
     },
-    length: {
-        type:Number,
-        default:0
-    },
     thumbnailUrl: {
         type:String,
         default:defaultPlaylistThumbnailUrl

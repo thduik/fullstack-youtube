@@ -39,7 +39,6 @@ const testLol = async () => {
         const postRes1 = await testCreatePlaylist(testUserArr[0].username, testPlaylistArr[0][1], testVideoArr[0][1][0])
         const playlistArrRes = await testGetPlaylist()
         //array pf playlist object json keys are {_id,playlistName,userid,videoId,thumbnailUrl}
-       
         const videoArrayRes0 = await testGetVideosOfPlaylist(playlistArrRes[0])
         const videoArrayRes1 = await testGetVideosOfPlaylist(playlistArrRes[1])
         //array of video obj json keys are {_id, playlistId,videoName}

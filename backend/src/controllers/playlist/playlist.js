@@ -1,4 +1,4 @@
-const { getPlaylistsOfUserDataM, getVideosListOfPlaylistDataM } = require("../../data-manager")
+const { getPlaylistsOfUserDataM, getVideosListOfPlaylistDataM, createPlaylistDataM } = require("../../data-manager")
 const { createPlaylistDb, getAllPlaylistsOfUser, getAllVideosOfPlaylist,
     addVideoToPlaylistsConcurrentDb, deleteVideoFromPlaylistDb } = require("../../db/playlist-db")
 const { postProcessDocArr } = require('./utils')
@@ -8,8 +8,8 @@ const createPlaylist = async (req, res, next) => {
     const videoInfo = req.body.videoInfo //{playlistName:string, userid:string, isPrivate:bool,isUnlisted:bool }
 
     try {
-        const doc = await createPlaylistDb(playlist, videoInfo)
-        console.log("createPLaylistDoc",doc)
+        const doc = await createPlaylistDataM(playlist, videoInfo)
+        console.log("createPLaylistDoc", doc)
         res.json({ doc: doc, success: true })
 
     } catch (err) {
@@ -21,7 +21,7 @@ const createPlaylist = async (req, res, next) => {
 
 const getPlaylistsOfUser = async (req, res, next) => {
     const userid = req.auth.userid
-    console.log("getPlaylistsOfUserController userid ", userid)
+    // console.log("getPlaylistsOfUserController userid ", userid)
     try {
         const playlistsDocs = await getPlaylistsOfUserDataM(userid)
         // postProcessDocArr(playlistsDocs)
@@ -53,8 +53,8 @@ const getVideosListOfPlaylist = async (req, res, next) => {
     const playlistid = req.params.playlistid //string
     try {   
         const videoDocs = await getVideosListOfPlaylistDataM(playlistid)
-        console.log("getVideosListOfPlaylistController success", videoDocs)
-        return videoDocs
+        console.log("getVideosListOfPlaylistController success", "p-id",playlistid, "pdoc", videoDocs)
+        res.json({ videos: videoDocs })
     } catch (err) {
         console.log("getVideosListOfPlaylist err", err)
     }
