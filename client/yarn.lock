@@ -2626,6 +2626,11 @@
     "tar" "^6.1.2"
     "which" "^2.0.2"
 
+"node-redis@^0.1.7":
+  "integrity" "sha512-OVxT8FuV3h+3XSEqtA1PKQkvDJ231R7GbgByj/DHzLhG2h2oQx7FjQFcDVy7JlVnecTJtVv7TTWrv3845DytWw=="
+  "resolved" "https://registry.npmjs.org/node-redis/-/node-redis-0.1.7.tgz"
+  "version" "0.1.7"
+
 "node-releases@^2.0.8":
   "integrity" "sha512-5GFldHPXVG/YZmFzJvKK2zDSzPKhEp0+ZR5SVaoSag9fsL5YgHbUHDfnG5494ISANDcK4KwPXAx2xqVEydmd7w=="
   "resolved" "https://registry.npmjs.org/node-releases/-/node-releases-2.0.10.tgz"

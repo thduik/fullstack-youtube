@@ -26,9 +26,11 @@ const VideoCard = ({ video: { id: { videoId }, snippet } }) => {
   const startSaveVideoToPlaylist = () => {
     console.log("startSaveVideoToPlaylist called")
     setShowDropdown(false)
-    dispatch(changeShowPlaylistSelectDropdown(true))
-    console.log("snippet is", snippet)
+    
+    // console.log("snippet is", snippet)
+    if (!snippet) { return }
     dispatch(changeSelectedVideo({...snippet, videoId:videoId}))
+    dispatch(changeShowPlaylistSelectDropdown(true))
   }
   const closeMenuFunc = () => {
     console.log("closeMenuFunc called")

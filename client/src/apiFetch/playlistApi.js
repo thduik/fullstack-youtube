@@ -11,8 +11,7 @@ export const getPlaylist = async (callback) => {
         const getUrl = baseUrl + '/playlist'
         const res = await axios.get(getUrl)
         console.log("getPlaylist success playlists are", res.data.playlists)
-        const res2 = processResData(res)
-        callback(res2.data.playlists)
+        callback(res.data.playlists)
         return
     } catch (err) {
         console.log("err getPlaylist", err)
@@ -51,17 +50,24 @@ export const postPlaylistCreate = async (newPlaylist, video) => {
 const processVideoData = (videoData) => {
     const res = {
         videoId: videoData.videoId,
-        videoName: videoData.tite,
+        videoName: videoData.title,
         thumbnailUrl: videoData.thumbnails.default.url,
         createdAt: Date.now()
     }
     return res
 }
 
+const filterPlaylistArr = (video, playlistArr) = {
+    
+}
+
 export const postAddVideoToPlaylist = async (video, playlistArr) => {
+
+
     if (!playlistArr.length) { return }
-    console.log("postAddVideoToPlaylist called", videoData, playlistArr)
     const videoData = processVideoData(video)
+    console.log("postAddVideoToPlaylist called", video, videoData, playlistArr)
+
     try {
         const updateUrl = baseUrl + `/playlist/update/`
         const playlistIdArr = playlistArr.map(o => o._id)
@@ -71,7 +77,7 @@ export const postAddVideoToPlaylist = async (video, playlistArr) => {
                 playlistIdArr: playlistIdArr
 
             })
-        // console.log("testPostAxios success docid is", res.data)
+        console.log("postAddVideoToPlaylist success docid is", res.data)
         return res.data
 
     } catch (err) {

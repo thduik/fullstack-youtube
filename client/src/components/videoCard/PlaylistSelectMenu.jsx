@@ -73,6 +73,7 @@ function PlaylistSelectMenu({ saveVideoToPlaylist }) {
             })
             console.log("res idx arr:", resIdxArr)
             const playlistArr = resIdxArr.map((idx) => playlists[idx])
+            console.log("selectedVideo is", selectedVideo)
             postAddVideoToPlaylist(selectedVideo, playlistArr)
         }
     }, [])

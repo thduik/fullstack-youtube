@@ -52,12 +52,15 @@ function LoginDropdown({ accountIcon }) {
 
     handleGoogleToken(tokenResponse, (res) => {
       dispatch(login(res.data))
+      setTimeout(()=>{getPlaylistAndHandle()}, 1000)
+    })
+  }
 
-      getPlaylist((playlists) => {
-        console.log("getPlaylist success", playlists)
-        dispatch(setPlaylistArray(playlists))
+  const getPlaylistAndHandle = () => {
+    getPlaylist((playlists) => {
+      console.log("getPlaylist success", playlists)
+      dispatch(setPlaylistArray(playlists))
 
-      })
     })
   }
 

@@ -19,7 +19,7 @@ const PlaylistSelectItem = ({ playlist, selectPlaylistItem, unselectPlaylistItem
     // },[selected])
     return (
         <div className="hover-pointer" onMouseEnter={mouseEntered} onMouseLeave={mouseLeft}
-            style={{
+            style={{    
                 display: "flex", flexDirection: "row"
                 ,padding: "8px 5px 0px 18px"
                 , backgroundColor: hovering ? "gray" : "rgba(0,0,0,0)"
