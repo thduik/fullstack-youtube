@@ -54,12 +54,18 @@ const testlolol = async () => {
         try {
 
             await connectCache()
-            const date0 = Date.now()
-            await redisClient.hSet('key11', obj)
-            await redisClient.hSet('key11', obj)
+            
+            var keylol = "key11key11key11key11key11key11key11key11key11key11key11key11key11key11key11key11key11key11"
+            for (var i = 0;i<0;i++) {keylol += keylol}
 
-            const aa = await redisClient.hGetAll('key11')
-            console.log(aa)
+            const date0 = Date.now()
+            
+            await redisClient.hSet(keylol, obj)
+
+            for (var i = 0; i < 20000; i++) {
+                await redisClient.hGetAll(keylol)
+            }
+            
 
             console.log("took", Date.now() - date0, "ms")
         } catch (err) {

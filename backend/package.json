@@ -25,7 +25,8 @@
     "dev": "NODE_ENV=development nodemon src/server.js --delay 1",
     "test": "echo \"Error: no test specified\" && exit 1",
     "testplaylist": "nodemon src/tests/playlist/playlist-test.js",
-    "testsearch": "node src/tests/search/search-test.js"
+    "testsearch": "node src/tests/search/search-test.js",
+    "testcache": "nodemon src/cache-module/tests/testPlaylist.js"
   },
   "keywords": [],
   "author": "",

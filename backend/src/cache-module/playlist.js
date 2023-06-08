@@ -23,24 +23,22 @@ const addVideoToPlaylistsCache = async (videoDocArr) => {
 
 
 const createPlaylistCache = async (result) => {
-    // result = {playlist:playlistDoc, video:videoRes}
-    // const {playlist, video} = result
-    console.log("createPlaylistCache called, result", result)
+    // result = { playlist:{ _doc: playlistDoc }, video:{ _doc:videoRes } }
+    // console.log("createPlaylistCache called, result", result)
     const playlist = parsePlaylistDoc(result.playlist._doc);
     const video = parseVideoDoc(result.video._doc)
     playlist.isPrivate = playlist.isPrivate ? 1 : 0; playlist.isUnlisted = playlist.isUnlisted ? 1 : 0 //convert bool to 1 and 0
-    playlist._id = result.playlist._id.toString(); video._id = result.video._id.toString() // convert _id of type ObjectId (mongoose/bson) to string so redis can parse
 
-    console.log("createPlaylistCache called video and playlist._id:", playlist._id, video._id)
+    console.log("createPlaylistCache called video and playlist._id:", playlist._id, video._id, playlist.userid)
     try {
         
         await redisClient.sAdd(`user:${playlist.userid}:playlists`, playlist._id)
         await redisClient.hSet(`playlist:${playlist._id}`, playlist)
         await redisClient.sAdd(`playlist:${playlist._id}:videos`, video.videoId+":"+video.createdAt.toString())
         await redisClient.hSet(`playvideo:${video.videoId}`, video)
-        console.log("createPlaylistCache finished playvideoHsetVideoId", video.videoId, video.videoName)
-        // const res = await redisClient.sMembers(`playlist:${playlist._id}:videos`)
-        // console.log("createPlaylistCache finished video.videoId and playlist._id", video.videoId, playlist._id)
+
+        const testRes = await redisClient.sMembers(`user:${playlist.userid}:playlists`)
+        console.log("createPlaylistCache finished playvideoHsetVideoId", playlist.userid, video.videoName, "testRes is:",testRes )
 
         return
     } catch (err) {
@@ -75,7 +73,7 @@ const getPlaylistsOfUserFromCache = async (userid) => {
 
     try {
         const playlistIds = await redisClient.sMembers(`user:${userid}:playlists`)
-
+        // console.log("getPlaylistsOfUserFromCache userId is",userid )
         if (!playlistIds || !playlistIds.length) { //key not set will return null
             // console.log("playlistIdsCache failed",playlistIds)
             return { isSet: false }
@@ -92,8 +90,9 @@ const getPlaylistsOfUserFromCache = async (userid) => {
                 playlistArr.push(playres)
             }
         }
-        console.log("playlistArrCache", playlistArr[0]._id)
-        return { isSet: true, data: playlistArr }
+        const resss = { isSet: true, data: playlistArr }
+        console.log("getPlaylistsOfUserFromCache", resss)
+        return resss
     } catch (err) {
         throw ("getPlaylistsOfUserCache err", err)
     }
