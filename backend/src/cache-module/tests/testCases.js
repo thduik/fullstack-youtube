@@ -22,5 +22,22 @@ const testStage1 = async (data1, data2) => {
         throw("testStage1 FAILED", err)
     }
 }
+const testStage2 = (res,expectedRes) => {//both are array of videos
+    // expectedRes._id =  expectedRes._id.toString()
+    console.log("testStage2 expectedRes:",expectedRes,"res",res )
+    const expResArr = expectedRes; expResArr.sort((a,b)=> a.createdAt - b.createdAt)
+    const resArr = res.data; resArr.sort((a,b)=> a.createdAt - b.createdAt)
 
-module.exports = {testStage1}
+    if ( res.data.length != expectedRes.length ) {throw("errtestStage2 length 2 arrats mismatch")}
+    for (var i = 0; i < res.length;i++){
+        const video = res[i]
+        const expVideo = expResArr[i]
+        expVideo._id = expVideo._id.toString()
+        console.log("testStage2 expVideo:",expVideo,"video",video )
+        const testRes = objectEqual(video, expVideo)
+        if (!testRes) {throw("err testStage2 object not equal")}
+       
+    }
+    console.log("OK testStage2 SUCCESS")
+}
+module.exports = {testStage1,testStage2}

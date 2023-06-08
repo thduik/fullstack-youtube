@@ -2,7 +2,7 @@ const { redisClient, connectCache } = require('../connectDb')
 const { createPlaylistCache, getPlaylistsOfUserFromCache, getAllVideosOfPlaylistFromCache } = require('../playlist')
 const { DataGeneratorCP } = require('./data')
 const { objectEqual } = require('./utils')
-const {testStage1} = require('./testCases')
+const {testStage1,testStage2} = require('./testCases')
 
 function delay(ms) {
     return new Promise(resolve => setTimeout(() => resolve(), ms));
@@ -35,9 +35,11 @@ const main = async () => {
         const playlistIdArr = res2.data.map(o=>o._id) 
         
         const res22 = await getAllVideosOfPlaylistFromCache(playlistIdArr[0])
-        console.log("res22 is", playlistIdArr,res22)
+        
         const expectedRes22 = dataGen.returnExpectedDataFor("getAllVideosOfPlaylistFromCache", {playlistId:playlistIdArr[0]})
 
+        console.log("stage2 data is: res22",res22,"expectedRes", expectedRes22)
+        await testStage2(res22, expectedRes22)
 
         await redisClient.flushAll()
     } catch (err) {

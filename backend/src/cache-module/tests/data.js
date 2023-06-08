@@ -32,7 +32,7 @@ class DataGeneratorCP { //CachePlaylist
             this.userDataArr.push({ userid: userId, playlistIdArr: [playlist._doc._id.toString()], userName: "fuck" })
             this.playlists.push(result.playlist._doc)
             this.playlistToVideoIds.set(playlist._doc._id.toString(), [video._doc.videoId])
-            this.videoIdToVideoJson.set(video._doc.videoId, video)
+            this.videoIdToVideoJson.set(video._doc.videoId, video._doc)
             // console.log("playlistToVideoIdsTest", this.playlistToVideoIds.get(playlist._doc._id.toString()))
             return result
         }
@@ -52,7 +52,7 @@ class DataGeneratorCP { //CachePlaylist
 
     returnGetAllVideosOfPlaylistFromCache = (data) => {
         //from 1 playlist id, return all video objects belong to playlist id
-        console.log("returnGetAllVideosOfPlaylistFromCache called", data)
+        // console.log("returnGetAllVideosOfPlaylistFromCache called", data)
         const playlistId = data.playlistId
         const videoIdArr = this.playlistToVideoIds.get(playlistId)
         if (!videoIdArr) { throw("videoIdArr isNUll error" + " "+ this.playlistToVideoIds.keys()[0] + " "+ playlistId)}
