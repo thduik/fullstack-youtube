@@ -32,12 +32,12 @@ const main = async () => {
         // console.log("getPlaylistsOfUserFromCache res2", res2, expectedRes ,objectEqual(res2.data[0],expectedRes[0]))
         await testStage1(res2, expectedRes)
 
-        // console.log("res2.data", res2.data)
-        // const playlistIdArr = res2.data.map(o=>o._id) 
-        // // console.log("playlistIdArr",playlistIdArr)
-        // const res22 = await getAllVideosOfPlaylistFromCache(playlistIdArr[0])
-        // console.log("res22 is", res22)
-        //const expectedRes22 = await dataGen.returnExpectedDataFor("getPlaylistsOfUserFromCache", {playlistId:playlistIdArr[0]})
+        const playlistIdArr = res2.data.map(o=>o._id) 
+        
+        const res22 = await getAllVideosOfPlaylistFromCache(playlistIdArr[0])
+        console.log("res22 is", playlistIdArr,res22)
+        const expectedRes22 = dataGen.returnExpectedDataFor("getAllVideosOfPlaylistFromCache", {playlistId:playlistIdArr[0]})
+
 
         await redisClient.flushAll()
     } catch (err) {

@@ -12,6 +12,7 @@ class DataGeneratorCP { //CachePlaylist
         this.createInputDataFor.bind(this)
         this.returnExpectedDataFor.bind(this)
         this.returnGetPlaylistsOfUserFromCacheData.bind(this)
+        this.returnGetAllVideosOfPlaylistFromCache.bind(this)
         this.userDataArr = [] // [ {userid:string, playlistIdArr:[ playlist._id ], userName:string} ]
         this.playlists = [] // [ playlistObject ], because we will be using filter 
         this.playlistToVideoIds = new Map() // { playlist_id : [videoIds] }
@@ -28,9 +29,11 @@ class DataGeneratorCP { //CachePlaylist
             console.log("createInputDataFor createPlaylistCache", userId, playlistName)
             const result = createInputDataForcreatePlaylistCache(platlistData) //{playlist:playlist, video:video}
             const { playlist, video } = result
-            this.userDataArr.push({ userid: userId, playlistIdArr: [playlist._doc._id], userName: "fuck" })
+            this.userDataArr.push({ userid: userId, playlistIdArr: [playlist._doc._id.toString()], userName: "fuck" })
             this.playlists.push(result.playlist._doc)
-            this.playlistToVideoIds.set(playlist._doc._id, [video._doc.videoId])
+            this.playlistToVideoIds.set(playlist._doc._id.toString(), [video._doc.videoId])
+            this.videoIdToVideoJson.set(video._doc.videoId, video)
+            // console.log("playlistToVideoIdsTest", this.playlistToVideoIds.get(playlist._doc._id.toString()))
             return result
         }
     }
@@ -39,12 +42,28 @@ class DataGeneratorCP { //CachePlaylist
         try {
             
                 if (funcName=="getPlaylistsOfUserFromCache") {return this.returnGetPlaylistsOfUserFromCacheData(data)}
-            
+                if (funcName=="getAllVideosOfPlaylistFromCache") {return this.returnGetAllVideosOfPlaylistFromCache(data)}
 
         } catch (err) {
             throw ("err returnExpectedDataFor", err)
         }
 
+    }
+
+    returnGetAllVideosOfPlaylistFromCache = (data) => {
+        //from 1 playlist id, return all video objects belong to playlist id
+        console.log("returnGetAllVideosOfPlaylistFromCache called", data)
+        const playlistId = data.playlistId
+        const videoIdArr = this.playlistToVideoIds.get(playlistId)
+        if (!videoIdArr) { throw("videoIdArr isNUll error" + " "+ this.playlistToVideoIds.keys()[0] + " "+ playlistId)}
+        const videoResArr = []
+        for (var i = 0;i < videoIdArr.length; i++) {
+            const videoRes = this.videoIdToVideoJson.get(videoIdArr[i])
+            if (!videoRes) { throw("returnGetAllVideosOfPlaylistFromCache err videoRes null")}
+            videoResArr.push(videoRes)
+        }
+        return videoResArr
+        
     }
 
     returnGetPlaylistsOfUserFromCacheData = (data) => {

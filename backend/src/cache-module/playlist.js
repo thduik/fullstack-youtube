@@ -38,7 +38,7 @@ const createPlaylistCache = async (result) => {
         await redisClient.hSet(`playvideo:${video.videoId}`, video)
 
         const testRes = await redisClient.sMembers(`user:${playlist.userid}:playlists`)
-        console.log("createPlaylistCache finished playvideoHsetVideoId", playlist.userid, video.videoName, "testRes is:",testRes )
+        // console.log("createPlaylistCache finished playvideoHsetVideoId", playlist.userid, video.videoName, "testRes is:",testRes )
 
         return
     } catch (err) {
@@ -91,7 +91,7 @@ const getPlaylistsOfUserFromCache = async (userid) => {
             }
         }
         const resss = { isSet: true, data: playlistArr }
-        console.log("getPlaylistsOfUserFromCache", resss)
+        // console.log("getPlaylistsOfUserFromCache", resss)
         return resss
     } catch (err) {
         throw ("getPlaylistsOfUserCache err", err)
