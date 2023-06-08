@@ -20,17 +20,15 @@ const {  videoDataArr, testVideoArr, testPlaylistArr, testUserArr } = require('.
 const { stage1Test,stage2Test, stage3Test, stage4Test } = require('./test-cases')
 const { resolve } = require('path')
 
-
+function delay(ms) {
+    return new Promise(resolve => setTimeout(() => resolve(), ms));
+}
 
 const playlistArrayClientSide = []
 //{playlist._id:[video]}
 const playlistToVideoMapClientSide = new Map()
 
-const delay = (ms) => new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(()=>{console.log("delayedCalled", ms, "ms")});
-    }, ms);
-  });
+
 
 const testLol = async () => {
 
@@ -39,8 +37,8 @@ const testLol = async () => {
         await cleanupTest()
         
         //the 0th video of playlist 0 and and 0th video of playlist 1 created
-        const postRes = await testCreatePlaylist(testUserArr[0].username, testPlaylistArr[0][0], testVideoArr[0][0][0])
-        const postRes1 = await testCreatePlaylist(testUserArr[0].username, testPlaylistArr[0][1], testVideoArr[0][1][0])
+        const postRes = await testCreatePlaylist(testPlaylistArr[0][0].name, {userid:testUserArr[0].userid ,username:testUserArr[0].username}, testVideoArr[0][0][0])
+        const postRes1 = await testCreatePlaylist(testPlaylistArr[0][1].name, {userid:testUserArr[0].userid ,username:testUserArr[0].username}, testVideoArr[0][1][0])
         const playlistArrRes = await testGetPlaylist()
         //array pf playlist object json keys are {_id,playlistName,userid,videoId,thumbnailUrl}
         const videoArrayRes0 = await testGetVideosOfPlaylist(playlistArrRes[0])

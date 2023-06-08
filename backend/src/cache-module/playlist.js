@@ -1,24 +1,13 @@
 const { redisClient } = require('./connectDb')
 const { parseVideoDoc, parsePlaylistDoc } = require('./utils')
 
-const convertVideoDoc = (doc) => {
-    const res = {
-        playlistId: doc.playlistId,
-        videoName: doc.videoName,
-        videoId: doc.videoId,
-        thumbnailUrl: doc.thumbnailUrl,
-        createdAt: doc.createdAt,
-        _id: doc._id.toString(),
-        __v: 0
-    }
-    return res
-}
+
 
 const addVideoToPlaylistsCache = async (videoDocArr) => {
     // console.log("addVideoToPlaylistsCache", videoDocArr)
     try {
         for (var i = 0; i < videoDocArr.length; i++) {
-            const doc = convertVideoDoc(videoDocArr[i])
+            const doc = parseVideoDoc(videoDocArr[i])
             // console.log("addVideoToPlaylistsCache map doc._id", doc._id)
             const keylol = doc.videoId+":"+ doc.createdAt.toString()
             await redisClient.sAdd(`playlist:${doc.playlistId}:videos`, keylol)
@@ -36,6 +25,7 @@ const addVideoToPlaylistsCache = async (videoDocArr) => {
 const createPlaylistCache = async (result) => {
     // result = {playlist:playlistDoc, video:videoRes}
     // const {playlist, video} = result
+    console.log("createPlaylistCache called, result", result)
     const playlist = parsePlaylistDoc(result.playlist._doc);
     const video = parseVideoDoc(result.video._doc)
     playlist.isPrivate = playlist.isPrivate ? 1 : 0; playlist.isUnlisted = playlist.isUnlisted ? 1 : 0 //convert bool to 1 and 0

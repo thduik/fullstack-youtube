@@ -26,4 +26,16 @@ const parsePlaylistDoc = (doc) => {
     return res
 }
 
+// const convertVideoDoc = (doc) => {
+//     const res = {
+//         playlistId: doc.playlistId,
+//         videoName: doc.videoName,
+//         videoId: doc.videoId,
+//         thumbnailUrl: doc.thumbnailUrl,
+//         createdAt: doc.createdAt,
+//         _id: doc._id.toString()
+//     }
+//     return res
+// }
+
 module.exports = {parseVideoDoc,parsePlaylistDoc}

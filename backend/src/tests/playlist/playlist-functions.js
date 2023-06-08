@@ -44,6 +44,7 @@ const testGetPlaylist = async () => {
 }
 
 const testCreatePlaylist = async (playlistName, {userid,username}, videoInfo) => {
+    console.log("testCreatePlaylist called playlistName",playlistName)
     try {
         const createUrl = baseUrl + '/playlist/create'
         const res = await axios.post(createUrl,
