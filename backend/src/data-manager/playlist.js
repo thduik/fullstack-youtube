@@ -5,6 +5,7 @@ const { getAllPlaylistsOfUserDb, getAllVideosOfPlaylistDb, createPlaylistDb
 ,addVideoToPlaylistsConcurrentDb } = require("../db")
 
 const addVideoToPlaylistsDataM = async (playlistIdArr, videoLol) => {
+    //add 1 video to multiple playlists
     console.log("addVideoToPlaylistsDataM", playlistIdArr, videoLol)
     try {
         
