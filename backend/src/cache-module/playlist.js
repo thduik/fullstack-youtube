@@ -4,7 +4,7 @@ const { parseVideoDoc, parsePlaylistDoc } = require('./utils')
 
 
 const addVideoToPlaylistsCache = async (videoDocArr) => {
-    // console.log("addVideoToPlaylistsCache", videoDocArr)
+    console.log("addVideoToPlaylistsCache", videoDocArr)
     try {
         for (var i = 0; i < videoDocArr.length; i++) {
             const doc = parseVideoDoc(videoDocArr[i])

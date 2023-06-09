@@ -11,8 +11,6 @@ function delay(ms) {
 const main = async () => {
 
     try {
-        await delay(500)
-        await connectCache()
         // await redisClient.flushAll()
 
         await delay(1000)
