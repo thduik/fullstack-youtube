@@ -16,8 +16,9 @@ const main = async () => {
         await delay(1000)
         const dataGen = new DataGeneratorCP()
         dataGen.createUserAndReturnUserId()
-        const inputData = dataGen.createInputDataFor("createPlaylistCache")
-        console.log("inputDatalol", inputData)//[ userid: 'userId593476', data: { playlist: [Object], video: [Object], userId: 'userId593476' }]
+        dataGen.createUserAndReturnUserId()
+        const inputData = dataGen.createInputDataFor("createPlaylistCache")//[ { userid: userId, data: { playlist:playlist, video:video } } ]
+        console.log("inputDatalol", inputData)
         for (var i = 0; i < inputData.length; i++) {
             //for each data in inputData, create a playlist.
             // which means, create a new playlist for each user
@@ -34,14 +35,18 @@ const main = async () => {
         const expectedRes = dataGen.returnExpectedDataFor("getPlaylistsOfUserFromCache") 
         // console.log("getPlaylistsOfUserFromCache res2", res2, expectedRes ,objectEqual(res2.data[0],expectedRes[0]))
         await testStage1(resArr, expectedRes)
-        const playlistIdArr = res2.data.map(o=>o._id) 
-        
-        const res22 = await getAllVideosOfPlaylistFromCache(playlistIdArr[0])
-        
-        const expectedRes22 = dataGen.returnExpectedDataFor("getAllVideosOfPlaylistFromCache", {playlistId:playlistIdArr[0]})
+       
 
-        console.log("stage2 data is: res22",res22,"expectedRes", expectedRes22)
-        await testStage2(res22, expectedRes22)
+        const playlistIdArr = dataGen.returnCurrentPlaylistIds()
+        const resArr11 = []
+        for (var i = 0;i < playlistIdArr.length;i++) {
+            const res22 = await getAllVideosOfPlaylistFromCache(playlistIdArr[i])
+            resArr11.push(res22)
+        }
+        const expectedRes22 = dataGen.returnExpectedDataFor("getAllVideosOfPlaylistFromCache")
+
+        // console.log("stage2 data is: res22",resArr11,"expectedRes", expectedRes22)
+        await testStage2(resArr11, expectedRes22)
 
 
         const inputData1 = createInputDataFor("addVideoToPlaylistsCache",{count:3})

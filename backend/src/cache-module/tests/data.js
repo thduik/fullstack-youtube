@@ -32,7 +32,9 @@ class DataGeneratorCP { //CachePlaylist
         this.videoIdToVideoJson = new Map() // { videoId:{videoJson} }
     }
 
-
+    returnCurrentPlaylistIds = () => {//return [playlistid] that currently exists
+        return this.playlists.map(o => o._id)
+    }
     returnCurrentUserids = () => { //return [userid] that currently exists
         return this.userDataArr.map(o => o.userid)
     }
@@ -70,13 +72,14 @@ class DataGeneratorCP { //CachePlaylist
 
 
             // console.log("playlistToVideoIdsTest", this.playlistToVideoIds.get(playlist._doc._id.toString()))
-            return resArr
+            return resArr //[ { userid: userId, data: { playlist:playlist, video:video } } ]
         }
 
         if (funcName == "addVideoToPlaylistsCache") {
             //create a new video for each playlist
             this.playlists.forEach((p) => {
                 console.log("addVideoToPlaylistsCache p._id", p._id)
+
             })
         }
 
@@ -96,24 +99,27 @@ class DataGeneratorCP { //CachePlaylist
 
     returnGetAllVideosOfPlaylistFromCache = () => {
         //from 1 playlist id, return all video objects belong to playlist id
-        // console.log("returnGetAllVideosOfPlaylistFromCache called", data)
-
-        this.playlistToVideoIds.forEach((playlistId) => {
-            //return [ {playlistId:playlistId, videoArr:[videoDoc]} ]
-            const finalArr = []
+        //return [ {playlistId:playlistId, videoArr:[videoDoc]} ]
+        const finalArr = []
+        for (const playlistId of this.playlistToVideoIds.keys()) {
             const videoIdArr = this.playlistToVideoIds.get(playlistId)
-            if (!videoIdArr) { throw ("videoIdArr isNUll error" + " " + this.playlistToVideoIds.keys()[0] + " " + playlistId) }
+            if (!videoIdArr) { throw ("videoIdArr isNUll error" + " " + this.playlistToVideoIds.keys() + " " + playlistId) }
             const videoResArr = []
+            
             for (var i = 0; i < videoIdArr.length; i++) {
                 const videoRes = this.videoIdToVideoJson.get(videoIdArr[i])
                 if (!videoRes) { throw ("returnGetAllVideosOfPlaylistFromCache err videoRes null") }
                 videoResArr.push(videoRes)
             }
-            finalArr.push({playlistId:playlistId, videoArr:videoResArr})
+            // console.log("playlistToVideoIds", playlistId, videoIdArr,videoResArr)
+            const newobj = { playlistId: playlistId, videoArr: videoResArr }
+            finalArr.push(newobj)
         }
 
-        )
 
+        //return [ {playlistId:playlistId, videoArr:[videoDoc]} ]
+
+        console.log("finalArr", finalArr)
         return finalArr
     }
 
@@ -131,7 +137,7 @@ class DataGeneratorCP { //CachePlaylist
                         if (playlists.length > 1) { throw ("err playlists.length > 1") }; const pobj = playlists[0]; pobj._id = pobj._id.toString()
                         playlistArrRes.push(pobj)
                     })
-                    finalArr.push( { userid: userid, playlistArr: playlistArrRes } )
+                    finalArr.push({ userid: userid, playlistArr: playlistArrRes })
                 }
             )
             return finalArr
@@ -170,11 +176,11 @@ const createInputDataForcreatePlaylistCache = ({ userId, playlistName }) => {
 }
 
 const createVideoForPlaylist = (playlistId) => {
-    const videoIdString = generateRandomString("64816588ede41e56207671be".length)
+    const videoIdString = generateRandomString("5Hnico_qSUc".length)
     const video = {
         playlistId: playlistId,
         videoName: 'VideoName' + getRandomInt(1, 10000).toString(),
-        videoId: '5Hnico_qSUc',
+        videoId: videoIdString,
         thumbnailUrl: 'https://i.ytimg.com/vi/MXBCMgq7_xY/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCkgbA5Yu_qQ59vBNraknj2139L0w',
         createdAt: Date.now() + + getRandomInt(1, 1000),
         _id: new ObjectID(),

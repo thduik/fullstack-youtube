@@ -24,7 +24,7 @@ const addVideoToPlaylistsCache = async (videoDocArr) => {
 
 const createPlaylistCache = async (result) => {
     // result = { playlist:{ _doc: playlistDoc }, video:{ _doc:videoRes } }
-    // console.log("createPlaylistCache called, result", result)
+    console.log("createPlaylistCache called, result", result)
     const playlist = parsePlaylistDoc(result.playlist._doc);
     const video = parseVideoDoc(result.video._doc)
     playlist.isPrivate = playlist.isPrivate ? 1 : 0; playlist.isUnlisted = playlist.isUnlisted ? 1 : 0 //convert bool to 1 and 0
