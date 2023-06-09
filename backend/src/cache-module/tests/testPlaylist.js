@@ -23,17 +23,17 @@ const main = async () => {
             // which means, create a new playlist for each user
             await createPlaylistCache(inputData[i].data)
         }
-        await delay(500)
+        await delay(1000)
 
-        const userids = dataGen.returnCurrentUserids()
-        const res2 = await getPlaylistsOfUserFromCache(usaid) // { isSet: true, data: playlistArr }
-        const res3 = await getPlaylistsOfUserFromCache(usaid)
-        const res4 = await getPlaylistsOfUserFromCache(usaid)
-        console.log("res2 is", res2, res3,res4 )
-        const expectedRes = dataGen.returnExpectedDataFor("getPlaylistsOfUserFromCache", {userid:usaid}) 
+        const useridArr = dataGen.returnCurrentUserids()
+        const resArr = []//[{ isSet: true, data: playlistArr }]
+        for (var i = 0;i < useridArr.length;i++) {
+            const res2 = await getPlaylistsOfUserFromCache(useridArr[i])//{ isSet: true, data: playlistArr }
+            resArr.push(res2)
+        }
+        const expectedRes = dataGen.returnExpectedDataFor("getPlaylistsOfUserFromCache") 
         // console.log("getPlaylistsOfUserFromCache res2", res2, expectedRes ,objectEqual(res2.data[0],expectedRes[0]))
-        await testStage1(res2, expectedRes)
-
+        await testStage1(resArr, expectedRes)
         const playlistIdArr = res2.data.map(o=>o._id) 
         
         const res22 = await getAllVideosOfPlaylistFromCache(playlistIdArr[0])

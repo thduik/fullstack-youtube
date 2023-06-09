@@ -32,9 +32,9 @@ class DataGeneratorCP { //CachePlaylist
         this.videoIdToVideoJson = new Map() // { videoId:{videoJson} }
     }
 
-    
+
     returnCurrentUserids = () => { //return [userid] that currently exists
-        return this.userDataArr.map(o=>o.userid)
+        return this.userDataArr.map(o => o.userid)
     }
 
     createUserAndReturnUserId = () => {
@@ -94,19 +94,27 @@ class DataGeneratorCP { //CachePlaylist
 
     }
 
-    returnGetAllVideosOfPlaylistFromCache = (data) => {
+    returnGetAllVideosOfPlaylistFromCache = () => {
         //from 1 playlist id, return all video objects belong to playlist id
         // console.log("returnGetAllVideosOfPlaylistFromCache called", data)
-        const playlistId = data.playlistId
-        const videoIdArr = this.playlistToVideoIds.get(playlistId)
-        if (!videoIdArr) { throw ("videoIdArr isNUll error" + " " + this.playlistToVideoIds.keys()[0] + " " + playlistId) }
-        const videoResArr = []
-        for (var i = 0; i < videoIdArr.length; i++) {
-            const videoRes = this.videoIdToVideoJson.get(videoIdArr[i])
-            if (!videoRes) { throw ("returnGetAllVideosOfPlaylistFromCache err videoRes null") }
-            videoResArr.push(videoRes)
+
+        this.playlistToVideoIds.forEach((playlistId) => {
+            //return [ {playlistId:playlistId, videoArr:[videoDoc]} ]
+            const finalArr = []
+            const videoIdArr = this.playlistToVideoIds.get(playlistId)
+            if (!videoIdArr) { throw ("videoIdArr isNUll error" + " " + this.playlistToVideoIds.keys()[0] + " " + playlistId) }
+            const videoResArr = []
+            for (var i = 0; i < videoIdArr.length; i++) {
+                const videoRes = this.videoIdToVideoJson.get(videoIdArr[i])
+                if (!videoRes) { throw ("returnGetAllVideosOfPlaylistFromCache err videoRes null") }
+                videoResArr.push(videoRes)
+            }
+            finalArr.push({playlistId:playlistId, videoArr:videoResArr})
         }
-        return videoResArr
+
+        )
+
+        return finalArr
     }
 
     returnGetPlaylistsOfUserFromCacheData = () => {
@@ -115,7 +123,7 @@ class DataGeneratorCP { //CachePlaylist
             const finalArr = []
             this.userDataArr.forEach(
                 (u) => {
-                    const { userid } = u; 
+                    const { userid } = u;
                     const playlistIdArr = this.userIdToPlaylistArrMap[userid]
                     const playlistArrRes = []
                     playlistIdArr.forEach((playlisId) => {
@@ -123,7 +131,7 @@ class DataGeneratorCP { //CachePlaylist
                         if (playlists.length > 1) { throw ("err playlists.length > 1") }; const pobj = playlists[0]; pobj._id = pobj._id.toString()
                         playlistArrRes.push(pobj)
                     })
-                    finalArr.push({userid:userid, playlistArr:playlistArrRes})
+                    finalArr.push( { userid: userid, playlistArr: playlistArrRes } )
                 }
             )
             return finalArr

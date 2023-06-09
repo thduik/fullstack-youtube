@@ -12,7 +12,7 @@ const parseVideoDoc = (doc) => {
 }
 
 const parsePlaylistDoc = (doc) => {
-    const res = {
+    const res = { 
         playlistName: doc.playlistName,
         userid: doc.userid,
         thumbnailUrl: doc.thumbnailUrl ?? 'none',
