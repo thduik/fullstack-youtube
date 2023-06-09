@@ -15,13 +15,17 @@ const main = async () => {
 
         await delay(1000)
         const dataGen = new DataGeneratorCP()
-
+        dataGen.createUserAndReturnUserId()
         const inputData = dataGen.createInputDataFor("createPlaylistCache")
-        const res1 = await createPlaylistCache(inputData)
-        const usaid = inputData.playlist._doc.userid
-
+        console.log("inputDatalol", inputData)//[ userid: 'userId593476', data: { playlist: [Object], video: [Object], userId: 'userId593476' }]
+        for (var i = 0; i < inputData.length; i++) {
+            //for each data in inputData, create a playlist.
+            // which means, create a new playlist for each user
+            await createPlaylistCache(inputData[i].data)
+        }
         await delay(500)
 
+        const userids = dataGen.returnCurrentUserids()
         const res2 = await getPlaylistsOfUserFromCache(usaid) // { isSet: true, data: playlistArr }
         const res3 = await getPlaylistsOfUserFromCache(usaid)
         const res4 = await getPlaylistsOfUserFromCache(usaid)
@@ -38,6 +42,10 @@ const main = async () => {
 
         console.log("stage2 data is: res22",res22,"expectedRes", expectedRes22)
         await testStage2(res22, expectedRes22)
+
+
+        const inputData1 = createInputDataFor("addVideoToPlaylistsCache",{count:3})
+        
 
         await redisClient.flushAll()
     } catch (err) {

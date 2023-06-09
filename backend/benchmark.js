@@ -47,6 +47,15 @@ const obj = {
 }
 
 const testlolol = async () => {
+    const maplol = new Map()
+
+    maplol.key1 = ['hehehehe']
+    maplol.key1.push('sdsdsdds')
+    console.log(maplol.key1)
+
+    return
+
+
     for (var i = 0; i < 5; i++) {
 
 

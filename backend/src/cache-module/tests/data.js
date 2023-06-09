@@ -7,21 +7,44 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+/*
+    the principle of this class is to create 1 data object for each user/playlist when the corresponding createInputDataFor is called
+    for example, if you call createInputDataFor("createPlaylistCache"), each user gets 1 more playlist and state is updated
+    if you call createInputDataFor("addVideoToPlaylistsCache"), each playlist gets 1 more song and state is updated
+    This dataGenerator class is completely stateless externally and needs no input. data are pseudo-randomly generated and corresponding expected data is returned when 
+    returnExpectedDataFor is called. createInputDataFor returns data that strictly meet input req for cache functions
+*/
+
+
 class DataGeneratorCP { //CachePlaylist
     constructor() {
         this.createInputDataFor.bind(this)
         this.returnExpectedDataFor.bind(this)
         this.returnGetPlaylistsOfUserFromCacheData.bind(this)
         this.returnGetAllVideosOfPlaylistFromCache.bind(this)
-        this.userDataArr = [] // [ {userid:string, playlistIdArr:[ playlist._id ], userName:string} ]
+        this.createUserAndReturnUserId.bind(this)
+        this.returnCurrentUserids.bind(this)
+
+        this.userDataArr = [] // [ {userid:string, userName:string} ]
+        this.userIdToPlaylistArrMap = new Map() //{userId:[playlistId]}
         this.playlists = [] // [ playlistObject ], because we will be using filter 
         this.playlistToVideoIds = new Map() // { playlist_id : [videoIds] }
         this.videoIdToVideoJson = new Map() // { videoId:{videoJson} }
     }
 
-    createUser = () => {
-        const randomNum = getRandomInt(1, 1000).toString()
+    
+    returnCurrentUserids = () => { //return [userid] that currently exists
+        return this.userDataArr.map(o=>o.userid)
+    }
+
+    createUserAndReturnUserId = () => {
+        //create a new user
+        const randomNum = getRandomInt(1, 1000000).toString()
         const userId = "userId" + randomNum
+        const userName = "userName" + randomNum
+        this.userDataArr.push({ userid: userId, userName: userName })
+        this.userIdToPlaylistArrMap[userId] = []
+        return userId
         // const userName = "userName" + randomNum
     }
 
@@ -31,14 +54,23 @@ class DataGeneratorCP { //CachePlaylist
 
         if (funcName == "createPlaylistCache") {
             //create 1 playlist for each user in state
-            const result = createInputDatCreatePlaylist()
-            const { playlist, video } = result
-            this.userDataArr.push({ userid: result.userId, playlistIdArr: [playlist._doc._id.toString()], userName: "fuck" })
-            this.playlists.push(result.playlist._doc)
-            this.playlistToVideoIds.set(playlist._doc._id.toString(), [video._doc.videoId])
-            this.videoIdToVideoJson.set(video._doc.videoId, video._doc)
+            const resArr = []
+            this.userDataArr.forEach((u) => {
+                const userId = u.userid
+                const result = createInputDatCreatePlaylist(userId)
+                const { playlist, video } = result
+                this.userIdToPlaylistArrMap[userId].push(playlist._doc._id.toString())
+                this.playlists.push(result.playlist._doc)
+                this.playlistToVideoIds.set(playlist._doc._id.toString(), [video._doc.videoId])
+                this.videoIdToVideoJson.set(video._doc.videoId, video._doc)
+
+                resArr.push({ userid: userId, data: result })
+
+            })
+
+
             // console.log("playlistToVideoIdsTest", this.playlistToVideoIds.get(playlist._doc._id.toString()))
-            return result
+            return resArr
         }
 
         if (funcName == "addVideoToPlaylistsCache") {
@@ -77,16 +109,24 @@ class DataGeneratorCP { //CachePlaylist
         return videoResArr
     }
 
-    returnGetPlaylistsOfUserFromCacheData = (data) => {
+    returnGetPlaylistsOfUserFromCacheData = () => {
+        //return [ {userid:userid, playlistArr:[playlistDoc]} ]
         try {
-            const { userid } = data; const userData = this.userDataArr.filter(o => o.userid == userid)[0]; const playlistIdArr = userData.playlistIdArr; const playlistArrRes = []
-            playlistIdArr.forEach((playlisId) => {
-                const playlists = this.playlists.filter(o => o._id == playlisId) //array of playlist objects
-                if (playlists.length > 1) { throw ("err playlists.length > 1") }; const pobj = playlists[0]; pobj._id = pobj._id.toString()
-                playlistArrRes.push(pobj)
-            })
-            console.log("returnExpectedDataFor", playlistArrRes)
-            return playlistArrRes
+            const finalArr = []
+            this.userDataArr.forEach(
+                (u) => {
+                    const { userid } = u; 
+                    const playlistIdArr = this.userIdToPlaylistArrMap[userid]
+                    const playlistArrRes = []
+                    playlistIdArr.forEach((playlisId) => {
+                        const playlists = this.playlists.filter(o => o._id == playlisId) //array of playlist objects
+                        if (playlists.length > 1) { throw ("err playlists.length > 1") }; const pobj = playlists[0]; pobj._id = pobj._id.toString()
+                        playlistArrRes.push(pobj)
+                    })
+                    finalArr.push({userid:userid, playlistArr:playlistArrRes})
+                }
+            )
+            return finalArr
         } catch (err) {
             throw ("err returnGetPlaylistsOfUserFromCacheData", err)
         }
@@ -110,7 +150,7 @@ const createInputDataForcreatePlaylistCache = ({ userId, playlistName }) => {
         thumbnailUrl: 'https://i.ytimg.com/vi/MXBCMgq7_xY/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCkgbA5Yu_qQ59vBNraknj2139L0w',
         isPrivate: true,
         isUnlisted: false,
-        createdAt: Date.now(),
+        createdAt: Date.now() + getRandomInt(1, 1000),
         count: 1,
         _id: newPlaylistId,
         // __v: 0
@@ -128,7 +168,7 @@ const createVideoForPlaylist = (playlistId) => {
         videoName: 'VideoName' + getRandomInt(1, 10000).toString(),
         videoId: '5Hnico_qSUc',
         thumbnailUrl: 'https://i.ytimg.com/vi/MXBCMgq7_xY/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCkgbA5Yu_qQ59vBNraknj2139L0w',
-        createdAt: 1686213166594,
+        createdAt: Date.now() + + getRandomInt(1, 1000),
         _id: new ObjectID(),
         // __v: 0
     }
@@ -136,7 +176,7 @@ const createVideoForPlaylist = (playlistId) => {
 }
 
 const createInputDatCreatePlaylist = (userId) => {
-    const playlistName = "playlist" + randomNum + getRandomInt(1, 100).toString()
+    const playlistName = "playlist" + getRandomInt(1, 100).toString()
     const platlistData = { userId: userId, playlistName: playlistName }
     console.log("createInputDataFor createPlaylistCache", userId, playlistName)
     const result = createInputDataForcreatePlaylistCache(platlistData) //{playlist:playlist, video:video}
