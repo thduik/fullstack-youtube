@@ -51,7 +51,8 @@ const testlolol = async () => {
 
     maplol.key1 = ['hehehehe']
     maplol.key1.push('sdsdsdds')
-    console.log(maplol.key1)
+    maplol["key1"]
+    console.log(maplol.key1,maplol["key1"])
 
     return
 

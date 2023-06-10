@@ -1,8 +1,8 @@
 const { redisClient, connectCache } = require('../connectDb')
-const { createPlaylistCache, getPlaylistsOfUserFromCache, getAllVideosOfPlaylistFromCache } = require('../playlist')
+const { createPlaylistCache, getPlaylistsOfUserFromCache, getAllVideosOfPlaylistFromCache, addVideoToPlaylistsCache } = require('../playlist')
 const { DataGeneratorCP } = require('./data')
 const { objectEqual } = require('./utils')
-const {testStage1,testStage2} = require('./testCases')
+const {testStage1,testStage2,stage3Test} = require('./testCases')
 
 function delay(ms) {
     return new Promise(resolve => setTimeout(() => resolve(), ms));
@@ -48,9 +48,26 @@ const main = async () => {
         // console.log("stage2 data is: res22",resArr11,"expectedRes", expectedRes22)
         await testStage2(resArr11, expectedRes22)
 
-
-        const inputData1 = createInputDataFor("addVideoToPlaylistsCache",{count:3})
         
+        for (var x = 0;x < 3; x++) {
+            const inputData1 = dataGen.createInputDataFor("addVideoToPlaylistsCache") //[ {playlistId:string,video:{playlistId:,videoName:,videoId:,thumbnailUrl:,createdAt:,_id:}}]
+            for (var i = 0; i < inputData1.length;i++) {
+                // console.log("inputData1",inputData1)
+                await addVideoToPlaylistsCache([inputData1[i].video]) //this takes in [ videoDoc ]
+                await delay(500)
+            }
+        }
+       
+        await delay(500)
+        const playlistIdArr1 = dataGen.returnCurrentPlaylistIds()
+        const resArr111 = []
+        for (var i = 0;i < playlistIdArr1.length;i++) {
+            const res22 = await getAllVideosOfPlaylistFromCache(playlistIdArr1[i])
+            console.log("res2222", res22)
+            resArr111.push(res22)
+        }
+        const expectedRes2222 = dataGen.returnExpectedDataFor("getAllVideosOfPlaylistFromCache")
+        await stage3Test(expectedRes2222, resArr111)
 
         await redisClient.flushAll()
     } catch (err) {

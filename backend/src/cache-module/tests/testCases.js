@@ -76,4 +76,29 @@ const testStage2 = (res, expectedRes) => {
 
     console.log("OK testStage2 SUCCESS")
 }
-module.exports = { testStage1, testStage2 }
+
+const stage3Test = (expData0, resData0) => { //[ {playlistId:string, videoArr:[videoDoc]} ]
+    console.log("stage3Test")
+    console.log("expData0",expData0)
+    console.log("resData0",resData0)
+    const resData1 = []
+    resData0.map(o=>{
+        if (!o.isSet || !o.data.length) {throw("NOT OK FAILED stage3Test o.isSet")}
+        resData1.push({playlistId:o.data[0].playlistId, videoArr:o.data})
+    })
+    expData0.forEach(expPData=>{
+        const resPData = resData1.filter(o=>o.playlistId==expPData.playlistId)[0]
+        if (!resPData) { throw("NOT OK FAILED stage3Test FAILED !resPData")}
+        
+        const expVideoArray = expPData.videoArr
+        const resVideoArray = resPData.videoArr
+        console.log("expVideoArray[0]",expVideoArray[0],"resVideoArray[0]",resVideoArray[0])
+        if (expVideoArray.length != resVideoArray.length) {throw("NOT OK FAILED stage3Test FAILED videoArr length not match")}
+        expVideoArray.sort( (a,b)=>a._id-b._id)
+        resVideoArray.sort( (a,b)=>a._id-b._id)
+        
+    })
+
+}
+
+module.exports = { testStage1, testStage2, stage3Test }

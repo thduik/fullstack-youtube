@@ -77,10 +77,23 @@ class DataGeneratorCP { //CachePlaylist
 
         if (funcName == "addVideoToPlaylistsCache") {
             //create a new video for each playlist
+            const finalRes = []
             this.playlists.forEach((p) => {
-                console.log("addVideoToPlaylistsCache p._id", p._id)
-
+                const vidArr = []
+                
+                const playlistId = p._id
+                // console.log("addVideoToPlaylistsCache p._id", p._id,this.playlistToVideoIds.get(playlistId),this.playlistToVideoIds[playlistId])
+                const vidDoc = createVideoForPlaylist(playlistId)
+                //add new vidId to vidvArr of this.playlistToVideoIds.get(playlistId)
+                const vidvArr = this.playlistToVideoIds.get(playlistId)
+                vidvArr.push(vidDoc.videoId)
+                this.playlistToVideoIds.set(playlistId, vidvArr)
+                this.videoIdToVideoJson.set(vidDoc.videoId, vidDoc)
+                console.log("addVideoToPlaylistsCache finalRes",vidDoc.videoId,this.playlistToVideoIds.get(playlistId))
+                finalRes.push({playlistId:playlistId, video:vidDoc})
             })
+
+            return finalRes
         }
 
     }
@@ -155,7 +168,7 @@ class DataGeneratorCP { //CachePlaylist
 
 
 const createInputDataForcreatePlaylistCache = ({ userId, playlistName }) => {
-    //create playlist + first video input data
+    //create playlist + fir st video input data
     //mock input data must respect true input data from dataManager
     const newPlaylistId = new ObjectID()
     const playlist = {
@@ -166,7 +179,7 @@ const createInputDataForcreatePlaylistCache = ({ userId, playlistName }) => {
         isUnlisted: false,
         createdAt: Date.now() + getRandomInt(1, 1000),
         count: 1,
-        _id: newPlaylistId,
+        _id: newPlaylistId.toString(),
         // __v: 0
     }
 
@@ -177,13 +190,14 @@ const createInputDataForcreatePlaylistCache = ({ userId, playlistName }) => {
 
 const createVideoForPlaylist = (playlistId) => {
     const videoIdString = generateRandomString("5Hnico_qSUc".length)
+    const vidID = new ObjectID()
     const video = {
         playlistId: playlistId,
         videoName: 'VideoName' + getRandomInt(1, 10000).toString(),
         videoId: videoIdString,
         thumbnailUrl: 'https://i.ytimg.com/vi/MXBCMgq7_xY/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCkgbA5Yu_qQ59vBNraknj2139L0w',
         createdAt: Date.now() + + getRandomInt(1, 1000),
-        _id: new ObjectID(),
+        _id: vidID.toString(),
         // __v: 0
     }
     return video
