@@ -29,8 +29,8 @@ class DataGeneratorCP { //CachePlaylist
         this.userIdToPlaylistArrMap = new Map() //{userId:[playlistId]}
         this.playlists = [] // [ playlistObject ], because we will be using filter 
         this.playlistToVideoIds = new Map() // { playlist_id : [videoIds] }
-        this.videoIdToVideoJson = new Map() // { videoId:{videoJson} }
-        this.docIdToVideoJson = new Map() // 
+        this.videoIdToVideoJson = new Map() // { videoId:{videoJson} }, not including createdAt and playlistId for each playlist
+        this.videoIdplaylistIdToCreatedAt = new Map() //  { videoId+playlistId: createdAt }
     }
 
 
@@ -63,7 +63,7 @@ class DataGeneratorCP { //CachePlaylist
             for (const playlistId of this.playlistToVideoIds.keys()) {
                 var videoIdArr = this.playlistToVideoIds.get(playlistId)
                 const removeVideoIdx = getRandomInt(0,videoIdArr.length-1)
-                const remove
+                const removedVideoId = videoIdArr[removeVideoIdx]
                 videoIdArr = videoIdArr.filter(o=>o.videoId != videoIdArr[removeVideoIdx])
                 this.playlistToVideoIds.set(playlistId, videoIdArr)
                 resArr.push()
@@ -82,7 +82,7 @@ class DataGeneratorCP { //CachePlaylist
                 this.playlists.push(result.playlist._doc)
                 this.playlistToVideoIds.set(playlist._doc._id.toString(), [video._doc.videoId])
                 this.videoIdToVideoJson.set(video._doc.videoId, video._doc)
-
+                this.videoIdplaylistIdToCreatedAt.set(playlist._doc._id.toString() + video._doc.videoId)
                 resArr.push({ userid: userId, data: result })
 
             })
@@ -106,7 +106,8 @@ class DataGeneratorCP { //CachePlaylist
                 vidvArr.push(vidDoc.videoId)
                 this.playlistToVideoIds.set(playlistId, vidvArr)
                 this.videoIdToVideoJson.set(vidDoc.videoId, vidDoc)
-                console.log("addVideoToPlaylistsCache finalRes",vidDoc.videoId,this.playlistToVideoIds.get(playlistId))
+                this.videoIdplaylistIdToCreatedAt.set(playlistId + vidDoc.videoId)
+                //console.log("addVideoToPlaylistsCache finalRes",vidDoc.videoId,this.playlistToVideoIds.get(playlistId))
                 finalRes.push({playlistId:playlistId, video:vidDoc})
             })
 

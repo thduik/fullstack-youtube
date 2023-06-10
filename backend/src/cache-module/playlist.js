@@ -148,6 +148,7 @@ const getAllVideosOfPlaylistFromCache = async (playlistid) => {
             const [videoId, createdAtString] = videoIdArr[i].split(":")
             const videoRes = await redisClient.hGetAll(`playvideo:${videoId}`)
             videoRes.createdAt = parseInt(createdAtString)
+            videoRes.playlistId = playlistid
             // console.log("cacheVideoRes", videoId, videoRes)
             if (videoRes) { videoResArr.push(videoRes) }
         }

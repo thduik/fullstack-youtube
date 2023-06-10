@@ -1,11 +1,11 @@
 const parseVideoDoc = (doc) => {
     const res = {
-        playlistId: doc.playlistId,
+        //playlistId: doc.playlistId,
         videoName: doc.videoName,
         videoId: doc.videoId,
         thumbnailUrl: doc.thumbnailUrl,
         createdAt: doc.createdAt,
-        _id: doc._id.toString(),
+        //_id: doc._id.toString(),
 
     }
     return res
