@@ -30,6 +30,7 @@ class DataGeneratorCP { //CachePlaylist
         this.playlists = [] // [ playlistObject ], because we will be using filter 
         this.playlistToVideoIds = new Map() // { playlist_id : [videoIds] }
         this.videoIdToVideoJson = new Map() // { videoId:{videoJson} }
+        this.docIdToVideoJson = new Map() // 
     }
 
 
