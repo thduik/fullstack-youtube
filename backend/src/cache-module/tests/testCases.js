@@ -64,9 +64,11 @@ const testStage2 = (res, expectedRes) => {
         for (var i = 0; i < resVideoArr.length; i++) {
             const video = resVideoArr[i]
             const expVideo = expectedVideoArr[i]
+            delete expVideo._id 
+            
             console.log("testStage2 videoExpVideo:", expVideo, "video", video)
             //delete _id video from video obj
-            delete expVideo._id 
+            
             const testRes = objectEqual(video, expVideo)
             if (!testRes) { throw ("err testStage2 object not equal") }
 

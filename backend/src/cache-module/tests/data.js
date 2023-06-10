@@ -28,9 +28,9 @@ class DataGeneratorCP { //CachePlaylist
         this.userDataArr = [] // [ {userid:string, userName:string} ]
         this.userIdToPlaylistArrMap = new Map() //{userId:[playlistId]}
         this.playlists = [] // [ playlistObject ], because we will be using filter 
-        this.playlistToVideoIds = new Map() // { playlist_id : [videoIds] }
-        this.videoIdToVideoJson = new Map() // { videoId:{videoJson} }, not including createdAt and playlistId for each playlist
-        this.videoIdplaylistIdToCreatedAt = new Map() //  { videoId+playlistId: createdAt }
+        this.playlistToVideoDocArr = new Map() // { playlist_id : [{vidDoc}] }
+        this.videoIdToVideoJson = new Map() // { videoId:{videoId:,thumbnailUrl:,videoName:} }, not including createdAt and playlistId for each playlist
+        
     }
 
 
@@ -60,12 +60,12 @@ class DataGeneratorCP { //CachePlaylist
 
         if (funcName == "deleteVideoFromPlaylist") {//each playlist remove 1 random video,=> return arr of [videoDoc], 1 videoDoc per playlist
             const resArr = []
-            for (const playlistId of this.playlistToVideoIds.keys()) {
-                var videoIdArr = this.playlistToVideoIds.get(playlistId)
+            for (const playlistId of this.playlistToVideoDocArr.keys()) {
+                var videoDocArr = this.playlistToVideoDocs.get(playlistId)
                 const removeVideoIdx = getRandomInt(0,videoIdArr.length-1)
-                const removedVideoId = videoIdArr[removeVideoIdx]
-                videoIdArr = videoIdArr.filter(o=>o.videoId != videoIdArr[removeVideoIdx])
-                this.playlistToVideoIds.set(playlistId, videoIdArr)
+                const removedVideoId = videoDocArr[removeVideoIdx]
+                videoDocArr = videoIdArr.filter(o=>o.videoId != videoDocArr[removeVideoIdx].videoId)
+                this.playlistToVideoDocArr.set(playlistId, videoDocArr)
                 resArr.push()
             }
 
@@ -80,9 +80,10 @@ class DataGeneratorCP { //CachePlaylist
                 const { playlist, video } = result
                 this.userIdToPlaylistArrMap[userId].push(playlist._doc._id.toString())
                 this.playlists.push(result.playlist._doc)
-                this.playlistToVideoIds.set(playlist._doc._id.toString(), [video._doc.videoId])
-                this.videoIdToVideoJson.set(video._doc.videoId, video._doc)
-                this.videoIdplaylistIdToCreatedAt.set(playlist._doc._id.toString() + video._doc.videoId)
+                this.playlistToVideoDocArr.set(playlist._doc._id.toString(), [video._doc])
+                const vidDoc = video; delete vidDoc._id; delete vidDoc.playlistId; delete vidDoc.createdAt
+                this.videoIdToVideoJson.set(video._doc.videoId, vidDoc)
+
                 resArr.push({ userid: userId, data: result })
 
             })
@@ -102,11 +103,12 @@ class DataGeneratorCP { //CachePlaylist
                 // console.log("addVideoToPlaylistsCache p._id", p._id,this.playlistToVideoIds.get(playlistId),this.playlistToVideoIds[playlistId])
                 const vidDoc = createVideoForPlaylist(playlistId)
                 //add new vidId to vidvArr of this.playlistToVideoIds.get(playlistId)
-                const vidvArr = this.playlistToVideoIds.get(playlistId)
-                vidvArr.push(vidDoc.videoId)
-                this.playlistToVideoIds.set(playlistId, vidvArr)
+                const vidDocArr = this.playlistToVideoIds.get(playlistId)
+                vidDocArr.push(vidDoc)
+                this.playlistToVideoDocArr.set(playlistId, vidDocArr)
+                delete vidDoc.createdAt; delete vidDoc.playlistId; delete vidDoc._id
                 this.videoIdToVideoJson.set(vidDoc.videoId, vidDoc)
-                this.videoIdplaylistIdToCreatedAt.set(playlistId + vidDoc.videoId)
+                
                 //console.log("addVideoToPlaylistsCache finalRes",vidDoc.videoId,this.playlistToVideoIds.get(playlistId))
                 finalRes.push({playlistId:playlistId, video:vidDoc})
             })
@@ -132,24 +134,14 @@ class DataGeneratorCP { //CachePlaylist
         //from 1 playlist id, return all video objects belong to playlist id
         //return [ {playlistId:playlistId, videoArr:[videoDoc]} ]
         const finalArr = []
-        for (const playlistId of this.playlistToVideoIds.keys()) {
-            const videoIdArr = this.playlistToVideoIds.get(playlistId)
-            if (!videoIdArr) { throw ("videoIdArr isNUll error" + " " + this.playlistToVideoIds.keys() + " " + playlistId) }
-            const videoResArr = []
-            
-            for (var i = 0; i < videoIdArr.length; i++) {
-                const videoRes = this.videoIdToVideoJson.get(videoIdArr[i])
-                if (!videoRes) { throw ("returnGetAllVideosOfPlaylistFromCache err videoRes null") }
-                videoResArr.push(videoRes)
-            }
-            // console.log("playlistToVideoIds", playlistId, videoIdArr,videoResArr)
-            const newobj = { playlistId: playlistId, videoArr: videoResArr }
+        for (const playlistId of this.playlistToVideoDocArr.keys()) {
+            const videoDocArr = this.playlistToVideoDocArr.get(playlistId)
+            if (!videoDocArr) { throw ("videoDocArr isNUll error" + " " + this.playlistToVideoDocArr.keys() + " " + playlistId) }
+            // console.log("playlistToVideoIds", playlistId, videoDocArr,videoResArr)
+            const newobj = { playlistId: playlistId, videoArr: videoDocArr }
             finalArr.push(newobj)
         }
-
-
         //return [ {playlistId:playlistId, videoArr:[videoDoc]} ]
-
         console.log("finalArr", finalArr)
         return finalArr
     }
@@ -176,8 +168,6 @@ class DataGeneratorCP { //CachePlaylist
             throw ("err returnGetPlaylistsOfUserFromCacheData", err)
         }
     }
-
-
 }
 
 
@@ -200,9 +190,7 @@ const createInputDataForcreatePlaylistCache = ({ userId, playlistName }) => {
         _id: newPlaylistId.toString(),
         // __v: 0
     }
-
     const video = createVideoForPlaylist(newPlaylistId.toString())
-
     return { playlist: { _doc: playlist }, video: { _doc: video }, userId: userId }
 }
 

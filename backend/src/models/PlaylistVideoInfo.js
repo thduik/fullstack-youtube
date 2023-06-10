@@ -19,7 +19,10 @@ const PlaylistVideoInfoSchema = new mongoose.Schema({
         type:String,
         index:true
     },
-    channelName:String,
+    channelName:{
+        type:String,
+        required:true
+    },
     thumbnailUrl:String,
     createdAt:Number //createdAt here is actually addedAt, non-sensitive data so whatever
     
