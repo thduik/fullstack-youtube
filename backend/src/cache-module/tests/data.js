@@ -1,11 +1,7 @@
 var ObjectID = require("bson-objectid");
 const { generateRandomString } = require("../../utils/strings/generateRandomString")
+const {objectEqual, createInputDataForcreatePlaylistCache, createVideoForPlaylist,getRandomInt} = require("./utils")
 
-function getRandomInt(min, max) {//generate random int between min and max (inclusive, example if 0 and 4 result will include 4)
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
 
 /*
     the principle of this class is to create 1 data object for each user/playlist when the corresponding createInputDataFor is called
@@ -81,8 +77,9 @@ class DataGeneratorCP { //CachePlaylist
                 this.userIdToPlaylistArrMap[userId].push(playlist._doc._id.toString())
                 this.playlists.push(result.playlist._doc)
                 this.playlistToVideoDocArr.set(playlist._doc._id.toString(), [video._doc])
-                const vidDoc = video; delete vidDoc._id; delete vidDoc.playlistId; delete vidDoc.createdAt
-                this.videoIdToVideoJson.set(video._doc.videoId, vidDoc)
+                console.log("this.playlistToVideoDocArr111", this.playlistToVideoDocArr)
+                const vidDoc = {...video._doc}; delete vidDoc._id; delete vidDoc.playlistId; delete vidDoc.createdAt
+                this.videoIdToVideoJson.set(vidDoc.videoId, vidDoc)
 
                 resArr.push({ userid: userId, data: result })
 
@@ -97,22 +94,28 @@ class DataGeneratorCP { //CachePlaylist
             //create a new video for each playlist
             const finalRes = []
             this.playlists.forEach((p) => {
-                const vidArr = []
                 
                 const playlistId = p._id
                 // console.log("addVideoToPlaylistsCache p._id", p._id,this.playlistToVideoIds.get(playlistId),this.playlistToVideoIds[playlistId])
-                const vidDoc = createVideoForPlaylist(playlistId)
-                //add new vidId to vidvArr of this.playlistToVideoIds.get(playlistId)
-                const vidDocArr = this.playlistToVideoIds.get(playlistId)
-                vidDocArr.push(vidDoc)
+                const vidDocu = createVideoForPlaylist(playlistId)
+                //push vidDoc with full data to finalRes so addVideoToPlaylistsCache can consume
+                finalRes.push({playlistId:playlistId, video:vidDocu})
+                // console.log("vidDocu", vidDocu)
+                //add new vidDoc to this.playlistToVideoDocArr.get(playlistId)
+                const vidDocArr = this.playlistToVideoDocArr.get(playlistId)
+                vidDocArr.push(vidDocu)
                 this.playlistToVideoDocArr.set(playlistId, vidDocArr)
+
+                //modify vidDoc and add to this.videoIdToVideoJson
+                const vidDoc = {...vidDocu}
                 delete vidDoc.createdAt; delete vidDoc.playlistId; delete vidDoc._id
                 this.videoIdToVideoJson.set(vidDoc.videoId, vidDoc)
                 
                 //console.log("addVideoToPlaylistsCache finalRes",vidDoc.videoId,this.playlistToVideoIds.get(playlistId))
-                finalRes.push({playlistId:playlistId, video:vidDoc})
+                
             })
-
+            //{videoDoc}
+            // console.log("finalResLolOl",finalRes )
             return finalRes
         }
 
@@ -134,6 +137,7 @@ class DataGeneratorCP { //CachePlaylist
         //from 1 playlist id, return all video objects belong to playlist id
         //return [ {playlistId:playlistId, videoArr:[videoDoc]} ]
         const finalArr = []
+        // console.log("this.playlistToVideoDocArr", this.playlistToVideoDocArr)
         for (const playlistId of this.playlistToVideoDocArr.keys()) {
             const videoDocArr = this.playlistToVideoDocArr.get(playlistId)
             if (!videoDocArr) { throw ("videoDocArr isNUll error" + " " + this.playlistToVideoDocArr.keys() + " " + playlistId) }
@@ -142,7 +146,7 @@ class DataGeneratorCP { //CachePlaylist
             finalArr.push(newobj)
         }
         //return [ {playlistId:playlistId, videoArr:[videoDoc]} ]
-        console.log("finalArr", finalArr)
+        console.log("finalArr", finalArr[0].videoArr)
         return finalArr
     }
 
@@ -170,44 +174,6 @@ class DataGeneratorCP { //CachePlaylist
     }
 }
 
-
-
-
-
-
-const createInputDataForcreatePlaylistCache = ({ userId, playlistName }) => {
-    //create playlist + fir st video input data
-    //mock input data must respect true input data from dataManager
-    const newPlaylistId = new ObjectID()
-    const playlist = {
-        playlistName: playlistName,
-        userid: userId,
-        thumbnailUrl: 'https://i.ytimg.com/vi/MXBCMgq7_xY/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCkgbA5Yu_qQ59vBNraknj2139L0w',
-        isPrivate: true,
-        isUnlisted: false,
-        createdAt: Date.now() + getRandomInt(1, 10000000),
-        count: 1,
-        _id: newPlaylistId.toString(),
-        // __v: 0
-    }
-    const video = createVideoForPlaylist(newPlaylistId.toString())
-    return { playlist: { _doc: playlist }, video: { _doc: video }, userId: userId }
-}
-
-const createVideoForPlaylist = (playlistId) => {
-    const videoIdString = generateRandomString("5Hnico_qSUc".length)
-    const vidID = new ObjectID()
-    const video = {
-        playlistId: playlistId,
-        videoName: 'VideoName' + getRandomInt(1, 10000).toString(),
-        videoId: videoIdString,
-        thumbnailUrl: 'https://i.ytimg.com/vi/MXBCMgq7_xY/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCkgbA5Yu_qQ59vBNraknj2139L0w',
-        createdAt: Date.now() + + getRandomInt(1, 10000000),
-        _id: vidID.toString(),
-        // __v: 0
-    }
-    return video
-}
 
 const createInputDatCreatePlaylist = (userId) => {
     const playlistName = "playlist" + getRandomInt(1, 100).toString()

@@ -46,7 +46,8 @@ const testStage1 = async (resArr, expectedArr) => {
     }
 }
 const testStage2 = (res, expectedRes) => {
-    console.log("testStage2", res, expectedRes)
+    // console.log("testStage2", "res",res)
+    // console.log("testStage2", "expectedRes", expectedRes)
     //expectedRes = { playlistId: '6483306986365dae1473ee6b', videoArr: [ [video] ] }
     const expResArr = expectedRes; expResArr.sort((a, b) => a.createdAt - b.createdAt)
     const resArrrr = res.map(o => {
@@ -64,9 +65,12 @@ const testStage2 = (res, expectedRes) => {
         for (var i = 0; i < resVideoArr.length; i++) {
             const video = resVideoArr[i]
             const expVideo = expectedVideoArr[i]
-            delete expVideo._id 
+
+            expVideo.playlistId = expectedRes.playlistId
             
-            console.log("testStage2 videoExpVideo:", expVideo, "video", video)
+            delete expVideo._id 
+
+            console.log("testStage2 expVideo:", expVideo, "video", video)
             //delete _id video from video obj
             
             const testRes = objectEqual(video, expVideo)

@@ -1,11 +1,12 @@
 const parseVideoDoc = (doc) => {
     const res = {
-        //playlistId: doc.playlistId,
+        playlistId: doc.playlistId,
         videoName: doc.videoName,
         videoId: doc.videoId,
         thumbnailUrl: doc.thumbnailUrl,
         createdAt: doc.createdAt,
-        //_id: doc._id.toString(),
+        channelName: doc.channelName,
+        _id: doc._id.toString(),
 
     }
     return res
@@ -23,7 +24,16 @@ const parsePlaylistDoc = (doc) => {
         _id: doc._id.toString(),
     }
 
-    return res
+    return { 
+        playlistName: doc.playlistName,
+        userid: doc.userid,
+        thumbnailUrl: doc.thumbnailUrl ?? 'none',
+        isPrivate: doc.isPrivate ? 1 : 0,
+        isUnlisted: doc.isUnlisted ? 1 : 0,
+        createdAt: doc.createdAt,
+        count: doc.count,
+        _id: doc._id.toString(),
+    }
 }
 
 // const convertVideoDoc = (doc) => {

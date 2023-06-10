@@ -52,7 +52,8 @@ const main = async () => {
         for (var x = 0;x < 3; x++) {
             const inputData1 = dataGen.createInputDataFor("addVideoToPlaylistsCache") //[ {playlistId:string,video:{playlistId:,videoName:,videoId:,thumbnailUrl:,createdAt:,_id:}}]
             for (var i = 0; i < inputData1.length;i++) {
-                // console.log("inputData1",inputData1)
+                console.log("inputData1",inputData1[i])
+                
                 await addVideoToPlaylistsCache([inputData1[i].video]) //this takes in [ videoDoc ]
                 await delay(300)
             }
