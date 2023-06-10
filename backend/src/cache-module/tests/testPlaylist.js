@@ -54,10 +54,11 @@ const main = async () => {
             for (var i = 0; i < inputData1.length;i++) {
                 // console.log("inputData1",inputData1)
                 await addVideoToPlaylistsCache([inputData1[i].video]) //this takes in [ videoDoc ]
-                await delay(500)
+                await delay(300)
             }
         }
-       
+        
+
         await delay(500)
         const playlistIdArr1 = dataGen.returnCurrentPlaylistIds()
         const resArr111 = []
@@ -66,8 +67,12 @@ const main = async () => {
             console.log("res2222", res22)
             resArr111.push(res22)
         }
+
+        
         const expectedRes2222 = dataGen.returnExpectedDataFor("getAllVideosOfPlaylistFromCache")
         await stage3Test(expectedRes2222, resArr111)
+
+
 
         await redisClient.flushAll()
     } catch (err) {

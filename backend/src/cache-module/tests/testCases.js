@@ -87,17 +87,27 @@ const stage3Test = (expData0, resData0) => { //[ {playlistId:string, videoArr:[v
         resData1.push({playlistId:o.data[0].playlistId, videoArr:o.data})
     })
     expData0.forEach(expPData=>{
+        
         const resPData = resData1.filter(o=>o.playlistId==expPData.playlistId)[0]
         if (!resPData) { throw("NOT OK FAILED stage3Test FAILED !resPData")}
         
         const expVideoArray = expPData.videoArr
         const resVideoArray = resPData.videoArr
-        console.log("expVideoArray[0]",expVideoArray[0],"resVideoArray[0]",resVideoArray[0])
+        // console.log("expVideoArray[0]",expVideoArray[0],"resVideoArray[0]",resVideoArray[0])
         if (expVideoArray.length != resVideoArray.length) {throw("NOT OK FAILED stage3Test FAILED videoArr length not match")}
-        expVideoArray.sort( (a,b)=>a._id-b._id)
-        resVideoArray.sort( (a,b)=>a._id-b._id)
-        
+        expVideoArray.sort( (a,b)=>a.createdAt-b.createdAt)
+        resVideoArray.sort( (a,b)=>a.createdAt-b.createdAt)
+        for (var i = 0;i < expVideoArray.length;i++) {
+            const video1 = expVideoArray[i]
+            const video2 = resVideoArray[i]
+            //console.log("stage3Test video1",video1);console.log("stage3Test video2",video2)
+            const resulz = objectEqual(video1, video2)
+            if (!resulz) {throw("NOT OK FAILED stage3Test FAILED objectEqual failed")}
+        }
+
     })
+
+    console.log("OK testStage3 SUCCESS")
 
 }
 

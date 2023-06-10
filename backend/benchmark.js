@@ -45,15 +45,16 @@ const obj = {
     count: 1,
     __v: 0
 }
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 const testlolol = async () => {
-    const maplol = new Map()
-
-    maplol.key1 = ['hehehehe']
-    maplol.key1.push('sdsdsdds')
-    maplol["key1"]
-    console.log(maplol.key1,maplol["key1"])
-
+    for (var i = 0; i < 20; i ++) {
+        console.log(getRandomInt(0,4))
+    }
     return
 
 

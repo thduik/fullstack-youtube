@@ -1,7 +1,7 @@
 var ObjectID = require("bson-objectid");
 const { generateRandomString } = require("../../utils/strings/generateRandomString")
 
-function getRandomInt(min, max) {
+function getRandomInt(min, max) {//generate random int between min and max (inclusive, example if 0 and 4 result will include 4)
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -32,6 +32,8 @@ class DataGeneratorCP { //CachePlaylist
         this.videoIdToVideoJson = new Map() // { videoId:{videoJson} }
     }
 
+
+
     returnCurrentPlaylistIds = () => {//return [playlistid] that currently exists
         return this.playlists.map(o => o._id)
     }
@@ -45,6 +47,7 @@ class DataGeneratorCP { //CachePlaylist
         const userId = "userId" + randomNum
         const userName = "userName" + randomNum
         this.userDataArr.push({ userid: userId, userName: userName })
+
         this.userIdToPlaylistArrMap[userId] = []
         return userId
         // const userName = "userName" + randomNum
@@ -53,6 +56,19 @@ class DataGeneratorCP { //CachePlaylist
 
 
     createInputDataFor = (funcName) => {
+
+        if (funcName == "deleteVideoFromPlaylist") {//each playlist remove 1 random video,=> return arr of [videoDoc], 1 videoDoc per playlist
+            const resArr = []
+            for (const playlistId of this.playlistToVideoIds.keys()) {
+                var videoIdArr = this.playlistToVideoIds.get(playlistId)
+                const removeVideoIdx = getRandomInt(0,videoIdArr.length-1)
+                const remove
+                videoIdArr = videoIdArr.filter(o=>o.videoId != videoIdArr[removeVideoIdx])
+                this.playlistToVideoIds.set(playlistId, videoIdArr)
+                resArr.push()
+            }
+
+        }   
 
         if (funcName == "createPlaylistCache") {
             //create 1 playlist for each user in state
@@ -177,7 +193,7 @@ const createInputDataForcreatePlaylistCache = ({ userId, playlistName }) => {
         thumbnailUrl: 'https://i.ytimg.com/vi/MXBCMgq7_xY/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCkgbA5Yu_qQ59vBNraknj2139L0w',
         isPrivate: true,
         isUnlisted: false,
-        createdAt: Date.now() + getRandomInt(1, 1000),
+        createdAt: Date.now() + getRandomInt(1, 10000000),
         count: 1,
         _id: newPlaylistId.toString(),
         // __v: 0
@@ -196,7 +212,7 @@ const createVideoForPlaylist = (playlistId) => {
         videoName: 'VideoName' + getRandomInt(1, 10000).toString(),
         videoId: videoIdString,
         thumbnailUrl: 'https://i.ytimg.com/vi/MXBCMgq7_xY/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCkgbA5Yu_qQ59vBNraknj2139L0w',
-        createdAt: Date.now() + + getRandomInt(1, 1000),
+        createdAt: Date.now() + + getRandomInt(1, 10000000),
         _id: vidID.toString(),
         // __v: 0
     }
