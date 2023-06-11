@@ -45,9 +45,10 @@ const testStage1 = async (resArr, expectedArr) => {
         throw ("testStage1 FAILED", err)
     }
 }
-const testStage2 = (res, expectedRes) => {
+const testStage2 = ( res,expectedRes) => {
     // console.log("testStage2", "res",res)
-    // console.log("testStage2", "expectedRes", expectedRes)
+    console.log("testStage2 expectedRes", expectedRes)
+    console.log("testStage2 res", res)
     //expectedRes = { playlistId: '6483306986365dae1473ee6b', videoArr: [ [video] ] }
     const expResArr = expectedRes; expResArr.sort((a, b) => a.createdAt - b.createdAt)
     const resArrrr = res.map(o => {
@@ -55,9 +56,9 @@ const testStage2 = (res, expectedRes) => {
         return { playlistId: o.data[0].playlistId, videoArr: o.data }
     })
 
-    expResArr.forEach(objj => {
-        const resVideoArr = resArrrr.filter(j=>j.playlistId==objj.playlistId)[0].videoArr
-        const expectedVideoArr = objj.videoArr
+    expResArr.forEach(playlistData => {
+        const resVideoArr = resArrrr.filter(j=>j.playlistId==playlistData.playlistId)[0].videoArr
+        const expectedVideoArr = playlistData.videoArr
         expectedVideoArr.sort((a, b) => a.createdAt - b.createdAt)
         resVideoArr.sort((a, b) => a.createdAt - b.createdAt)
         // console.log("expResArr.forEach", resVideoArr,expectedVideoArr)
@@ -66,7 +67,7 @@ const testStage2 = (res, expectedRes) => {
             const video = resVideoArr[i]
             const expVideo = expectedVideoArr[i]
 
-            expVideo.playlistId = expectedRes.playlistId
+            expVideo.playlistId = playlistData.playlistId
             
             delete expVideo._id 
 

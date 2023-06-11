@@ -1,14 +1,28 @@
 const { redisClient } = require('./connectDb')
 const { parseVideoDoc, parsePlaylistDoc } = require('./utils')
 
+const deletePlaylistOfUserCache = async (userId, playlistDoc) => {
+    try {
+        const playlistId = typeof playlistDoc._id == 'string' ? playlistDoc._id : playlistDoc._id.toString()
+        await redisClient.sRem(`user:${playlist.userid}:playlists`, playlist._id)
+        await redisClient.del(`playlist:${playlist._id}`, playlist)
+        await redisClient.del(`playlist:${videoDoc.playlistId}:videos`)
+    } catch (err) {
+        throw ( err )
+    }
+}
 
-const deleteVideoFromPlaylist = async (videoDoc) => {
+const deleteVideoFromPlaylistCache = async (videoDoc) => {
     try {
         const videoId = typeof videoDoc._id == 'string' ? videoDoc._id : videoDoc._id.toString()
-        const key = videoId + ":" + videoDoc.createdAt.toString()
-        const resulz = await redisClient.isMember(`playlist:${videoDoc.playlistId}:videos`, key)
+        const videoKey = videoId + ":" + videoDoc.createdAt.toString()
+        const playlistKey = `playlist:${videoDoc.playlistId}:videos`
+        const resulz = await redisClient.isMember(playlistKey, videoKey)
         console.log("deleteVideoFromPlaylist resulz", resulz)
-        if (!resulz) { throw ("deleteVideoFromPlaylist resulz false isMember failed") }
+        
+        const res11 = await redisClient.sRem(playlistKey, videoKey)
+        if (!resulz || !res11) { throw ("deleteVideoFromPlaylist resulz false isMember failed") }
+        return {success:true}
     } catch (err) {
         throw ("err deleteVideoFromPlaylist", err)
     }
@@ -40,9 +54,8 @@ const addVideoToPlaylistsCache = async (videoDocArr) => {
         for (var i = 0; i < videoDocArr.length; i++) {
             const doc = parseVideoDoc(videoDocArr[i])
             // console.log("addVideoToPlaylistsCache map doc._id", doc._id)
-
             await addVideoToOnePlaylist(doc)
-            console.log("add playvideoHsetVideoId res.videoId,res.videoName ", keylol, doc.playlistId, doc.videoName, res.videoId, res.videoName, doc)
+            console.log("add playvideoHsetVideoId res.videoId,res.videoName ", doc.playlistId, doc.videoName, doc)
         }
         return { success: true }
     } catch (err) {
@@ -186,4 +199,6 @@ module.exports = {
     , addVideosOfPlaylistToCache
     , createPlaylistCache
     , addVideoToPlaylistsCache
+    , deleteVideoFromPlaylistCache
+    , deletePlaylistOfUserCache
 }

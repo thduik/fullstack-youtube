@@ -56,6 +56,10 @@ function objectEqual(object1, object2) {
       const val1 = object1[key];
       const val2 = object2[key];
       const areObjects = isObject(val1) && isObject(val2);
+
+      if (!areObjects && val1 !== val2) {
+        throw("objectEqual failed key is" + key)
+      }
       if (
         areObjects && !objectEqual(val1, val2) ||
         !areObjects && val1 !== val2

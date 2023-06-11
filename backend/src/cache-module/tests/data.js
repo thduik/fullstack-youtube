@@ -54,17 +54,17 @@ class DataGeneratorCP { //CachePlaylist
 
     createInputDataFor = (funcName) => {
 
-        if (funcName == "deleteVideoFromPlaylist") {//each playlist remove 1 random video,=> return arr of [videoDoc], 1 videoDoc per playlist
+        if (funcName == "deleteVideoFromPlaylistCache") {//each playlist remove 1 random video,=> return arr of [videoDoc], 1 videoDoc per playlist
             const resArr = []
             for (const playlistId of this.playlistToVideoDocArr.keys()) {
-                var videoDocArr = this.playlistToVideoDocs.get(playlistId)
-                const removeVideoIdx = getRandomInt(0,videoIdArr.length-1)
-                const removedVideoId = videoDocArr[removeVideoIdx]
-                videoDocArr = videoIdArr.filter(o=>o.videoId != videoDocArr[removeVideoIdx].videoId)
+                var videoDocArr = this.playlistToVideoDocArr.get(playlistId)
+                const removeVideoIdx = getRandomInt(0,videoDocArr.length-1)
+                const removedVideo = videoDocArr[removeVideoIdx]; const length0 = videoDocArr.length
+                videoDocArr = videoDocArr.filter(o=>o.videoId !=removedVideo.videoId); if ( length0 - videoDocArr.length == 0 ) {throw("error createInputDataFor deleteVideoFromPlaylist")}
                 this.playlistToVideoDocArr.set(playlistId, videoDocArr)
-                resArr.push()
+                resArr.push({playlistId:playlistId, video:removedVideo})
             }
-
+            return resArr
         }   
 
         if (funcName == "createPlaylistCache") {
@@ -80,7 +80,6 @@ class DataGeneratorCP { //CachePlaylist
                 console.log("this.playlistToVideoDocArr111", this.playlistToVideoDocArr)
                 const vidDoc = {...video._doc}; delete vidDoc._id; delete vidDoc.playlistId; delete vidDoc.createdAt
                 this.videoIdToVideoJson.set(vidDoc.videoId, vidDoc)
-
                 resArr.push({ userid: userId, data: result })
 
             })
@@ -110,12 +109,9 @@ class DataGeneratorCP { //CachePlaylist
                 const vidDoc = {...vidDocu}
                 delete vidDoc.createdAt; delete vidDoc.playlistId; delete vidDoc._id
                 this.videoIdToVideoJson.set(vidDoc.videoId, vidDoc)
-                
-                //console.log("addVideoToPlaylistsCache finalRes",vidDoc.videoId,this.playlistToVideoIds.get(playlistId))
-                
+                                
             })
-            //{videoDoc}
-            // console.log("finalResLolOl",finalRes )
+            
             return finalRes
         }
 
