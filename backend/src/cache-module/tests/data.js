@@ -1,6 +1,7 @@
 var ObjectID = require("bson-objectid");
 const { generateRandomString } = require("../../utils/strings/generateRandomString")
-const {objectEqual, createInputDataForcreatePlaylistCache, createVideoForPlaylist,getRandomInt} = require("./utils")
+const {objectEqual, createInputDataForcreatePlaylistCache, createVideoForPlaylist,getRandomInt} = require("./utils");
+const { deletePlaylistOfUserCache } = require("../playlist");
 
 
 /*
@@ -53,6 +54,18 @@ class DataGeneratorCP { //CachePlaylist
 
 
     createInputDataFor = (funcName) => {
+
+        if (funcName == "deletePlaylistOfUserCache") {//[ {userId:userId, playlistId:removedPId} ]
+            const resArr = []
+            for (const userId of this.userIdToPlaylistArrMap.keys()) {
+                var playlistIdArr = this.userIdToPlaylistArrMap.get(userId);const length0 = playlistIdArr.length
+                const removedPId = playlistIdArr[getRandomInt(0, playlistIdArr.length - 1)]
+                playlistIdArr = playlistIdArr.filter(o=>o != removedPId);if (length0 - playlistIdArr.length == 0) {throw("err deletePlaylistOfUserCache length not reduced")}
+                this.userIdToPlaylistArrMap.set(userId, playlistIdArr)
+                resArr.push({userId:userId, playlistId:removedPId})
+            }
+            return resArr //[ {userId:userId, playlistId:removedPId} ]
+        }
 
         if (funcName == "deleteVideoFromPlaylistCache") {//each playlist remove 1 random video,=> return arr of [videoDoc], 1 videoDoc per playlist
             const resArr = []

@@ -1,5 +1,5 @@
 const { redisClient, connectCache } = require('../connectDb')
-const { createPlaylistCache, getPlaylistsOfUserFromCache, getAllVideosOfPlaylistFromCache, addVideoToPlaylistsCache, deleteVideoFromPlaylistCache } = require('../playlist')
+const { createPlaylistCache, getPlaylistsOfUserFromCache, getAllVideosOfPlaylistFromCache, addVideoToPlaylistsCache, deleteVideoFromPlaylistCache, deletePlaylistOfUserCache } = require('../playlist')
 const { DataGeneratorCP } = require('./data')
 const { objectEqual } = require('./utils')
 const { testStage1, testStage2, stage3Test } = require('./testCases')
@@ -82,10 +82,56 @@ const main = async () => {
                 console.log("deleteInputData",deleteInputData[i].video)
                 await deleteVideoFromPlaylistCache(deleteInputData[i].video)
             }
-            
+        }
+
+        const playlistIdArr22 = dataGen.returnCurrentPlaylistIds()
+        const resArr222 = []
+        for (var i = 0; i < playlistIdArr22.length;i++) {
+            const res22 = await getAllVideosOfPlaylistFromCache(playlistIdArr22[i])
+            resArr222.push(res22)
+        }
+        const expectedRes333 = dataGen.returnExpectedDataFor("getAllVideosOfPlaylistFromCache") 
+        
+        await testStage2( resArr222, expectedRes333)
+
+        for (var j = 0; j < 1;j++) {
+            const deleteInputData = dataGen.createInputDataFor("deletePlaylistOfUserCache")
+            for (var i = 0; i < deleteInputData.length; i ++) {
+                const {userId, playlistId} = deleteInputData[i]
+                console.log("deleteInputDatadeletePlaylistOfUserCache",deleteInputData[i])
+                await deletePlaylistOfUserCache({userId:userId,playlistId:playlistId })
+            }
             
         }
+
+        //with deletePlaylistOfUserCache called, should also test for remaining playlistIdArr
+
+        const userIdArr = dataGen.returnCurrentUserids()
+        const playlistTestRes = []
+        for (var i = 0; i < userIdArr.length;i++) {
+            const res222 = await getPlaylistsOfUserFromCache(userIdArr[i]) //{isSet:,data:[playlistDoc]}
+            
+            console.log("playlistArrheheh", playlistTestRes)
+            playlistTestRes.push(res222)
+        }
         
+        const expRes1234 = dataGen.returnExpectedDataFor("getPlaylistsOfUserFromCache")
+
+        await testStage1(playlistTestRes, expRes1234)
+        
+        const playlistIdArr2222 = playlistTestRes.map(o=>o)
+        console.log("playlistIdArr22", playlistIdArr2222)
+
+        return
+        const resArr444 = []
+        for (var i = 0; i < playlistIdArr444.length;i++) {
+            const res22 = await getAllVideosOfPlaylistFromCache(playlistIdArr22[i])
+            resArr444.push(res22)
+        }
+
+        const expectedRes444 = dataGen.returnExpectedDataFor("getAllVideosOfPlaylistFromCache") 
+        
+
         await redisClient.flushAll()
     } catch (err) {
         await redisClient.flushAll()

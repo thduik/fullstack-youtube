@@ -1,12 +1,14 @@
 const { redisClient } = require('./connectDb')
 const { parseVideoDoc, parsePlaylistDoc } = require('./utils')
 
-const deletePlaylistOfUserCache = async (userId, playlistDoc) => {
+const deletePlaylistOfUserCache = async ({userId, playlistId}) => {
+    if (!userId || !playlistId) {throw("deletePlaylistOfUserCache err")}
+    console.log("deletePlaylistOfUserCache", userId, playlistId)
     try {
-        const playlistId = typeof playlistDoc._id == 'string' ? playlistDoc._id : playlistDoc._id.toString()
-        await redisClient.sRem(`user:${playlist.userid}:playlists`, playlist._id)
-        await redisClient.del(`playlist:${playlist._id}`, playlist)
-        await redisClient.del(`playlist:${videoDoc.playlistId}:videos`)
+        //const playlistId = typeof playlistDoc._id == 'string' ? playlistDoc._id : playlistDoc._id.toString()
+        await redisClient.sRem(`user:${userId}:playlists`, playlistId)
+        await redisClient.del(`playlist:${playlistId}`, playlist)
+        await redisClient.del(`playlist:${playlistId}:videos`)
     } catch (err) {
         throw ( err )
     }
@@ -14,10 +16,10 @@ const deletePlaylistOfUserCache = async (userId, playlistDoc) => {
 
 const deleteVideoFromPlaylistCache = async (videoDoc) => {
     try {
-        const videoId = typeof videoDoc._id == 'string' ? videoDoc._id : videoDoc._id.toString()
+        const videoId = videoDoc.videoId
         const videoKey = videoId + ":" + videoDoc.createdAt.toString()
         const playlistKey = `playlist:${videoDoc.playlistId}:videos`
-        const resulz = await redisClient.isMember(playlistKey, videoKey)
+        const resulz = await redisClient.sIsMember(playlistKey, videoKey)
         console.log("deleteVideoFromPlaylist resulz", resulz)
         
         const res11 = await redisClient.sRem(playlistKey, videoKey)
