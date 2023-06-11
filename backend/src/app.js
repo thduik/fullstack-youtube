@@ -14,9 +14,11 @@ const { playlistRouter } = require('./routes/playlist-router');
 
 
 
-console.log("NODE_ENV", process.env.NODE_ENV)
+console.log("NODE_ENV", process.env.NODE_ENV, "MOCK_AUTH", process.env.MOCK_AUTH)
 
 var app = express()
+
+
 
 
 app.enable('trust proxy')
@@ -29,7 +31,11 @@ app.use(helmet());
 app.post('/logout', logoutApp)
 
 
+
 app.use('/', sanitizeRequest)
+
+
+
 app.use('/', verifyJwtAccessTokenRequest)
 
 app.use('/cookies',(req,res,next)=>{console.log("req.cookies are", req.cookies);res.send("1")})

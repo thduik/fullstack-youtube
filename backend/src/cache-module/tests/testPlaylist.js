@@ -19,13 +19,14 @@ const main = async () => {
         dataGen.createUserAndReturnUserId()
 
 
-        for (var j = 0; j < 1; j++) { //j = number of playlist created per user
+        for (var j = 0; j < 2; j++) { //j = number of playlist created per user
             const inputData = dataGen.createInputDataFor("createPlaylistCache")//[ { userid: userId, data: { playlist:playlist, video:video } } ]
             console.log("inputDatalol", inputData)
             for (var i = 0; i < inputData.length; i++) {
                 //for each data in inputData, create a playlist.
                 // which means, create a new playlist for each user
                 await createPlaylistCache(inputData[i].data)
+                
             }
         }
         await delay(400)
@@ -117,20 +118,21 @@ const main = async () => {
         
         const expRes1234 = dataGen.returnExpectedDataFor("getPlaylistsOfUserFromCache")
 
-        await testStage1(playlistTestRes, expRes1234)
+        await testStage1(playlistTestRes, expRes1234) 
         
-        const playlistIdArr2222 = playlistTestRes.map(o=>o)
+        const playlistIdArr2222 = [] 
+        playlistTestRes.map(o=>playlistIdArr2222.push(...o.data.map(o=>o._id)) ) //fetch all the fckin playlistIds
         console.log("playlistIdArr22", playlistIdArr2222)
 
-        return
         const resArr444 = []
-        for (var i = 0; i < playlistIdArr444.length;i++) {
-            const res22 = await getAllVideosOfPlaylistFromCache(playlistIdArr22[i])
+        for (var i = 0; i < playlistIdArr2222.length;i++) {
+            const res22 = await getAllVideosOfPlaylistFromCache(playlistIdArr2222[i])
             resArr444.push(res22)
         }
 
         const expectedRes444 = dataGen.returnExpectedDataFor("getAllVideosOfPlaylistFromCache") 
         
+        await testStage2(resArr444, expectedRes444)
 
         await redisClient.flushAll()
     } catch (err) {
