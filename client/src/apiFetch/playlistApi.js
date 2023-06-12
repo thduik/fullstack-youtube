@@ -23,20 +23,24 @@ export const getPlaylist = async (callback) => {
 
 
 export const postPlaylistCreate = async (newPlaylist, video) => {
+    console.log("postPlaylistCreate called",  )
     //user = {userid}
     //playlist.name, playlist.privacy
+    const videoInfo = {
+        videoId: video.videoId,
+        videoName: video.title,
+        thumbnailUrl: video.thumbnails.default.url,
+        channelName:video.channelTitle,
+        createdAt: Date.now()
+    }
+    console.log("postPlaylistCreate videoInfo", videoInfo)
     try {
 
         const createUrl = baseUrl + '/playlist/create'
         const res = await axios.post(createUrl,
             {
                 playlist: newPlaylist,
-                videoInfo: {
-                    videoId: video.videoId,
-                    videoName: video.title,
-                    thumbnailUrl: video.thumbnails.default,
-                    createdAt: Date.now()
-                }
+                videoInfo: videoInfo
 
 
             })
@@ -57,7 +61,7 @@ const processVideoData = (videoData) => {
     return res
 }
 
-const filterPlaylistArr = (video, playlistArr) = {
+const filterPlaylistArr = (video, playlistArr) => {
     
 }
 

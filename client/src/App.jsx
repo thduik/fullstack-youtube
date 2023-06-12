@@ -18,6 +18,7 @@ import { fetchFromAPI } from "./apiFetch/fetchFromAPI";
 import PlaylistSelectMenu from "./components/videoCard/PlaylistSelectMenu";
 import { getPlaylist } from "./apiFetch/playlistApi";
 import { setPlaylistArray } from "./features/appData/playlistSlice";
+import PlaylistsPage from "./components/playlist/PlaylistsPage";
 
 
 
@@ -77,8 +78,10 @@ const App = () => {
               <Route path={`videos`} element={ <ChannelVideos/>} />
             </Route>
             <Route path='/search/:searchTerm' element={<SearchFeed />} />
-            <Route path='/user/custom/:userid' element={<ChannelDetail basePath={"/user/custom"}/>} >
+            <Route path='/user/custom/:userId' element={<ChannelDetail basePath={"/user/custom/"}/>} >
               {/* playlist component here */}
+              <Route path='playlists' element={<PlaylistsPage/>}/>
+              
             </Route>
           </Routes>
         </div>

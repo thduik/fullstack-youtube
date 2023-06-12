@@ -11,7 +11,7 @@ const ChannelDetail = ({basePath}) => {
   const [channelDetail, setChannelDetail] = useState();
   const [videos, setVideos] = useState(null);
   const navigate = useNavigate()
-  const { id } = useParams();
+  const { userId } = useParams();
 
   useEffect(() => {
     console.log("ChannelDetail calling api useEffect")
@@ -19,21 +19,19 @@ const ChannelDetail = ({basePath}) => {
       const data = await fetchFromAPI(`channels?part=snippet&id=${id}`);
 
       setChannelDetail(data?.items[0]);
-
       const videosData = await fetchFromAPI(`search?channelId=${id}&part=snippet&order=date&maxResults=10`);
-
       setVideos(videosData?.items);
     };
 
     fetchResults();
-  }, [id]);
+  }, [userId]);
 
   const clickedNavMenu = (idx) => {
     if (idx==0) { //home clicked
-      navigate(basePath + "/")
+      navigate(basePath)
     }
-    if (idx==1) {navigate(`${basePath}/${id}/videos`) }
-    if (idx==3) {navigate(`${basePath}/${id}/playlist`)}
+    if (idx==1) {navigate(`${basePath}/${userId}/videos`) }
+    if (idx==3) {navigate(`${basePath}/${userId}/playlists`)}
   }
   return (
     

@@ -1,0 +1,22 @@
+/* {xs:"0px",sm800:"40px",md1100:"70px"} */
+
+@media screen and (min-width: 0px) {
+    div.playlist-page {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    div.playlist-page {
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+}
+
+@media screen and (min-width: 1100px) {
+    div.playlist-page {
+        margin-left: 70px;
+        margin-right: 70px;
+    }
+}
