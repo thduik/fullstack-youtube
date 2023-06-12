@@ -26,17 +26,19 @@ const PlaylistCard = ({ playlist }) => {
         //pass playlist param to url as video=videoId?playlist=playlistId (videoId of first video)
         //dispatch to redux data of all remaining videosz in playlistos
         //custom = my own personal playlist system
+
+
         const playlistId = playlist._id
-        getVideosOfPlaylist(playlistId, (videoArr)=>{
-            videoArr.sort((a,b)=>a.createdAt - b.createdAt)
-            dispatch(changeIsStreaming(true))
-            dispatch(setVideoArray(videoArr))
-            dispatch(setStreamedPlaylist(playlist))
-            console.log("getVideosOfPlaylist success", videoArr)
-            navigate(`/video/${videoArr[0].videoId}?playlist=${playlistId}?custom=true`)
-        }).catch( (err) => {
-            throw("err getVideosOfPlaylist", err)
-        })
+        // getVideosOfPlaylist(playlistId, (videoArr)=>{
+        //     videoArr.sort((a,b)=>a.createdAt - b.createdAt)
+        //     dispatch(changeIsStreaming(true))
+        //     dispatch(setVideoArray(videoArr))
+        //     dispatch(setStreamedPlaylist(playlist))
+        //     console.log("getVideosOfPlaylist success", videoArr)
+        navigate(`/video/${videoArr[0].videoId}?playlist=${playlistId}&custom=true`)
+        // }).catch( (err) => {
+        //     throw("err getVideosOfPlaylist", err)
+        // })
         
     }
     return (
