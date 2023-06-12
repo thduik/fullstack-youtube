@@ -93,7 +93,7 @@ function PlaylistSelectMenu({ saveVideoToPlaylist }) {
     }
     const createPlaylistConfirmed = async (playlist) => {
         try {
-            console.log("createPlaylistConfirmed playlistSelectMenu called", playlist.name, playlist.privacy)
+            //console.log("createPlaylistConfirmed playlistSelectMenu called", playlist.name, playlist.privacy)
             setTimeout(() => { closeMenu() }, 300)
             const userData = { userid: userId, name: name }
             const newPlaylist = utilCreateNewPlaylist(playlist, userData)
@@ -115,7 +115,9 @@ function PlaylistSelectMenu({ saveVideoToPlaylist }) {
             }} ref={ref}>
 
                 <PlaylistSelectHeader onClickClose={closeMenu} />
-                {playlists.map((obj, idx) => <PlaylistSelectItem playlist={obj} idx={idx} selectPlaylistItem={itemSelected} unselectPlaylistItem={itemUnselected} />)}
+                <div style = {{overflowY:"scroll", maxHeight:"70vh"}}>      
+                    {playlists.map((obj, idx) => <PlaylistSelectItem playlist={obj} idx={idx} selectPlaylistItem={itemSelected} unselectPlaylistItem={itemUnselected} />)}
+                </div>
                 {/* <PlaylistSelectItem selectThisItem={itemSelected}/> */}
                 <CreateNewPlaylistComponent createPlaylistConfirmed={createPlaylistConfirmed} />
             </div>

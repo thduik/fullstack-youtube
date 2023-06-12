@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { changeShowMiniSidebar } from '../../features/uiState/uiStateSlice.js'
 
 const VideoDetail = () => {
+  const {playlist} = useParams()
   const dispatch = useDispatch()
   const [videoDetail, setVideoDetail] = useState(null);
   const [videos, setVideos] = useState(null);

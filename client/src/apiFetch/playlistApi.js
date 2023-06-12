@@ -29,7 +29,7 @@ export const postPlaylistCreate = async (newPlaylist, video) => {
     const videoInfo = {
         videoId: video.videoId,
         videoName: video.title,
-        thumbnailUrl: video.thumbnails.default.url,
+        thumbnailUrl: video.thumbnails.medium.url,
         channelName:video.channelTitle,
         createdAt: Date.now()
     }
@@ -56,7 +56,8 @@ const processVideoData = (videoData) => {
         videoId: videoData.videoId,
         videoName: videoData.title,
         thumbnailUrl: videoData.thumbnails.default.url,
-        createdAt: Date.now()
+        createdAt: Date.now(),
+        channelName: videoData.channelTitle
     }
     return res
 }
@@ -91,26 +92,14 @@ export const postAddVideoToPlaylist = async (video, playlistArr) => {
 }
 
 
-const testAddVideoToPlaylist = async (playlistArr, videoData) => {
-    //this happens because in playlistSelectMenu frontend, 1 video can be added to multiple playlists
-
-    console.log("testAddVideoToPlaylist called", playlistArr)
+const getVideosOfPlaylist = async (playlist) => {
     try {
-
-        const updateUrl = baseUrl + `/playlist/update/`
-        const playlistIdArr = playlistArr.map(o => o._id)
-        console.log("testAddVideoToPlaylist", videoData, playlistIdArr)
-        const res = await axios.post(updateUrl,
-            {
-                videoData: videoData,
-                playlistIdArr: playlistIdArr
-
-            })
-        // console.log("testPostAxios success docid is", res.data)
-        return res.data
-
+        const playlistid = playlist._id
+        const getUrl = baseUrl + `/playlist/${playlistid}/videos`
+        const res = await axios.get(getUrl)
+        // console.log("testGetVideosOfPlaylist success videos are", res.data.videos)
+        return res.data.videos
     } catch (err) {
-        throw ("err testAddVideoToPlaylist", err)
+        throw ("testGetVideosOfPlaylist", err)
     }
-
 }

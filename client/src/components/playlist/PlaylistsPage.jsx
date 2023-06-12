@@ -5,10 +5,10 @@ const PlaylistsPage = () => {
     const { playlists } = useSelector((state) => state.playlist)
 
     return (
-        <div className="playlists-page" style={{backgroundColor:"green"}}>
+        <div className="playlists-page" style={{backgroundColor:"none"}}>
             <div style={{ display: "flex", flexDirection: "row", flexWrap:"wrap"
         , justifyContent:"center" }}>
-                {playlists.map(o => <PlaylistCard playlist={o} />)}
+                { playlists.map(o => <PlaylistCard playlist={o} />)}
             </div>
         </div>
     )

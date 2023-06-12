@@ -30,8 +30,8 @@ const ChannelDetail = ({basePath}) => {
     if (idx==0) { //home clicked
       navigate(basePath)
     }
-    if (idx==1) {navigate(`${basePath}/${userId}/videos`) }
-    if (idx==3) {navigate(`${basePath}/${userId}/playlists`)}
+    if (idx==1) {navigate(`${basePath}${userId}/videos`) }
+    if (idx==3) {navigate(`${basePath}${userId}/playlists`)}
   }
   return (
     

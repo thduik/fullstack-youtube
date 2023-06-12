@@ -3,7 +3,7 @@ import React from "react";
 function VerticalThreeDotIcon({width="30px", height="30px", fillColor="white", viewBox="-3 -3 30 30", borderRadius="15px"}) {
   return (
     <svg
-    className="nav-icon"
+    
     //   width={width}
     //   height={height}
       viewBox={viewBox}

@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
 
     playlists:[],
-    selectedVideo:{}
+    selectedVideo:{} //for playlist creation menu only src/components/videoCard/PlaylistSelectMenu.jsx
 
 }
 
