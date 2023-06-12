@@ -22,11 +22,11 @@ const getAllPlaylistsOfUserDb = async (userid) => {
     }
 }
 
-const createPlaylistDb = async (playlist, videoData) => {
+const createPlaylistDb = async ({playlist, videoData}) => {
     //return the _id of document
     //playlistName is not unique, unique identifier is _id of mongoose document
     //because data is not sensitive anyways
-    console.log("createPlaylistDb db called", "videoData.length is", videoData.length, "playlist.length is",playlist.length)
+    console.log("createPlaylistDb db called", "videoData is", videoData, "playlist is",playlist)
     try {
         const playlistDoc = await Playlist.create({
             
@@ -35,6 +35,7 @@ const createPlaylistDb = async (playlist, videoData) => {
             creatorName: playlist.creatorName,
             isPrivate:playlist.isPrivate ?? false,
             thumbnailUrl:videoData.thumbnailUrl
+            
         })
 
         const playlistId = playlistDoc._id.toString()
@@ -44,7 +45,8 @@ const createPlaylistDb = async (playlist, videoData) => {
             videoId:videoData.videoId,
             videoName:videoData.videoName,
             thumbnailUrl:videoData.thumbnailUrl,
-            createdAt:videoData.createdAt
+            createdAt:videoData.createdAt,
+            channelName: videoData.channelName
         })
         console.log("createPlaylistDb success playlistDoc and VideoDoc docId are", playlistDoc._id, videoRes._id)
         return {playlist:playlistDoc, video:videoRes}
@@ -61,7 +63,8 @@ const returnCreatePlaylistVideoInfoPromise = (playlistid, videoData) => {
         videoId:videoData.videoId,
         videoName:videoData.videoName,
         thumbnailUrl:videoData.thumbnailUrl,
-        createdAt:videoData.createdAt
+        createdAt:videoData.createdAt,
+        channelName: videoData.channelName
     })
 }
 

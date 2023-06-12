@@ -3,6 +3,7 @@ const { setCookiesAndSendResPostLogin } = require('../../auth-module/utils-cooki
 const {converUserDataToJson} = require('../utils')
 
 const googleLogin = async (req, res) => {
+    console.log("googleLogin called")
 
     if (!req.body.googleToken) {
         console.log("googleLogin controller failed no token")

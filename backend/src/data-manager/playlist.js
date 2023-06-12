@@ -18,16 +18,17 @@ const addVideoToPlaylistsDataM = async (playlistIdArr, videoLol) => {
     }
 }
 
-const createPlaylistDataM = async (playlist, videoInfo) => {
+const createPlaylistDataM = async ({playlist, videoInfo}) => {
+    console.log("createPlaylistDataM videoInfo", videoInfo)
     try {
-        const result = await createPlaylistDb(playlist, videoInfo) //{playlist:playlistDoc, video:videoRes}
+        const result = await createPlaylistDb({playlist:playlist, videoData:videoInfo}) //{playlist:playlistDoc, video:videoRes}
         console.log("createPLaylistDataM success result.playlist._id and result.video._d:",result.playlist._id, result.video._id)
         await createPlaylistCache(result) //{playlist:playlistDoc, video:videoRes}
         return result.playlist
         
     } catch (err) {
-        console.log("err createPlaylist", err)
-        res.status(402).send("error creatingPlaylist")
+        console.log("err createPlaylistDataM", err)
+        // console.log("error creatingPlaylist")
     }
 }
 

@@ -68,6 +68,7 @@ class DataGeneratorCP { //CachePlaylist
         }
 
         if (funcName == "deleteVideoFromPlaylistCache") {//each playlist remove 1 random video,=> return arr of [videoDoc], 1 videoDoc per playlist
+            //return //[{playlistId:playlistId, video:removedVideo}]
             const resArr = []
             for (const playlistId of this.playlistToVideoDocArr.keys()) {
                 var videoDocArr = this.playlistToVideoDocArr.get(playlistId)
@@ -77,7 +78,7 @@ class DataGeneratorCP { //CachePlaylist
                 this.playlistToVideoDocArr.set(playlistId, videoDocArr)
                 resArr.push({playlistId:playlistId, video:removedVideo})
             }
-            return resArr
+            return resArr //[{playlistId:playlistId, video:removedVideo}]
         }   
 
         if (funcName == "createPlaylistCache") {

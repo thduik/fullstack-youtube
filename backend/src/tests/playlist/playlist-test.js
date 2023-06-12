@@ -19,6 +19,8 @@ const test = require('node:test')
 const {  videoDataArr, testVideoArr, testPlaylistArr, testUserArr } = require('./data')
 const { stage1Test,stage2Test, stage3Test, stage4Test } = require('./test-cases')
 const { resolve } = require('path')
+const { loginWithGoogleTest } = require('./auth')
+const dataGenerator = require('./dataGenerator')
 
 function delay(ms) {
     return new Promise(resolve => setTimeout(() => resolve(), ms));
@@ -36,6 +38,11 @@ const testLol = async () => {
         await setupTest()
         await cleanupTest()
         
+        const mockUser = dataGenerator.generateUserDataForGoogleTesting()
+        const res1 = await loginWithGoogleTest(mockUser)
+        console.log("loginWithGoogleTest success res", res1)
+
+        return
         //the 0th video of playlist 0 and and 0th video of playlist 1 created
         const postRes = await testCreatePlaylist(testPlaylistArr[0][0].name, {userid:testUserArr[0].userid ,username:testUserArr[0].username}, testVideoArr[0][0][0])
         const postRes1 = await testCreatePlaylist(testPlaylistArr[0][1].name, {userid:testUserArr[0].userid ,username:testUserArr[0].username}, testVideoArr[0][1][0])

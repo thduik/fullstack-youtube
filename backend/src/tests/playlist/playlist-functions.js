@@ -8,7 +8,7 @@ var ObjectID = require("bson-objectid");
 const { testUserArr } = require('./data')
 const { redisClient } = require('../../cache-module/connectDb')
 
-const baseUrl = 'http://localhost:4444/test'
+const baseUrl = 'http://localhost:4444/'
 
 
 

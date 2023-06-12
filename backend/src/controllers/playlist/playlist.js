@@ -7,11 +7,12 @@ const { postProcessDocArr } = require('./utils')
 const createPlaylist = async (req, res, next) => {
     const playlist = req.body.playlist //{videoId:string,videoName:string,thumbnailUrl:string,createdAt:int}
     const videoInfo = req.body.videoInfo //{playlistName:string, userid:string, isPrivate:bool,isUnlisted:bool }
-
+    
     try {
-        const doc = await createPlaylistDataM(playlist, videoInfo)
-        doc._id = doc._id.toString()
-        console.log("createPlaylistDataM success doc._id", doc._id)
+        const doc = await createPlaylistDataM({playlist:playlist, videoInfo:videoInfo} )
+        console.log("createPlaylistDataM success doc._id", doc)
+        doc._id = doc._id.toString()    
+        
         res.json({ doc: doc, success: true })
 
     } catch (err) {
@@ -27,7 +28,7 @@ const getPlaylistsOfUser = async (req, res, next) => {
     try {
         const playlistsDocs = await getPlaylistsOfUserDataM(userid)
         // postProcessDocArr(playlistsDocs)
-        console.log("getPlaylistsOfUserController success", playlistsDocs[0].thumbnailUrl)
+        console.log("getPlaylistsOfUserController success", playlistsDocs)
         res.json({ playlists: playlistsDocs, success: true })
     } catch (err) {
         console.log("error getPlaylistsOfUser", err)
