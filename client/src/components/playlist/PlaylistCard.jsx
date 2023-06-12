@@ -2,8 +2,8 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import VerticalThreeDotIcon from "../../icons/VerticalThreeDotIcon"
-import { changeIsStreaming, setVideoArray, setStreamedPlaylist } from "../../features/appData/playlistStreamSlice"
-import { getVideosOfPlaylist } from "../../apiFetch/playlistApi"
+// import { changeIsStreaming, setVideoArray, setStreamedPlaylist } from "../../features/appData/playlistStreamSlice"
+// import { getVideosOfPlaylist } from "../../apiFetch/playlistApi"
 
 const PlaylistCard = ({ playlist }) => {
     

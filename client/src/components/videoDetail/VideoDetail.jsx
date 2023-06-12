@@ -12,16 +12,20 @@ import { useSelector, useDispatch } from 'react-redux'
 import { changeShowMiniSidebar } from '../../features/uiState/uiStateSlice.js'
 import PlaylistStreamMenu from "../playlist/PlaylistStreamMenu";
 import { getVideosOfPlaylist } from "../../apiFetch/playlistApi";
-
+import { changeIsStreaming, setVideoArray, setStreamedPlaylist } from "../../features/appData/playlistStreamSlice"
 const VideoDetail = () => {
   const { id } = useParams() //id = videoid
   useEffect(() => { console.log("VideoDetail id", id) }, [id])
   const [searchParams, setSearchParams] = useSearchParams();
-  const playlistId = searchParams.get("playlist")
-
+  const [playlistId, setPlaylistId] = useState(null)
   const dispatch = useDispatch()
   const [videoDetail, setVideoDetail] = useState(null);
   const [videos, setVideos] = useState(null);
+
+  useEffect(()=>{
+    const playlistIdd = searchParams.get("playlist")
+    if (playlistIdd) { setPlaylistId(playlistIdd)}
+  },[searchParams])
 
   useEffect(() => {
     if (!playlistId) { return }
@@ -93,7 +97,8 @@ const VideoDetail = () => {
           </Box>
         </Box>
         <div>
-          {/* {playlistId ? <PlaylistStreamMenu currentVideoId={id} /> : null} */}
+        {/* <PlaylistStreamMenu currentVideoId={id} /> */}
+          {playlistId ? <PlaylistStreamMenu currentVideoId={id} /> : null}
           <Box px={2} py={{ md: 1, xs: 5 }} justifyContent="center" alignItems="center" >
             <Videos videos={videos} direction="column" />
           </Box>
