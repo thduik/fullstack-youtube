@@ -1,14 +1,27 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import PlaylistStreamItem from "./PlaylistStreamItem"
 
-const PlaylistStreamMenu = () => {
+const PlaylistStreamMenu = ({currentVideoId}) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
     
+    const {videoArr, streamedPlaylist, isStreaming} = useSelector(state=>state.playlistStream)
+
+    useEffect(() => {
+        console.log("PlaylistStreamMenu videoArr", videoArr)
+    },[videoArr])
+
+    const clickedPlaylistItem = (lol) => {
+
+    }
+
     return (
-        <div>
-            
+        <div style = {{display:"flex",flexDirection:"column",
+            maxHeight:"300px", overflowY:"scroll"}}>
+            {videoArr.map(video=><PlaylistStreamItem onClick={clickedPlaylistItem} video={video}/>)}
         </div>
     )
 }

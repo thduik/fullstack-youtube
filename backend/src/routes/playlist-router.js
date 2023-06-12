@@ -16,7 +16,7 @@ playlistRouter.post("/create", createPlaylist)
 playlistRouter.post("/update/", addVideoToPlaylist)
 
 
-playlistRouter.get("/playlist/:playlistid/videos", getVideosListOfPlaylist)
+playlistRouter.get("/:playlistid/videos", getVideosListOfPlaylist)
 
 
 module.exports = {playlistRouter}

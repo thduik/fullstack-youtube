@@ -5,6 +5,7 @@ var ObjectID = require("bson-objectid");
 
 
 const getAllVideosOfPlaylistDb = async (playlistid) => {
+    console.log("getAllVideosOfPlaylistDb playlistid", playlistid)
     try {
         const docs = await PlaylistVideoInfo.find({playlistId:playlistid}).lean()
         return docs

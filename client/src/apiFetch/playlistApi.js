@@ -92,13 +92,14 @@ export const postAddVideoToPlaylist = async (video, playlistArr) => {
 }
 
 
-const getVideosOfPlaylist = async (playlist) => {
+export const getVideosOfPlaylist = async (playlistid, callback) => {
     try {
-        const playlistid = playlist._id
+        //const playlistid = playlist._id
         const getUrl = baseUrl + `/playlist/${playlistid}/videos`
         const res = await axios.get(getUrl)
         // console.log("testGetVideosOfPlaylist success videos are", res.data.videos)
-        return res.data.videos
+        callback(res.data.videos)
+        return 
     } catch (err) {
         throw ("testGetVideosOfPlaylist", err)
     }

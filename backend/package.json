@@ -25,9 +25,10 @@
     "dev": "NODE_ENV=development nodemon src/server.js --delay 1",
     "dev:test": "NODE_ENV=development MOCK_AUTH=true nodemon src/server.js --delay 1",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "testplaylist": "nodemon src/tests/playlist/playlist-test.js",
-    "testsearch": "node src/tests/search/search-test.js",
-    "testcache": "nodemon src/cache-module/tests/testPlaylist.js"
+    "test:playlist": "nodemon src/tests/playlist/playlist-test.js",
+    "test:search": "node src/tests/search/search-test.js",
+    "test:cache": "nodemon src/cache-module/tests/testPlaylist.js",
+    "flush:all": "node scripts/datadb-delete.js"
   },
   "keywords": [],
   "author": "",

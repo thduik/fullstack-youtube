@@ -11,16 +11,18 @@ const ChannelDetail = ({basePath}) => {
   const [channelDetail, setChannelDetail] = useState();
   const [videos, setVideos] = useState(null);
   const navigate = useNavigate()
-  const { userId } = useParams();
+  const { userId,id } = useParams();
 
   useEffect(() => {
     console.log("ChannelDetail calling api useEffect")
     const fetchResults = async () => {
-      const data = await fetchFromAPI(`channels?part=snippet&id=${id}`);
-
-      setChannelDetail(data?.items[0]);
-      const videosData = await fetchFromAPI(`search?channelId=${id}&part=snippet&order=date&maxResults=10`);
-      setVideos(videosData?.items);
+      if (id) {
+        const data = await fetchFromAPI(`channels?part=snippet&id=${id}`);
+        setChannelDetail(data?.items[0]);
+        const videosData = await fetchFromAPI(`search?channelId=${id}&part=snippet&order=date&maxResults=10`);
+        setVideos(videosData?.items);
+      }
+     
     };
 
     fetchResults();

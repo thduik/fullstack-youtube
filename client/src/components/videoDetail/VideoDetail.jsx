@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import ReactPlayer from "react-player";
 import { Typography, Box, Stack, createTheme } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -10,13 +10,18 @@ import { fetchFromAPI } from "../../apiFetch/fetchFromAPI";
 import { useSelector, useDispatch } from 'react-redux'
 
 import { changeShowMiniSidebar } from '../../features/uiState/uiStateSlice.js'
+import PlaylistStreamMenu from "../playlist/PlaylistStreamMenu";
 
 const VideoDetail = () => {
-  const {playlist} = useParams()
+  const { id } = useParams() //id = videoid
+  useEffect(()=>{console.log("VideoDetail id", id)},[id])
+  const [searchParams, setSearchParams] = useSearchParams();
+  const playlistId = searchParams.get("playlist")
+
   const dispatch = useDispatch()
   const [videoDetail, setVideoDetail] = useState(null);
   const [videos, setVideos] = useState(null);
-  const { id } = useParams();
+  
 
   
     useEffect(() => {
@@ -31,9 +36,9 @@ const VideoDetail = () => {
 
   useEffect(() => {
     
-    fetchFromAPI(`videos?part=snippet,statistics&id=${id}`)
+    fetchFromAPI(`videos?part=contentDetails%2Csnippet%2Cstatistics&id=${id}`)
       .then((data) => {
-        console.log("videoStatisticsIs: ", data.items)
+        console.log("videoStatisticsIs: ",data)
         setVideoDetail(data.items[0])
       })
 
@@ -73,6 +78,7 @@ const VideoDetail = () => {
             </Stack>
           </Box>
         </Box>
+        {playlistId ? <PlaylistStreamMenu currentVideoId = {id}/> : null}
         <Box px={2} py={{ md: 1, xs: 5 }} justifyContent="center" alignItems="center" >
           <Videos videos={videos} direction="column" />
         </Box>
