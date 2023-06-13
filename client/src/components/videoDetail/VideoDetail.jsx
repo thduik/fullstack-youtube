@@ -17,25 +17,33 @@ const VideoDetail = () => {
   const { id } = useParams() //id = videoid
   useEffect(() => { console.log("VideoDetail id", id) }, [id])
   const [searchParams, setSearchParams] = useSearchParams();
+  const { videoArr, streamedPlaylist, isStreaming } = useSelector(state => state.playlistStream);
   const [playlistId, setPlaylistId] = useState(null)
   const dispatch = useDispatch()
   const [videoDetail, setVideoDetail] = useState(null);
   const [videos, setVideos] = useState(null);
+  useEffect(() => {
+    return () => {//unmount 
+      dispatch(changeIsStreaming(true))
+    }
 
-  useEffect(()=>{
-    const playlistIdd = searchParams.get("playlist")
-    if (playlistIdd) { setPlaylistId(playlistIdd)}
-  },[searchParams])
+  }, [])
 
   useEffect(() => {
-    if (!playlistId) { return }
+    const playlistIdd = searchParams.get("playlist")
+    if (playlistIdd) { setPlaylistId(playlistIdd) }
+  }, [searchParams])
+
+  useEffect(() => {
+    if (!playlistId || isStreaming) { return }
 
     getVideosOfPlaylist(playlistId, (videoArr) => {
+      console.log("getVideosOfPlaylist success", videoArr)
+
       videoArr.sort((a, b) => a.createdAt - b.createdAt)
       dispatch(changeIsStreaming(true))
       dispatch(setVideoArray(videoArr))
       dispatch(setStreamedPlaylist(playlist))
-      console.log("getVideosOfPlaylist success", videoArr)
 
     }).catch((err) => {
       throw ("err getVideosOfPlaylist", err)
@@ -97,7 +105,7 @@ const VideoDetail = () => {
           </Box>
         </Box>
         <div>
-        {/* <PlaylistStreamMenu currentVideoId={id} /> */}
+          {/* <PlaylistStreamMenu currentVideoId={id} /> */}
           {playlistId ? <PlaylistStreamMenu currentVideoId={id} /> : null}
           <Box px={2} py={{ md: 1, xs: 5 }} justifyContent="center" alignItems="center" >
             <Videos videos={videos} direction="column" />

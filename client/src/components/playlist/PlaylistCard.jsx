@@ -2,8 +2,8 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import VerticalThreeDotIcon from "../../icons/VerticalThreeDotIcon"
-// import { changeIsStreaming, setVideoArray, setStreamedPlaylist } from "../../features/appData/playlistStreamSlice"
-// import { getVideosOfPlaylist } from "../../apiFetch/playlistApi"
+import { changeIsStreaming, setVideoArray, setStreamedPlaylist } from "../../features/appData/playlistStreamSlice"
+import { getVideosOfPlaylist } from "../../apiFetch/playlistApi"
 
 const PlaylistCard = ({ playlist }) => {
     
@@ -29,16 +29,16 @@ const PlaylistCard = ({ playlist }) => {
 
 
         const playlistId = playlist._id
-        // getVideosOfPlaylist(playlistId, (videoArr)=>{
-        //     videoArr.sort((a,b)=>a.createdAt - b.createdAt)
-        //     dispatch(changeIsStreaming(true))
-        //     dispatch(setVideoArray(videoArr))
-        //     dispatch(setStreamedPlaylist(playlist))
-        //     console.log("getVideosOfPlaylist success", videoArr)
+        getVideosOfPlaylist(playlistId, (videoArr)=>{
+            videoArr.sort((a,b)=>a.createdAt - b.createdAt)
+            dispatch(changeIsStreaming(true))
+            dispatch(setVideoArray(videoArr))
+            dispatch(setStreamedPlaylist(playlist))
+            console.log("getVideosOfPlaylist success", videoArr)
         navigate(`/video/${videoArr[0].videoId}?playlist=${playlistId}&custom=true`)
-        // }).catch( (err) => {
-        //     throw("err getVideosOfPlaylist", err)
-        // })
+        }).catch( (err) => {
+            throw("err getVideosOfPlaylist", err)
+        })
         
     }
     return (
