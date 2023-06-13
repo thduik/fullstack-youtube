@@ -7,7 +7,6 @@ const PlaylistStreamMenu = ({currentVideoId}) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    
     const {videoArr, streamedPlaylist, isStreaming} = useSelector(state=>state.playlistStream)
     useEffect(()=>{
         console.log("PlaylistStreamMenu videoArr, streamedPlaylist, isStreaming",
@@ -23,11 +22,14 @@ const PlaylistStreamMenu = ({currentVideoId}) => {
 
     return (
         <div style = {{display:"flex",flexDirection:"column", backgroundColor:"#151515",
-            maxHeight:"300px", overflowY:"scroll", boderRadius:"20px"}}>
+            maxHeight:"300px", boderRadius:"20px"}}>
             <div style = {{display:"flex", flexDirection:"column", height:"60px", width:"100%"}}>
                 <h4 style={{color:"white"}}>{streamedPlaylist && streamedPlaylist.playlistName ? streamedPlaylist.playlistName : "null name"}</h4>
             </div>
-            {videoArr ? videoArr.map(video=><PlaylistStreamItem onClick={clickedPlaylistItem} video={video}/>) : null}
+            <div style = {{overflowY:"scroll", display:"flex",flexDirection:"column", maxHeight:"300px"}} >
+                {videoArr ? videoArr.map(video=><PlaylistStreamItem onClick={clickedPlaylistItem} video={video}/>) : null}
+            </div>
+            
         </div>
     )
 }
