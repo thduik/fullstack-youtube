@@ -78,9 +78,11 @@ const getPlaylistDetailDataM = async (playlistId) => {
     try {
         const res = await getPlaylistDataFromCache(playlistId)
         if (!res.isSet) {
-            const res2 = await 
-            addPlaylistDataToCache
+            const res2 = await getPlaylistDetailDb(playlistId)
+            addPlaylistDataToCache(playlistId)
+            return res2
         }
+        return res
     } catch (err) {
         throw("getPlaylistDetailDataM err", err)
     }

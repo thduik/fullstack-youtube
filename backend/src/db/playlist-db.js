@@ -94,7 +94,7 @@ const deleteVideoFromPlaylistDb = async (video, orderIndex) => {
     }
 }
 
-const getPlaylistDetail = async (playlistId) => {
+const getPlaylistDetailDb = async (playlistId) => {
     console.log("getPlaylistDetail called", playlistId)
     try {
         const resArr = await Playlist.find({_id:playlistId})
@@ -105,4 +105,4 @@ const getPlaylistDetail = async (playlistId) => {
     }
 }
 module.exports = {createPlaylistDb, getAllPlaylistsOfUserDb, getAllVideosOfPlaylistDb,
-    addVideoToPlaylistsConcurrentDb, deleteVideoFromPlaylistDb,getPlaylistDetail}
+    addVideoToPlaylistsConcurrentDb, deleteVideoFromPlaylistDb,getPlaylistDetailDb}

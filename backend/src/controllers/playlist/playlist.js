@@ -1,8 +1,7 @@
 const { getPlaylistsOfUserDataM, getVideosListOfPlaylistDataM, createPlaylistDataM
 ,addVideoToPlaylistsDataM, getPlaylistDetailDataM } = require("../../data-manager")
-const { createPlaylistDb, getAllPlaylistsOfUser, getAllVideosOfPlaylist,
-    addVideoToPlaylistsConcurrentDb, deleteVideoFromPlaylistDb } = require("../../db/playlist-db")
-const { postProcessDocArr } = require('./utils')
+const {  deleteVideoFromPlaylistDb } = require("../../db/playlist-db")
+// const { postProcessDocArr } = require('./utils')
 
 const createPlaylist = async (req, res, next) => {
     const playlist = req.body.playlist //{videoId:string,videoName:string,thumbnailUrl:string,createdAt:int}
