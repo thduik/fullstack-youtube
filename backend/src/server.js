@@ -6,7 +6,7 @@ require('dotenv').config()
 if (process.env.NODE_ENV == 'development') {
   setTimeout(()=>{
     process.exit()
-  }, 2400000)
+  }, 3600000)
 }
 
 process.on('exit', ()=>{})

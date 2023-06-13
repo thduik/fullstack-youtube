@@ -16,6 +16,7 @@ import HomeIcon from '../icons/HomeIcon';
 import ShortsIcon from '../icons/ShortsIcon';
 import SubscriptionIcon from '../icons/SubscriptionIcon';
 import LibraryIcon from '../icons/LibraryIcon';
+import PlaylistIcon from '../icons/PlaylistIcon';
 
 export const logo = 'https://i.ibb.co/s9Qys2j/logo.png';
 
@@ -24,6 +25,7 @@ export const categories = [
   { name: 'Shorts', icon: <ShortsIcon />, },
   { name: 'Subscriptions', icon: <SubscriptionIcon />, },
   { name: 'Library', icon: <LibraryIcon />, },
+  { name: 'Playlists', icon: <PlaylistIcon/> },
   { name: 'JS Mastery', icon: <CodeIcon />, },
   { name: 'Coding', icon: <CodeIcon />, },
   { name: 'ReactJS', icon: <CodeIcon />, },

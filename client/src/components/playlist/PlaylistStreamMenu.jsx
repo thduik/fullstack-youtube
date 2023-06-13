@@ -21,12 +21,12 @@ const PlaylistStreamMenu = ({currentVideoId}) => {
     }
 
     return (
-        <div style = {{display:"flex",flexDirection:"column", backgroundColor:"#151515",
+        <div className="playlist-stream-menu" style = {{display:"flex",flexDirection:"column", backgroundColor:"#151515",
             maxHeight:"300px", boderRadius:"20px"}}>
             <div style = {{display:"flex", flexDirection:"column", height:"60px", width:"100%"}}>
                 <h4 style={{color:"white"}}>{streamedPlaylist && streamedPlaylist.playlistName ? streamedPlaylist.playlistName : "null name"}</h4>
             </div>
-            <div style = {{overflowY:"scroll", display:"flex",flexDirection:"column", maxHeight:"300px"}} >
+            <div style = {{overflowY:"scroll", display:"flex",flexDirection:"column", maxHeight:"300px", backgroundColor:"rgba(0,0,0,0)"}} >
                 {videoArr ? videoArr.map(video=><PlaylistStreamItem onClick={clickedPlaylistItem} video={video}/>) : null}
             </div>
             

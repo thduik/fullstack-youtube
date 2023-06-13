@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { changeShowMiniSidebar } from '../../features/uiState/uiStateSlice.js'
 import PlaylistStreamMenu from "../playlist/PlaylistStreamMenu";
-import { getVideosOfPlaylist } from "../../apiFetch/playlistApi";
+import { getVideosOfPlaylist, getPlaylistDetail } from "../../apiFetch/playlistApi";
 import { changeIsStreaming, setVideoArray, setStreamedPlaylist } from "../../features/appData/playlistStreamSlice"
 const VideoDetail = () => {
   const { id } = useParams() //id = videoid
@@ -37,14 +37,16 @@ const VideoDetail = () => {
   useEffect(() => {
     if (!playlistId || isStreaming) { return }
 
+    getPlaylistDetail(playlistId, (playlistData)=>{
+      console.log("getPlaylistDetail success playlistData", playlistData)
+      dispatch(setStreamedPlaylist(playlistData))
+    })
+
     getVideosOfPlaylist(playlistId, (videoArr) => {
       console.log("getVideosOfPlaylist success", videoArr)
-
       videoArr.sort((a, b) => a.createdAt - b.createdAt)
       dispatch(changeIsStreaming(true))
       dispatch(setVideoArray(videoArr))
-      dispatch(setStreamedPlaylist(playlist))
-
     }).catch((err) => {
       throw ("err getVideosOfPlaylist", err)
     })

@@ -11,7 +11,7 @@ import { changeSelectedCategory } from "../../features/appData/appDataSlice";
 import YoutubeIcon from '../../icons/YoutubeIcon'
 import BurgerMenuIcon from "../../icons/BurgerMenuIcon";
 import './index.css'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const allBackgroundColor = "#202020"   //div and stacks
@@ -22,7 +22,9 @@ const Sidebar = (props) => {
   const dispatch = useDispatch()
   const selectedCategory = useSelector((state) => state.appData.selectedCategory)
   const showSidebar = useSelector((state) => state.uiState.showSidebar)
+  const navigate = useNavigate()
   const [videos, setVideos] = useState(null);
+  const { userId } = useSelector((state) => state.user)
 
   // useEffect(() => {
   //   setVideos(null);
@@ -35,6 +37,10 @@ const Sidebar = (props) => {
     if (catName == selectedCategory) {
       console.log("selected same cat as current one")
       return
+    }
+    if (catName.toLowerCase() == "playlists") {
+      console.log("playlists sidebar clicked")
+      navigate(`/user/custom/${userId}/playlists`)
     }
     dispatch(changeSelectedCategory(catName))
   }
@@ -80,7 +86,7 @@ const Sidebar = (props) => {
         <div style={{ backgroundColor: allBackgroundColor }}>
 
 
-          {categories.map((category) => (
+          {categories.map((category, idx) => (
             <button
               className="category-btn"
               onClick={() => categoryClicked(category.name)}
@@ -95,7 +101,7 @@ const Sidebar = (props) => {
               <span style={{ color: category.name === selectedCategory ? "white" : "white", marginRight: "12px" }}>
                 {category.icon}
               </span>
-              <span style={{ opacity: category.name === selectedCategory ? "1" : "0.8" }}>
+              <span style={{ opacity: category.name === selectedCategory ? "1" : "0.8", fontSize:"14px" }}>
                 {category.name}
               </span>
             </button>
