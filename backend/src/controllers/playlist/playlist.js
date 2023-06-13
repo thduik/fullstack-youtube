@@ -1,5 +1,5 @@
 const { getPlaylistsOfUserDataM, getVideosListOfPlaylistDataM, createPlaylistDataM
-,addVideoToPlaylistsDataM } = require("../../data-manager")
+,addVideoToPlaylistsDataM, getPlaylistDetailDataM } = require("../../data-manager")
 const { createPlaylistDb, getAllPlaylistsOfUser, getAllVideosOfPlaylist,
     addVideoToPlaylistsConcurrentDb, deleteVideoFromPlaylistDb } = require("../../db/playlist-db")
 const { postProcessDocArr } = require('./utils')
@@ -80,5 +80,16 @@ const deleteVideoFromPlaylist = async (req, res, next) => {
     }
 }
 
+const getPlaylistDetail = async (req, res, next) => {
+    try {
+        const playlistId = req.body.playlistId
+        const result = await getPlaylistDetailDataM(playlistId)
+        res.send({playlist:result})
+    } catch (err) {
+        console.log("getPlaylistDetail err", err)
+        res.send("Error getting playlist detail")
+    }
+    
+}
 
-module.exports = { deleteVideoFromPlaylist, createPlaylist, getPlaylistsOfUser, getVideosListOfPlaylist, addVideoToPlaylist }
+module.exports = { deleteVideoFromPlaylist, createPlaylist, getPlaylistsOfUser, getVideosListOfPlaylist, addVideoToPlaylist, getPlaylistDetail }

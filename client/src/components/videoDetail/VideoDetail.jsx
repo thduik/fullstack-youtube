@@ -24,7 +24,7 @@ const VideoDetail = () => {
   const [videos, setVideos] = useState(null);
   useEffect(() => {
     return () => {//unmount 
-      dispatch(changeIsStreaming(true))
+      dispatch(changeIsStreaming(false))
     }
 
   }, [])

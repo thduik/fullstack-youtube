@@ -9,7 +9,10 @@ const PlaylistStreamMenu = ({currentVideoId}) => {
 
     
     const {videoArr, streamedPlaylist, isStreaming} = useSelector(state=>state.playlistStream)
-
+    useEffect(()=>{
+        console.log("PlaylistStreamMenu videoArr, streamedPlaylist, isStreaming",
+        videoArr, streamedPlaylist, isStreaming)
+    },[videoArr, streamedPlaylist, isStreaming])
     useEffect(() => {
         console.log("PlaylistStreamMenu videoArr", videoArr)
     },[videoArr])
@@ -19,10 +22,10 @@ const PlaylistStreamMenu = ({currentVideoId}) => {
     }
 
     return (
-        <div style = {{display:"flex",flexDirection:"column",
-            maxHeight:"300px", overflowY:"scroll"}}>
-            <div style = {{display:"flex", flexDirection:"column"}}>
-                <h4 style={{color:"white"}}>{streamedPlaylist.playlistName}</h4>
+        <div style = {{display:"flex",flexDirection:"column", backgroundColor:"#151515",
+            maxHeight:"300px", overflowY:"scroll", boderRadius:"20px"}}>
+            <div style = {{display:"flex", flexDirection:"column", height:"60px", width:"100%"}}>
+                <h4 style={{color:"white"}}>{streamedPlaylist && streamedPlaylist.playlistName ? streamedPlaylist.playlistName : "null name"}</h4>
             </div>
             {videoArr ? videoArr.map(video=><PlaylistStreamItem onClick={clickedPlaylistItem} video={video}/>) : null}
         </div>

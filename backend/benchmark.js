@@ -52,9 +52,16 @@ function getRandomInt(min, max) {
 }
 
 const testlolol = async () => {
-    for (var i = 0; i < 20; i ++) {
-        console.log(getRandomInt(0,4))
-    }
+    await connectCache()
+    await redisClient.hSet("key1", obj)
+    const res1 = await redisClient.hGetAll("key1")
+    const res2 = await redisClient.hGetAll("key2")
+    const r1 = await redisClient.exists("key1")
+    const r2 = await redisClient.exists("key2")
+    console.log("r1",r1, "r2", r2)
+    if (!r2) {console.log("r2 not ok")}
+    if (r1) {console.log("r1 ok")}
+    console.log("res1", res1, "res2", res2)
     return
 
 
@@ -64,7 +71,7 @@ const testlolol = async () => {
 
         try {
 
-            await connectCache()
+            
             
             var keylol = "key11key11key11key11key11key11key11key11key11key11key11key11key11key11key11key11key11key11"
             for (var i = 0;i<3;i++) {keylol += keylol}

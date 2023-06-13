@@ -50,7 +50,7 @@ const addVideoToOnePlaylist = async (doc) => {
     
 }
 
-const addVideoToPlaylistsCache = async (videoDocArr) => {
+const addVideoToPlaylistsCache = async (videoDocArr) => { //add 1 video to multiple playlists, triggered by playlist owner add 1 video to array of playlists request
     console.log("addVideoToPlaylistsCache", videoDocArr)
     try {
         for (var i = 0; i < videoDocArr.length; i++) {
@@ -94,7 +94,7 @@ const createPlaylistCache = async (result) => {
 }
 
 
-const addVideosOfPlaylistToCache = async (playlistid, videoDocs) => {
+const addVideosOfPlaylistToCache = async (playlistid, videoDocs) => { //fetch videos of playlist from db, then add all those to cache, triggered by normal read queries
     console.log("addVideosOfPlaylistToCache called videoDocs.length:", videoDocs.length)
     try {
         for (var i = 0; i < videoDocs.length; i++) {
@@ -194,6 +194,26 @@ const getAllVideosOfPlaylistFromCache = async (playlistid) => {
     }
 }
 
+const getPlaylistDataFromCache = async (playlistId) => {
+    try {
+        const playlistExists = await redisClient.exists(`playlist:${playlistId}`)
+        if (!playlistExists) { return {isSet:false} }
+        const playlistData = await redisClient.hGetAll(`playlist:${playlistId}`)
+        return playlistData
+    } catch (err) {
+        console.log("getPlaylistDataFromCache")
+    }
+}
+
+const addPlaylistDataToCache = async (playlistId, playlistDoc) => {//populate data for by getPlaylistDataFromCache
+    try {
+        const playlistExists = await redisClient.hSet(`playlist:${playlistId}`,playlistDoc )
+        return {success:true}
+    } catch (err) {
+        console.log("getPlaylistDataFromCache")
+    }
+}
+
 module.exports = {
     getPlaylistsOfUserFromCache
     , addPlaylistsOfUserToCache
@@ -203,4 +223,6 @@ module.exports = {
     , addVideoToPlaylistsCache
     , deleteVideoFromPlaylistCache
     , deletePlaylistOfUserCache
+    , getPlaylistDataFromCache
+    , addPlaylistDataToCache
 }

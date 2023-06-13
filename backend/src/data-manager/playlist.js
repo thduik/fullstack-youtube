@@ -1,6 +1,6 @@
 const { getPlaylistsOfUserFromCache, addPlaylistsOfUserToCache
     , getAllVideosOfPlaylistFromCache, addVideosOfPlaylistToCache
-,createPlaylistCache,addVideoToPlaylistsCache} = require("../cache-module")
+,createPlaylistCache,addVideoToPlaylistsCache,getPlaylistDataFromCache, addPlaylistDataToCache} = require("../cache-module")
 const { getAllPlaylistsOfUserDb, getAllVideosOfPlaylistDb, createPlaylistDb
 ,addVideoToPlaylistsConcurrentDb } = require("../db")
 
@@ -74,5 +74,17 @@ const getPlaylistsOfUserDataM = async (userid) => {
     
 }
 
+const getPlaylistDetailDataM = async (playlistId) => {
+    try {
+        const res = await getPlaylistDataFromCache(playlistId)
+        if (!res.isSet) {
+            const res2 = await 
+            addPlaylistDataToCache
+        }
+    } catch (err) {
+        throw("getPlaylistDetailDataM err", err)
+    }
+}
+
 module.exports = {getPlaylistsOfUserDataM, getVideosListOfPlaylistDataM
-,createPlaylistDataM, addVideoToPlaylistsDataM}
+,createPlaylistDataM, addVideoToPlaylistsDataM, getPlaylistDetailDataM}
