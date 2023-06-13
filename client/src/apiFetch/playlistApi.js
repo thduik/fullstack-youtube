@@ -110,7 +110,7 @@ export const getPlaylistDetail = async (playlistid, callback) => {
         //const playlistid = playlist._id
         const getUrl = baseUrl + `/playlist/${playlistid}/details`
         const res = await axios.get(getUrl)
-        console.log("getPlaylistDetail success videos are", res.data)
+        console.log("getPlaylistDetail success details are", res.data)
         callback(res.data.playlist)
         return 
     } catch (err) {

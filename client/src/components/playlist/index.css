@@ -36,3 +36,14 @@
         margin-right: 70px;
     }
 }
+
+@media screen and (min-width: 1100px) {
+    div.playlists-page {
+        margin-left: 80px;
+        margin-right: 70px;
+    }
+
+    div.playlist-stream-menu {
+        width:390px;
+    }
+}

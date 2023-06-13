@@ -15,12 +15,15 @@ import { changeSelectedVideo } from '../../features/appData/playlistSlice';
 
 
 const cardWidthSmall = window.innerWidth - 30
-console.log("cardWidthSmall is", `${cardWidthSmall}px`)
 const widthStyle = {
   xs: `${cardWidthSmall}px`, sm: '270px', sm770: '290px', md: "320px",
   md1000: "290px", lg: "370px"
 }
-const VideoCard = ({ video: { id: { videoId }, snippet } }) => {
+
+const playlistSreamWidth = {
+  xs:'100%', md1000: "290px", lg: "370px"
+}
+const VideoCard = ({ video: { id: { videoId }, snippet, isPlaylistStream } }) => {
   const dispatch = useDispatch()
   const [showDropdown, setShowDropdown] = useState(false)
   const startSaveVideoToPlaylist = () => {
@@ -50,7 +53,7 @@ const VideoCard = ({ video: { id: { videoId }, snippet } }) => {
 
           // sx={{ width: { xs: '100%', sm: '358px'}, 
           sx={{
-            width: widthStyle,
+            width: isPlaylistStream ? playlistSreamWidth  : widthStyle,
             height: 180
             
           }}

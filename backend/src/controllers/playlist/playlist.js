@@ -40,6 +40,7 @@ const getVideosListOfPlaylist = async (req, res, next) => {
     
 
     const playlistid = req.params.playlistid //string
+    
     try {   
         const videoDocs = await getVideosListOfPlaylistDataM(playlistid)
         console.log("getVideosListOfPlaylistController success", "p-id",playlistid, "videoDocs.length", videoDocs.length)
@@ -80,9 +81,11 @@ const deleteVideoFromPlaylist = async (req, res, next) => {
 }
 
 const getPlaylistDetail = async (req, res, next) => {
+    const playlistId = req.params.playlistid //string
     try {
-        const playlistId = req.body.playlistId
+        
         const result = await getPlaylistDetailDataM(playlistId)
+        console.log("getPlaylistDetail controller success", result)
         res.send({playlist:result})
     } catch (err) {
         console.log("getPlaylistDetail err", err)

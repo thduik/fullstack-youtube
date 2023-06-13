@@ -2,7 +2,7 @@ const { getPlaylistsOfUserFromCache, addPlaylistsOfUserToCache
     , getAllVideosOfPlaylistFromCache, addVideosOfPlaylistToCache
 ,createPlaylistCache,addVideoToPlaylistsCache,getPlaylistDataFromCache, addPlaylistDataToCache} = require("../cache-module")
 const { getAllPlaylistsOfUserDb, getAllVideosOfPlaylistDb, createPlaylistDb
-,addVideoToPlaylistsConcurrentDb } = require("../db")
+,addVideoToPlaylistsConcurrentDb, getPlaylistDetailDb } = require("../db")
 
 const addVideoToPlaylistsDataM = async (playlistIdArr, videoLol) => {
     //add 1 video to multiple playlists
@@ -75,6 +75,7 @@ const getPlaylistsOfUserDataM = async (userid) => {
 }
 
 const getPlaylistDetailDataM = async (playlistId) => {
+    
     try {
         const res = await getPlaylistDataFromCache(playlistId)
         if (!res.isSet) {

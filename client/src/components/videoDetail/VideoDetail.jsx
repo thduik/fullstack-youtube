@@ -13,6 +13,9 @@ import { changeShowMiniSidebar } from '../../features/uiState/uiStateSlice.js'
 import PlaylistStreamMenu from "../playlist/PlaylistStreamMenu";
 import { getVideosOfPlaylist, getPlaylistDetail } from "../../apiFetch/playlistApi";
 import { changeIsStreaming, setVideoArray, setStreamedPlaylist } from "../../features/appData/playlistStreamSlice"
+
+const playerBoxWidth = {xs:"100%", sm770:"90%", md1000:"84%"}
+
 const VideoDetail = () => {
   const { id } = useParams() //id = videoid
   useEffect(() => { console.log("VideoDetail id", id) }, [id])
@@ -83,7 +86,7 @@ const VideoDetail = () => {
       <Stack direction={{ xs: "column", md1: "row" }} >
         <Box flex={1}>
           {/* <Box sx={{ width: "100%", position: "sticky", top: "86px" }}> */}
-          <Box sx={{ width: "100%", top: "86px" }}>
+          <Box sx={{ width: playerBoxWidth, top: "86px", margin:"auto" }}>
             <ReactPlayer url={`https://www.youtube.com/watch?v=${id}`} className="react-player" controls />
             <Typography color="#fff" variant="h5" fontWeight="bold" p={2}>
               {title}
@@ -109,8 +112,8 @@ const VideoDetail = () => {
         <div>
           {/* <PlaylistStreamMenu currentVideoId={id} /> */}
           {playlistId ? <PlaylistStreamMenu currentVideoId={id} /> : null}
-          <Box px={2} py={{ md: 1, xs: 5 }} justifyContent="center" alignItems="center" >
-            <Videos videos={videos} direction="column" />
+          < Box px={2} py={{ md: 1, xs: 5 }} justifyContent="center" alignItems="center" >
+            <Videos videos={videos} direction="column" isPlaylistStream={isStreaming} />
           </Box>
         </div>
 
