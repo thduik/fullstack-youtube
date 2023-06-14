@@ -30,6 +30,7 @@ export const postPlaylistCreate = async (newPlaylist, video) => {
         videoId: video.videoId,
         videoName: video.title,
         thumbnailUrl: video.thumbnails.medium.url,
+        thumbnails: video.thumbnails,
         channelName:video.channelTitle,
         createdAt: Date.now()
     }
@@ -56,6 +57,8 @@ const processVideoData = (videoData) => {
         videoId: videoData.videoId,
         videoName: videoData.title,
         thumbnailUrl: videoData.thumbnails.default.url,
+        thumbnails: videoData.thumbnails,
+
         createdAt: Date.now(),
         channelName: videoData.channelTitle
     }

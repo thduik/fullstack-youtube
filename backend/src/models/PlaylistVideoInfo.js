@@ -10,6 +10,24 @@ const PlaylistVideoInfoSchema = new mongoose.Schema({
         index:true,
         required:true
     },
+    thumbnails: {
+        default: {
+            height:Number,
+            url:String,
+            width:Number
+        },
+        high: {
+            height:Number,
+            url:String,
+            width:Number
+        },
+        medium: {
+            height:Number,
+            url:String,
+            width:Number
+        }
+
+    },
     videoName:{
         required:true,
         type:String

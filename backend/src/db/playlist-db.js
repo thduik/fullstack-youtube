@@ -35,7 +35,8 @@ const createPlaylistDb = async ({playlist, videoData}) => {
             userid: playlist.userid,
             creatorName: playlist.creatorName,
             isPrivate:playlist.isPrivate ?? false,
-            thumbnailUrl:videoData.thumbnailUrl
+            thumbnailUrl:videoData.thumbnailUrl,
+            thumbnails:videoData.thumbnails
             
         })
 
@@ -46,6 +47,7 @@ const createPlaylistDb = async ({playlist, videoData}) => {
             videoId:videoData.videoId,
             videoName:videoData.videoName,
             thumbnailUrl:videoData.thumbnailUrl,
+            thumbnails:videoData.thumbnails,
             createdAt:videoData.createdAt,
             channelName: videoData.channelName
         })
@@ -64,6 +66,7 @@ const returnCreatePlaylistVideoInfoPromise = (playlistid, videoData) => {
         videoId:videoData.videoId,
         videoName:videoData.videoName,
         thumbnailUrl:videoData.thumbnailUrl,
+        thumbnails:videoData.thumbnails,
         createdAt:videoData.createdAt,
         channelName: videoData.channelName
     })

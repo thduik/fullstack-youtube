@@ -21,6 +21,24 @@ const playlistSchema = new mongoose.Schema({
         type:String,
         default:defaultPlaylistThumbnailUrl
     },
+    thumbnails: {
+        default: {
+            height:Number,
+            url:String,
+            width:Number
+        },
+        high: {
+            height:Number,
+            url:String,
+            width:Number
+        },
+        medium: {
+            height:Number,
+            url:String,
+            width:Number
+        }
+
+    },
     isPrivate: {
         type:Boolean,
         required:true,

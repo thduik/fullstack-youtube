@@ -7,6 +7,7 @@ const parseVideoDoc = (doc) => {
         createdAt: doc.createdAt,
         channelName: doc.channelName,
         _id: doc._id.toString(),
+        thumbnails: doc.thumbnails
 
     }
     return res
@@ -17,6 +18,7 @@ const parsePlaylistDoc = (doc) => {
         playlistName: doc.playlistName,
         userid: doc.userid,
         thumbnailUrl: doc.thumbnailUrl ?? 'none',
+        thumbnails:doc.thumbnails,
         isPrivate: doc.isPrivate ? 1 : 0,
         isUnlisted: doc.isUnlisted ? 1 : 0,
         createdAt: doc.createdAt,
