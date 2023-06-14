@@ -4,9 +4,7 @@ import { Typography, Card, CardContent, CardMedia } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import { demoThumbnailUrl, demoVideoUrl, demoVideoTitle, demoChannelUrl, demoChannelTitle } from "../../utils/constants";
-import VerticalThreeDotIcon from '../../icons/VerticalThreeDotIcon';
 import VideoCardDropdown from './VideoCardDropdown';
-import PlaylistSelectMenu from './PlaylistSelectMenu';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { changeShowPlaylistSelectDropdown } from '../../features/uiState/uiStateSlice';

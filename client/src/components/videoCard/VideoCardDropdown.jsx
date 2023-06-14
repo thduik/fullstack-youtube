@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import VerticalThreeDotIcon from '../../icons/VerticalThreeDotIcon';
 import SaveToPlaylistIcon from '../../icons/SaveToPlaylistIcon';
 import VideoDropdownButton from './VideoDropdownButton';
-import { changeShowPlaylistSelectDropdown } from '../../features/uiState/uiStateSlice';
 
 
 const wrapperBackgroundColor = "rgba(0,0,0,0)" //important because all elements being transparent allow effects to work

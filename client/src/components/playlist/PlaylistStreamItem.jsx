@@ -1,13 +1,19 @@
 import { useState } from "react"
+import PlaylistStreamDropdown from "./PlaylistStreamDropdown"
 
 
 const PlaylistStreamItem = ({ video, key, onClick, idx }) => {
     const [hovering, setHovering] = useState(false)
+    const [showDropdown, setShowDropdown] = useState(false)
 
     const mouseEntered = () => { setHovering(true) }
     const mouseLeft = () => { setHovering(false) }
     const clickedItem = () => {
         onClick({video:video, key:idx}) //key = index in video array of playlist. state.playlistStream.videoArr
+    }
+
+    const deletePlaylistClicked = () => {
+        setShowDropdown(false)
     }
     return (
         <div className="hover-pointer" onMouseEnter={mouseEntered} onMouseLeave={mouseLeft} onClick={clickedItem}
@@ -25,6 +31,10 @@ const PlaylistStreamItem = ({ video, key, onClick, idx }) => {
         , maxHeight:"80px" }}>
                 <p style={{ color: "white", fontSize:"14px", marginTop:"20px", marginLeft:"14px",overflowY:"hidden" }}>{video.videoName}</p>
                 <p style={{ color: "rgba(255,255,255,0.6)", fontSize:"13px", marginTop:"10px", marginLeft:"14px",overflowY:"hidden" }}>{video.channelName}</p>
+            </div>
+            <div>
+                <PlaylistStreamDropdown showDropdown={showDropdown} setShowDropdown={setShowDropdown}
+            deletePlaylist={deletePlaylistClicked}/>
             </div>
         </div>
     )

@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import VerticalThreeDotIcon from '../../icons/VerticalThreeDotIcon';
 import SaveToPlaylistIcon from '../../icons/SaveToPlaylistIcon';
 import PlaylistDropdownButton from './PlaylistDropdownButton';
-import { changeShowPlaylistSelectDropdown } from '../../features/uiState/uiStateSlice';
 import DropdownTriggerButton from './DropdownTriggerButton';
 
 
@@ -41,7 +40,7 @@ const dropdownButtonStyle = {
 }
 
 
-function VideoCardDropdown({saveVideoToPlaylist, showDropdown, setShowDropdown}) {
+function PlaylistStreamDropdown({deletePlaylist, showDropdown, setShowDropdown}) {
     // const [showDropdown, setShowDropdown] = useState(false)
     const dispatch = useDispatch()
     const { email, googleid, name, pictureUrl, userId, userName, isLoggedIn } = useSelector((state) => state.user)
@@ -55,7 +54,7 @@ function VideoCardDropdown({saveVideoToPlaylist, showDropdown, setShowDropdown})
     const deletePlaylistClicked = async () => {
         console.log("deletePlaylistClicked")
         await setShowDropdown(false)
-        saveVideoToPlaylist()
+        deletePlaylist()
     }
 
     const addToQueueClicked = () => {
@@ -87,4 +86,4 @@ function VideoCardDropdown({saveVideoToPlaylist, showDropdown, setShowDropdown})
     );
 }
 
-export default VideoCardDropdown;
+export default PlaylistStreamDropdown;
