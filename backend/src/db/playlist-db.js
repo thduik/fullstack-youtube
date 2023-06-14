@@ -51,7 +51,7 @@ const createPlaylistDb = async ({playlist, videoData}) => {
             createdAt:videoData.createdAt,
             channelName: videoData.channelName
         })
-        console.log("createPlaylistDb success playlistDoc and VideoDoc docId are", playlistDoc._id, videoRes._id)
+        console.log("createPlaylistDb success playlistDoc and VideoDoc docId are", playlistDoc, videoRes)
         return {playlist:playlistDoc, video:videoRes}
         
     } catch (err) {

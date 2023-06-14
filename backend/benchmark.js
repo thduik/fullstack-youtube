@@ -52,6 +52,15 @@ function getRandomInt(min, max) {
 }
 
 const testlolol = async () => {
+    const date0 = Date.now()
+    console.log("start")
+    for (var i = 0; i < 300000; i++) {
+       const lol = await typeof obj == 'object'
+       if (!lol) {console.log("breaklol")}
+    }
+    console.log("done", Date.now() - date0)
+    return
+    console.log("\\\\")
     await connectCache()
     await redisClient.hSet("key1", obj)
     const res1 = await redisClient.hGetAll("key1")

@@ -22,7 +22,7 @@ const createPlaylistDataM = async ({playlist, videoInfo}) => {
     console.log("createPlaylistDataM videoInfo", videoInfo)
     try {
         const result = await createPlaylistDb({playlist:playlist, videoData:videoInfo}) //{playlist:playlistDoc, video:videoRes}
-        console.log("createPLaylistDataM success result.playlist._id and result.video._d:",result.playlist._id, result.video._id)
+        console.log("createPLaylistDataM success result:",result, result)
         await createPlaylistCache(result) //{playlist:playlistDoc, video:videoRes}
         return result.playlist
         

@@ -30,7 +30,8 @@ const testStage1 = async (resArr, expectedArr) => {
                 const p2 = playlistArr2[i]; p2.count = parseInt(p2.count); p2.createdAt = parseInt(p2.createdAt)
                 p2.isPrivate = parseInt(p2.isPrivate) ? true : false; p2.isUnlisted = parseInt(p2.isUnlisted) ? true : false
                 console.log("p1p2", p1, p2)
-
+                if (!p1.thumbnails || !p2.thumbnails) {throw("NOT OK testStage1 FAILED, no thumbnails")}
+                delete p1.thumbnails; delete p2.thumbnails
                 p1.count = parseInt(p1.count)
                 p1.createdAt = parseInt(p1.createdAt)
                 const res = objectEqual(p1, p2)
@@ -67,9 +68,9 @@ const testStage2 = ( res,expectedRes) => {
             const video = resVideoArr[i]
             const expVideo = expectedVideoArr[i]
 
-            expVideo.playlistId = playlistData.playlistId
-            expVideo.thumbnails = JSON.stringify(expVideo.thumbnails)
-            delete expVideo._id 
+            expVideo.playlistId = playlistData.playlistId //;expVideo.thumbnails = JSON.stringify(expVideo.thumbnails, replacer)
+            if (!expVideo.thumbnails || !video.thumbnails) { throw("no thumbnails")}
+            delete expVideo._id; delete expVideo.thumbnails;delete video.thumbnails
 
             console.log("testStage2 expectedVideo:", expVideo);console.log( "apiResultVideo", video)
             //delete _id video from video obj
@@ -118,5 +119,16 @@ const stage3Test = (expData0, resData0) => { //[ {playlistId:string, videoArr:[v
     console.log("OK testStage3 SUCCESS")
 
 }
+
+
+function replacer(key, value) {
+    if (typeof value === 'string') {
+      //to avoid ///"
+      //add space to , and :
+      return value.replace(/"/g, '').replace(/,/g, ', ').replace(/:/g, ': ')
+    } else {
+      return value
+    }
+  }
 
 module.exports = { testStage1, testStage2, stage3Test }

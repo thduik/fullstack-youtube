@@ -40,7 +40,7 @@ const addVideoToOnePlaylist = async (doc) => {
 
         const docCopy = {...doc}
         delete docCopy._id; delete docCopy.createdAt; delete docCopy.playlistId
-        console.log("fcking doc no _id", docCopy)
+        console.log("addVideoToOnePlaylist doc before hSet doc.videoId", doc.videoId, docCopy)
         const success = await redisClient.hSet(`playvideo:${doc.videoId}`, docCopy)
         //const res = await redisClient.hGetAll(`playvideo:${doc.videoId}`)
         return {success:true}
@@ -73,12 +73,13 @@ const createPlaylistCache = async (result) => {
     const video = parseVideoDoc(result.video._doc)
     playlist.isPrivate = playlist.isPrivate ? 1 : 0; playlist.isUnlisted = playlist.isUnlisted ? 1 : 0 //convert bool to 1 and 0
 
-    console.log("createPlaylistCache called video and playlist._id:", playlist._id, video._id, playlist.userid)
+    console.log("createPlaylistCache called video and playlist:", playlist, video)
     try {
 
+        
         await redisClient.sAdd(`user:${playlist.userid}:playlists`, playlist._id)
         await redisClient.hSet(`playlist:${playlist._id}`, playlist)
-        await addVideoToOnePlaylist(result.video._doc)
+        await addVideoToOnePlaylist(video)
         //await redisClient.sAdd(`playlist:${playlist._id}:videos`, video.videoId + ":" + video.createdAt.toString())
         //await redisClient.hSet(`playvideo:${video.videoId}`, video)
 
@@ -144,16 +145,18 @@ const getPlaylistsOfUserFromCache = async (userid) => {//return {isSet:bool, dat
 
 
 const addPlaylistsOfUserToCache = async (playlistDocs, userid) => {
-    console.log("addPlaylistsOfUserToCache playlistDocs", playlistDocs)
+    // console.log("addPlaylistsOfUserToCache playlistDocs", playlistDocs)
     try {
 
         for (var i = 0; i < playlistDocs.length; i++) { //convert boolean to 1 and 0 because redis don't accept js bool
             const pdoc = playlistDocs[i]
+            if (typeof pdoc.thumbnails == 'object') { pdoc.thumbnails=JSON.stringify(pdoc.thumbnails) }
             const idString = pdoc._id.toString()
             pdoc._id = pdoc._id.toString()
             pdoc.isPrivate = pdoc.isPrivate ? 1 : 0,
                 pdoc.isUnlisted = pdoc.isUnlisted ? 1 : 0,
-                Object.keys(pdoc).forEach((keylol) => console.log(keylol, typeof pdoc[keylol]))
+                //Object.keys(pdoc).forEach((keylol) => console.log(keylol, typeof pdoc[keylol]))
+            console.log("addPlaylistsOfUserToCache", pdoc, idString)
             await redisClient.sAdd(`user:${userid}:playlists`, idString)
             await redisClient.hSet(`playlist:${idString}`, pdoc)
 

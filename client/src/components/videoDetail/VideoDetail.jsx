@@ -34,8 +34,10 @@ const VideoDetail = () => {
   }, [])
 
   useEffect(() => {
-    setVideoId(searchParams.get("v"))
+    const videoId = searchParams.get("v")
+    if (!videoId) {return}
     console.log("VideoDetail searchParams.get(v)",searchParams.get("v"))
+    setVideoId(videoId)
     const playlistIdd = searchParams.get("playlist")
     if (playlistIdd) { setPlaylistId(playlistIdd) }
     
@@ -72,7 +74,7 @@ const VideoDetail = () => {
   }, [])
 
   useEffect(() => {
-
+    console.log("relatedToVideoId", id)
     fetchFromAPI(`videos?part=contentDetails%2Csnippet%2Cstatistics&id=${id}`)
       .then((data) => {
         console.log("videoStatisticsIs: ", data)

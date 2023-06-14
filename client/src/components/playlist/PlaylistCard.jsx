@@ -35,7 +35,7 @@ const PlaylistCard = ({ playlist }) => {
             dispatch(setVideoArray(videoArr))
             dispatch(setStreamedPlaylist(playlist))
             console.log("getVideosOfPlaylist playlistCard success", videoArr)
-        navigate(`/watch?v=${videoArr[0].videoId}?playlist=${playlistId}&custom=true`)
+        navigate(`/watch?v=${videoArr[0].videoId}&playlist=${playlistId}&custom=true`)
         }).catch( (err) => {
             throw("err getVideosOfPlaylist", err)
         })
