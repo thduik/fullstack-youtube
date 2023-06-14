@@ -17,24 +17,28 @@ import { changeIsStreaming, setVideoArray, setStreamedPlaylist } from "../../fea
 const playerBoxWidth = {xs:"100%", sm770:"90%", md1000:"84%"}
 
 const VideoDetail = () => {
-  const { id } = useParams() //id = videoid
-  useEffect(() => { console.log("VideoDetail id", id) }, [id])
+  // const { id } = useParams() //id = videoid
+  //useEffect(() => { console.log("VideoDetail id", id) }, [id])
   const [searchParams, setSearchParams] = useSearchParams();
   const { videoArr, streamedPlaylist, isStreaming } = useSelector(state => state.playlistStream);
   const [playlistId, setPlaylistId] = useState(null)
   const dispatch = useDispatch()
   const [videoDetail, setVideoDetail] = useState(null);
   const [videos, setVideos] = useState(null);
+  const [id, setVideoId] = useState(null)
+  const [playlistVideoIdx, setPlaylistVideoIdx] = useState(null)
   useEffect(() => {
     return () => {//unmount 
       dispatch(changeIsStreaming(false))
     }
-
   }, [])
 
   useEffect(() => {
+    setVideoId(searchParams.get("v"))
+    console.log("VideoDetail searchParams.get(v)",searchParams.get("v"))
     const playlistIdd = searchParams.get("playlist")
     if (playlistIdd) { setPlaylistId(playlistIdd) }
+    
   }, [searchParams])
 
   useEffect(() => {
@@ -48,6 +52,8 @@ const VideoDetail = () => {
     getVideosOfPlaylist(playlistId, (videoArr) => {
       console.log("getVideosOfPlaylist success", videoArr)
       videoArr.sort((a, b) => a.createdAt - b.createdAt)
+      setVideoId(videoArr[0].videoId)
+      setPlaylistVideoIdx(0)
       dispatch(changeIsStreaming(true))
       dispatch(setVideoArray(videoArr))
     }).catch((err) => {
@@ -76,6 +82,12 @@ const VideoDetail = () => {
     fetchFromAPI(`search?part=snippet&relatedToVideoId=${id}&type=video`)
       .then((data) => setVideos(data.items))
   }, [id]);
+
+  const changedPlaylistVideo = ({ video, key }) => { //key = index of video in playlistStream.videoArr, we can jump to next video
+    console.log("changedPlaylistVideo called",video, "idx key", key)
+    setVideoId(video.videoId)
+    setPlaylistVideoIdx(key)
+  }
 
   if (!videoDetail?.snippet) return <Loader />;
 
@@ -111,7 +123,7 @@ const VideoDetail = () => {
         </Box>
         <div>
           {/* <PlaylistStreamMenu currentVideoId={id} /> */}
-          {playlistId ? <PlaylistStreamMenu currentVideoId={id} /> : null}
+          {playlistId ? <PlaylistStreamMenu currentVideoId={id} selectPlaylistVideo={changedPlaylistVideo}/> : null}
           < Box px={2} py={{ md: 1, xs: 5 }} justifyContent="center" alignItems="center" >
             <Videos videos={videos} direction="column" isVideoDetail = {true}/>
           </Box>

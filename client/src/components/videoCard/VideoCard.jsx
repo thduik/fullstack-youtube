@@ -50,7 +50,7 @@ const VideoCard = ({ video: { id: { videoId }, snippet },isVideoDetail }) => {
       boxShadow: "none", borderRadius: 0
     }}>
 
-      <Link to={videoId ? `/video/${videoId}` : `/video/cV2gBU6hKfY`}>
+      <Link to={videoId ? `/watch?v=${videoId}` : `/watch?v=cV2gBU6hKfY`}>
         <CardMedia  image={snippet?.thumbnails?.high?.url || demoThumbnailUrl} alt={snippet?.title}
 
           // sx={{ width: { xs: '100%', sm: '358px'}, 
@@ -66,7 +66,7 @@ const VideoCard = ({ video: { id: { videoId }, snippet },isVideoDetail }) => {
           display: "flex", flexDirection: "row", width: "100%",
           justifyContent: "space-between"
         }}>
-          <Link to={videoId ? `/video/${videoId}` : demoVideoUrl} >
+          <Link to={videoId ? `/watch?v=${videoId}` : demoVideoUrl} >
             <Typography variant="subtitle1" fontWeight="bold" color="#FFF">
               {snippet?.title.slice(0, 60) || demoVideoTitle.slice(0, 60)}
             </Typography>

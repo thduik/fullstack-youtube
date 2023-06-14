@@ -68,10 +68,10 @@ const testStage2 = ( res,expectedRes) => {
             const expVideo = expectedVideoArr[i]
 
             expVideo.playlistId = playlistData.playlistId
-            
+            expVideo.thumbnails = JSON.stringify(expVideo.thumbnails)
             delete expVideo._id 
 
-            console.log("testStage2 expVideo:", expVideo, "video", video)
+            console.log("testStage2 expectedVideo:", expVideo);console.log( "apiResultVideo", video)
             //delete _id video from video obj
             
             const testRes = objectEqual(video, expVideo)

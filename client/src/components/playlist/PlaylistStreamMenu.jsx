@@ -18,7 +18,7 @@ const PlaylistStreamMenu = ({ currentVideoId, selectPlaylistVideo }) => {
 
     const clickedPlaylistItem = ({ video, key }) => {  //key = index in video array of playlist. state.playlistStream.videoArr
         console.log("PlaylistStreamMenu clickedPlaylistItem", video, key)
-        selectPlaylistVideo(video, key)
+        selectPlaylistVideo({video:video, key:key})
     }
 
     return (

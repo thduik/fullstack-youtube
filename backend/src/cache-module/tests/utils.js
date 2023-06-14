@@ -35,6 +35,11 @@ const createVideoForPlaylist = (playlistId) => {
       videoName: 'VideoName' + getRandomInt(1, 100000).toString(),
       videoId: videoIdString,
       thumbnailUrl: 'https://i.ytimg.com/vi/MXBCMgq7_xY/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCkgbA5Yu_qQ59vBNraknj2139L0w',
+      thumbnails:{
+        defaul: {url:'https://' + generateRandomString(8), width:120, height:90}
+        ,medium: {url:'https://' + generateRandomString(8), width:220, height:190}
+        ,high: {url:'https://' + generateRandomString(8), width:320, height:290}
+      },
       channelName:"channel" + getRandomInt(1, 10000).toString(),
       createdAt: Date.now() + getRandomInt(1, 10000000),
       _id: vidID.toString(),

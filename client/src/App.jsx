@@ -73,7 +73,8 @@ const App = () => {
           {showPlaylistSelectDropdown ? <PlaylistSelectMenu/> : null}
           <Routes>
             <Route exact path='/' element={<Feed videos={feedVideos} showSidebar={showSidebar} />} />
-            <Route path='/video/:id' element={<VideoDetail />} />
+            {/* <Route path='/video/:id' element={<VideoDetail />} /> */}
+            <Route path='/watch' element={<VideoDetail />} />
             <Route path='/channel/:id' element={<ChannelDetail basePath={"/channel"} />}>
               <Route path={`videos`} element={ <ChannelVideos/>} />
             </Route>
