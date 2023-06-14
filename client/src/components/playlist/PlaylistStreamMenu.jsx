@@ -18,7 +18,7 @@ const PlaylistStreamMenu = ({ currentVideoId, selectPlaylistVideo }) => {
 
     const clickedPlaylistItem = ({ video, key }) => {  //key = index in video array of playlist. state.playlistStream.videoArr
         console.log("PlaylistStreamMenu clickedPlaylistItem", video, key)
-        selectPlaylistVideo({video:video, key:key})
+        selectPlaylistVideo({ video: video, key: key })
     }
 
     return (
@@ -27,9 +27,13 @@ const PlaylistStreamMenu = ({ currentVideoId, selectPlaylistVideo }) => {
             boderRadius: "20px", marginLeft: "12px"
         }}>
             <div style={{ display: "flex", flexDirection: "column", height: "120px", width: "100%", backgroundColor: "#363636" }}>
-                <h4 style={{ color: "white", fontSize: "14px" }}>
+                <h4 style={{ color: "white", fontSize: "14px", marginLeft: "14px", marginTop: "20px" }}>
                     {streamedPlaylist && streamedPlaylist.playlistName ? streamedPlaylist.playlistName : "null name"}
+
                 </h4>
+                <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "13px", marginLeft: "14px" }}>
+                    {streamedPlaylist.isPrivate == true ? "Private" : "Public"}
+                </p>
             </div>
             <div style={{ overflowY: "scroll", display: "flex", flexDirection: "column", maxHeight: "300px", backgroundColor: "rgba(0,0,0,0)" }} >
                 {videoArr ? videoArr.map((video, idx) =>

@@ -74,21 +74,30 @@ const VideoDetail = () => {
   }, [])
 
   useEffect(() => {
+    if (!id) {return}
     console.log("relatedToVideoId", id)
     fetchFromAPI(`videos?part=contentDetails%2Csnippet%2Cstatistics&id=${id}`)
       .then((data) => {
         console.log("videoStatisticsIs: ", data)
         setVideoDetail(data.items[0])
       })
-
+      
     fetchFromAPI(`search?part=snippet&relatedToVideoId=${id}&type=video`)
       .then((data) => setVideos(data.items))
   }, [id]);
 
   const changedPlaylistVideo = ({ video, key }) => { //key = index of video in playlistStream.videoArr, we can jump to next video
     console.log("changedPlaylistVideo called",video, "idx key", key)
+    
     setVideoId(video.videoId)
     setPlaylistVideoIdx(key)
+  }
+
+  const videoPlayEnded = () => {
+    if (playlistVideoIdx < videoArr.length-1) {
+      setVideoId(videoArr[playlistVideoIdx + 1].videoId)
+      setPlaylistVideoIdx(playlistVideoIdx + 1)
+    }
   }
 
   if (!videoDetail?.snippet) return <Loader />;
@@ -101,7 +110,7 @@ const VideoDetail = () => {
         <Box flex={1}>
           {/* <Box sx={{ width: "100%", position: "sticky", top: "86px" }}> */}
           <Box sx={{ width: playerBoxWidth, top: "86px", margin:"auto" }}>
-            <ReactPlayer url={`https://www.youtube.com/watch?v=${id}`} className="react-player" controls />
+            <ReactPlayer playing={id ? true : false} muted={true} onEnded={videoPlayEnded} url={`https://www.youtube.com/watch?v=${id}`} className="react-player" controls />
             <Typography color="#fff" variant="h5" fontWeight="bold" p={2}>
               {title}
             </Typography>

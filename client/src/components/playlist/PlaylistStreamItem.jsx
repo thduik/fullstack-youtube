@@ -16,7 +16,7 @@ const PlaylistStreamItem = ({ video, key, onClick, idx }) => {
             <div style={{width:"20px"}}>
             <p style = {{color:"rgba(255,255,255,0.8)", fontSize:"12px", marginTop:"45px", marginLeft:"3px"}}>{idx + 1} </p>
             </div>
-            <div style={{margin:"5px 5px 5px 4px", height:"81px", width:"144px", backgroundSize:"cover"
+            <div style={{margin:"5px 5px 5px 4px", height:"81px", width:"144px", backgroundSize:"cover", overflow:"hidden"
                 ,backgroundImage:`url("${video.thumbnailUrl}")`}}>
                 {/* <img height="90px" width="160px" src={video.thumbnailUrl} style={{objectFit:"cover"}} /> */}
             </div>

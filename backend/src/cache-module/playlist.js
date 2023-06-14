@@ -96,14 +96,17 @@ const createPlaylistCache = async (result) => {
 
 
 const addVideosOfPlaylistToCache = async (playlistid, videoDocs) => { //fetch videos of playlist from db, then add all those to cache, triggered by normal read queries
-    console.log("addVideosOfPlaylistToCache called videoDocs.length:", videoDocs.length)
+    // console.log("addVideosOfPlaylistToCache called videoDocs.length:", videoDocs.length)
     try {
         for (var i = 0; i < videoDocs.length; i++) {
+            
             const video = videoDocs[i]
             video._id = video._id.toString()
+            if (typeof video.thumbnails == 'object') {video.thumbnails = JSON.stringify(video.thumbnails) }
+            console.log("addVideosOfPlaylistToCache success playvideoHsetVideoId:", video.videoId, video.videoName)
             await redisClient.sAdd(`playlist:${playlistid}:videos`, video.videoId + ":" + video.createdAt.toString())
             const res = await redisClient.hSet(`playvideo:${video.videoId}`, video)
-            console.log("addVideosOfPlaylistToCache success playvideoHsetVideoId:", res, video.videoId, video.videoName)
+            
         }
         return { success: true }
     } catch (err) {
