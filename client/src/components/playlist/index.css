@@ -8,7 +8,8 @@
     }
 
     div.playlist-stream-menu {
-        width:100%
+        width:100%;
+        max-height: 400px;
     }
 }
 
@@ -45,5 +46,13 @@
 
     div.playlist-stream-menu {
         width:390px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    
+
+    div.playlist-stream-menu {
+        width:470px;
     }
 }
