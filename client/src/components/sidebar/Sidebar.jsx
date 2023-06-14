@@ -38,6 +38,9 @@ const Sidebar = (props) => {
       console.log("selected same cat as current one")
       return
     }
+    if  (catName.toLowerCase() == "home") {
+      navigate("/")
+    }
     if (catName.toLowerCase() == "playlists") {
       console.log("playlists sidebar clicked")
       navigate(`/user/custom/${userId}/playlists`)
