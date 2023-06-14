@@ -7,6 +7,7 @@ import VerticalThreeDotIcon from '../../icons/VerticalThreeDotIcon';
 import SaveToPlaylistIcon from '../../icons/SaveToPlaylistIcon';
 import PlaylistDropdownButton from './PlaylistDropdownButton';
 import DropdownTriggerButton from './DropdownTriggerButton';
+import TrashCanIcon from '../../icons/TrashCanIcon';
 
 
 const wrapperBackgroundColor = "rgba(0,0,0,0)" //important because all elements being transparent allow effects to work
@@ -32,7 +33,8 @@ const dropdownDivStyle = {
     width: dropdownMenuWidth, marginLeft: dropdownMenuMarginLeft,
     border: "1px solid gray",
     padding: "9px 0px 9px 0px", borderRadius: "8px"
-    , marginTop: "-69px"
+    , marginTop: "-29px"
+    , zIndex:"100"
 }
 
 const dropdownButtonStyle = {
@@ -41,7 +43,6 @@ const dropdownButtonStyle = {
 
 
 function PlaylistStreamDropdown({deletePlaylist, showDropdown, setShowDropdown}) {
-    // const [showDropdown, setShowDropdown] = useState(false)
     const dispatch = useDispatch()
     const { email, googleid, name, pictureUrl, userId, userName, isLoggedIn } = useSelector((state) => state.user)
 
@@ -78,7 +79,7 @@ function PlaylistStreamDropdown({deletePlaylist, showDropdown, setShowDropdown})
                 , display: showDropdown ? "flex" : "none", flexDirection: "column"
             }} >
 
-                {isLoggedIn ? <PlaylistDropdownButton iconComponent={<TrashCanIcon />} text='Remove from playlist' onClick={deletePlaylistClicked} /> : null}
+                {isLoggedIn ? <PlaylistDropdownButton iconComponent={<TrashCanIcon />} iconMarginTop="4px" text='Remove from playlist' onClick={deletePlaylistClicked} /> : null}
                 <PlaylistDropdownButton iconComponent={<SaveToPlaylistIcon />} text='Add to QUeue' onClick={addToQueueClicked} />
             </div>
         </div>
