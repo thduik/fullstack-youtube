@@ -1,5 +1,6 @@
 const parseVideoDoc = (doc) => {
     const res = {
+        
         playlistId: doc.playlistId,
         videoName: doc.videoName,
         videoId: doc.videoId,
