@@ -13,10 +13,12 @@ const SearchFeed = () => {
   const [videos, setVideos] = useState(null);
   const { searchTerm } = useParams();
   const [nextPageToken, setNextPageToken] = useState("default");
+  const [xxx,setXxx] = useState("lol")
+
   useEffect(()=>{
     console.log("nextPageToken changed",nextPageToken)
   },[nextPageToken])
-  
+
   const handleScroll = async () => {
     //console.log("handleScroll called")
     const bottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight
@@ -24,14 +26,16 @@ const SearchFeed = () => {
     if (bottom) {
       console.log('scrolled at the bottom');
       try {
-        const pageTOken = nextPageToken
+        const pageTOken = nextPageToken; console.log("nextPageToken handleScroll",nextPageToken)
         const res = await searchVideosFromApiYoutube(searchTerm, pageTOken)
         console.log("videos currVidArr is", videos)
         const videoOnlyArr = res.items; const currVidArr = videos; videoOnlyArr.push(...currVidArr)
-        const pageTokenNext = res.nextPageToken
-        if (pageTokenNext) { setNextPageToken(pageTokenNext) }
+        
+       
         console.log("SearchFeed fetch success:", videoOnlyArr)
         setVideos(videoOnlyArr)
+        const pageTokenNext = res.nextPageToken
+        if (pageTokenNext) { setNextPageToken(pageTokenNext) }
       } catch (err) {
         console.log("err searchVideosFromApiYoutube infinteScroll pageToken", err)
       }
@@ -57,10 +61,12 @@ const SearchFeed = () => {
       const res = await searchVideosFromApiYoutube(searchTerm)
       console.log("searchVideosFromApiYoutube res", res, res.nextPageToken)
       const videoOnlyArr = res.items
-      const pageTokenNext = res.nextPageToken
-      if (pageTokenNext) { setNextPageToken(pageTokenNext); console.log("pageTokenNext oke", pageTokenNext) }
       console.log("SearchFeed fetch success:", videoOnlyArr)
       setVideos(videoOnlyArr)
+
+      const pTokenLol = res.nextPageToken
+      if (pTokenLol) { setNextPageToken(pTokenLol); console.log("pageTokenNext oke", pageTokenNext) }
+      
     } catch (err) {
       console.log("SearchFeed fetch error: ", err)
     }
