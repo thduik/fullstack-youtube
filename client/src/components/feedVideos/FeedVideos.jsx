@@ -6,9 +6,17 @@ import { useEffect } from "react";
 
 const FeedVideos = ({ videos, direction }) => {
   // if(!videos?.length) return <Loader />;
+  const handleScroll = (e) => {
+    const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+    console.log("bottom handleScroll is", bottom)
+    if (bottom) { 
+      console.log("SeachFeed scrolled to bottom")
+     }
+  }
   if(!videos?.length) return null;
   return (
-    <Stack direction={direction || "row"} flexWrap="wrap" justifyContent="center" alignItems="start" gap={2}>
+    <Stack onScroll={handleScroll}
+    direction={direction || "row"} flexWrap="wrap" justifyContent="center" alignItems="start" gap={2}>
       {videos.map((item, idx) => (
        
         <Box key={idx}>

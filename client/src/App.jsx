@@ -66,10 +66,10 @@ const App = () => {
 
       {/* miniSidebar is finished, does not need animation or transition */}
       {showMiniSidebar ? <MiniSidebar /> : null}
-      <Box sx={{ backgroundColor: '#000' }}>
+      <Box sx={{ backgroundColor: '#000', height:"auto" }}>
 
         <Navbar />
-        <div style={{ paddingTop: '80px' }}>
+        <div style={{ paddingTop: '80px', height:"auto" }}>
           {showPlaylistSelectDropdown ? <PlaylistSelectMenu/> : null}
           <Routes>
             <Route exact path='/' element={<Feed videos={feedVideos} showSidebar={showSidebar} />} />
