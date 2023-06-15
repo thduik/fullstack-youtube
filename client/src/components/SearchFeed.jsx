@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Typography, Box } from "@mui/material";
 import { useParams } from "react-router-dom";
 
@@ -12,17 +12,34 @@ const marginLeftRight = { xs: "0px", sm800: "40px", md1100: "70px" }
 const SearchFeed = () => {
   const [videos, setVideos] = useState(null);
   const { searchTerm } = useParams();
-  const ref = useRef(null);
-  const ref1 = useRef(null)
-  useEffect(() => {
-    const handleScroll = () => {
-      console.log("handleScroll called")
-      const bottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight
+  const [nextPageToken, setNextPageToken] = useState("default");
+  useEffect(()=>{
+    console.log("nextPageToken changed",nextPageToken)
+  },[nextPageToken])
+  
+  const handleScroll = async () => {
+    //console.log("handleScroll called")
+    const bottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight
 
-      if (bottom) {
-        console.log('at the bottom');
+    if (bottom) {
+      console.log('scrolled at the bottom');
+      try {
+        const pageTOken = nextPageToken
+        const res = await searchVideosFromApiYoutube(searchTerm, pageTOken)
+        console.log("videos currVidArr is", videos)
+        const videoOnlyArr = res.items; const currVidArr = videos; videoOnlyArr.push(...currVidArr)
+        const pageTokenNext = res.nextPageToken
+        if (pageTokenNext) { setNextPageToken(pageTokenNext) }
+        console.log("SearchFeed fetch success:", videoOnlyArr)
+        setVideos(videoOnlyArr)
+      } catch (err) {
+        console.log("err searchVideosFromApiYoutube infinteScroll pageToken", err)
       }
-    };
+    }
+
+  };
+  useEffect(() => {
+    
 
     window.addEventListener('scroll', handleScroll, {
       passive: true
@@ -33,27 +50,15 @@ const SearchFeed = () => {
     }
   }, [])
 
-  // useEffect(() => {
-  //   const handleScroll = (e) => {
-  //     // Do your stuff here
-  //     console.log("handleScroll called")
-  //     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-  //     console.log("bottom handleScroll is", bottom)
-  //     if (bottom) {
-  //       console.log("SeachFeed scrolled to bottom")
-  //     }
-  //   };
 
-  //   ref.current?.addEventListener("scroll", handleScroll);
-  //   ref1.current?.addEventListener("scroll", handleScroll);
-  //   ref.current?.addEventListener("click", ()=>{console.log("addEventListener click called")})
-  //   return () => ref.current?.removeEventListener("scroll", handleScroll);
-  // }, []);
 
   useEffect(async () => {
     try {
       const res = await searchVideosFromApiYoutube(searchTerm)
+      console.log("searchVideosFromApiYoutube res", res, res.nextPageToken)
       const videoOnlyArr = res.items
+      const pageTokenNext = res.nextPageToken
+      if (pageTokenNext) { setNextPageToken(pageTokenNext); console.log("pageTokenNext oke", pageTokenNext) }
       console.log("SearchFeed fetch success:", videoOnlyArr)
       setVideos(videoOnlyArr)
     } catch (err) {
@@ -61,22 +66,13 @@ const SearchFeed = () => {
     }
   }, [searchTerm]);
 
-  const handleScroll = (e) => {
-    console.log("handleScroll onScroll called")
-    const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-    console.log("bottom handleScroll is", bottom)
-    if (bottom) {
-      console.log("SeachFeed scrolled to bottom")
-    }
-  }
 
   return (
-    <Box ref={ref} p={2} minHeight="95vh" onScroll={handleScroll}
+    <Box p={2} minHeight="95vh" 
       //marginLeftRight leave space for miniSidebar when screen width >= 800px
       sx={{ marginLeft: marginLeftRight, marginRight: marginLeftRight, overflowY: "scroll", height: "auto" }}>
-      <Box ref={ref} display="flex" sx={{ height: "100%" }}>
-        <div style={{ overflowY: "scroll", height: "100%" }}
-          ref={ref1} onScroll={handleScroll}>
+      <Box display="flex" sx={{ height: "100%" }}>
+        <div style={{ overflowY: "scroll", height: "100%" }}>
           {<FeedVideos videos={videos} />}
         </div>
 

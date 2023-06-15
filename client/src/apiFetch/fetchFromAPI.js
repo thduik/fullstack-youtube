@@ -26,12 +26,14 @@ export const fetchFromAPI = async (url) => {
   }
 };
 
-export const searchVideosFromApiYoutube = async (keyword = "lol") => {
+export const searchVideosFromApiYoutube = async (keyword = "lol", pageToken = false) => {//pageToken = next page token
   
   const baseUrl = import.meta.env.VITE_BASE_API_URL
   console.log("baseUrl is", baseUrl)
   try {
-      const searchUrl = baseUrl + `/youtube/video/search/?q=${keyword}&type=video`
+      var searchUrl = baseUrl + `/youtube/video/search/?q=${keyword}&type=video`
+      if (pageToken) { searchUrl += `&nextPageToken=${pageToken}`}
+      console.log("searchUrl", searchUrl, "pageTOken", pageToken)
       const res = await axios.get(searchUrl)
       // console.log("searchVideosFromApiYoutube success", res.data)
       console.log("videoData is",res.data.items[0])
