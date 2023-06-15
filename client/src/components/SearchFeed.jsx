@@ -25,9 +25,9 @@ const SearchFeed = () => {
       
       searchVideosFromApiYoutubeCallback(searchTerm, pageTOken, (res) => {
         console.log("videos currVidArr is", videos)
-        const videoOnlyArr = res.items; const currVidArr = videos; videoOnlyArr.push(...currVidArr)
+        const videoOnlyArr = res.items; const currVidArr = [...videos]; currVidArr.push(...videoOnlyArr)
         console.log("SearchFeed fetch success:", videoOnlyArr)
-        setVideos(videoOnlyArr)
+        setVideos(currVidArr)
         const pageTokenNext = res.nextPageToken
         if (pageTokenNext) { setNextPageToken(pageTokenNext) }
       })
@@ -89,14 +89,9 @@ const SearchFeed = () => {
       //marginLeftRight leave space for miniSidebar when screen width >= 800px
       sx={{ marginLeft: marginLeftRight, marginRight: marginLeftRight, overflowY: "scroll", height: "auto" }}>
       <Box display="flex" sx={{ height: "100%" }}>
-        <h1 style={{ color: "white", fontSize: "20px" }}>{nextPageToken} {xxx}</h1>
         <div style={{ overflowY: "scroll", height: "100%" }}>
           {<FeedVideos videos={videos} />}
         </div>
-
-
-        {/* <Box sx={{ mr: { sm: '0' } }}/>*/}
-        {/* {<FeedVideos videos={videos} />} */}
       </Box>
     </Box>
   );
