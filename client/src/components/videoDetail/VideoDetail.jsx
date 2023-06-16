@@ -133,7 +133,7 @@ const VideoDetail = () => {
           </Box>
         </Box>
         
-        <Box sx={{width:{xs:"100%",md1000:"350px"}, paddingRight:"12px"}}>
+        <Box sx={{width:{xs:"100%",md1000:"350px",md1200:"400px"}, paddingRight:"12px"}}>
           
           {playlistId ? <PlaylistStreamMenu currentVideoId={id} selectPlaylistVideo={changedPlaylistVideo}/> : null}
           < Box px={2} sx={{width:"100%", marginTop:"30px"}}
