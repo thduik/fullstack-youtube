@@ -1,17 +1,17 @@
 const { getPlaylistsOfUserDataM, getVideosListOfPlaylistDataM, createPlaylistDataM
-,addVideoToPlaylistsDataM, getPlaylistDetailDataM } = require("../../data-manager")
-const {  deleteVideoFromPlaylistDb } = require("../../db/playlist-db")
+    , addVideoToPlaylistsDataM, getPlaylistDetailDataM, deleteVideoFromPlaylistDataM } = require("../../data-manager")
+const { deleteVideoFromPlaylistDb } = require("../../db/playlist-db")
 // const { postProcessDocArr } = require('./utils')
 
 const createPlaylist = async (req, res, next) => {
     const playlist = req.body.playlist //{videoId:string,videoName:string,thumbnailUrl:string,createdAt:int}
     const videoInfo = req.body.videoInfo //{playlistName:string, userid:string, isPrivate:bool,isUnlisted:bool }
-    
+
     try {
-        const doc = await createPlaylistDataM({playlist:playlist, videoInfo:videoInfo} )
+        const doc = await createPlaylistDataM({ playlist: playlist, videoInfo: videoInfo })
         console.log("createPlaylistDataM success doc._id", doc)
-        doc._id = doc._id.toString()    
-        
+        doc._id = doc._id.toString()
+
         res.json({ doc: doc, success: true })
 
     } catch (err) {
@@ -37,18 +37,18 @@ const getPlaylistsOfUser = async (req, res, next) => {
 
 
 const getVideosListOfPlaylist = async (req, res, next) => {
-    
+
 
     const playlistid = req.params.playlistid //string
-    
-    try {   
+
+    try {
         const videoDocs = await getVideosListOfPlaylistDataM(playlistid)
-        console.log("getVideosListOfPlaylistController success", "p-id",playlistid, "videoDocs.length", videoDocs.length)
+        console.log("getVideosListOfPlaylistController success", "p-id", playlistid, "videoDocs.length", videoDocs.length)
         res.json({ videos: videoDocs })
     } catch (err) {
         console.log("getVideosListOfPlaylistController err", err)
     }
-    
+
 }
 
 const addVideoToPlaylist = async (req, res, next) => {
@@ -57,7 +57,7 @@ const addVideoToPlaylist = async (req, res, next) => {
     // console.log("addVideoToPlaylist playlistIdArr",playlistIdArr,"videoLol",videoLol)
 
     try {
-        
+
         const addRes = await addVideoToPlaylistsDataM(playlistIdArr, videoLol)
         res.json({ success: true })
     } catch (err) {
@@ -66,32 +66,35 @@ const addVideoToPlaylist = async (req, res, next) => {
 
 }
 
-const deleteVideoFromPlaylist = async (req, res, next) => {
-    const video = req.body.video
-    const videoOrderIndex = req.body.videoOrderIndex
-    console.log("deleteVideoFromPlaylist video:", video)
-
-    try {
-        const result = await deleteVideoFromPlaylistDb(video, videoOrderIndex)
-        res.json({ success: true })
-    } catch (err) {
-        console.log("deleteVideoFromPlaylist err", err)
-        res.status(402).json({ success: false })
-    }
-}
 
 const getPlaylistDetail = async (req, res, next) => {
     const playlistId = req.params.playlistid //string
     try {
-        
+
         const result = await getPlaylistDetailDataM(playlistId)
         console.log("getPlaylistDetail controller success", result)
-        res.send({playlist:result})
+        res.send({ playlist: result })
     } catch (err) {
         console.log("getPlaylistDetail err", err)
         res.send("Error getting playlist detail")
     }
-    
+
 }
 
-module.exports = { deleteVideoFromPlaylist, createPlaylist, getPlaylistsOfUser, getVideosListOfPlaylist, addVideoToPlaylist, getPlaylistDetail }
+const deleteVideoFromPlaylist = async (req, res, next) => {
+    try {
+        const { videoData, playlistId } = req.body
+        const { userid } = req.auth; if (!userid) { throw ("no user id") }
+        const result = await deleteVideoFromPlaylistDataM({ videoData: videoData, playlistId: playlistId, userId: userid })
+        res.send({success:1})
+
+    } catch (err) {
+        console.log("err deleteVideoFromPlaylist")
+        res.send({success:0})
+    }
+}
+
+module.exports = {
+    deleteVideoFromPlaylist, createPlaylist, getPlaylistsOfUser, getVideosListOfPlaylist, addVideoToPlaylist, getPlaylistDetail
+    , deleteVideoFromPlaylist
+}

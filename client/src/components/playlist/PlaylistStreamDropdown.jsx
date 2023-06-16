@@ -56,9 +56,8 @@ function PlaylistStreamDropdown({deletePlaylist, showDropdown, setShowDropdown})
     const deletePlaylistClicked = () => {
         console.log("deletePlaylistClicked")
         setShowDropdown(false)
-        dispatch()
         deletePlaylist()
-
+x``
     }
 
     const addToQueueClicked = () => {

@@ -122,10 +122,13 @@ export const getPlaylistDetail = async (playlistid, callback) => {
 }
 
 
-export const postDeleteVideo = async ({playlistId, videoId}) => {
+export const postDeleteVideo = async ({playlistId, videoData}) => {
     try {
-        
+        const deleteUrl = baseUrl + `/playlist/video/delete`
+        const postData =  {videoData:videoData, playlistId:playlistId}
+        const res = await axios.post(deleteUrl,postData)
+        console.log("postDeleteVideo success", res)
     } catch (err) {
-
+        console.log("postDeleteVideo err", err)
     }
 }

@@ -22,7 +22,7 @@ const PlaylistStreamMenu = ({ currentVideoId, selectPlaylistVideo }) => {
     }
 
     return (
-        <div className="playlist-stream-menu" style={{width:"auto",borderRadius:"10px 10px 0px 0px",marginBottom:"20px"
+        <div className="playlist-stream-menu" style={{width:"auto",borderRadius:"10px 10px 10px 10px",marginBottom:"20px",paddingBottom:"5px"
             ,display: "flex", flexDirection: "column", backgroundColor: "#222222",
             boderRadius: "20px", marginLeft: "12px"
         }}>

@@ -16,13 +16,15 @@ const PlaylistStreamItem = ({ video, key, onClick, idx, playlistId="default" }) 
 
     const deletePlaylistClicked = () => {
         setShowDropdown(false)
+        console.log("deleteVideoFromPlaylist ",playlistId, video.videoId)
+        
         dispatch(deleteVideoFromPlaylist({playlistId:playlistId, videoId:video.videoId}))
-        postDeleteVideo({playlistId:playlistId, videoId:video.videoId})
+        postDeleteVideo({playlistId:playlistId, videoData:video})
     }
     return (
         <div className="hover-pointer" onMouseEnter={mouseEntered} onMouseLeave={mouseLeft}
             style={{
-                height: "90px", width: "100%", display: "flex", flexDirection: "row", margin: "5px 5px 5px 5px"
+                height: "90px", width: "100%", display: "flex", flexDirection: "row", margin: "5px 5px 5px 0px"
                 , backgroundColor: hovering ? "#343434" : "rgba(0,0,0,0)"
             }}>
             <div style={{ backgroundColor: "rgba(0,0,0,0)", display: "flex", flexDirection: "row", width: "100%" }} onClick={clickedItem}>
@@ -45,8 +47,7 @@ const PlaylistStreamItem = ({ video, key, onClick, idx, playlistId="default" }) 
                 </div>
             </div>
             <div style={{ marginRight: "5px", marginLeft: "auto", paddingTop: "20px", paddingRight:"6px",width: "40px" }}>
-                <PlaylistStreamDropdown showDropdown={showDropdown} setShowDropdown={setShowDropdown}
-                    deletePlaylist={deletePlaylistClicked} />
+                <PlaylistStreamDropdown showDropdown={showDropdown} setShowDropdown={setShowDropdown} deletePlaylist={deletePlaylistClicked} />
             </div>
         </div>
     )

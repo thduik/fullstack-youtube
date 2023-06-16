@@ -1,8 +1,9 @@
 const { getPlaylistsOfUserFromCache, addPlaylistsOfUserToCache
     , getAllVideosOfPlaylistFromCache, addVideosOfPlaylistToCache
-,createPlaylistCache,addVideoToPlaylistsCache,getPlaylistDataFromCache, addPlaylistDataToCache} = require("../cache-module")
+,createPlaylistCache,addVideoToPlaylistsCache,getPlaylistDataFromCache, addPlaylistDataToCache
+,deleteVideoFromPlaylistCache} = require("../cache-module")
 const { getAllPlaylistsOfUserDb, getAllVideosOfPlaylistDb, createPlaylistDb
-,addVideoToPlaylistsConcurrentDb, getPlaylistDetailDb } = require("../db")
+,addVideoToPlaylistsConcurrentDb, getPlaylistDetailDb, deleteVideoFromPlaylistDb } = require("../db")
 
 const addVideoToPlaylistsDataM = async (playlistIdArr, videoLol) => {
     //add 1 video to multiple playlists
@@ -89,5 +90,16 @@ const getPlaylistDetailDataM = async (playlistId) => {
     }
 }
 
+const deleteVideoFromPlaylistDataM = async ({videoData, playlistId, userId}) => {
+    if (!userId) { throw("erreredeleteVideoFromPlaylistDataM")}
+    const data = {videoData:videoData, playlistId:playlistId, userId:userId}
+    try {
+        const promise1 = () => deleteVideoFromPlaylistCache(data)
+        // const promise2 = () => deleteVideoFromPlaylistDb(data)
+    } catch (err) {
+        throw(err)
+    }
+}
 module.exports = {getPlaylistsOfUserDataM, getVideosListOfPlaylistDataM
-,createPlaylistDataM, addVideoToPlaylistsDataM, getPlaylistDetailDataM}
+,createPlaylistDataM, addVideoToPlaylistsDataM, getPlaylistDetailDataM
+,deleteVideoFromPlaylistDataM}

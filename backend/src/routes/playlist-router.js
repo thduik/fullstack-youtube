@@ -1,5 +1,7 @@
 const expresso = require('express');
-const { createPlaylist, getPlaylistsOfUser, getVideosListOfPlaylist, addVideoToPlaylist, deleteVideoFromPlaylist, getPlaylistDetail } = require('../controllers/playlist/playlist');
+const { createPlaylist, getPlaylistsOfUser, getVideosListOfPlaylist, addVideoToPlaylist, deleteVideoFromPlaylist, getPlaylistDetail
+ } = require('../controllers/playlist/playlist');
+
 const playlistRouter = expresso.Router();
 const {testVerifyAuthId} = require('./test-utils.js');
 const { authUserOnly } = require('./utils');
@@ -20,6 +22,7 @@ playlistRouter.get("/:playlistid/videos", getVideosListOfPlaylist)
 
 playlistRouter.get("/:playlistid/details", getPlaylistDetail)
 
+playlistRouter.get("/playlist/video/delete", deleteVideoFromPlaylist)
 module.exports = {playlistRouter}
 
 // testRouter.post("/playlist/:playlistid/videos/delete",  (req,res,next)=>{

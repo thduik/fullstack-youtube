@@ -1,5 +1,5 @@
 const {getPlaylistsOfUserDataM, getVideosListOfPlaylistDataM, createPlaylistDataM
-,addVideoToPlaylistsDataM, getPlaylistDetailDataM} = require('./playlist.js')
+,addVideoToPlaylistsDataM, getPlaylistDetailDataM,deleteVideoFromPlaylistDataM} = require('./playlist.js')
 
 module.exports = {getPlaylistsOfUserDataM, getVideosListOfPlaylistDataM
-    , createPlaylistDataM,addVideoToPlaylistsDataM, getPlaylistDetailDataM}
+    , createPlaylistDataM,addVideoToPlaylistsDataM, getPlaylistDetailDataM,deleteVideoFromPlaylistDataM}
