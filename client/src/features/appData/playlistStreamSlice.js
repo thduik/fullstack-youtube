@@ -23,12 +23,17 @@ export const playlistStreamSlice = createSlice({
         },
         setStreamedPlaylist: (state, action) => {// change to null OR {playlistObject}, which is the playlist currently streamed
             state.streamedPlaylist = action.payload
+        },
+        deleteVideoFromPlaylist: (state, action) => {
+            const {videoId,playlistId } = action.payload
+            const videoArross = state.videoArr.filter(o=>o.videoId != videoId)
+            state.videoArr = videoArross
         }
     }
 
 })
 
 
-export const { changeIsStreaming, setVideoArray, setStreamedPlaylist } = playlistStreamSlice.actions
+export const { changeIsStreaming, setVideoArray, setStreamedPlaylist, deleteVideoFromPlaylist } = playlistStreamSlice.actions
 
 export default playlistStreamSlice.reducer

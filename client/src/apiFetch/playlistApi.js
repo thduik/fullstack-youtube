@@ -120,3 +120,12 @@ export const getPlaylistDetail = async (playlistid, callback) => {
         throw ("testGetVideosOfPlaylist", err)
     }
 }
+
+
+export const postDeleteVideo = async ({playlistId, videoId}) => {
+    try {
+        
+    } catch (err) {
+
+    }
+}

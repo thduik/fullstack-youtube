@@ -8,3 +8,4 @@ export { default as SearchBar } from './searchBar/SearchBar';
 export { default as SearchFeed } from './SearchFeed';
 export { default as Videos } from './Videos';
 export { default as ChannelVideos} from './channel/ChannelVideos'
+export { default as DropdownTriggerButton} from './playlist/DropdownTriggerButton'

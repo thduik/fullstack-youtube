@@ -1,11 +1,13 @@
 import { useState } from "react"
 import PlaylistStreamDropdown from "./PlaylistStreamDropdown"
+import { deleteVideoFromPlaylist } from "../../features/appData/playlistStreamSlice"
+import { useDispatch } from "react-redux"
 
 
-const PlaylistStreamItem = ({ video, key, onClick, idx }) => {
+const PlaylistStreamItem = ({ video, key, onClick, idx, playlistId="default" }) => {
     const [hovering, setHovering] = useState(false)
     const [showDropdown, setShowDropdown] = useState(false)
-
+    const dispatch = useDispatch()
     const mouseEntered = () => { setHovering(true) }
     const mouseLeft = () => { setHovering(false) }
     const clickedItem = () => {
@@ -14,6 +16,8 @@ const PlaylistStreamItem = ({ video, key, onClick, idx }) => {
 
     const deletePlaylistClicked = () => {
         setShowDropdown(false)
+        dispatch(deleteVideoFromPlaylist({playlistId:playlistId, videoId:video.videoId}))
+        postDeleteVideo({playlistId:playlistId, videoId:video.videoId})
     }
     return (
         <div className="hover-pointer" onMouseEnter={mouseEntered} onMouseLeave={mouseLeft}
@@ -37,7 +41,7 @@ const PlaylistStreamItem = ({ video, key, onClick, idx }) => {
                     , maxHeight: "80px"
                 }}>
                     <p style={{ color: "white", fontSize: "14px", marginTop: "20px", marginLeft: "14px", overflowY: "hidden" }}>{video.videoName}</p>
-                    <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "13px", marginTop: "10px", marginLeft: "14px", overflowY: "hidden" }}>{video.channelName}</p>
+                    <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "13px", marginTop: "10px", marginLeft: "14px", overflowY: "hidden" }}>{video.channelName} </p>
                 </div>
             </div>
             <div style={{ marginRight: "5px", marginLeft: "auto", paddingTop: "20px", paddingRight:"6px",width: "40px" }}>

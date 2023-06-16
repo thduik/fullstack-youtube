@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import VerticalThreeDotIcon from '../../icons/VerticalThreeDotIcon';
 import SaveToPlaylistIcon from '../../icons/SaveToPlaylistIcon';
 import VideoDropdownButton from './VideoDropdownButton';
+import DropdownTriggerButton from '../playlist/DropdownTriggerButton';
 
 
 const wrapperBackgroundColor = "rgba(0,0,0,0)" //important because all elements being transparent allow effects to work
@@ -68,12 +69,9 @@ function VideoCardDropdown({saveVideoToPlaylist, showDropdown, setShowDropdown})
     
 
     return (
-        <div className="" style={wrapperStyle} tabIndex={-1} onBlur={toggleDisplayOff}>
-            <div style={accountIconDivStyle} onClick={toggleMenuDisplay}>
-                <VerticalThreeDotIcon />
-            </div>
-
-
+        <div className="hover-pointer" style={wrapperStyle} tabIndex={-1} onBlur={toggleDisplayOff}>
+            <DropdownTriggerButton iconComp={<VerticalThreeDotIcon />} onClick={toggleMenuDisplay}/>
+            
             <div style={{
                 ...dropdownDivStyle, borderBottom: "1px solid gray"
                 , display: showDropdown ? "flex" : "none", flexDirection: "column"

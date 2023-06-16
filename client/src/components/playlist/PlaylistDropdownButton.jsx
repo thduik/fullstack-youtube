@@ -20,9 +20,13 @@ const PlaylistDropdownButton = ({iconComponent, text, onClick, iconMarginTop="0p
         console.log("mouseLeftButton called")
     }
 
+    const clickButton = () => {
+        onClick()
+    }
+
     return (
         <div className="video-drop-button-div" style = {{...divStyle, backgroundColor:hovering ? "gray" : "rgba(0,0,0,0)"}}
-         onMouseEnter={mouseEnteredButton} onMouseLeave={mouseLeftButton} onClick={onClick}>
+         onMouseEnter={mouseEnteredButton} onMouseLeave={mouseLeftButton} onClick={clickButton}>
             <div style={{marginTop:iconMarginTop}}>
                 {iconComponent}
             </div>

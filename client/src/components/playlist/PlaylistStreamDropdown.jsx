@@ -34,7 +34,7 @@ const dropdownDivStyle = {
     border: "1px solid gray",
     padding: "9px 0px 9px 0px", borderRadius: "8px"
     , marginTop: "-29px"
-    , zIndex:"100"
+    , zIndex:"10000"
     ,position:"relative"
 }
 
@@ -53,10 +53,12 @@ function PlaylistStreamDropdown({deletePlaylist, showDropdown, setShowDropdown})
         setShowDropdown(newState)
     }
 
-    const deletePlaylistClicked = async () => {
+    const deletePlaylistClicked = () => {
         console.log("deletePlaylistClicked")
-        await setShowDropdown(false)
+        setShowDropdown(false)
+        dispatch()
         deletePlaylist()
+
     }
 
     const addToQueueClicked = () => {

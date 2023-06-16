@@ -39,7 +39,7 @@ const PlaylistStreamMenu = ({ currentVideoId, selectPlaylistVideo }) => {
             <div style={{ overflowY: "scroll",overflowX:"hidden", display: "flex", flexDirection: "column", maxHeight: "300px",borderRadius:"0 0 0px 0px"
              ,backgroundColor: "rgba(0,0,0,0)" }} >
                 {videoArr ? videoArr.map((video, idx) =>
-                    <PlaylistStreamItem onClick={clickedPlaylistItem} video={video} key={idx} idx={idx} />) : null}
+                    <PlaylistStreamItem onClick={clickedPlaylistItem} video={video} key={idx} idx={idx} playlistId={streamedPlaylist._id}/>) : null}
             </div>
 
         </div>
