@@ -132,10 +132,11 @@ const VideoDetail = () => {
             </Stack>
           </Box>
         </Box>
-        <Box sx={{width:{xs:"100%",md1000:"350px"}
-      }}>
+        
+        <Box sx={{width:{xs:"100%",md1000:"350px"}, paddingRight:"12px"}}>
+          
           {playlistId ? <PlaylistStreamMenu currentVideoId={id} selectPlaylistVideo={changedPlaylistVideo}/> : null}
-          < Box px={2} sx={{width:"100%"}}
+          < Box px={2} sx={{width:"100%", marginTop:"30px"}}
            py={{ md: 1, xs: 5 }} justifyContent="center" alignItems="center" >
             <Videos videos={videos} direction="column" isVideoDetail = {true}/>
           </Box>

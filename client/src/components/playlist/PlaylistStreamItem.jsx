@@ -21,7 +21,7 @@ const PlaylistStreamItem = ({ video, key, onClick, idx }) => {
                 height: "90px", width: "100%", display: "flex", flexDirection: "row", margin: "5px 5px 5px 5px"
                 , backgroundColor: hovering ? "#343434" : "rgba(0,0,0,0)"
             }}>
-            <div style={{ backgroundColor: "rgba(0,244,0,1)", display: "flex", flexDirection: "row", width: "100%" }} onClick={clickedItem}>
+            <div style={{ backgroundColor: "rgba(0,0,0,0)", display: "flex", flexDirection: "row", width: "100%" }} onClick={clickedItem}>
                 <div style={{ width: "20px", backgroundColor: "rgba(0,0,0,0)" }} >
                     <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "12px", marginTop: "45px", marginLeft: "3px" }}>{idx + 1} </p>
                 </div>
@@ -40,7 +40,7 @@ const PlaylistStreamItem = ({ video, key, onClick, idx }) => {
                     <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "13px", marginTop: "10px", marginLeft: "14px", overflowY: "hidden" }}>{video.channelName}</p>
                 </div>
             </div>
-            <div style={{ marginRight: "5px", marginLeft: "auto", paddingTop: "20px", width: "40px" }}>
+            <div style={{ marginRight: "5px", marginLeft: "auto", paddingTop: "20px", paddingRight:"6px",width: "40px" }}>
                 <PlaylistStreamDropdown showDropdown={showDropdown} setShowDropdown={setShowDropdown}
                     deletePlaylist={deletePlaylistClicked} />
             </div>

@@ -9,7 +9,8 @@ const Videos = ({ videos, direction = "row", flexWrap = "wrap", isVideoDetail=fa
   
   return (
     
-    <Stack direction={direction} flexWrap={flexWrap} justifyContent="center" gap={2}>
+    <Stack sx = {{width:"100%", paddingRight:"15px",boxSizing:"border-box"}}
+    direction={direction} flexWrap={flexWrap} justifyContent="center" gap={2}>
       {videos.map((item, idx) => (
         <Box key={idx}>
           {item.id.videoId && <VideoCard video={item} isVideoDetail = {isVideoDetail}/>}

@@ -20,7 +20,7 @@ const dropdownMenuMarginLeft = "-190px"
 const dropdownBackgroundColor = "#363636"
 
 const wrapperStyle = {
-    width: totalWidth, paddingTop: "3px",
+    width: totalWidth, paddingTop: "3px", 
     paddingLeft: "0px", borderRadius: "0px", border: "1px solid rgba(0,0,0,0)"
     , marginLeft: "10px", wrapperBackgroundColor
 }
@@ -35,6 +35,7 @@ const dropdownDivStyle = {
     padding: "9px 0px 9px 0px", borderRadius: "8px"
     , marginTop: "-29px"
     , zIndex:"100"
+    ,position:"relative"
 }
 
 const dropdownButtonStyle = {
