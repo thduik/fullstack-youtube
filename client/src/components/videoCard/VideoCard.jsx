@@ -20,7 +20,7 @@ const widthStyle = {
 }
 
 const videoDetailWidth = {
-  xs:'100%', md1000: "300px", lg: "370px"
+  xs:'100%' //, md1000: "300px", lg: "370px"
 }
 const VideoCard = ({ video: { id: { videoId }, snippet },isVideoDetail }) => {
   const dispatch = useDispatch()
@@ -42,7 +42,7 @@ const VideoCard = ({ video: { id: { videoId }, snippet },isVideoDetail }) => {
   return (
     <Card sx={{
 
-      width: widthStyle,
+      width:isVideoDetail ? videoDetailWidth : widthStyle,
       // width: { xs: '100%', sm: '44%', md: "30%", }, 
 
       boxShadow: "none", borderRadius: 0

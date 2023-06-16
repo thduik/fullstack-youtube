@@ -106,7 +106,7 @@ const VideoDetail = () => {
 
   return (
     <Box sx={{ padding: "0px 10px 10px 30px" }} minHeight="95vh">
-      <Stack direction={{ xs: "column", md1: "row" }} >
+      <Stack direction={{ xs: "column", md1000: "row" }} >
         <Box flex={1}>
           {/* <Box sx={{ width: "100%", position: "sticky", top: "86px" }}> */}
           <Box sx={{ width: playerBoxWidth, top: "86px", margin:"auto" }}>
@@ -132,13 +132,14 @@ const VideoDetail = () => {
             </Stack>
           </Box>
         </Box>
-        <div>
-          {/* <PlaylistStreamMenu currentVideoId={id} /> */}
+        <Box sx={{width:{xs:"100%",md1000:"350px"}
+      }}>
           {playlistId ? <PlaylistStreamMenu currentVideoId={id} selectPlaylistVideo={changedPlaylistVideo}/> : null}
-          < Box px={2} py={{ md: 1, xs: 5 }} justifyContent="center" alignItems="center" >
+          < Box px={2} sx={{width:"100%"}}
+           py={{ md: 1, xs: 5 }} justifyContent="center" alignItems="center" >
             <Videos videos={videos} direction="column" isVideoDetail = {true}/>
           </Box>
-        </div>
+        </Box>
 
       </Stack>
     </Box>

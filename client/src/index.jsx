@@ -30,7 +30,7 @@ const theme = createTheme({
       sm770:770,
       sm800: 800,
       md: 900,
-      md1: 1000,
+      md1000: 1000,
       md1100: 1100,
       lg: 1200,
       lg1300: 1300,

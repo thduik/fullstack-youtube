@@ -13,9 +13,9 @@ const DropdownTriggerButton = ({iconComp,onClick}) => {
 
     
     return (
-        <div style={{width:"30px", height:"30px", display:"flex", justifyContent:"center"
+        <div style={{width:"30px", height:"30px", display:"flex", justifyContent:"center",boderRadius:"15px"
         ,backgroundColor:hovering ?
-             mouseDown ? "#343434" : "#212121"
+             mouseDown ? "#474747" : "#393939"
          : "rgba(0,0,0,0)"}}
         onMouseEnter={mouseEntered} onMouseLeave={mouseLeft} onClick = {clickedButton} 
         onMouseDown={mouseDowned} onMouseUp={mouseUpped}>
