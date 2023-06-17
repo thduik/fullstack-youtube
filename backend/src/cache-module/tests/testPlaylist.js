@@ -81,7 +81,7 @@ const main = async () => {
             const deleteInputData = dataGen.createInputDataFor("deleteVideoFromPlaylistCache")
             for (var i = 0; i < deleteInputData.length; i ++) {
                 console.log("deleteInputData",deleteInputData[i].video)
-                await deleteVideoFromPlaylistCache(deleteInputData[i].video)
+                await deleteVideoFromPlaylistCache(deleteInputData[i])//{userid:playlist.userId,playlistId:playlistId, video:removedVideo}
             }
         }
 

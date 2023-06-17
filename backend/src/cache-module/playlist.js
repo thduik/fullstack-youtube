@@ -15,6 +15,7 @@ const deletePlaylistOfUserCache = async ({userId, playlistId}) => {
 }
 
 const deleteVideoFromPlaylistCache = async ({videoData, playlistId, userId}) => {
+    console.log("deleteVideoFromPlaylistCache called")
     try {
         const belongToUser = await redisClient.sIsMember(`user:${userId}:playlists`, playlistId)
         if (!belongToUser) {throw("deleteVideoFromPlaylistCache not belong to user")}
@@ -22,14 +23,15 @@ const deleteVideoFromPlaylistCache = async ({videoData, playlistId, userId}) => 
         const videoId = videoDoc.videoId
         const videoKey = videoId + ":" + videoDoc.createdAt.toString()
         const playlistKey = `playlist:${videoDoc.playlistId}:videos`
-        const resulz = await redisClient.sIsMember(videoKey,playlistKey)
+        const resulz = await redisClient.sIsMember(playlistKey,videoKey)
         console.log("deleteVideoFromPlaylist resulz", resulz)
         
-        const res11 = await redisClient.sRem(playlistKey, videoKey)
-        if (!resulz || !res11) { throw ("deleteVideoFromPlaylist resulz false isMember failed") }
+        const res11 = await redisClient.sRem( playlistKey,videoKey )
+        if (!resulz || !res11) { throw ("deleteVideoFromPlaylist resulz false isMember failed", resulz, res11) }
         return {success:true}
     } catch (err) {
-        throw ("err deleteVideoFromPlaylist", err)
+        console.log("err deleteVideoFromPlaylistCache", err)
+        throw ("err deleteVideoFromPlaylistCache", err)
     }
 }
 

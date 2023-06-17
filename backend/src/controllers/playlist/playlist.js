@@ -82,10 +82,12 @@ const getPlaylistDetail = async (req, res, next) => {
 }
 
 const deleteVideoFromPlaylist = async (req, res, next) => {
+    console.log("deleteVideoFromPlaylist called")
     try {
         const { videoData, playlistId } = req.body
         const { userid } = req.auth; if (!userid) { throw ("no user id") }
         const result = await deleteVideoFromPlaylistDataM({ videoData: videoData, playlistId: playlistId, userId: userid })
+        console.log("deleteVideoFromPlaylist result:", result)
         res.send({success:1})
 
     } catch (err) {

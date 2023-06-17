@@ -22,7 +22,7 @@ playlistRouter.get("/:playlistid/videos", getVideosListOfPlaylist)
 
 playlistRouter.get("/:playlistid/details", getPlaylistDetail)
 
-playlistRouter.get("/playlist/video/delete", deleteVideoFromPlaylist)
+playlistRouter.post("/video/delete", deleteVideoFromPlaylist)
 module.exports = {playlistRouter}
 
 // testRouter.post("/playlist/:playlistid/videos/delete",  (req,res,next)=>{

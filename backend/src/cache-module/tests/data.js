@@ -71,12 +71,13 @@ class DataGeneratorCP { //CachePlaylist
             //return //[{playlistId:playlistId, video:removedVideo}]
             const resArr = []
             for (const playlistId of this.playlistToVideoDocArr.keys()) {
+                const playlist = this.playlists.filter(o=>o._id == playlistId)[0] ; if(!playlist) {throw("err playlistNotFound")}
                 var videoDocArr = this.playlistToVideoDocArr.get(playlistId)
                 const removeVideoIdx = getRandomInt(0,videoDocArr.length-1)
                 const removedVideo = videoDocArr[removeVideoIdx]; const length0 = videoDocArr.length
                 videoDocArr = videoDocArr.filter(o=>o.videoId !=removedVideo.videoId); if ( length0 - videoDocArr.length == 0 ) {throw("error createInputDataFor deleteVideoFromPlaylist")}
                 this.playlistToVideoDocArr.set(playlistId, videoDocArr)
-                resArr.push({playlistId:playlistId, video:removedVideo})
+                resArr.push({userid:playlist.userId,playlistId:playlistId, video:removedVideo})
             }
             return resArr //[{playlistId:playlistId, video:removedVideo}]
         }   

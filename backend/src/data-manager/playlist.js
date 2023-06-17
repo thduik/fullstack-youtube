@@ -94,8 +94,11 @@ const deleteVideoFromPlaylistDataM = async ({videoData, playlistId, userId}) => 
     if (!userId) { throw("erreredeleteVideoFromPlaylistDataM")}
     const data = {videoData:videoData, playlistId:playlistId, userId:userId}
     try {
-        const promise1 = () => deleteVideoFromPlaylistCache(data)
+        const promise1 =  () =>  deleteVideoFromPlaylistCache(data)
+        const resArr = await Promise.all([deleteVideoFromPlaylistCache(data)])
         // const promise2 = () => deleteVideoFromPlaylistDb(data)
+        console.log("deleteVideoFromPlaylistDataM resArr", resArr)
+        return resArr
     } catch (err) {
         throw(err)
     }
