@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-import { Typography, Card, CardContent, CardMedia } from "@mui/material";
+import { Typography, Card, CardContent, CardMedia, Stack } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import { demoThumbnailUrl, demoVideoUrl, demoVideoTitle, demoChannelUrl, demoChannelTitle } from "../../utils/constants";
 import VideoCardDropdown from './VideoCardDropdown';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { changeShowPlaylistSelectDropdown } from '../../features/uiState/uiStateSlice';
 import { changeSelectedVideo } from '../../features/appData/playlistSlice';
@@ -23,6 +23,22 @@ const videoDetailWidth = {
   xs:'auto' //, md1000: "300px", lg: "370px"
 }
 const VideoCard = ({ video: { id: { videoId }, snippet },isVideoDetail }) => {
+  const [width, setWidth] = useState(0) //window.innerWidth, viewport width
+  const [horizontalCard, setHorizontalCard] = useState(false) //horizontal videoCard like in original youtubeapp
+  useEffect(()=>{
+    if (width < 1000 && width > 440) { setHorizontalCard(true)} 
+    else { setHorizontalCard(false) }
+  },[width])
+  useEffect(() => {
+    const updateWindowDimensions = () => {
+      const newWidth = window.innerWidth;
+      setWidth(newWidth);
+      console.log("updating width");
+    };
+    window.addEventListener("resize", updateWindowDimensions);
+    return () => window.removeEventListener("resize", updateWindowDimensions) 
+
+  }, []);
   const dispatch = useDispatch()
   const [showDropdown, setShowDropdown] = useState(false)
   console.log("VideoCardisVideoDetail",isVideoDetail)
@@ -40,11 +56,10 @@ const VideoCard = ({ video: { id: { videoId }, snippet },isVideoDetail }) => {
     dispatch(changeShowPlaylistSelectDropdown(false))
   }
   return (
-    <Card sx={{
+    <Stack direction={horizontalCard ? "row" : "column"}
+    sx={{
 
       width:isVideoDetail ? videoDetailWidth : widthStyle,
-      // width: { xs: '100%', sm: '44%', md: "30%", }, 
-
       boxShadow: "none", borderRadius: 0
     }}>
 
@@ -54,11 +69,16 @@ const VideoCard = ({ video: { id: { videoId }, snippet },isVideoDetail }) => {
           // sx={{ width: { xs: '100%', sm: '358px'}, 
           sx={{
             width: isVideoDetail ? videoDetailWidth  : widthStyle,
-            height: 180
+            height: horizontalCard ? 90 : "auto",
+            width: horizontalCard ? 200 : "100%"
             
           }}
         />
       </Link>
+
+      <div style={{width:"auto"}}>
+
+      
       <CardContent sx={{ backgroundColor: "black", height: '106px' }}>
         <div style={{
           display: "flex", flexDirection: "row", width: "100%",
@@ -82,9 +102,9 @@ const VideoCard = ({ video: { id: { videoId }, snippet },isVideoDetail }) => {
           </Typography>
         </Link>
       </CardContent>
-      
+      </div>
 
-    </Card>
+    </Stack>
 
   )
 }

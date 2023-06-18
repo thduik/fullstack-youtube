@@ -11,6 +11,7 @@ const {youtubeRouter} = require('./routes/youtube-router')
 var cookieParser = require('cookie-parser');
 const { verifyJwtAccessTokenRequest, logoutApp } = require('./auth-module');
 const { playlistRouter } = require('./routes/playlist-router');
+const { commentRouter } = require('./routes/comment-router');
 
 
 console.log("env vars NODE_ENV == development", process.env.NODE_ENV == "development", "MOCK_AUTH == true", process.env.MOCK_AUTH == "true")
@@ -41,6 +42,7 @@ app.use('/test', testRouter)
 app.use('/playlist', playlistRouter)
 app.use('/auth', authRouter)
 app.use('/youtube', youtubeRouter)
+app.use('/comment', commentRouter)
 // you need to set mergeParams: true on the router,
 // if you want to access params from the parent router
 

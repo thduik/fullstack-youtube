@@ -47,7 +47,7 @@ const PlaylistStreamMenu = ({ currentVideoId, selectPlaylistVideo }) => {
 
                 </h4>
                 <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "13px", marginLeft: "14px",marginTop:"4px" }}>
-                    {streamedPlaylist.isPrivate == true ? "Private" : "Public"}
+                    {streamedPlaylist && streamedPlaylist.isPrivate ? "Private" : "Public"}
                 </p>
                 <div style={{display:"flex",flexDirection:"row", marginLeft:"14px", marginTop:"8px"}} >
                     <StandardRoundButton iconComp={<LoopPlaylistIcon fillColor={loopPlaylist ? "white":"rgba(255,255,255,0.6)"}/>} 

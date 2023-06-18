@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import ReactPlayer from "react-player";
 import { Typography, Box, Stack, createTheme } from "@mui/material";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+// import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import { Videos, Loader } from "..";
 import { fetchFromAPI } from "../../apiFetch/fetchFromAPI";
@@ -13,6 +13,7 @@ import { changeShowMiniSidebar } from '../../features/uiState/uiStateSlice.js'
 import PlaylistStreamMenu from "../playlist/PlaylistStreamMenu";
 import { getVideosOfPlaylist, getPlaylistDetail } from "../../apiFetch/playlistApi";
 import { changeIsStreaming, setVideoArray, setStreamedPlaylist } from "../../features/appData/playlistStreamSlice"
+import VideoStats from "./VideoStats";
 
 const playerBoxWidth = {xs:"100%", sm770:"90%", md1000:"84%"}
 
@@ -111,25 +112,7 @@ const VideoDetail = () => {
           {/* <Box sx={{ width: "100%", position: "sticky", top: "86px" }}> */}
           <Box sx={{ width: playerBoxWidth, top: "86px", margin:"auto" }}>
             <ReactPlayer playing={id ? true : false} muted={true} onEnded={videoPlayEnded} url={`https://www.youtube.com/watch?v=${id}`} className="react-player" controls />
-            <Typography color="#fff" variant="h5" fontWeight="bold" p={2}>
-              {title}
-            </Typography>
-            <Stack direction="row" justifyContent="space-between" sx={{ color: "#fff" }} py={1} px={2} >
-              <Link to={`/channel/${channelId}`}>
-                <Typography variant={{ sm: "subtitle1", md: 'h6' }} color="#fff" >
-                  {channelTitle}
-                  <CheckCircleIcon sx={{ fontSize: "12px", color: "gray", ml: "5px" }} />
-                </Typography>
-              </Link>
-              <Stack direction="row" gap="20px" alignItems="center">
-                <Typography variant="body1" sx={{ opacity: 0.7 }}>
-                  {parseInt(viewCount).toLocaleString()} views
-                </Typography>
-                <Typography variant="body1" sx={{ opacity: 0.7 }}>
-                  {parseInt(likeCount).toLocaleString()} likes
-                </Typography>
-              </Stack>
-            </Stack>
+            <VideoStats title ={title} channelTitle = {channelTitle} channelId={channelId} viewCount={viewCount} likeCount={likeCount} />
           </Box>
         </Box>
         

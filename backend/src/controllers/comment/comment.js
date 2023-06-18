@@ -13,10 +13,6 @@ const getCommentThreadsOfVideos = async (req, res, next) => {
         console.log("getCommentThreadsOfVideos err", err)
         res.status(404).send('errorlolsno')
     }
-    
-
-
-    
 }
 
 const getCommentsOfCommentThread = (req, res,next) => {

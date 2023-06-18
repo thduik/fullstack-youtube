@@ -8,7 +8,7 @@ commentRouter.get('/threads/video/:videoid', (req,res,next)=>{
     getCommentThreadsOfVideos(req, res, next)
 })
 
-commentRouter.get('/:threadid', (req,res,next)=>{
+commentRouter.get('/:threadid', (req,res,next)=>{   
     console.log("commentRouter get comment of comment thread called", req.query)
     searchVideos(req, res, next)
 })
