@@ -2,6 +2,7 @@ import { useState } from "react"
 import PlaylistStreamDropdown from "./PlaylistStreamDropdown"
 import { deleteVideoFromPlaylist } from "../../features/appData/playlistStreamSlice"
 import { useDispatch } from "react-redux"
+import { postDeleteVideo } from "../../apiFetch/playlistApi"
 
 
 const PlaylistStreamItem = ({ video, key, onClick, idx, playlistId="default" }) => {
@@ -32,7 +33,7 @@ const PlaylistStreamItem = ({ video, key, onClick, idx, playlistId="default" }) 
                     <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "12px", marginTop: "45px", marginLeft: "3px" }}>{idx + 1} </p>
                 </div>
                 <div style={{
-                    margin: "5px 5px 5px 4px", height: "81px", width: "144px", backgroundSize: "cover", overflow: "hidden"
+                    margin: "5px 5px 5px 4px", height: "81px", width: "144px", backgroundClip:"border-box",backgroundSize:"contain", overflow: "hidden"
                     , backgroundImage: `url("${video.thumbnailUrl}")`
                 }}>
                     {/* <img height="90px" width="160px" src={video.thumbnailUrl} style={{objectFit:"cover"}} /> */}
