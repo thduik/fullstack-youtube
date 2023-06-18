@@ -15,7 +15,7 @@ const FeedVideos = ({ videos, direction }) => {
   }
   if(!videos?.length) return null;
   return (
-    <Stack onScroll={handleScroll}
+    <Stack onScroll={handleScroll} 
     direction={direction || "row"} flexWrap="wrap" justifyContent="center" alignItems="start" gap={2}>
       {videos.map((item, idx) => (
        

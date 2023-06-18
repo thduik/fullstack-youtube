@@ -13,13 +13,16 @@ const SearchFeed = () => {
   const [videos, setVideos] = useState(null);
   const { searchTerm } = useParams();
   const [nextPageToken, setNextPageToken] = useState("defos");
-  const [xxx, setXxx] = useState("old val")
   const [isBottom, setIsBottom] = useState(false)
 
   useEffect(() => {
     console.log("nextPageToken changed", nextPageToken)
   }, [nextPageToken])
-
+  
+  const filterAndSetVideos = (vidArros) => {
+    const viszArr = vidArros.filter(o=>o.id.kind == "youtube#video")
+    setVideos(viszArr)
+  }
   const loadMoreVideos = (pageTOken) => {
     try {
       
@@ -27,7 +30,8 @@ const SearchFeed = () => {
         console.log("videos currVidArr is", videos)
         const videoOnlyArr = res.items; const currVidArr = [...videos]; currVidArr.push(...videoOnlyArr)
         console.log("SearchFeed fetch success:", videoOnlyArr)
-        setVideos(currVidArr)
+        // setVideos(currVidArr)
+        filterAndSetVideos(currVidArr)
         const pageTokenNext = res.nextPageToken
         if (pageTokenNext) { setNextPageToken(pageTokenNext) }
       })
@@ -38,7 +42,7 @@ const SearchFeed = () => {
 
   useEffect(()=>{
     if(isBottom) {
-      const pageTOken = nextPageToken; console.log("nextPageToken handleScroll", pageTOken, xxx)
+      const pageTOken = nextPageToken; console.log("nextPageToken handleScroll", pageTOken)
       loadMoreVideos(pageTOken)
       setIsBottom(false)
     }
@@ -48,7 +52,6 @@ const SearchFeed = () => {
     const handleScroll = () => {
       //console.log("handleScroll called")
       const bottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight
-      setXxx("assss")
       if (bottom) {
         console.log('scrolled at the bottom');
         setIsBottom(true)
@@ -73,8 +76,8 @@ const SearchFeed = () => {
       console.log("searchVideosFromApiYoutube res", res, res.nextPageToken)
       const videoOnlyArr = res.items
       console.log("SearchFeed fetch success:", videoOnlyArr)
-      setVideos(videoOnlyArr)
-      setXxx("new val")
+      // setVideos(videoOnlyArr)
+      filterAndSetVideos(videoOnlyArr)
       const pTokenLol = res.nextPageToken; setNextPageToken(pTokenLol)
       if (pTokenLol) { setNextPageToken(pTokenLol); console.log("pageTokenNext oke", pageTokenNext) }
 
