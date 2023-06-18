@@ -15,10 +15,11 @@ import { changeSelectedVideo } from '../../features/appData/playlistSlice';
 const cardWidthSmall = window.innerWidth - 30
 const widthStyle = {
   xs:"100%"   //`${cardWidthSmall}px`
-  , sm: '270px', sm770: '290px', md: "320px",
+  , xs450: '100%', 
   md1000: "290px", lg: "370px"
 }
 
+// const widthStyle = { xs:"auto" }
 const videoDetailWidth = {
   xs:'auto' //, md1000: "300px", lg: "370px"
 }
@@ -26,15 +27,20 @@ const VideoCard = ({ video: { id: { videoId }, snippet },isVideoDetail }) => {
   const [width, setWidth] = useState(0) //window.innerWidth, viewport width
   const [horizontalCard, setHorizontalCard] = useState(false) //horizontal videoCard like in original youtubeapp
   useEffect(()=>{
-    if (width < 1000 && width > 440) { setHorizontalCard(true)} 
+    if (width < 1000 && width >= 450) { setHorizontalCard(true)} 
     else { setHorizontalCard(false) }
-  },[width])
+    // console.log("horizontalCard",horizontalCard)
+  },[width]) 
   useEffect(() => {
+    
     const updateWindowDimensions = () => {
       const newWidth = window.innerWidth;
       setWidth(newWidth);
       console.log("updating width");
     };
+    const lolwidth = window.innerWidth;
+    if (lolwidth < 1000 && lolwidth > 440) { setHorizontalCard(true)} 
+    else { setHorizontalCard(false) }
     window.addEventListener("resize", updateWindowDimensions);
     return () => window.removeEventListener("resize", updateWindowDimensions) 
 
@@ -68,9 +74,11 @@ const VideoCard = ({ video: { id: { videoId }, snippet },isVideoDetail }) => {
 
           // sx={{ width: { xs: '100%', sm: '358px'}, 
           sx={{
-            width: isVideoDetail ? videoDetailWidth  : widthStyle,
-            height: horizontalCard ? 90 : "auto",
-            width: horizontalCard ? 200 : "100%"
+            // width: isVideoDetail ? videoDetailWidth  : widthStyle,
+            // width: horizontalCard ? "100%" : "100%",
+            width:horizontalCard ? "30vw" : "100%",
+            height: horizontalCard ? "20vw" : {xs:"140px",md1000:"170px"},
+           
             
           }}
         />
