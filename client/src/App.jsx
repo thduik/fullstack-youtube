@@ -42,9 +42,9 @@ const App = () => {
       
       setFeedVideos(resItems)
     })
-    fetchFromAPI(`search?part=snippet&q=${'news'}`)
-      .then((data) => {console.log("searchNews", data.items[0])
-        setFeedVideos(data.items)})
+    // fetchFromAPI(`search?part=snippet&q=${'news'}`)
+    //   .then((data) => {console.log("searchNews", data.items[0])
+    //     setFeedVideos(data.items)})
   }, []);
   
   // const [showSidebar, setShowSidebar] = useState(true)

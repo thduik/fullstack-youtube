@@ -85,7 +85,9 @@ const convertDateDiff = (dateIso) => { //dateIso = publishedAt,
 
 const testlolol = async () => {
     //1 hour = 3600000 ms
-
+    const o = {id:"fuck"}
+    console.log(`https://i.ytimg.com/vi/${o.id}/hqdefault.jpg`)
+    return
     const timeMs = Date.now() - Date.parse("2023-06-02T02:00:00.000Z") 
     const dateDiff = convertDateDiff("2023-06-02T02:00:00.000Z" )
     //console.log(new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString());
