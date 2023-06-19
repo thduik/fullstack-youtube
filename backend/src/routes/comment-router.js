@@ -1,4 +1,5 @@
 const express = require('express')
+const { getCommentThreadsOfVideos } = require('../controllers/comment/comment')
 const commentRouter = express.Router()
 
 //app.use('/youtube', youtubeRouter)

@@ -36,7 +36,7 @@ const VideoCard = ({ video: { id: { videoId }, snippet },isVideoDetail }) => {
     const updateWindowDimensions = () => {
       const newWidth = window.innerWidth;
       setWidth(newWidth);
-      console.log("updating width");
+      // console.log("updating width");
     };
     const lolwidth = window.innerWidth;
     if (lolwidth < 1000 && lolwidth > 440) { setHorizontalCard(true)} 
@@ -109,12 +109,12 @@ const VideoCard = ({ video: { id: { videoId }, snippet },isVideoDetail }) => {
 
         <Link to={snippet?.channelId ? `/channel/${snippet?.channelId}` : demoChannelUrl} >
           <Typography variant="subtitle2" color="gray">
-            {snippet?.channelTitle || demoChannelTitle}
+            {snippet?.channelTitle.substring(0,100) || demoChannelTitle}
             <CheckCircleIcon sx={{ fontSize: "12px", color: "gray", ml: "5px" }} />
           </Typography>
           {horizontalCard ? 
-          <p style={{fontSize:"12px",color:"rgba(255,255,255,0.6)",marginTop:"6px"}}>
-            {snippet?.description || "nullDesc"}</p> 
+          <p style={{fontSize:"12px",color:"rgba(255,255,255,0.6)",marginTop:"9px", lineHeight:"1.5"}}>
+            {snippet?.description.substring(0,150) || "nullDesc"}</p> 
         : null}
         </Link>
       </CardContent>

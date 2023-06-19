@@ -2,6 +2,7 @@ const axios = require('axios');
 require('dotenv').config()
 
 const fetchCommentsOfVideo = async (videoId, pageToken = false) => {
+    console.log("fetchCommentsOfVideo called", videoId, pageToken)
     var paramz = {
         part: 'snippet',
         videoId: videoId,
@@ -15,8 +16,8 @@ const fetchCommentsOfVideo = async (videoId, pageToken = false) => {
         url: 'https://youtube-v311.p.rapidapi.com/commentThreads/',
         params: paramz,
         headers: {
-            // 'X-RapidAPI-Key': 'e5255cd7e3mshb0fecff923ab3b2p194ad3jsnc5e0bee7fae3',
-            'X-RapidAPI-Key': process.env.RAPID_API_KEY,
+            'X-RapidAPI-Key': 'e5255cd7e3mshb0fecff923ab3b2p194ad3jsnc5e0bee7fae3',
+            // 'X-RapidAPI-Key': process.env.RAPID_API_KEY,
             'X-RapidAPI-Host': 'youtube-v311.p.rapidapi.com'
         }
     };
@@ -25,9 +26,9 @@ const fetchCommentsOfVideo = async (videoId, pageToken = false) => {
         const response = await axios.request(options);
         return response.data
         // console.log(response.data);
-    } catch (error) {
+    } catch (err) {
         console.error("error fetchCommentsOfVideo", err);
-        throw(error)
+        // throw(err)
     }
 }
 

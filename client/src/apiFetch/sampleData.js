@@ -1,4 +1,4 @@
-const sample = {
+const sampleCommentData = {
     "kind": "youtube#commentThreadListResponse",
     "etag": "bDk1k-hLWQ6IjSPYreRwn0XS_dg",
     "nextPageToken": "QURTSl9pMkhHeFVPbktuVG9FcWFzbE9NaXhxcFV3MG00d0RvX1ZkdUx5M05wQkxudEQ2V0pnOVUxWDc1bXlwclRFOFh0WENoUHFWbUNTVQ==",

@@ -1,6 +1,6 @@
 
-const CommentBox = ({snippet:{topLevelComment,videoId}}) => {
-    const {authorProfileImageUrl, textDisplay,authorDisplayName} = topLevelComment.snippet
+const CommentBox = ({comment}) => {
+    const {authorProfileImageUrl, textDisplay,authorDisplayName} = comment.snippet.topLevelComment.snippet
     
     return (
         <div style={{display:"flex", flexDirection:"row"}}>

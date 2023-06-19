@@ -14,6 +14,7 @@ import PlaylistStreamMenu from "../playlist/PlaylistStreamMenu";
 import { getVideosOfPlaylist, getPlaylistDetail } from "../../apiFetch/playlistApi";
 import { changeIsStreaming, setVideoArray, setStreamedPlaylist } from "../../features/appData/playlistStreamSlice"
 import VideoStats from "./VideoStats";
+import VideoComments from "./VideoComments";
 
 const playerBoxWidth = {xs:"100%", sm770:"90%", md1000:"84%"}
 
@@ -28,6 +29,7 @@ const VideoDetail = () => {
   const [videos, setVideos] = useState(null);
   const [id, setVideoId] = useState(null)
   const [playlistVideoIdx, setPlaylistVideoIdx] = useState(null)
+  
   useEffect(() => {
     return () => {//unmount 
       dispatch(changeIsStreaming(false))
@@ -113,6 +115,7 @@ const VideoDetail = () => {
           <Box sx={{ width: playerBoxWidth, top: "86px", margin:"auto" }}>
             <ReactPlayer playing={id ? true : false} muted={true} onEnded={videoPlayEnded} url={`https://www.youtube.com/watch?v=${id}`} className="react-player" controls />
             <VideoStats title ={title} channelTitle = {channelTitle} channelId={channelId} viewCount={viewCount} likeCount={likeCount} />
+            <VideoComments videoId={id}/>
           </Box>
         </Box>
         
@@ -122,6 +125,7 @@ const VideoDetail = () => {
           < Box px={2} sx={{width:"100%", marginTop:"30px"}}
            py={{ md: 1, xs: 5 }} justifyContent="center" alignItems="center" >
             <Videos videos={videos} direction="column" isVideoDetail = {true}/>
+
           </Box>
         </Box>
 

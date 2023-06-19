@@ -3,7 +3,7 @@ const { fetchCommentsOfVideo } = require("./comment-api")
 
 
 const getCommentThreadsOfVideos = async (req, res, next) => {
-    const videoId = req.params.videoId
+    const videoId = req.params.videoid
     const pageToken = req.params.pageToken
     try {
         const result = await fetchCommentsOfVideo(videoId, pageToken)

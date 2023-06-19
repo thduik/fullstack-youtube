@@ -5,10 +5,15 @@ import CommentBox from "./CommentComponent"
 
 const VideoComments = ({videoId}) => {
     const [comments, setComments] = useState([])
+    const [nextPageToken, setNextPageToken] = useState(false)
     useEffect(()=>{
         fetchCommentsOfVideo(videoId, (res)=>{
             console.log("fetchCommentsOfVideo res is", res)
+            if (!res) {console.log("err no res VideoComments"); return}
+            setComments(res?.items)
+            setNextPageToken(res?.nextPageToken)
         })
+        
     },[videoId])
 
     return (
@@ -17,3 +22,5 @@ const VideoComments = ({videoId}) => {
         </div>
     )
 }
+
+export default VideoComments;
