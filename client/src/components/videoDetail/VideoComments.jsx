@@ -3,7 +3,7 @@ import { fetchCommentsOfVideo } from "../../apiFetch/commentApi"
 import CommentBox from "./CommentComponent"
 
 
-const VideoComments = ({videoId}) => {
+const VideoComments = ({videoId, commentCount, marginTop = "30px"}) => {
     const [comments, setComments] = useState([])
     const [nextPageToken, setNextPageToken] = useState(false)
     useEffect(()=>{
@@ -17,7 +17,10 @@ const VideoComments = ({videoId}) => {
     },[videoId])
 
     return (
-        <div style={{display:"flex", flexDirection:"column"}}>
+        <div style={{display:"flex", flexDirection:"column", marginTop:marginTop}}>
+            <div>
+                <p style={{color:"white", fontSize:"14px"}}>{commentCount} comments</p>
+            </div>
             {comments.map((c)=><CommentBox comment={c} />)}
         </div>
     )

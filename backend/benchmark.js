@@ -52,7 +52,12 @@ function getRandomInt(min, max) {
 }
 
 const testlolol = async () => {
+    //1 hour = 3600000 ms
+
     
+    //console.log(new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString());
+    console.log(Date.parse("2019-01-02T02:00:00.000Z") - Date.parse("2019-01-02T01:00:00.000Z") )
+    return
     console.log("\\\\")
     await connectCache()
     await redisClient.hSet("key1", obj)
