@@ -1,5 +1,6 @@
 const axios = require('axios')
 const { searchVideosWithKeyword } = require('../../youtube-module')
+const { fetchPopularVideos } = require('./popular-api')
 require('dotenv').config()
 
 const searchVideos = async (req, res, next) => {
@@ -17,5 +18,17 @@ const searchVideos = async (req, res, next) => {
     }
 }
 
+const getPopularVideos = async (req,res,next) => {
+    console.log("getPopularVideo called", req.body)
+    const regCode = req.query.regionCode
+    try {
+        const result = await fetchPopularVideos({regionCode: regCode ? regCode : false})
+        console.log("getPopularVideos success", result)
+        res.json(result)
+    } catch (err) {
+        console.log("errpr getPopularVideos")
+        res.status(405).send("errorBITCHH")
+    }
+}
 
-module.exports = {searchVideos}
+module.exports = {searchVideos, getPopularVideos}

@@ -51,12 +51,48 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// const convertDateDiff = (dateIso) => { //dateIso = publishedAt, 
+//     //find difference between Date.now and published at, 
+//     //published less than 24 hours ago, show hours ago. less than 7 days, show days ago. less than 30 days, show weeks ago. less than 365 days. show months ago.
+
+//     const timeDiffSec = (Date.now() - Date.parse(dateIso)) / 1000
+//     if (timeDiffSec < 60) { return "Just now" }
+//     if (timeDiffSec < 3600) { return `${timeDiffSec / 60} minutes ago` }
+//     const timeDiffHours = timeDiffSec / 3600
+//     if (timeDiffHours < 24) { return `${timeDiffSec / 60} hours ago` }
+//     const timeDiffDays = timeDiffHours / 24
+//     if (timeDiffDays < 7) { return `${Math.floor(timeDiffDays)} days ago` }
+//     if (timeDiffDays < 30) { return `${Math.floor(timeDiffDays / 7)} weeks ago` }
+//     if (timeDiffDays < 365) { return `${Math.floor(timeDiffDays / 30)} months ago` }
+//     return `${Math.floor(timeDiffDays / 365)} years ago`
+// }
+
+const convertDateDiff = (dateIso) => { //dateIso = publishedAt, 
+    //find difference between Date.now and published at, 
+    //published less than 24 hours ago, show hours ago. less than 7 days, show days ago. less than 30 days, show weeks ago. less than 365 days. show months ago.
+
+    const timeDiffSec = (Date.now() - Date.parse(dateIso)) / 1000
+    if (timeDiffSec < 60) { return "Just now" }
+    if (timeDiffSec < 3600) { return `${Math.round(timeDiffSec / 60 * 100)/100} minutes ago` }
+    const timeDiffHours = timeDiffSec / 3600
+    if (timeDiffHours < 24) { return `${Math.round(timeDiffHours * 100)/100} hours ago` }
+    const timeDiffDays = timeDiffHours / 24
+    if (timeDiffDays < 7) { return `${Math.round(timeDiffDays * 100) / 100} days ago` }
+    if (timeDiffDays < 30) { return `${Math.floor(timeDiffDays / 7)} weeks ago` }
+    if (timeDiffDays < 365) { return `${Math.floor(timeDiffDays / 30)} months ago` }
+    return `${Math.floor(timeDiffDays / 365)} years ago`
+}
+
 const testlolol = async () => {
     //1 hour = 3600000 ms
 
-    
+    const timeMs = Date.now() - Date.parse("2023-06-02T02:00:00.000Z") 
+    const dateDiff = convertDateDiff("2023-06-02T02:00:00.000Z" )
     //console.log(new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString());
-    console.log(Date.parse("2019-01-02T02:00:00.000Z") - Date.parse("2019-01-02T01:00:00.000Z") )
+    console.log(timeMs,dateDiff)
+    console.log(convertDateDiff("2023-05-02T02:00:00.000Z" ))
+    console.log(convertDateDiff("2023-01-02T02:00:00.000Z" ))
+    console.log(convertDateDiff("2022-01-02T02:00:00.000Z" ))
     return
     console.log("\\\\")
     await connectCache()

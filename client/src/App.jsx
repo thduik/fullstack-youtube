@@ -19,6 +19,7 @@ import PlaylistSelectMenu from "./components/videoCard/PlaylistSelectMenu";
 import { getPlaylist } from "./apiFetch/playlistApi";
 import { setPlaylistArray } from "./features/appData/playlistSlice";
 import PlaylistsPage from "./components/playlist/PlaylistsPage";
+import { fetchPopularVideos } from "./apiFetch/popularApi";
 
 
 
@@ -36,8 +37,14 @@ const App = () => {
 
   useEffect(() => {
     setFeedVideos(null);
+    fetchPopularVideos(false, (resItems)=>{
+      console.log("fetchPopularVideosApp.jsx", resItems[0])
+      
+      setFeedVideos(resItems)
+    })
     fetchFromAPI(`search?part=snippet&q=${'news'}`)
-      .then((data) => setFeedVideos(data.items))
+      .then((data) => {console.log("searchNews", data.items[0])
+        setFeedVideos(data.items)})
   }, []);
   
   // const [showSidebar, setShowSidebar] = useState(true)
