@@ -64,7 +64,8 @@ const VideoCard = ({ video: { id: { videoId }, snippet }, isVideoDetail }) => {
   return (
     <Stack direction={horizontalCard ? "row" : "column"}
       sx={{
-        backgroundColor: "yellow",
+
+        backgroundColor: "none",
         width: isVideoDetail ? videoDetailWidth : widthStyle,
         boxShadow: "none", borderRadius: 0,
         margin: horizontalCard ? "0px 30px 0px 30px" : "0"
@@ -97,7 +98,9 @@ const VideoCard = ({ video: { id: { videoId }, snippet }, isVideoDetail }) => {
 
           <div style={{
             display: "flex", flexDirection: "row", marginBottom: "4px",
-            justifyContent: "space-between", width: "auto", margin: "0px"
+            justifyContent: "space-between", margin: "0px"
+            ,backgroundColor:"none"
+            , width: horizontalCard ? "auto" : "100%"
           }}>
             <Link to={videoId ? `/watch?v=${videoId}` : demoVideoUrl} >
               <Typography variant="subtitle1" fontWeight="bold" color="#FFF" lineHeight={"1.5"} fontSize={"14px"}>
@@ -106,27 +109,41 @@ const VideoCard = ({ video: { id: { videoId }, snippet }, isVideoDetail }) => {
             </Link>
             {
               horizontalCard ? null :
-              <div style={{ marginRight: "0px", width: "100%" }}>
-                <VideoCardDropdown showDropdown={showDropdown} setShowDropdown={setShowDropdown}
-                  saveVideoToPlaylist={startSaveVideoToPlaylist} />
-              </div>
+                <div style={{ marginRight: "0px", width: "50px" }}>
+                  <VideoCardDropdown showDropdown={showDropdown} setShowDropdown={setShowDropdown}
+                    saveVideoToPlaylist={startSaveVideoToPlaylist} />
+                </div>
             }
           </div>
+          <div style = {{width:"auto", lineClamp:"2"}}>
+            <Link to={snippet?.channelId ? `/channel/${snippet?.channelId}` : demoChannelUrl} >
+              {/* <Typography variant="subtitle2" color="gray" textOverflow={"clip"} overflow={"hidden"}>  */}
 
-          <Link to={snippet?.channelId ? `/channel/${snippet?.channelId}` : demoChannelUrl} >
-            <Typography variant="subtitle2" color="gray">
-              {snippet?.channelTitle.substring(0, 100) || demoChannelTitle}
-              <CheckCircleIcon sx={{ fontSize: "12px", color: "gray", ml: "5px" }} />
-            </Typography>
-            {horizontalCard ?
-              <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.6)", marginTop: "9px", lineHeight: "1.5" }}>
-                {snippet?.description.substring(0, 120) || "nullDesc"}</p>
-              : null}
-          </Link>
 
+
+              <p style={{ fontSize: "13px", color: "white", fontWeight: "bold" }}>
+
+                {snippet?.channelTitle.substring(0, 100) || demoChannelTitle}
+                <span>
+                  <CheckCircleIcon sx={{ fontSize: "12px", color: "gray", ml: "5px" }} />
+                </span>
+              </p>
+
+
+              {/* </Typography> */}
+              {horizontalCard ?
+                <div style={{ width:horizontalCard ? "auto" : "100%"
+                , maxWidth: "45vw", minWidth: "36vw", overflow: "hidden",lineClamp:"2" }}>
+                  <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.6)", marginTop: "9px", lineHeight: "1.5", lineClamp:"2" }}>
+                    {snippet?.description.substring(0, 120) || "nullDesc"}</p>
+                </div>
+                : null}
+
+            </Link>
+          </div>
         </CardContent>
       </div> {horizontalCard ?
-        <div style={{ marginRight: "0px", width: "auto", backgroundColor:"green" }}>
+        <div style={{ marginRight: "0px", width: "auto", backgroundColor: "green" }}>
           <VideoCardDropdown showDropdown={showDropdown} setShowDropdown={setShowDropdown}
             saveVideoToPlaylist={startSaveVideoToPlaylist} />
         </div>
