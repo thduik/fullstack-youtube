@@ -57,7 +57,7 @@ const main = async () => {
         for (var x = 0; x < 3; x++) {
             const inputData1 = dataGen.createInputDataFor("addVideoToPlaylistsCache") //[ {playlistId:string,video:{playlistId:,videoName:,videoId:,thumbnailUrl:,createdAt:,_id:}}]
             for (var i = 0; i < inputData1.length; i++) {
-                console.log("inputData1", inputData1[i])
+                // console.log("inputData1", inputData1[i])
 
                 await addVideoToPlaylistsCache([inputData1[i].video]) //this takes in [ videoDoc ]
                 await delay(300)
@@ -69,7 +69,7 @@ const main = async () => {
         const resArr111 = []
         for (var i = 0; i < playlistIdArr1.length; i++) {
             const res22 = await getAllVideosOfPlaylistFromCache(playlistIdArr1[i])
-            console.log("res2222", res22)
+            // console.log("res2222", res22)
             resArr111.push(res22)
         }
 
@@ -80,7 +80,7 @@ const main = async () => {
         for (var j = 0; j < 1;j++) {
             const deleteInputData = dataGen.createInputDataFor("deleteVideoFromPlaylistCache")
             for (var i = 0; i < deleteInputData.length; i ++) {
-                console.log("deleteInputData",deleteInputData[i].video)
+                // console.log("deleteInputData",deleteInputData[i].video)
                 await deleteVideoFromPlaylistCache(deleteInputData[i])//{userid:playlist.userId,playlistId:playlistId, video:removedVideo}
             }
         }
@@ -99,7 +99,7 @@ const main = async () => {
             const deleteInputData = dataGen.createInputDataFor("deletePlaylistOfUserCache")
             for (var i = 0; i < deleteInputData.length; i ++) {
                 const {userId, playlistId} = deleteInputData[i]
-                console.log("deleteInputDatadeletePlaylistOfUserCache",deleteInputData[i])
+                // console.log("deleteInputDatadeletePlaylistOfUserCache",deleteInputData[i])
                 await deletePlaylistOfUserCache({userId:userId,playlistId:playlistId })
             }
             
@@ -112,7 +112,7 @@ const main = async () => {
         for (var i = 0; i < userIdArr.length;i++) {
             const res222 = await getPlaylistsOfUserFromCache(userIdArr[i]) //{isSet:,data:[playlistDoc]}
             
-            console.log("playlistArrheheh", playlistTestRes)
+            // console.log("playlistArrheheh", playlistTestRes)
             playlistTestRes.push(res222)
         }
         
@@ -122,7 +122,7 @@ const main = async () => {
         
         const playlistIdArr2222 = [] 
         playlistTestRes.map(o=>playlistIdArr2222.push(...o.data.map(o=>o._id)) ) //fetch all the fckin playlistIds
-        console.log("playlistIdArr22", playlistIdArr2222)
+        // console.log("playlistIdArr22", playlistIdArr2222)
 
         const resArr444 = []
         for (var i = 0; i < playlistIdArr2222.length;i++) {
@@ -137,7 +137,7 @@ const main = async () => {
         await redisClient.flushAll()
     } catch (err) {
         await redisClient.flushAll()
-        console.log("errMain", err)
+        // console.log("errMain", err)
     }
     await redisClient.flushAll()
 

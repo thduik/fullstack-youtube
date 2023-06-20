@@ -144,7 +144,7 @@ const VideoCard = ({ video: { id: { videoId }, snippet }, isVideoDetail }) => {
           </div>
         </CardContent>
       </div> {horizontalCard ?
-        <div style={{ marginRight: "0px", width: "auto", backgroundColor: "green" }}>
+        <div style={{ marginRight: "0px", width: "auto", backgroundColor: "none" }}>
           <VideoCardDropdown showDropdown={showDropdown} setShowDropdown={setShowDropdown}
             saveVideoToPlaylist={startSaveVideoToPlaylist} />
         </div>

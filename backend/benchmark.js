@@ -91,7 +91,7 @@ const testlolol = async () => {
     const timeMs = Date.now() - Date.parse("2023-06-02T02:00:00.000Z") 
     const dateDiff = convertDateDiff("2023-06-02T02:00:00.000Z" )
     //console.log(new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString());
-    console.log(timeMs,dateDiff)
+    // console.log(timeMs,dateDiff)
     console.log(convertDateDiff("2023-05-02T02:00:00.000Z" ))
     console.log(convertDateDiff("2023-01-02T02:00:00.000Z" ))
     console.log(convertDateDiff("2022-01-02T02:00:00.000Z" ))

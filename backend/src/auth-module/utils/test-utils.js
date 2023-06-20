@@ -1,8 +1,8 @@
 const verifyAccessTokenGoogle = ({googleid, email, name
     , given_name,verified_email, family_name, picture} ) => {
 
-        console.log("test verifyAccessTokenGoogle", googleid, email, name
-        , given_name,verified_email, family_name, picture)
+        // console.log("test verifyAccessTokenGoogle", googleid, email, name
+        // , given_name,verified_email, family_name, picture)
 
     return {
         id: googleid, //google id

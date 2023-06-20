@@ -3,7 +3,7 @@ const { parseVideoDoc, parsePlaylistDoc } = require('./utils')
 
 const deletePlaylistOfUserCache = async ({userId, playlistId}) => {
     if (!userId || !playlistId) {throw("deletePlaylistOfUserCache err")}
-    console.log("deletePlaylistOfUserCache", userId, playlistId)
+    // console.log("deletePlaylistOfUserCache", userId, playlistId)
     try {
         //const playlistId = typeof playlistDoc._id == 'string' ? playlistDoc._id : playlistDoc._id.toString()
         await redisClient.sRem(`user:${userId}:playlists`, playlistId)
@@ -15,7 +15,7 @@ const deletePlaylistOfUserCache = async ({userId, playlistId}) => {
 }
 
 const deleteVideoFromPlaylistCache = async ({videoData, playlistId, userId}) => {
-    console.log("deleteVideoFromPlaylistCache called")
+    // console.log("deleteVideoFromPlaylistCache called")
     try {
         const belongToUser = await redisClient.sIsMember(`user:${userId}:playlists`, playlistId)
         if (!belongToUser) {throw("deleteVideoFromPlaylistCache not belong to user")}
@@ -24,13 +24,13 @@ const deleteVideoFromPlaylistCache = async ({videoData, playlistId, userId}) => 
         const videoKey = videoId + ":" + videoDoc.createdAt.toString()
         const playlistKey = `playlist:${videoDoc.playlistId}:videos`
         const resulz = await redisClient.sIsMember(playlistKey,videoKey)
-        console.log("deleteVideoFromPlaylist resulz", resulz)
+        // console.log("deleteVideoFromPlaylist resulz", resulz)
         
         const res11 = await redisClient.sRem( playlistKey,videoKey )
         if (!resulz || !res11) { throw ("deleteVideoFromPlaylist resulz false isMember failed", resulz, res11) }
         return {success:true}
     } catch (err) {
-        console.log("err deleteVideoFromPlaylistCache", err)
+        // console.log("err deleteVideoFromPlaylistCache", err)
         throw ("err deleteVideoFromPlaylistCache", err)
     }
 }
@@ -136,7 +136,7 @@ const getPlaylistsOfUserFromCache = async (userid) => {//return {isSet:bool, dat
 
         for (var i = 0; i < playlistIds.length; i++) { //id strings
             const ids = playlistIds[i]
-            console.log('playlistIds is', ids)
+            // console.log('playlistIds is', ids)
             const playres = await redisClient.hGetAll(`playlist:${ids}`)
             if (playres) {  //if hGet failed, playres will be null 
 
@@ -164,7 +164,7 @@ const addPlaylistsOfUserToCache = async (playlistDocs, userid) => {
             pdoc.isPrivate = pdoc.isPrivate ? 1 : 0,
                 pdoc.isUnlisted = pdoc.isUnlisted ? 1 : 0,
                 //Object.keys(pdoc).forEach((keylol) => console.log(keylol, typeof pdoc[keylol]))
-            console.log("addPlaylistsOfUserToCache", pdoc, idString)
+            // console.log("addPlaylistsOfUserToCache", pdoc, idString)
             await redisClient.sAdd(`user:${userid}:playlists`, idString)
             await redisClient.hSet(`playlist:${idString}`, pdoc)
 
@@ -182,9 +182,9 @@ const getAllVideosOfPlaylistFromCache = async (playlistid) => {
     // console.log("getAllVideosOfPlaylistFromCache called")
     try {
         const videoIdArr = await redisClient.sMembers(`playlist:${playlistid}:videos`)
-        console.log("cache videoIdArr:", videoIdArr)
+        // console.log("cache videoIdArr:", videoIdArr)
         if (!videoIdArr || !videoIdArr.length) {
-            console.log("isSet false")
+            // console.log("isSet false")
             return { isSet: false }
         }
         const videoResArr = []
@@ -200,7 +200,7 @@ const getAllVideosOfPlaylistFromCache = async (playlistid) => {
         return { isSet: true, data: videoResArr }
 
     } catch (err) {
-        console.log("error getAllVideosOfPlaylistFromCache, throw next line")
+        // console.log("error getAllVideosOfPlaylistFromCache, throw next line")
         throw ("getAllVideosOfPlaylistFromCache err", err)
     }
 }
@@ -212,7 +212,7 @@ const getPlaylistDataFromCache = async (playlistId) => {
         const playlistData = await redisClient.hGetAll(`playlist:${playlistId}`)
         return playlistData
     } catch (err) {
-        console.log("getPlaylistDataFromCache")
+        // console.log("getPlaylistDataFromCache")
     }
 }
 
@@ -221,7 +221,7 @@ const addPlaylistDataToCache = async (playlistId, playlistDoc) => {//populate da
         const playlistExists = await redisClient.hSet(`playlist:${playlistId}`,playlistDoc )
         return {success:true}
     } catch (err) {
-        console.log("getPlaylistDataFromCache")
+        // console.log("getPlaylistDataFromCache")
     }
 }
 

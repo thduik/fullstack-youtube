@@ -26,7 +26,7 @@ const main = async () => {
     await redisClient.flushAll()
     await deleteAllPlaylist()
     await deleteAllPlaylistVideoInfos()
-    console.log("deleteAll success")
+    // console.log("deleteAll success")
 }
 
 main()
