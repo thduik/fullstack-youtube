@@ -45,7 +45,7 @@ export const miniCategories = [
   { name: 'Shorts', icon: <ShortsIcon />, },
   { name: 'Subscriptions', icon: <SubscriptionIcon />, },
   { name: 'Library', icon: <LibraryIcon />, },
-
+  { name: 'Playlists', icon: <PlaylistIcon /> }
 ]
 
 export const demoThumbnailUrl = 'https://i.ibb.co/G2L2Gwp/API-Course.png';

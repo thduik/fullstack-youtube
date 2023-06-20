@@ -1,5 +1,8 @@
+// https://rapidapi.com/Glavier/api/youtube-v311
+
 const axios = require('axios');
 require('dotenv').config()
+
 
 const fetchCommentsOfVideo = async (videoId, pageToken = false, order = 'relevance') => {
     console.log("fetchCommentsOfVideo called", videoId, pageToken)
@@ -32,4 +35,30 @@ const fetchCommentsOfVideo = async (videoId, pageToken = false, order = 'relevan
     }
 }
 
-module.exports = {fetchCommentsOfVideo}
+const fetchCommentsOfParentThread = async ({parentId, pageToken}) => { //child comments of parent commentThread
+    var paramz = {
+        part: 'snippet',
+        parentId:parentId,
+        maxResults: '10',
+        textFormat: 'html'
+      }
+    const options = {
+        method: 'GET',
+        url: 'https://youtube-v311.p.rapidapi.com/comments/',
+        params: paramz,
+        headers: {
+          'X-RapidAPI-Key': process.env.RAPID_API_KEY,
+          'X-RapidAPI-Host': 'youtube-v311.p.rapidapi.com'
+        }
+      };
+      
+      try {
+          const response = await axios.request(options);
+          console.log(response.data);
+      } catch (error) {
+          console.error(error);
+      }
+
+}
+
+module.exports = {fetchCommentsOfVideo, fetchCommentsOfParentThread}

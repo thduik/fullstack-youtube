@@ -47,7 +47,7 @@ const VideoCard = ({ video: { id: { videoId }, snippet }, isVideoDetail }) => {
   }, []);
   const dispatch = useDispatch()
   const [showDropdown, setShowDropdown] = useState(false)
-  console.log("VideoCardisVideoDetail", isVideoDetail)
+  // console.log("VideoCardisVideoDetail", isVideoDetail)
   const startSaveVideoToPlaylist = () => {
     console.log("startSaveVideoToPlaylist called")
     setShowDropdown(false)

@@ -1,3 +1,5 @@
+//https://rapidapi.com/genapi/api/youtube-v3-lite
+
 const axios = require('axios');
 require('dotenv').config()
 
@@ -23,6 +25,7 @@ const fetchPopularVideos = async ( {regionCode} ) => {
 
     try {
         const response = await axios.request(options);
+        console.log
         return (response.data);
     } catch (error) {
         throw(error)

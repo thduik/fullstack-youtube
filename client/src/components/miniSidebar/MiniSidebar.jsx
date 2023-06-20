@@ -3,14 +3,17 @@ import { Stack } from "@mui/material";
 import { miniCategories } from "../../utils/constants";
 import './index.css'
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const MiniSidebar = ({backgroundColor="black",buttonBackgroundColor="rgba(0,0,0,0)"}) => {
+    const { userId } = useSelector((state) => state.user)
     const navigate = useNavigate();
     const nameToUrlMap = {
         "Home":"/",
         "Shorts":"/search/tyler1",
         "Subscriptions":"/",
-        "Library":"/"
+        "Library":"/",
+        "Playlists":userId ? `user/custom/${userId}/playlists` : '/'
     }
 
     const handleClick = (name) => {
@@ -21,9 +24,9 @@ const MiniSidebar = ({backgroundColor="black",buttonBackgroundColor="rgba(0,0,0,
 
     const pMarginLeftMap = (name)=>{
         const mapObj = {
-            "Home":"14px", "Shorts":"13px", "Subscriptions":"0", "Library":"12px"
+            "Home":"14px", "Shorts":"13px", "Subscriptions":"0", "Library":"12px", "Playlists":"9px"
         }
-        return mapObj[name]
+        return mapObj[name] || "4px"
     }
     const barButtons = miniCategories.map((obj) => {
         //{ name: 'New', icon: <HomeIcon />, },
