@@ -105,7 +105,7 @@ const VideoDetail = () => {
 
   if (!videoDetail?.snippet) return <Loader />;
 
-  const { snippet: { title, channelId, channelTitle }, statistics: { viewCount, likeCount, commentCount } } = videoDetail;
+  const { snippet: { title, channelId, channelTitle, description, publishedAt }, statistics: { viewCount, likeCount, commentCount } } = videoDetail;
 
   return (
     <Box sx={{ padding: "0px 10px 10px 30px" }} minHeight="95vh">
@@ -114,9 +114,13 @@ const VideoDetail = () => {
           {/* <Box sx={{ width: "100%", position: "sticky", top: "86px" }}> */}
           <Box sx={{ width: playerBoxWidth, top: "86px", margin:"auto" }}>
             <ReactPlayer playing={id ? true : false} muted={true} onEnded={videoPlayEnded} url={`https://www.youtube.com/watch?v=${id}`} className="react-player" controls />
-            <VideoStats title ={title} channelTitle = {channelTitle} channelId={channelId} viewCount={viewCount} likeCount={likeCount} />
+            <VideoStats title ={title} channelTitle = {channelTitle} channelId={channelId} viewCount={viewCount} likeCount={likeCount} publishedAt={publishedAt} />
+            <div>
+              <p style={{color:"white", fontSize:"12px"}}>{description}</p>
+            </div>
             <VideoComments commentCount={commentCount} videoId={id}/>
           </Box>
+
         </Box>
         
         <Box sx={{width:{xs:"100%",md1000:"350px",md1200:"400px"}, paddingRight:"12px"}}>

@@ -24,6 +24,7 @@ const videoDetailWidth = {
   xs: 'auto' //, md1000: "300px", lg: "370px"
 }
 const VideoCard = ({ video: { id: { videoId }, snippet }, isVideoDetail }) => {
+  
   const [width, setWidth] = useState(0) //window.innerWidth, viewport width
   const [horizontalCard, setHorizontalCard] = useState(false) //horizontal videoCard like in original youtubeapp
   useEffect(() => {

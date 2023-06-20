@@ -1,10 +1,16 @@
-export const processResData = (res) => {
-    for (var i = 0;i<res.data.items.length;i++) {
-      res.data.items[i].channelTitle = decodeHtml(res.data.items[i].channelTitle)
-      res.data.items[i].description = decodeHtml(res.data.items[i].description)
-      res.data.items[i].title = decodeHtml(res.data.items[i].title)
+export const processResData = (reslolData) => {
+  const videoArr = reslolData.items
+  const newRes = {...reslolData}
+  const resArr = []
+    for (var i = 0;i<videoArr.length;i++) {
+      var newO = {...videoArr[i]}
+      newO.channelTitle = decodeHtml(newO.channelTitle)
+      newO.description = decodeHtml(newO.description)
+      newO.title = decodeHtml(newO.title)
+      resArr.push(newO)
     }
-    return res
+    newRes.items = resArr
+    return newRes
   }
 
 

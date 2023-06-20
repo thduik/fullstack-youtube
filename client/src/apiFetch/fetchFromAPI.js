@@ -37,8 +37,8 @@ export const searchVideosFromApiYoutube = async (keyword = "lol", pageToken = fa
       const res = await axios.get(searchUrl)
       // console.log("searchVideosFromApiYoutube success", res.data)
       console.log("videoData is",res.data.items[0])
-      const res2 = processResData(res)
-      return res2.data
+      const res2Data = processResData(res.data)
+      return res2Data
   } catch (err) {
       throw("searchVideosFromApiYoutube err", err)
   }
@@ -56,8 +56,8 @@ export const searchVideosFromApiYoutubeCallback = async (keyword = "lol", pageTo
       const res = await axios.get(searchUrl)
       // console.log("searchVideosFromApiYoutube success", res.data)
       console.log("videoData is",res.data.items[0])
-      const res2 = processResData(res)
-      callback(res2.data)
+      const res2 = processResData(res.data)
+      callback(res2)
       return 
   } catch (err) {
       throw("searchVideosFromApiYoutube err", err)
