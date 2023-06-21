@@ -4,9 +4,12 @@ import CommentBox from "./CommentComponent"
 import StandardRoundButton from "../StandardRoundButton"
 
 
+
 const VideoComments = ({ videoId, commentCount, marginTop = "30px" }) => {
     const [comments, setComments] = useState([])
     const [nextPageToken, setNextPageToken] = useState(false)
+    const [buttonHook, setButtonHook] = useState(false)
+
     useEffect(() => {
         fetchCommentsOfVideo({ videoId: videoId }, (res) => {
             console.log("fetchCommentsOfVideo res is", res)
@@ -16,25 +19,29 @@ const VideoComments = ({ videoId, commentCount, marginTop = "30px" }) => {
         })
 
     }, [videoId])
+    useEffect(() => {
+        if (!buttonHook) { return }
+        fetchCommentsOfVideo({ videoId: videoId, pageToken: nextPageToken }, (res) => {
+            var commentArr = comments
+            if (res && res.items ) { 
+                commentArr.push(...res.items)
+                console.log("clickedLoadMoreComments res is", commentArr)
+                setNextPageToken(res.nextPageToken)
+                setComments(commentArr)
+                
+             }
+            setButtonHook(false)
+        })
+
+    }, [buttonHook])
     useEffect(()=>{
         console.log("comments useState",comments)
         
     },[comments])
-    const clickedLoadMoreComments = (pageToken) => {
-        fetchCommentsOfVideo({ videoId: videoId, pageToken: pageToken }, (res) => {
-            //console.log("clickedLoadMoreComments res is", res)
-            const commentArr = comments
-            if (res && res.items ) { 
-                console.log("clickedLoadMoreComments res is", res)
-                commentArr.push(...res.items)
-                settos(commentArr)
-             }
-        })
-    }
-
-    const settos = (commentArr) => {
-        console.log("settos called")
-        setComments(commentArr)
+    const clickedGetMoreComments = () => {
+        
+        if (buttonHook) { return }
+        setButtonHook(true)
     }
     return (
         <div style={{ display: "flex", flexDirection: "column", marginTop: marginTop }}>
@@ -46,7 +53,7 @@ const VideoComments = ({ videoId, commentCount, marginTop = "30px" }) => {
                 <StandardRoundButton width={"100%"} hoverBColor={"rgba(62, 166, 255, 0.5)"} 
                 mouseDownBColor="rgba(255, 255, 255, 0.2)" textColor="rgba(62, 166, 255, 1)"
                 text={"Load more comments"}
-                    onClick={() => { clickedLoadMoreComments(nextPageToken) }} />
+                    onClick={clickedGetMoreComments} />
             </div>
         </div>
     )

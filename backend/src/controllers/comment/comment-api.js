@@ -4,17 +4,17 @@ const axios = require('axios');
 require('dotenv').config()
 
 
-const fetchCommentsOfVideo = async (videoId, pageToken = false, order = 'relevance') => {
-    console.log("fetchCommentsOfVideo called", videoId, pageToken)
+const fetchCommentsOfVideo = async ({videoId, pageToken = false, order = 'relevance'}) => {
+    
     var paramz = {
         part: 'snippet',
         videoId: videoId,
-        maxResults: '20',
+        maxResults: '10',
         order: order,
         textFormat: 'html'
     }
     if (pageToken) {paramz.pageToken = pageToken}
-
+    console.log("fetchCommentsOfVideo called", videoId, pageToken, order, "paramz",paramz)
     const options = {
         method: 'GET',
         url: 'https://youtube-v311.p.rapidapi.com/commentThreads/',

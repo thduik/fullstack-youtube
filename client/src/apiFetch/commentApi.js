@@ -3,12 +3,13 @@ import { processResData } from './utils'
 const baseUrl = 'https://holysheet2831.hopto.org/api'
 
 export const fetchCommentsOfVideo = async ({videoId, pageToken = false}, callback) => {
-    console.log("fetchCommentsOfVideo called", videoId)
+    var getUrl = baseUrl + `/comment/threads/video/${videoId}`
+    if (pageToken) {getUrl += `?pageToken=${pageToken}`}
+    console.log("fetchCommentsOfVideo called", videoId, pageToken, "getUrl",getUrl)
+
     try {
-        var getUrl = baseUrl + `/comment/threads/video/${videoId}`
-        if (pageToken) {getUrl += `?pageToken=${pageToken}`}
         const res = await axios.get(getUrl)
-        console.log("fetchCommentsOfVideo success comments are", res.data)
+        console.log("fetchCommentsOfVideo success comments are", getUrl, res.data)
         callback(res.data)
         return
     } catch (err) {
