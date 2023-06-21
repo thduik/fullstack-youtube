@@ -9,7 +9,7 @@ import ChannelNavMenu from "./ChannelNavMenu";
 
 const ChannelDetail = ({basePath, isUser=false}) => {
   const [channelDetail, setChannelDetail] = useState();
-  const [videos, setVideos] = useState(null);
+  // const [videos, setVideos] = useState(null);
   const navigate = useNavigate()
   const { userId,id } = useParams();
 
@@ -20,9 +20,6 @@ const ChannelDetail = ({basePath, isUser=false}) => {
         const data = await fetchFromAPI(`channels?part=snippet&id=${id}`);
         console.log("ChannelDetail channeldata is:", data)
         setChannelDetail(data?.items[0]);
-        const videosData = await fetchFromAPI(`search?channelId=${id}&part=snippet&order=date&maxResults=10`);
-        console.log("ChannelDetail videoData is", videosData)
-        setVideos(videosData?.items);
       }
      
     };
@@ -51,7 +48,7 @@ const ChannelDetail = ({basePath, isUser=false}) => {
       <ChannelNavMenu onClick={clickedNavMenu}/>
       <div style={{paddingTop:"5px",
         backgroundColor:"rgba(0,0,0,0)",display:"flex",justifyContent:"center"}}>
-          <Outlet context={[videos]}/>
+          <Outlet context={[id]}/>
        
           {/* <Route path={`/channel/:id/videos`} element={ <Videos videos={videos} />} /> */}
     
