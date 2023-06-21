@@ -4,7 +4,10 @@ import { convertDateDiff } from "../../utils"
 
 const CommentBox = ({ comment }) => {
     const { authorProfileImageUrl, textDisplay, authorDisplayName, publishedAt, updatedAt, likeCount, textOriginal } = comment.snippet.topLevelComment.snippet
+    const {totalReplyCount, canReply, isPublic } = comment.snippet
+    const {id} = comment
     const [publishDate, setPublishDate] = useState("nullDatelol")
+    // console.log("commentTotalReplyCount is", totalReplyCount, canReply, isPublic, id)
     useEffect(() => {
         console.log("publishedAt",publishedAt)
         const resTimeDiff = convertDateDiff(publishedAt)
@@ -24,7 +27,7 @@ const CommentBox = ({ comment }) => {
                     <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "12px", marginLeft:"13px", paddingTop:"2px"}}>{publishedAt}</p>
                 </div>
                 <p style={{ color: "white", fontSize: "13px", marginTop: "9px", lineHeight:"1.5" }}>{textDisplay}</p>
-
+                
                 <div style={{ display: "flex", flexDirection: "row", paddingTop:"8px" }}>
                     <div style={{ display: "flex", flexDirection: "row" }}>
                         <LikeIcon/>

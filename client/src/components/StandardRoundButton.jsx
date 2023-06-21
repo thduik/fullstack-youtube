@@ -7,11 +7,13 @@ const StandardRoundButton = ({ iconComp = null, onClick, width = "30px", height 
     , hoverBColor = "#494949"
     , mouseDownBColor = "#575757"
     , textColor = "white"
-    ,fontSize = "12px"
+    , fontSize = "12px"
     , textDivHeight = "30px"
-    , textMarginTop = "7px"
-    }
-    ) => {
+    , textMarginTop = "8px"
+    , textFontWeight = "bold"
+    , border = "none"
+}
+) => {
     const [hovering, setHovering] = useState(false)
     const [mouseDown, setMouseDown] = useState(false)
 
@@ -24,7 +26,7 @@ const StandardRoundButton = ({ iconComp = null, onClick, width = "30px", height 
 
     return (
         <div className="hover-pointer" style={{
-            width: width, height: width, display: "flex", justifyContent: "center", borderRadius: "15px"
+            width: width, height: width, display: "flex", justifyContent: "center", borderRadius: "15px", border: border
             , backgroundColor: hovering ?
                 mouseDown ? mouseDownBColor : hoverBColor
                 : idleBColor
@@ -32,8 +34,10 @@ const StandardRoundButton = ({ iconComp = null, onClick, width = "30px", height 
             onMouseEnter={mouseEntered} onMouseLeave={mouseLeft} onClick={clickedButton}
             onMouseDown={mouseDowned} onMouseUp={mouseUpped}>
             {iconComp}
-            {text ? <div style={{width:"100%", height:textDivHeight, textAlign:"center"}}>
-                <p style={{color:textColor, fontSize:fontSize, marginTop:textMarginTop}}>{text}</p>
+            {text ? <div style={{ width: "100%", height: textDivHeight, textAlign: "center" }}>
+                <p style={{ color: textColor, fontSize: fontSize, marginTop: textMarginTop, fontWeight: textFontWeight }}>
+                    {text}
+                </p>
             </div> : null}
         </div>
     )

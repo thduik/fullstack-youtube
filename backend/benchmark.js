@@ -15,6 +15,7 @@
 
 //     console.log("test took", Date.now() - startTime, "ms")
 // }
+const axios = require('axios');
 
 const loginSchema = {}
 const bcrypt = {}
@@ -84,9 +85,12 @@ const convertDateDiff = (dateIso) => { //dateIso = publishedAt,
 }
 
 const testlolol = async () => {
+    const shortsUrl = `https://yt.lemnoslife.com/channels?part=shorts&id=UCfJay0vRAuRKBk1drjaMaGg`
     //1 hour = 3600000 ms
-    const o = {id:"fuck"}
-    console.log(`https://i.ytimg.com/vi/${o.id}/hqdefault.jpg`)
+    const res = await axios.get(shortsUrl)
+
+    console.log("reslol", res.data.items)
+
     return
     const timeMs = Date.now() - Date.parse("2023-06-02T02:00:00.000Z") 
     const dateDiff = convertDateDiff("2023-06-02T02:00:00.000Z" )
@@ -140,6 +144,9 @@ const testlolol = async () => {
 
 const benchmarkCreatePlaylist = async (ntimes = 1000) => {
 
+    
+
+    return
     await setupTest()
     const dateStart = Date.now()
     await testCreatePlaylist()
