@@ -13,14 +13,13 @@ const ChannelVideos = loadable(() => import('./components/channel/ChannelVideos'
 const ChannelDetail = loadable(() => import('./components/channel/ChannelDetail'));
 // import VideoDetail from "./components/videoDetail/VideoDetail";
 const VideoDetail = loadable(() => import('./components/videoDetail/VideoDetail'));
-
-
 // import Sidebar from "./components/sidebar/Sidebar";
 const Sidebar = loadable(() => import('./components/sidebar/Sidebar'));
-
-
 // import PlaylistSelectMenu from "./components/videoCard/PlaylistSelectMenu";
 const PlaylistSelectMenu = loadable(() => import('./components/videoCard/PlaylistSelectMenu'));
+// import PlaylistsPage from "./components/playlist/PlaylistsPage";
+const PlaylistsPage = loadable(() => import('./components/playlist/PlaylistsPage'));
+
 
 import { changeShowSidebar } from './features/uiState/uiStateSlice.js'
 
@@ -33,7 +32,7 @@ import { fetchFromAPI } from "./apiFetch/fetchFromAPI";
 
 import { getPlaylist } from "./apiFetch/playlistApi";
 import { setPlaylistArray } from "./features/appData/playlistSlice";
-import PlaylistsPage from "./components/playlist/PlaylistsPage";
+
 import { fetchPopularVideos } from "./apiFetch/popularApi";
 
 
@@ -104,11 +103,11 @@ const App = () => {
 
             {/* <Route path='/video/:id' element={<VideoDetail />} /> */}
             <Route path='/watch' element={<VideoDetail />} />
-            <Route path='/channel/:id' element={<ChannelDetail basePath={"/channel"} />}>
+            <Route path='/channel/:id' element={<ChannelDetail basePath={"/channel/"} />}>
               <Route path={`videos`} element={<ChannelVideos />} />
             </Route>
             <Route path='/search/:searchTerm' element={<SearchFeed />} />
-            <Route path='/user/custom/:userId' element={<ChannelDetail basePath={"/user/custom/"} />} >
+            <Route path='/user/custom/:userId' element={<ChannelDetail isUser={true} basePath={"/user/custom/"} />} >
               {/* playlist component here */}
               <Route path='playlists' element={<PlaylistsPage />} />
 

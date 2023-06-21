@@ -31,4 +31,14 @@ const getPopularVideos = async (req,res,next) => {
     }
 }
 
-module.exports = {searchVideos, getPopularVideos}
+const getChannelVideos = async (req, res, next) => {
+    const playlistId = req.query.playlistId
+
+    try {
+
+    } catch (err) {
+        
+    }
+}
+
+module.exports = {searchVideos, getPopularVideos, getChannelVideos}

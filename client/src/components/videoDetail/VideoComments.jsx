@@ -19,9 +19,11 @@ const VideoComments = ({videoId, commentCount, marginTop = "30px"}) => {
     return (
         <div style={{display:"flex", flexDirection:"column", marginTop:marginTop}}>
             <div>
-                <p style={{color:"white", fontSize:"14px"}}>{commentCount} comments</p>
+                <p style={{color:"white", fontSize:"14px", marginBottom:"14px"}}>{commentCount} comments</p>
             </div>
             {comments.map((c)=><CommentBox comment={c} />)}
+
+            
         </div>
     )
 }

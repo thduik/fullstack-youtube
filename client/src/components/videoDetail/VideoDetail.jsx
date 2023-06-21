@@ -115,8 +115,8 @@ const VideoDetail = () => {
           <Box sx={{ width: playerBoxWidth, top: "86px", margin:"auto" }}>
             <ReactPlayer playing={id ? true : false} muted={true} onEnded={videoPlayEnded} url={`https://www.youtube.com/watch?v=${id}`} className="react-player" controls />
             <VideoStats title ={title} channelTitle = {channelTitle} channelId={channelId} viewCount={viewCount} likeCount={likeCount} publishedAt={publishedAt} />
-            <div>
-              <p style={{color:"white", fontSize:"12px"}}>{description}</p>
+            <div style={{padding:"14px", marginTop:"10px"}}>
+              <p style={{color:"white", fontSize:"13px", lineHeight:"1.5"}}>{description}</p>
             </div>
             <VideoComments commentCount={commentCount} videoId={id}/>
           </Box>

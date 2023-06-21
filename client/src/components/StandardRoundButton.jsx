@@ -1,7 +1,8 @@
 import { useState } from "react"
 
 
-const StandardRoundButton = ({iconComp,onClick, idleBColor = "rgba(0,0,0,0)"}) => {
+const StandardRoundButton = ({iconComp,onClick, width="30px", height="30px", text=false
+    ,idleBColor = "rgba(0,0,0,0)"}) => {
     const [hovering, setHovering] = useState(false)
     const [mouseDown, setMouseDown] = useState(false)
 
@@ -13,7 +14,7 @@ const StandardRoundButton = ({iconComp,onClick, idleBColor = "rgba(0,0,0,0)"}) =
 
     
     return (
-        <div className="hover-pointer" style={{width:"30px", height:"30px", display:"flex", justifyContent:"center",borderRadius:"15px"
+        <div className="hover-pointer" style={{width:width, height:width, display:"flex", justifyContent:"center",borderRadius:"15px"
         ,backgroundColor:hovering ?
              mouseDown ? "#575757" : "#494949"
          : idleBColor}}
