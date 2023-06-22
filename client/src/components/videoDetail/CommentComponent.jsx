@@ -11,6 +11,7 @@ const CommentBox = ({ comment }) => {
     const {id} = comment
     const [publishDate, setPublishDate] = useState("nullDatelol")
     const [comments, setComments] = useState([])
+    const [nextPageToken, setNextPageToken] = useState(false)
     useEffect(() => {
         console.log("publishedAt",publishedAt)
         const resTimeDiff = convertDateDiff(publishedAt)
@@ -19,10 +20,11 @@ const CommentBox = ({ comment }) => {
     
     const clickedShowReplies = async () => {
         try {
-            const res = await fetchCommentsOfParentThread({parentId:id})
+            const res = await fetchCommentsOfParentThread({parentId:id, pageToken:nextPageToken})
             if (!res.items) {throw("clickedShowReplies err no res.items")}
-            console.log("clickedShowReplies res is", res.items)
+            console.log("clickedShowReplies res is", res)
             const currComments = [...comments]
+            setNextPageToken(res.nextPageToken)
             currComments.push(...res.items)
             setComments(currComments)
         } catch(err) {
@@ -49,16 +51,19 @@ const CommentBox = ({ comment }) => {
                         <p style={{ color: "white", fontSize: "13px", marginTop: "6px", marginLeft:"5px" }}>{likeCount}</p>
                     </div>
                 </div>
+                
+                {
+                    comments.map((c,idx)=><ChildComment snippet = {c.snippet} id={c.id} />)
+                }
+
                 <div style={{marginTop:"9px"}}>
-                    { totalReplyCount > 0 ?
-                        <ViewMoreRepliesButton text = {`${totalReplyCount} Replies`} onClick={clickedShowReplies}
+                    { totalReplyCount > 0 && totalReplyCount > comments.length ?
+                        <ViewMoreRepliesButton text = {nextPageToken ? 'More replies':`${totalReplyCount} Replies`} 
+                        onClick={clickedShowReplies}
                         />
                         :null
                     }
                 </div>
-                {
-                    comments.map((c,idx)=><ChildComment snippet = {c.snippet} id={c.id} />)
-                }
             </div>
         </div>
     )

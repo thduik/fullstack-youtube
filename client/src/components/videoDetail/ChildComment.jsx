@@ -20,7 +20,6 @@ const ChildComment = ({snippet, id}) => {
                 <div style={{ display: "flex", flexDirection: "row"}}>
                     <p style={{ color: "white", fontSize: "14px", fontWeight: "bold" }}>{authorDisplayName}</p>
                     <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "13px", marginLeft: "16px",paddingTop:"1px" }}>{publishDate} </p>
-                    <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "12px", marginLeft:"13px", paddingTop:"2px"}}>{publishedAt}</p>
                 </div>
                 <p style={{ color: "white", fontSize: "13px", marginTop: "9px", lineHeight:"1.5" }}>{textDisplay}</p>
                 
