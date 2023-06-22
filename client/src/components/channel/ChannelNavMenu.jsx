@@ -8,6 +8,7 @@ const ChannelNavMenu = ({channel, onClick}) => {
 
     const homeClicked = () => {onClick(0)}
     const videoClicked = () => {onClick(1)}
+    const shortsClicked = () => {onClick(2)}
     const playlistClicked = () => {onClick(3)}
     return (
         <div className="hover-pointer" style={{
@@ -17,7 +18,7 @@ const ChannelNavMenu = ({channel, onClick}) => {
                 
             <ChannelNavButton title = "Home" onClick={homeClicked}/>
             <ChannelNavButton title = "Video" onClick={videoClicked}/>
-            <ChannelNavButton title = "Shorts" onClick={homeClicked}/>
+            <ChannelNavButton title = "Shorts" onClick={shortsClicked}/>
             <ChannelNavButton title = "Playlists" onClick={playlistClicked}/>
             <ChannelNavButton title = "Channels" onClick={homeClicked}/>
             <ChannelNavButton title = "About" onClick={homeClicked}/>

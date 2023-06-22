@@ -32,6 +32,7 @@ const ChannelDetail = ({basePath, isUser=false}) => {
     //   navigate(basePath)
     // }
     if (idx==1) { if (!isUser) {navigate(`${basePath}${id}/videos`) } }
+    if (idx==2 && !isUser) {navigate(`${basePath}${id}/shorts`)}
     if (idx==3) {navigate(`${basePath}${userId}/playlists`)}
   }
   return (
