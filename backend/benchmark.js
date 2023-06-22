@@ -85,7 +85,8 @@ const convertDateDiff = (dateIso) => { //dateIso = publishedAt,
 }
 
 const testlolol = async () => {
-    const shortsUrl = `https://yt.lemnoslife.com/channels?part=shorts&id=UCfJay0vRAuRKBk1drjaMaGg`
+    const channelId = 'UCfJay0vRAuRKBk1drjaMaGg'
+    const shortsUrl = `https://yt.lemnoslife.com/channels?part=shorts&id=${channelId}`
     //1 hour = 3600000 ms
     const res = await axios.get(shortsUrl)
 

@@ -3,7 +3,7 @@
 const axios = require('axios');
 require('dotenv').config()
 
-
+const rapidApiKey = process.env.RAPID_API_KEY
 const fetchCommentsOfVideo = async ({ videoId, pageToken = false, order = 'relevance' }) => {
 
     var paramz = {
@@ -20,7 +20,7 @@ const fetchCommentsOfVideo = async ({ videoId, pageToken = false, order = 'relev
         url: 'https://youtube-v311.p.rapidapi.com/commentThreads/',
         params: paramz,
         headers: {
-            'X-RapidAPI-Key': process.env.RAPID_API_KEY,
+            'X-RapidAPI-Key': rapidApiKey,
             'X-RapidAPI-Host': 'youtube-v311.p.rapidapi.com'
         }
     };
@@ -47,7 +47,7 @@ const fetchCommentsOfParentThread = async ({ parentId, pageToken }) => { //child
         url: 'https://youtube-v311.p.rapidapi.com/comments/',
         params: paramz,
         headers: {
-            'X-RapidAPI-Key': process.env.RAPID_API_KEY,
+            'X-RapidAPI-Key': rapidApiKey,
             'X-RapidAPI-Host': 'youtube-v311.p.rapidapi.com'
         }
     };
