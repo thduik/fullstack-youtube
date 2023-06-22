@@ -1,17 +1,16 @@
 import { useState } from "react"
+import DropdownArrowDownIcon from "../../icons/DropdownArrowDownIcon"
 
-
-const StandardRoundButton = ({ iconComp = null, onClick, width = "30px", height = "30px", text = null
+const ViewMoreRepliesButton = ({ iconComp = null, onClick, width = "100px", height = "30px", text = null
     //BColor = BackgroundColor
     , idleBColor = "rgba(0,0,0,0)"
-    , hoverBColor = "#494949"
-    , mouseDownBColor = "#575757"
-    , textColor = "white"
+    , hoverBColor = "rgba(62, 166, 255, 0.5)"
+    , mouseDownBColor = "rgba(255, 255, 255, 0.2)"
+    , textColor = "rgba(62, 166, 255, 1)"
     , fontSize = "12px"
     , textDivHeight = "30px"
     , textMarginTop = "8px"
     , textFontWeight = "bold"
-    , border = "none"
 }
 ) => {
     const [hovering, setHovering] = useState(false)
@@ -26,23 +25,25 @@ const StandardRoundButton = ({ iconComp = null, onClick, width = "30px", height 
 
     return (
         <div className="hover-pointer" style={{
-            width: width, height: width, display: "flex", flexDirection: "row", justifyContent: "center", borderRadius: "15px", border: border
+            width: "115px",
+             height: height, display: "flex", flexDirection: "row", justifyContent: "center", borderRadius: "15px", border: "none"
             , backgroundColor: hovering ?
                 mouseDown ? mouseDownBColor : hoverBColor
                 : idleBColor
         }}
             onMouseEnter={mouseEntered} onMouseLeave={mouseLeft} onClick={clickedButton}
             onMouseDown={mouseDowned} onMouseUp={mouseUpped}>
-
-            {iconComp}
-            {text ? <div style={{ width: "100%", height: textDivHeight, textAlign: "center" }}>
+            <div style={{ marginTop: "3px", marginLeft:"5px" }}>
+                {<DropdownArrowDownIcon fillColor="rgba(62, 166, 255, 1)" />}
+            </div>
+            {text ? <div style={{ width:"80px", height: textDivHeight, textAlign: "left" }}>
                 <p style={{ color: textColor, fontSize: fontSize, marginTop: textMarginTop, fontWeight: textFontWeight }}>
                     {text}
                 </p>
             </div> : null}
-            
+
         </div>
     )
 }
 
-export default StandardRoundButton;
+export default ViewMoreRepliesButton;

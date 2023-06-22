@@ -23,7 +23,7 @@ const getPopularVideos = async (req,res,next) => {
     const regCode = req.query.regionCode
     try {
         const result = await fetchPopularVideos({regionCode: regCode ? regCode : false})
-        console.log("getPopularVideos success", result)
+        console.log("getPopularVideos success result.items.length", result.items.length)
         res.json(result)
     } catch (err) {
         console.log("errpr getPopularVideos")

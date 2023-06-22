@@ -1,7 +1,7 @@
 import React from "react";
 
 function DropdownArrowDownIcon(
-  {width="18px", height="18px", fillColor="white", viewBox="0 0 18 18"}
+  {width="24px", height="24px", fillColor="white", viewBox="0 0 24 24"}
 ) {
   return (
     <svg

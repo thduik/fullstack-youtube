@@ -1,19 +1,28 @@
 import { useEffect, useState } from "react"
 import LikeIcon from "../../icons/LikeIcon"
 import { convertDateDiff } from "../../utils"
+import ViewMoreRepliesButton from "./ViewMoreRepliesButton"
+import { fetchCommentsOfParentThread } from "../../apiFetch/commentApi"
 
 const CommentBox = ({ comment }) => {
     const { authorProfileImageUrl, textDisplay, authorDisplayName, publishedAt, updatedAt, likeCount, textOriginal } = comment.snippet.topLevelComment.snippet
     const {totalReplyCount, canReply, isPublic } = comment.snippet
     const {id} = comment
     const [publishDate, setPublishDate] = useState("nullDatelol")
-    // console.log("commentTotalReplyCount is", totalReplyCount, canReply, isPublic, id)
+
     useEffect(() => {
         console.log("publishedAt",publishedAt)
         const resTimeDiff = convertDateDiff(publishedAt)
         setPublishDate(resTimeDiff)
     }, [publishedAt])
-    
+    const clickedShowReplies = async () => {
+        try {
+            const res = await fetchCommentsOfParentThread({parentId:id})
+            console.log("clickedShowReplies res is", res)
+        } catch(err) {
+            console.log("err clickedShowReplies", err)
+        }
+    }
     return (
         <div style={{ display: "flex", flexDirection: "row", height: "auto", padding: "6px", margin: "8px 0px 8px 0px" }}>
             <div style={{ height: "50px", width: "50px", padding: "5px" }}>
@@ -33,6 +42,13 @@ const CommentBox = ({ comment }) => {
                         <LikeIcon/>
                         <p style={{ color: "white", fontSize: "13px", marginTop: "6px", marginLeft:"5px" }}>{likeCount}</p>
                     </div>
+                </div>
+                <div style={{marginTop:"9px"}}>
+                    { totalReplyCount > 0 ?
+                        <ViewMoreRepliesButton text = {`${totalReplyCount} Replies`} onClick={clickedShowReplies}
+                        />
+                        :null
+                    }
                 </div>
             </div>
         </div>

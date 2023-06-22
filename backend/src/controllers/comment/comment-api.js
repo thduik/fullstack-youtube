@@ -4,8 +4,8 @@ const axios = require('axios');
 require('dotenv').config()
 
 
-const fetchCommentsOfVideo = async ({videoId, pageToken = false, order = 'relevance'}) => {
-    
+const fetchCommentsOfVideo = async ({ videoId, pageToken = false, order = 'relevance' }) => {
+
     var paramz = {
         part: 'snippet',
         videoId: videoId,
@@ -13,8 +13,8 @@ const fetchCommentsOfVideo = async ({videoId, pageToken = false, order = 'releva
         order: order,
         textFormat: 'html'
     }
-    if (pageToken) {paramz.pageToken = pageToken}
-    console.log("fetchCommentsOfVideo called", videoId, pageToken, order, "paramz",paramz)
+    if (pageToken) { paramz.pageToken = pageToken }
+    console.log("fetchCommentsOfVideo called", videoId, pageToken, order, "paramz", paramz)
     const options = {
         method: 'GET',
         url: 'https://youtube-v311.p.rapidapi.com/commentThreads/',
@@ -35,30 +35,32 @@ const fetchCommentsOfVideo = async ({videoId, pageToken = false, order = 'releva
     }
 }
 
-const fetchCommentsOfParentThread = async ({parentId, pageToken}) => { //child comments of parent commentThread
+const fetchCommentsOfParentThread = async ({ parentId, pageToken }) => { //child comments of parent commentThread
     var paramz = {
         part: 'snippet',
-        parentId:parentId,
+        parentId: parentId,
         maxResults: '10',
         textFormat: 'html'
-      }
+    }
     const options = {
         method: 'GET',
         url: 'https://youtube-v311.p.rapidapi.com/comments/',
         params: paramz,
         headers: {
-          'X-RapidAPI-Key': process.env.RAPID_API_KEY,
-          'X-RapidAPI-Host': 'youtube-v311.p.rapidapi.com'
+            'X-RapidAPI-Key': process.env.RAPID_API_KEY,
+            'X-RapidAPI-Host': 'youtube-v311.p.rapidapi.com'
         }
-      };
-      
-      try {
-          const response = await axios.request(options);
-          console.log(response.data);
-      } catch (error) {
-          console.error(error);
-      }
+    };
+
+    try {
+        const response = await axios.request(options);
+        return (response.data);
+    } catch (error) {
+        console.error(error);
+        throw (error)
+
+    }
 
 }
 
-module.exports = {fetchCommentsOfVideo, fetchCommentsOfParentThread}
+module.exports = { fetchCommentsOfVideo, fetchCommentsOfParentThread }
