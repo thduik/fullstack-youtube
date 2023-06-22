@@ -19,9 +19,9 @@ export const fetchCommentsOfVideo = async ({videoId, pageToken = false}, callbac
 }
 
 export const fetchCommentsOfParentThread = async ({parentId, pageToken=false}) => {
-    var getUrl = baseUrl + `/parent?parentid=${parentId}`
+    var getUrl = baseUrl + `/comment/parent?parentid=${parentId}`
     if (pageToken) {getUrl += `?pageToken=${pageToken}`}
-    console.log("fetchCommentsOfVideo called", videoId, pageToken, "getUrl",getUrl)
+    console.log("fetchCommentsOfVideo called", parentId, pageToken, "getUrl",getUrl)
 
     try {
         const res = await axios.get(getUrl)
