@@ -15,8 +15,9 @@ import { getVideosOfPlaylist, getPlaylistDetail } from "../../apiFetch/playlistA
 import { changeIsStreaming, setVideoArray, setStreamedPlaylist } from "../../features/appData/playlistStreamSlice"
 import VideoStats from "./VideoStats";
 import VideoComments from "./VideoComments";
+import DescriptionDisplay from "./DescriptionDisplay";
 
-const playerBoxWidth = {xs:"100%", sm770:"90%", md1000:"84%"}
+const playerBoxWidth = { xs: "100%", sm770: "90%", md1000: "84%" }
 
 const VideoDetail = () => {
   // const { id } = useParams() //id = videoid
@@ -31,25 +32,30 @@ const VideoDetail = () => {
   const [playlistVideoIdx, setPlaylistVideoIdx] = useState(null)
 
   useEffect(() => {
+    console.log("")
     return () => {//unmount 
       dispatch(changeIsStreaming(false))
     }
   }, [])
 
   useEffect(() => {
+    if (videoDetail?.snippet) { console.log("videoDetailSnippet description", videoDetail.snippet.description.split(/\r?\n/) ) }
+  }, [videoDetail])
+
+  useEffect(() => {
     const videoId = searchParams.get("v")
-    if (!videoId) {return}
-    console.log("VideoDetail searchParams.get(v)",searchParams.get("v"))
+    if (!videoId) { return }
+    console.log("VideoDetail searchParams.get(v)", searchParams.get("v"))
     setVideoId(videoId)
     const playlistIdd = searchParams.get("playlist")
     if (playlistIdd) { setPlaylistId(playlistIdd) }
-    
+
   }, [searchParams])
 
   useEffect(() => {
     if (!playlistId || isStreaming) { return }
 
-    getPlaylistDetail(playlistId, (playlistData)=>{
+    getPlaylistDetail(playlistId, (playlistData) => {
       console.log("getPlaylistDetail success playlistData", playlistData)
       dispatch(setStreamedPlaylist(playlistData))
     })
@@ -77,64 +83,73 @@ const VideoDetail = () => {
   }, [])
 
   useEffect(() => {
-    if (!id) {return}
+    if (!id) { return }
     console.log("relatedToVideoId", id)
     fetchFromAPI(`videos?part=contentDetails%2Csnippet%2Cstatistics&id=${id}`)
       .then((data) => {
         console.log("videoStatisticsIs: ", data)
         setVideoDetail(data.items[0])
       })
-      
+
     fetchFromAPI(`search?part=snippet&relatedToVideoId=${id}&type=video`)
       .then((data) => setVideos(data.items))
   }, [id]);
 
+
+
   const changedPlaylistVideo = ({ video, key }) => { //key = index of video in playlistStream.videoArr, we can jump to next video
-    console.log("changedPlaylistVideo called",video, "idx key", key)
-    
+    console.log("changedPlaylistVideo called", video, "idx key", key)
+
     setVideoId(video.videoId)
     setPlaylistVideoIdx(key)
   }
 
   const videoPlayEnded = () => {
-    if (playlistVideoIdx < videoArr.length-1) {
+    if (playlistVideoIdx < videoArr.length - 1) {
       setVideoId(videoArr[playlistVideoIdx + 1].videoId)
       setPlaylistVideoIdx(playlistVideoIdx + 1)
     }
   }
 
+
   if (!videoDetail?.snippet) return <Loader />;
 
   const { snippet: { title, channelId, channelTitle, description, publishedAt }, statistics: { viewCount, likeCount, commentCount } } = videoDetail;
 
+
   return (
+
     <Box sx={{ padding: "0px 10px 10px 30px" }} minHeight="95vh">
       <Stack direction={{ xs: "column", md1000: "row" }} >
         <Box flex={1}>
           {/* <Box sx={{ width: "100%", position: "sticky", top: "86px" }}> */}
-          <Box sx={{ width: playerBoxWidth, top: "86px", margin:"auto" }}>
+          <Box sx={{ width: playerBoxWidth, top: "86px", margin: "auto" }}>
             <ReactPlayer playing={id ? true : false} muted={true} onEnded={videoPlayEnded} url={`https://www.youtube.com/watch?v=${id}`} className="react-player" controls />
-            <VideoStats title ={title} channelTitle = {channelTitle} channelId={channelId} viewCount={viewCount} likeCount={likeCount} publishedAt={publishedAt} />
-            <div style={{padding:"14px", marginTop:"10px"}}>
-              <p style={{color:"white", fontSize:"13px", lineHeight:"1.5"}}>{description}</p>
+            <VideoStats title={title} channelTitle={channelTitle} channelId={channelId} viewCount={viewCount} likeCount={likeCount} publishedAt={publishedAt} />
+            <div style={{ padding: "14px", marginTop: "10px", color: "white" }} 
+            >
+              {/* <pre style={{color:"white", fontSize:"13px", lineHeight:"1.5"}}>{['a','b','c']}</pre>
+              {description.split('\\n')} */}
+              <DescriptionDisplay text={description}/>
             </div>
-            <VideoComments commentCount={commentCount} videoId={id}/>
+            <VideoComments commentCount={commentCount} videoId={id} />
           </Box>
 
         </Box>
-        
-        <Box sx={{width:{xs:"100%",md1000:"350px",md1200:"400px"}, paddingRight:"12px"}}>
-          
-          {playlistId ? <PlaylistStreamMenu currentVideoId={id} selectPlaylistVideo={changedPlaylistVideo}/> : null}
-          < Box px={2} sx={{width:"100%", marginTop:"30px"}}
-           py={{ md: 1, xs: 5 }} justifyContent="center" alignItems="center" >
-            <Videos videos={videos} direction="column" isVideoDetail = {true}/>
+
+        <Box sx={{ width: { xs: "100%", md1000: "350px", md1200: "400px" }, paddingRight: "12px" }}>
+
+          {playlistId ? <PlaylistStreamMenu currentVideoId={id} selectPlaylistVideo={changedPlaylistVideo} /> : null}
+          < Box px={2} sx={{ width: "100%", marginTop: "30px" }}
+            py={{ md: 1, xs: 5 }} justifyContent="center" alignItems="center" >
+            <Videos videos={videos} direction="column" isVideoDetail={true} />
 
           </Box>
         </Box>
 
       </Stack>
     </Box>
+
   );
 };
 
