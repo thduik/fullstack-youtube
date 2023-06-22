@@ -1,6 +1,15 @@
+import { useState, useEffect } from "react"
+import { convertDateDiff } from "../../utils"
+import LikeIcon from "../../icons/LikeIcon"
 
 const ChildComment = ({snippet, id}) => {
     const { authorProfileImageUrl, textDisplay, authorDisplayName, publishedAt, updatedAt, likeCount, textOriginal } = snippet
+    const [publishDate, setPublishDate] = useState("nullDatelol")
+    useEffect(() => {
+        console.log("publishedAt",publishedAt)
+        const resTimeDiff = convertDateDiff(publishedAt)
+        setPublishDate(resTimeDiff)
+    }, [publishedAt])
     return (
         <div style={{ display: "flex", flexDirection: "row", height: "auto", padding: "6px", margin: "8px 0px 8px 0px" }}>
             <div style={{ height: "40px", width: "40px", padding: "5px" }}>

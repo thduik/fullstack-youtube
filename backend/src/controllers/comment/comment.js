@@ -15,7 +15,7 @@ const getCommentThreadsOfVideos = async (req, res, next) => {
     }
 }
 
-const getCommentsOfParentThread = async (req, res,next) => {
+const getCommentsOfParentThread = async (req, res, next) => {
     const parentId = req.query.parentid
     const pageToken = req.query.pageToken
 
