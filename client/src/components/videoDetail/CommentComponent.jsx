@@ -3,22 +3,28 @@ import LikeIcon from "../../icons/LikeIcon"
 import { convertDateDiff } from "../../utils"
 import ViewMoreRepliesButton from "./ViewMoreRepliesButton"
 import { fetchCommentsOfParentThread } from "../../apiFetch/commentApi"
+import ChildComment from "./ChildComment"
 
 const CommentBox = ({ comment }) => {
     const { authorProfileImageUrl, textDisplay, authorDisplayName, publishedAt, updatedAt, likeCount, textOriginal } = comment.snippet.topLevelComment.snippet
     const {totalReplyCount, canReply, isPublic } = comment.snippet
     const {id} = comment
     const [publishDate, setPublishDate] = useState("nullDatelol")
-
+    const [comments, setComments] = useState([])
     useEffect(() => {
         console.log("publishedAt",publishedAt)
         const resTimeDiff = convertDateDiff(publishedAt)
         setPublishDate(resTimeDiff)
     }, [publishedAt])
+    
     const clickedShowReplies = async () => {
         try {
             const res = await fetchCommentsOfParentThread({parentId:id})
-            console.log("clickedShowReplies res is", res)
+            if (!res.items) {throw("clickedShowReplies err no res.items")}
+            console.log("clickedShowReplies res is", res.items)
+            const currComments = [...comments]
+            currComments.push(...res.items)
+            setComments(currComments)
         } catch(err) {
             console.log("err clickedShowReplies", err)
         }
@@ -50,6 +56,9 @@ const CommentBox = ({ comment }) => {
                         :null
                     }
                 </div>
+                {
+                    comments.map((c,idx)=><ChildComment snippet = {c.snippet} id={c.id} />)
+                }
             </div>
         </div>
     )

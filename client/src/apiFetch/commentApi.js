@@ -26,8 +26,8 @@ export const fetchCommentsOfParentThread = async ({parentId, pageToken=false}) =
     try {
         const res = await axios.get(getUrl)
         console.log("fetchCommentsOfVideo success comments are", getUrl, res.data)
-        callback(res.data)
-        return
+        return(res.data)
+        
     } catch (err) {
         console.log("err fetchCommentsOfVideo", err)
         return

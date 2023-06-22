@@ -1,4 +1,4 @@
-const { fetchCommentsOfVideo } = require("./comment-api")
+const { fetchCommentsOfVideo, fetchCommentsOfParentThread } = require("./comment-api")
 
 
 
