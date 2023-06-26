@@ -9,3 +9,7 @@
 req.auth is set by authModule
 
 resources endpoints check req.auth.userid (that is set by authModule) and grant resources accordingly
+
+
+
+jwt key generate to backend/src/jwt-keys/public.pem

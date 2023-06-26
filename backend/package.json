@@ -15,7 +15,9 @@
     "googleapis": "^118.0.0",
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.0",
+    "jwk-to-pem": "^2.0.5",
     "mongoose": "^7.1.2",
+    "node-jose": "^2.2.0",
     "node-redis": "^0.1.7",
     "openid-client": "^5.4.2",
     "redis": "^4.6.7"
@@ -28,7 +30,9 @@
     "test:playlist": "nodemon src/tests/playlist/playlist-test.js",
     "test:search": "node src/tests/search/search-test.js",
     "test:cache": "nodemon src/cache-module/tests/testPlaylist.js",
-    "flush:all": "node scripts/datadb-delete.js"
+    "flush:all": "node scripts/datadb-delete.js",
+    "test:jwks": "nodemon src/auth-module/jwks_rotator/test1.js"
+    
   },
   "keywords": [],
   "author": "",

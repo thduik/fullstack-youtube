@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const fs = require('fs')
 const path = require('path')
 const { setCookiesAndSendResPostLogin, setCookiesAfterRefreshAccessToken } = require("./utils-cookies")
+const { signJwksKey } = require("./jwks_rotator")
 
 require('dotenv').config()
 
@@ -20,7 +21,6 @@ const refreshTokenToIdMap = new Map()
 const createRefreshToken = () => {
     return generateRandomString(refreshTokenLength)
 }
-
 const createAccessTokenJWT = (userid) => {
     //numeric date is seconds elapsed since epoch time 1970-01-01T00:00:00Z
     const jwtNumericDate = Math.floor(Date.now()/1000) 
@@ -34,14 +34,16 @@ const createAccessTokenJWT = (userid) => {
         jit:jwtId,
         exp:jwtNumericDate + 1200 //20 minutes converted to seconds
      }
-
-    var token = jwt.sign(jwtBody, private_key, { algorithm: 'RS256' });
+    //  var token = 
+    var token = signJwksKey(jwtBody);
     return token
 }
 
 const verifyJwtAccessToken = (accessToken) => {
+    if (!public_key) {throw("verifyJwtAccessToken error no public key")}
     try {
-        const res = jwt.verify(accessToken, public_key, { algorithm: 'RS256'})
+        // const res = jwt.verify(accessToken, public_key, { algorithm: 'RS256'})
+        const res = verifyJwksToken(accessToken)
         return res
     } catch (err) {
         throw("verifyJwtAccessToken error:", err)
@@ -80,7 +82,7 @@ const verifyRefreshTokenAndGetNewAccessTokenRequest = (req,res,next) => {
     try {
         const {accessToken, refreshToken} = verifyRefreshTokenAndCreateAccessToken(req.cookies.refreshToken)
         setCookiesAfterRefreshAccessToken(accessToken, refreshToken, res)
-        const resultos = verifyJwtAccessToken(accessToken)
+        const resultos = verifyJwtAccessToken(accessoken)
         req.auth.userid = resultos.sub
         setCookiesAfterRefreshAccessToken(accessToken, refreshToken, res)
         next()
