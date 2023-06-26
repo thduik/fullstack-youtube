@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useDispatch } from "react-redux"
 import { logout } from "../features/user/userSlice"
+import { baseApiUrl } from "../configs"
 
 
 export const testApi = async () => {
@@ -10,7 +11,9 @@ export const testApi = async () => {
 const baseUrl = 'https://holysheet2831.hopto.org/api'
 
 export const cookieLogin = async (callback) => {
-    const destUrl = 'https://holysheet2831.hopto.org/api/auth/cookie/login'
+    // const destUrl = 'https://holysheet2831.hopto.org/api/auth/cookie/login'
+    const destUrl = `${baseApiUrl}/auth/cookie/login`
+    console.log("cookieLogin called", destUrl)
     try {
         const res = await axios.post(
             destUrl, {}
@@ -23,8 +26,11 @@ export const cookieLogin = async (callback) => {
 }
 
 export const testCookies = async () => {
-    const destUrl = "https://holysheet2831.hopto.org/api/cookies"
-    console.log("testPost called destUrl is", destUrl)
+    
+    // const destUrl = "https://holysheet2831.hopto.org/api/cookies"
+    const destUrl = `${baseApiUrl}/cookies`
+
+    console.log("testCookies called destUrl is", destUrl)
     try {
         const res = await axios.post(
             destUrl, {}
@@ -37,8 +43,8 @@ export const testCookies = async () => {
 
 
 export const logoutApp = async () => {
-    const destUrl = "https://holysheet2831.hopto.org/api/logout"
-    console.log("testPost called destUrl is", destUrl)
+    const destUrl = `${baseApiUrl}/api/logout`
+    console.log("logoutApp called destUrl is", destUrl)
     try {
         const res = await axios.post(
             destUrl, { type: 200, error: 0 }
@@ -70,13 +76,14 @@ const testPost = async (url = "/test") => {
 }
 
 const testGet = async (url = "/test") => {
-    console.log("testPost called")
-    try {
-        const res = await axios.get("https://holysheet2831.hopto.org/api" + url)
-        console.log("testPost success, res is", res)
-    } catch (err) {
-        console.log("testPost err, err is", err)
-    }
+    console.log("testGet called")
+
+    // try {
+    //     const res = await axios.get("https://holysheet2831.hopto.org/api" + url)
+    //     console.log("testPost success, res is", res)
+    // } catch (err) {
+    //     console.log("testPost err, err is", err)
+    // }
 
 }
 

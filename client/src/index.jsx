@@ -7,6 +7,8 @@ import './normalize.css'
 
 import { store } from './store'
 import { Provider } from 'react-redux'
+
+
 // import { ThemeProvider } from '@emotion/react';
 // import { ThemeProvider, createTheme } from '@mui/material/styles';
 
@@ -42,7 +44,7 @@ const theme = createTheme({
 
 
 console.log("import.meta.env.GOOGLE_CREDENTIALS_CLIENT_ID", import.meta.env.VITE_GOOGLE_CREDENTIALS_CLIENT_ID)
-
+console.log("import.meta.env.VITE_ENV_DOCKER", import.meta.env.VITE_ENV_DOCKER,"import.meta.env.VITE_ENV_DOCKER == true", import.meta.env.VITE_ENV_DOCKER == 'true')
 
 ReactDOM.render(
 

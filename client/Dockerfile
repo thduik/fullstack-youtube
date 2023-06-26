@@ -1,0 +1,36 @@
+#  Dockerfile for Node Express Backend api (development)
+
+FROM node:18-alpine3.17
+
+ARG NODE_ENV=development
+
+# Create App Directory
+RUN mkdir -p /usr/app/fullstack-youtube/client
+WORKDIR /usr/app/fullstack-youtube/client
+
+# Install Dependencies
+COPY package.json ./
+
+RUN npm install
+
+# Copy app source code
+COPY . .
+
+RUN ls node_modules
+
+# Exports
+EXPOSE 5234
+
+#extraCode start Dec28
+#change owner to container owner from host owner
+#node image automatically creates node user inside container that owns the filesystem in the container
+
+#RUN chown -R node:node /usr/app/fullstack-youtube/client
+
+#USER node   
+
+#extraCode end
+
+# ENV REDIS_URL redis:6379
+CMD ["npm", "dev:docker"]
+# CMD ["npm", "start"]

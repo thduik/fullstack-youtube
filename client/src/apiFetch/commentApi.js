@@ -1,9 +1,10 @@
 import axios from 'axios'
 import { processResData } from './utils'
-const baseUrl = 'https://holysheet2831.hopto.org/api'
+import { baseApiUrl } from '../configs'
+
 
 export const fetchCommentsOfVideo = async ({videoId, pageToken = false}, callback) => {
-    var getUrl = baseUrl + `/comment/threads/video/${videoId}`
+    var getUrl = baseApiUrl + `/comment/threads/video/${videoId}`
     if (pageToken) {getUrl += `?pageToken=${pageToken}`}
     console.log("fetchCommentsOfVideo called", videoId, pageToken, "getUrl",getUrl)
 

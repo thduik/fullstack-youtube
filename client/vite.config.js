@@ -13,6 +13,7 @@ export default defineConfig({
     'process.env': process.env
   },
   server: {
+    host:true,
     fs: {
       // Allow serving files from one level up to the project root
       allow: ['..','.'],
@@ -24,7 +25,7 @@ export default defineConfig({
   },
   proxy: {
     '/api': {
-         target: 'https://holysheet2831.hopto.org/',
+         target: 'https://http://localhost:5234',
          changeOrigin: true,
          secure: false,      
          ws: true,

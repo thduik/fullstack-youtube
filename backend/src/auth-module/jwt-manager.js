@@ -10,8 +10,8 @@ require('dotenv').config()
 const refreshTokenLength = process.env.GOOGLE_REFRESH_TOKEN_LENGTH 
 
 //keys generated for rsa
-const public_key = fs.readFileSync(path.resolve(__dirname, '../jwt-keys/public.pem'));
-const private_key = fs.readFileSync(path.resolve(__dirname, '../jwt-keys/private.pem'));
+// const public_key = fs.readFileSync(path.resolve(__dirname, '../jwt-keys/public.pem'));
+// const private_key = fs.readFileSync(path.resolve(__dirname, '../jwt-keys/private.pem'));
 
 //caching used to store refreshTokenz in memory
 //{"user123456":"refreshToken123456"}
@@ -24,7 +24,7 @@ const createRefreshToken = () => {
 const createAccessTokenJWT = (userid) => {
     //numeric date is seconds elapsed since epoch time 1970-01-01T00:00:00Z
     const jwtNumericDate = Math.floor(Date.now()/1000) 
-    const jwtSecret = process.env.JWT_PRIVATE_KEY_OPENID
+    // const jwtSecret = process.env.JWT_PRIVATE_KEY_OPENID
     const jwtId = generateRandomString(27)
     //jwtId is optional and experimental feature
     const jwtBody = { 
@@ -40,7 +40,7 @@ const createAccessTokenJWT = (userid) => {
 }
 
 const verifyJwtAccessToken = (accessToken) => {
-    if (!public_key) {throw("verifyJwtAccessToken error no public key")}
+    // if (!public_key) {throw("verifyJwtAccessToken error no public key")}
     try {
         // const res = jwt.verify(accessToken, public_key, { algorithm: 'RS256'})
         const res = verifyJwksToken(accessToken)

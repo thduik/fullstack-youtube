@@ -31,12 +31,15 @@ let redisClient;
 const connectCache = async () => {
 
     try {
-        redisClient = redis.createClient();
+        // redisClient = redis.createClient(6379,'127.0.0.1');
+        // redisClient = redis.createClient('redis://127.0.0.0:6379');
+        redisClient = redis.createClient('redis://redis:6389')
+        console.log("redisClient redis://redis:6379")
+        
         await redisClient.connect();
     } catch (err) {
         throw ("err connectCache", err)
     }
-
 };
 const obj = {
     ss: 'aa',

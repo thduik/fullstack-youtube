@@ -2,7 +2,7 @@ const { checkUserAgainstDbGoogleId } = require('../db/user-db')
 const { createRefreshAndAccessToken } = require('./jwt-manager')
 require('dotenv').config()
 const test_mock = process.env.NODE_ENV == "development" &&  process.env.MOCK_AUTH == "true"
-console.log("test_mock var", test_mock)
+console.log("test_mock varrrrr", test_mock)
 const { verifyAccessTokenGoogle } = test_mock ? require('./utils/test-utils.js') : require('./utils/google-access-v1')
 
 /*

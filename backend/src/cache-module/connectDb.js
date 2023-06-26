@@ -5,7 +5,8 @@ let redisClient;
 const connectCache = async () => {
   
   try {
-    redisClient = redis.createClient();
+    redisClient = redis.createClient({url:'redis://redis_cache:6379'});//redis_cache = name of redis service in docker compose
+    console.log("redisClient connectingredis://redis:6379")
     await redisClient.connect();
     console.log("connectCache success")
   } catch (err) {

@@ -12,6 +12,7 @@ var cookieParser = require('cookie-parser');
 const { verifyJwtAccessTokenRequest, logoutApp } = require('./auth-module');
 const { playlistRouter } = require('./routes/playlist-router');
 const { commentRouter } = require('./routes/comment-router');
+const { setCorsHeaders } = require('./utils/corsFunctions');
 
 
 console.log("env vars NODE_ENV == development", process.env.NODE_ENV == "development", "MOCK_AUTH == true", process.env.MOCK_AUTH == "true")
@@ -27,6 +28,10 @@ app.use(helmet());
 if (process.env.NODE_ENV == "development") {
     app.use((req,res,next)=>{console.log("app received request"); next()})
 }
+
+
+app.use('/',setCorsHeaders)
+
 app.post('/logout', logoutApp)
 
 app.use('/', sanitizeRequest)

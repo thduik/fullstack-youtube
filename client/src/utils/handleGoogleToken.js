@@ -1,11 +1,13 @@
 import axios from "axios"
 import { login, logout } from "../features/user/userSlice"
+import { baseApiUrl } from "../configs"
 
 export const handleGoogleToken = async (token, callback) => {
 
     console.log("handleGoogleToken called, token is", token)
     const url="/auth/google/login"
-    const destUrl = "https://holysheet2831.hopto.org/api" + url
+    // const destUrl = "https://holysheet2831.hopto.org/api" + url
+    const destUrl = baseApiUrl + url
     try {
         const res = await axios.post(destUrl, {
             googleToken: token
