@@ -7,14 +7,7 @@ require('dotenv').config()
 const baseUrl = 'http://localhost:4444'
 
 const testSearch = async (keyword="lol") => {
-    try {
-        const searchUrl = baseUrl + `/youtube/video/search/?q=${keyword}&limit=5&type=video`
-    const res = await axios.get(searchUrl)
-    console.log("testSearch success", res.data)
-    return res.data
-    } catch (err) {
-        console.log("testSearch err", err)
-    }
+    
     
 }
 

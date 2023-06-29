@@ -24,7 +24,7 @@ const createAndWriteNewJWKSkey = async () => {
     const res = await keyStore.generate('RSA', 2048, { alg: 'RS256', use: 'sig' })
     await delay(100)
 
-    console.log("createAndWriteNewJWKSkey complete")
+    // console.log("createAndWriteNewJWKSkey complete")
     const jsonlol = keyStore.toJSON(true)
     const jsonkey = JSON.stringify(jsonlol, null, '  ')
     // const jsonkey = JSON.stringify(keyStore.toJSON(true), null, '  ')

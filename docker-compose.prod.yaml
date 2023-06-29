@@ -2,9 +2,9 @@ version: '3.8'
 
 services:
   client:
-    build: 
+    build:
       context: ./client
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.prod
     volumes:
       - ./client:/usr/app/fullstack-youtube/client
       - /usr/app/fullstack-youtube/client/node_modules
@@ -16,7 +16,7 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     volumes:
       - ./backend:/usr/app/fullstack-youtube/backend
       - /usr/app/fullstack-youtube/backend/node_modules
@@ -27,7 +27,7 @@ services:
       - db
     # networks:
     #   - my_network
-      
+
   db:
     ports:
       - '27017:27017'
@@ -40,7 +40,7 @@ services:
     image: redis
     # networks:
     #   - my_network
-  
-# networks:
-#   my_network:
-#     driver: bridge
+
+    # networks:
+    #   my_network:
+    #     driver: bridge

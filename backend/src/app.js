@@ -1,5 +1,6 @@
 var express = require('express')
 const corsOptions =  require('./configs/cors-config')
+const cors = require('cors')
 var helmet = require("helmet");
 const connectDB = require('./db/connect-db')
 const { authRouter } = require('./routes/auth-router');
@@ -29,6 +30,7 @@ if (process.env.NODE_ENV == "development") {
     app.use((req,res,next)=>{console.log("app received request"); next()})
 }
 
+app.use('/', cors(corsOptions))
 
 app.use('/',setCorsHeaders)
 

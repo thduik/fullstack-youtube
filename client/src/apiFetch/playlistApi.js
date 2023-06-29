@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { processResData } from './utils'
-const baseUrl = 'https://holysheet2831.hopto.org/api'
+import { baseApiUrl } from '../configs'
+// const baseUrl = 'https://holysheet2831.hopto.org/api'
 
 export const getPlaylist = async (callback) => {
     //// resJson = {email,googleid,name,pictureUrl,userId,userName}
@@ -8,7 +9,7 @@ export const getPlaylist = async (callback) => {
     //creds is stored in cookies
 
     try {
-        const getUrl = baseUrl + '/playlist'
+        const getUrl = baseApiUrl + '/playlist'
         const res = await axios.get(getUrl)
         console.log("getPlaylist success playlists are", res.data.playlists)
         callback(res.data.playlists)

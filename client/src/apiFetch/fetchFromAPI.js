@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { processResData } from './utils';
+import { baseApiUrl } from '../configs';
 
 export const BASE_URL = 'https://youtube-v31.p.rapidapi.com' //'https://youtube-v3-alternative.p.rapidapi.com' // 'https://youtube-v31.p.rapidapi.com';
 
@@ -28,10 +29,9 @@ export const fetchFromAPI = async (url) => {
 
 export const searchVideosFromApiYoutube = async (keyword = "lol", pageToken = false) => {//pageToken = next page token
   
-  const baseUrl = import.meta.env.VITE_BASE_API_URL
-  console.log("baseUrl is", baseUrl)
+  // const baseUrl = import.meta.env.VITE_BASE_API_URL
   try {
-      var searchUrl = baseUrl + `/youtube/video/search/?q=${keyword}&type=video`
+      var searchUrl = baseApiUrl + `/youtube/video/search/?q=${keyword}&type=video`
       if (pageToken) { searchUrl += `&nextPageToken=${pageToken}`}
       console.log("searchUrl", searchUrl, "pageTOken", pageToken)
       const res = await axios.get(searchUrl)
@@ -47,10 +47,10 @@ export const searchVideosFromApiYoutube = async (keyword = "lol", pageToken = fa
 
 export const searchVideosFromApiYoutubeCallback = async (keyword = "lol", pageToken = false, callback) => {//pageToken = next page token
   
-  const baseUrl = import.meta.env.VITE_BASE_API_URL
-  console.log("baseUrl is", baseUrl)
+  // const baseUrl = import.meta.env.VITE_BASE_API_URL
+ 
   try {
-      var searchUrl = baseUrl + `/youtube/video/search/?q=${keyword}&type=video`
+      var searchUrl = baseApiUrl + `/youtube/video/search/?q=${keyword}&type=video`
       if (pageToken) { searchUrl += `&nextPageToken=${pageToken}`}
       console.log("searchUrl", searchUrl, "pageTOken", pageToken)
       const res = await axios.get(searchUrl)

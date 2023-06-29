@@ -47,7 +47,7 @@ const App = () => {
   const [feedVideos, setFeedVideos] = useState(null);
   const isDev = import.meta.env.DEV
   console.log("import.meta.env.DEV:", isDev)
-  const baseUrl = isDev ? '/testapp' : '/'
+  // const baseUrl = isDev ? '/testapp' : '/'
 
   useEffect(() => {
     setFeedVideos(null);

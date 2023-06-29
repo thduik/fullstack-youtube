@@ -24,7 +24,7 @@
   },
   "scripts": {
     "start": "node src/server.js --delay 1",
-    "dev": "NODE_ENV=development nodemon src/server.js --delay 1",
+    "dev": "NODE_ENV=development nodemon src/server.js --legacy-watch --delay 1",
     "dev:test": "NODE_ENV=development MOCK_AUTH=true nodemon src/server.js --delay 1",
     
     "test": "echo \"Error: no test specified\" && exit 1",

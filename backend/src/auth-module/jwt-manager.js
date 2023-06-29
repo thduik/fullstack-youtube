@@ -24,7 +24,6 @@ const createRefreshToken = () => {
 const createAccessTokenJWT = (userid) => {
     //numeric date is seconds elapsed since epoch time 1970-01-01T00:00:00Z
     const jwtNumericDate = Math.floor(Date.now()/1000) 
-    // const jwtSecret = process.env.JWT_PRIVATE_KEY_OPENID
     const jwtId = generateRandomString(27)
     //jwtId is optional and experimental feature
     const jwtBody = { 

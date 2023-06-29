@@ -31,7 +31,7 @@
     "build": "vite build",
     "test": "react-scripts test",
     "dev": "vite",
-    "dev:docker":"VITE_ENV_DOCKER=true vite",
+    "dev:docker":"VITE_ENV_DOCKER=true VITE_NODE_ENV=development vite",
     "preview": "vite preview"
   },
   "eslintConfig": {
