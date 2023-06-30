@@ -12,10 +12,8 @@ WORKDIR /usr/app/fullstack-youtube/backend
 COPY package.json ./
 
 RUN npm install
-
 # Copy app source code
 COPY . .
-
 # Exports
 EXPOSE 4444
 
