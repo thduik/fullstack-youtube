@@ -10,6 +10,7 @@ jobs:
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - run: echo id -g
       - run: echo id -u
-      - run: git fetch origin master
-      - run: git merge
+      # - run: git fetch origin master
+      # we use pull here to simplify the steps
+      - run: git pull
       - run: ../build.sh
