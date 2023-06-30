@@ -10,9 +10,8 @@ WORKDIR /usr/app/fullstack-youtube/backend
 
 # Install Dependencies
 COPY package.json ./
-
+RUN npm install pm2 -g
 RUN npm install
-
 # Copy app source code
 COPY . .
 
@@ -21,4 +20,5 @@ EXPOSE 4444
 
 # ENV REDIS_URL redis:6379
 
-CMD ["pm2-runtime","server.js"]
+# CMD ["pm2-runtime","src/server.js"]
+CMD ["npm","start"]

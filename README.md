@@ -7,3 +7,19 @@ chown -R youtube_runner:youtube_runner fullstack-youtube
 
 # add execution rights to build.sh file (if not it will throw permission denied error when running ./build.sh)
 chmod u+x ./build.sh
+
+# docker compose -f ./docker-compose.prod.yaml up --build
+run above command for local test of staging build in staging server
+
+# create redis instance   ( --network= (either network id or name) )
+`
+docker run --network=0f02641851f8 -p 6379:6379 --name redis_cache redis 
+` 
+
+# create mongodb instance for mongoose in backend    ( --network= (either network id or name) )
+`  docker run --network=0f02641851f8 -p 27017:27017 --name db mongo `
+
+# check network setting of container
+
+docker inspect b95600812e4d -f "{{json .NetworkSettings.Networks }}"
+docker inspect 30d9ebfca026 -f "{{json .NetworkSettings.Networks }}"
