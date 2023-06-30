@@ -8,8 +8,8 @@ jobs:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - run: echo id -g
-      - run: echo id -u
+      - run: id -g
+      - run: id -u
       # - run: git fetch origin master
       # we use pull here to simplify the steps
       - run: git pull
