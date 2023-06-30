@@ -24,27 +24,6 @@ services:
     ports:
       - '4444:4444'
     user: '1000:1000'
-    
-    # depends_on:
-    #   - redis_cache
-    #   - db
-    # networks:
-    #   - my_network
-
-  # db:
-  #   ports:
-  #     - '27017:27017'
-  #   image: mongo
-  #   user: '1000:1000'
-
-  # redis_cache:
-  #   ports:
-  #     - '6379:6379'
-  #   # container_name: redis
-  #   image: redis
-  #   user: '1000:1000'
-  #   # networks:
-  #   #   - my_network
 
     # networks:
     #   my_network:
