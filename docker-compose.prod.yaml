@@ -12,8 +12,8 @@ services:
       - '5234:5234'
     # networks:
     #   - my_network
-    user:
-      - '1002:1002'
+    user: '1002:1002'
+    
   backend:
     build:
       context: ./backend
@@ -26,8 +26,7 @@ services:
     depends_on:
       - redis_cache
       - db
-    user:
-      - '1002:1002'
+    user: '1002:1002'
     # networks:
     #   - my_network
 
@@ -35,16 +34,14 @@ services:
     ports:
       - '27017:27017'
     image: mongo
-    user:
-      - '1002:1002'
+    user: '1002:1002'
 
   redis_cache:
     ports:
       - '6379:6379'
     # container_name: redis
     image: redis
-    user:
-      - '1002:1002'
+    user: '1002:1002'
     # networks:
     #   - my_network
 
