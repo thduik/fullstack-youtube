@@ -2,7 +2,7 @@
 
 FROM node:18-alpine3.17
 
-ARG NODE_ENV=development
+ARG NODE_ENV=production
 
 # Create App Directory
 RUN mkdir -p /usr/app/fullstack-youtube/backend
