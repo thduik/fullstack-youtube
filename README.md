@@ -19,16 +19,22 @@ example
 
 # create redis instance   ( --network= (either network id or name) )
 `
-docker run --network={networkid | networkname} -p 6379:6379 --name redis_cache redis 
+docker run --network=fullstack-youtube_default -p 6379:6379 --name redis_cache redis 
 ` 
-
 
 # check network setting of container
 
 docker inspect b95600812e4d -f "{{json .NetworkSettings.Networks }}"
-docker inspect 30d9ebfca026 -f "{{json .NetworkSettings.Networks }}"
+docker inspect {containerid | containerName} -f "{{json .NetworkSettings.Networks }}"
 
 
 # DANGER : git reset --hard
 
 
+git add .github/workflows/main.yaml && git commit -m 'lol' && git push
+
+
+# docker compose files explanations
+dev = `local dev environment. client backend db cache all run by docker compose, in local env. backend = whatever (typically nodemon), client = whatever (typically run dev). Dockerfile.dev`
+staging = `staging environment. client backend db cache all run by docker compose, in a live testing environment with live https domain. backend = pm2, client = build, so as to imitate live prod. Dockerfile.prod`
+prod = `prod environment. db and cache are now seperated and not managed by docker compose.  only client and backend are run by docker compose. backend = pm2, client = build. full prod settings. Dockerfile.prod`

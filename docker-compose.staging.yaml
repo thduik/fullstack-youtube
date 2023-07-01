@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.prod
+    volumes:
+      - ./client:/usr/app/fullstack-youtube/client
+      - /usr/app/fullstack-youtube/client/node_modules
+    ports:
+      - '5234:5234'
+    # networks:
+    #   - my_network
+    user: '1000:1000'
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    volumes:
+      - ./backend:/usr/app/fullstack-youtube/backend
+      - /usr/app/fullstack-youtube/backend/node_modules
+    ports:
+      - '4444:4444'
+    user: '1000:1000'
+
+    db:
+      ports:
+        - '27017:27017'
+      image: mongo
+      user: '1000:1000'
+
+    redis_cache:
+      ports:
+        - '6379:6379'
+      # container_name: redis
+      image: redis
+      user: '1000:1000'
+
+    # networks:
+    #   my_network:
+    #     driver: bridge
