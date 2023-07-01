@@ -27,7 +27,7 @@ jobs:
       #experimental
       # - run: ../../z_build_scripts/build_prod.sh
       #staging
-      - run: docker compose up -f /var/www/fullstack-youtube/docker-compose.staging.yaml --build --wait --remove-orphans
+      - run: docker compose -f /var/www/fullstack-youtube/docker-compose.staging.yaml up --build --wait --remove-orphans
       - run: echo "done all goodbye"
 
 
