@@ -20,13 +20,12 @@ jobs:
       #because our purpose is to simply copy paste from repo to build for deployment every time, just git reset --hard to avoid troubles
       - run: git reset --hard
       - run: git pull
-      # - run: docker compose -f /var/www/fullstack-youtube/docker-compose.prod.yaml up --build
       # - run: docker compose -f /var/www/fullstack-youtube/docker-compose.prod.yaml up --build --wait --remove-orphans
 
 
       #experimental
       # - run: ../../z_build_scripts/build_prod.sh
-      - run: docker compose up --build --wait
+      - run: docker compose up --build 
       - run: echo "done all goodbye"
 
 
