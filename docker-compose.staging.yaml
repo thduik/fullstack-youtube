@@ -32,7 +32,7 @@ services:
     ports:
       - '27017:27017'
     image: mongo
-    user: '1000:1000'
+    # user: '1000:1000'
 
   redis_cache:
     ports:
@@ -40,6 +40,7 @@ services:
     # container_name: redis
     image: redis
     user: '1000:1000'
+    
   # networks:
   #   my_network:
   #     driver: bridge
