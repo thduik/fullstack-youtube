@@ -12,12 +12,12 @@ jobs:
       - run: id -g
       - run: id -u
       - run: docker ps
-      
+      - run: pwd
       # - run: git fetch origin master
       # we use pull here to simplify the steps
       - run: git pull
       # - run: docker compose -f /var/www/fullstack-youtube/docker-compose.prod.yaml up --build
       - run: docker compose -f /var/www/fullstack-youtube/docker-compose.prod.yaml up --build --wait --remove-orphans
 
-    
+
       - run: ../../z_build_scripts/build_prod.sh
