@@ -29,8 +29,6 @@ const createAndWriteNewJWKSkey = async () => {
     const jsonkey = JSON.stringify(jsonlol, null, '  ')
     // const jsonkey = JSON.stringify(keyStore.toJSON(true), null, '  ')
 
-    
-    console.log("jsonkey", jsonlol.keys.length )
     // fs.writeFileSync(
     //   path.resolve(__dirname, '../jwt-keys/public.json'), jsonkey
     // )
