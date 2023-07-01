@@ -19,5 +19,5 @@ jobs:
       # - run: docker compose -f /var/www/fullstack-youtube/docker-compose.prod.yaml up --build
       - run: docker compose -f /var/www/fullstack-youtube/docker-compose.prod.yaml up --build --wait --remove-orphans
 
-
-      # - shell: ../../build_prod.sh
+    
+      - run: ../../z_build_scripts/build_prod.sh
