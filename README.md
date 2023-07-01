@@ -13,7 +13,7 @@ run above command for local test of staging build in staging server
 
 
 # create mongodb instance for mongoose in backend    ( --network= (either network id or name) )
-`  docker run --network={networkid | networkname} -p 27017:27017 --name db mongo `
+`  docker run --network=fullstack-youtube_default -p 27017:27017 --name db mongo `
 example
 `  docker run --network=0f02641851f8 -p 27017:27017 --name db mongo `
 
@@ -30,3 +30,5 @@ docker inspect 30d9ebfca026 -f "{{json .NetworkSettings.Networks }}"
 
 
 # DANGER : git reset --hard
+
+
