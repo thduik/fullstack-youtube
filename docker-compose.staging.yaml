@@ -24,6 +24,9 @@ services:
     ports:
       - '4444:4444'
     user: '1000:1000'
+    depends_on:
+      - redis_cache
+      - db
 
   db:
     ports:
