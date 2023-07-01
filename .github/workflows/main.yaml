@@ -17,6 +17,7 @@ jobs:
       # we use pull here to simplify the steps
       - run: git pull
       # - run: docker compose -f /var/www/fullstack-youtube/docker-compose.prod.yaml up --build
-      - run: docker compose -f /var/www/fullstack-youtube/docker-compose.prod.yaml start --build
+      - run: docker compose -f /var/www/fullstack-youtube/docker-compose.prod.yaml up --build --wait --remove-orphans
+
 
       # - shell: ../../build_prod.sh
