@@ -3,44 +3,20 @@ import { fetchCommentsOfVideoAA, fetchCommentsOfVideoBB } from "../../apiFetch/c
 import CommentBox from "./CommentComponent"
 import StandardRoundButton from "../StandardRoundButton"
 import { CircularProgress } from "@mui/material"
-import { useCommentFetchBB } from "../../configs/appConfig"
+import useCommentApiBB from "../../hooks/commentApiHook"
 
 
 
 const VideoComments = ({ videoId, commentCount, marginTop = "30px" }) => {
-    const [comments, setComments] = useState([])
-    const [nextPageToken, setNextPageToken] = useState(false)
-    const [buttonHook, setButtonHook] = useState(false)
-
-    useEffect(() => {
-        // fetchCommentsOfVideo({ videoId: videoId }, (res) => {
-        fetchCommentsOfVideoBB({ videoId: videoId }, (res) => {
-            console.log("fetchCommentsOfVideo res is", res)
-            if (!res) { console.log("err no res VideoComments"); return }
-            setComments(res?.items)
-            setNextPageToken(res?.nextPageToken)
-        })
-
-    }, [videoId])
-    useEffect(() => {
-        if (!buttonHook) { return }
-        if (!useCommentFetchBB) { 
-            //use fetchAA
-            return 
-        }
-        fetchCommentsOfVideoBB({ videoId: videoId, pageToken: nextPageToken }, (res) => {
-            var commentArr = comments
-            if (res && res.items ) { 
-                commentArr.push(...res.items)
-                console.log("clickedLoadMoreComments res is", commentArr)
-                setNextPageToken(res.nextPageToken)
-                setComments(commentArr)
-                
-             }
-            setButtonHook(false)
-        })
-
-    }, [buttonHook])
+    const [comments, buttonHook, setVideoId, setButtonHook] = useCommentApiBB()
+    useEffect(()=>{
+        console.log("VideoComments comments changed", comments)
+    },[comments])
+    useEffect(()=>{
+        console.log("VideoComments setVideoID called")
+        setVideoId(videoId)
+    },[videoId])
+    
     useEffect(()=>{
         console.log("comments useState",comments)
         
