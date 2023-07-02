@@ -20,4 +20,4 @@ EXPOSE 4444
 
 # ENV REDIS_URL redis:6379
 
-CMD ["npm","start"]
+CMD ["npm","run", "dev"]

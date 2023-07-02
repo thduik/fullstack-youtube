@@ -13,9 +13,10 @@ const CommentBox = ({ comment }) => {
     const [comments, setComments] = useState([])
     const [nextPageToken, setNextPageToken] = useState(false)
     useEffect(() => {
-        console.log("publishedAt",publishedAt)
-        const resTimeDiff = convertDateDiff(publishedAt)
-        setPublishDate(resTimeDiff)
+        // console.log("publishedAt",publishedAt)
+        //do not use below function when using fetchCommentsOfVideoBB,  use when using fetchCommentsOfVideoAA
+        // const resTimeDiff = convertDateDiff(publishedAt);setPublishDate(resTimeDiff)
+        setPublishDate(publishedAt)
     }, [publishedAt])
     
     const clickedShowReplies = async () => {

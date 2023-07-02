@@ -7,7 +7,7 @@ const getCommentThreadsOfVideos = async (req, res, next) => {
     const pageToken = req.query.pageToken
     try {
         const result = await fetchCommentsOfVideo({videoId:videoId, pageToken:pageToken})
-        console.log("getCommentThreadsOfVideos success result.length",  result.items.length ) // items: [items: [{kind: 'youtube#commentThread',etag:'string', id:'string', snippet: [Object]}]
+        console.log("getCommentThreadsOfVideos success" ) // items: [items: [{kind: 'youtube#commentThread',etag:'string', id:'string', snippet: [Object]}]
         res.json(result)
     } catch (err) {
         console.log("getCommentThreadsOfVideos err", err)

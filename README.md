@@ -1,3 +1,19 @@
+DOCKERISZED YOUTUBE CLONE
+
+# support google login
+# deployed on vps
+# code splitting js build folder with vitejs
+# docker-compose allow 1 click setup of all services
+# github action runner guidance
+
+
+
+# helpers
+
+
+# dev local
+docker compose -f docker-compose.yaml up --build 
+ 
 sudo usermod -a -G groupName userName
 sudo usermod -a -G docker youtube_runner
 chown youtube_runner:youtube_runner test.sh
