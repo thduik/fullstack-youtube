@@ -30,7 +30,7 @@ const VideoComments = ({ videoId, commentCount, marginTop = "30px" }) => {
             <div>
                 <p style={{ color: "white", fontSize: "14px", marginBottom: "14px" }}>{commentCount} comments</p>
             </div>
-            {comments.map((c, idx) => <CommentBox key={idx} comment={c} />)}
+            {comments.map((c, idx) => <CommentBox key={idx} comment={c} videoId={videoId} />)}
             <div style={{width:"80%", margin:"auto", backgroundColor:"none"}}>
                 {buttonHook ?
                 <div style={{width:"60px", margin:"auto", padding:"auto"}}> <CircularProgress/> </div> 
