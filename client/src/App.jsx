@@ -19,7 +19,9 @@ const Sidebar = loadable(() => import('./components/sidebar/Sidebar'));
 const PlaylistSelectMenu = loadable(() => import('./components/videoCard/PlaylistSelectMenu'));
 // import PlaylistsPage from "./components/playlist/PlaylistsPage";
 const PlaylistsPage = loadable(() => import('./components/playlist/PlaylistsPage'));
+const ChannelShorts = loadable(() => import('./components/shorts/ChannelShorts'));
 
+// import ChannelShorts from "./shorts/ChannelShorts";
 
 import { changeShowSidebar } from './features/uiState/uiStateSlice.js'
 
@@ -105,6 +107,7 @@ const App = () => {
             <Route path='/watch' element={<VideoDetail />} />
             <Route path='/channel/:id' element={<ChannelDetail basePath={"/channel/"} />}>
               <Route path={`videos`} element={<ChannelVideos />} />
+              <Route path={`shorts`} element={<ChannelShorts />} />
             </Route>
             <Route path='/search/:searchTerm' element={<SearchFeed />} />
             <Route path='/user/custom/:userId' element={<ChannelDetail isUser={true} basePath={"/user/custom/"} />} >

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Routes,Route, useParams, useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
 import { Outlet } from "react-router"
@@ -12,7 +12,7 @@ const ChannelDetail = ({basePath, isUser=false}) => {
   // const [videos, setVideos] = useState(null);
   const navigate = useNavigate()
   const { userId,id } = useParams();
-
+  
   useEffect(() => {
     console.log("ChannelDetail calling api useEffect")
     const fetchResults = async () => {
@@ -21,7 +21,6 @@ const ChannelDetail = ({basePath, isUser=false}) => {
         console.log("ChannelDetail channeldata is:", data)
         setChannelDetail(data?.items[0]);
       }
-     
     };
 
     fetchResults();
@@ -33,7 +32,7 @@ const ChannelDetail = ({basePath, isUser=false}) => {
     // }
     if (idx==1) { if (!isUser) {navigate(`${basePath}${id}/videos`) } }
     if (idx==2 && !isUser) {navigate(`${basePath}${id}/shorts`)}
-    if (idx==3) {navigate(`${basePath}${userId}/playlists`)}
+    if (idx==3 && isUser) {navigate(`${basePath}${userId}/playlists`)}
   }
   return (
     

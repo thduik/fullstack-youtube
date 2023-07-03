@@ -60,7 +60,7 @@ const CommentBox = ({ videoId, comment }) => { //comment here is the parent comm
 
                 <div style={{ marginTop: "9px" }}>
 
-                    {   buttonActive ? <div style={{height:"24px",width:"24px"}}> <CircularProgress height="20px" width="20px" /> </div> :
+                    {   buttonActive ? <div style={{height:"24px",width:"24px"}}> <CircularProgress size="24px" /> </div> :
 
                         (totalReplyCount > 0 && totalReplyCount > comments.length ?
                             <ViewMoreRepliesButton text={nextPageToken ? 'More replies' : `${totalReplyCount} Replies`}

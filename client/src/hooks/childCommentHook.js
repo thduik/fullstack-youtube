@@ -17,8 +17,8 @@ const useChildComment = () => {
         setVideoId(videoId)
     }, [commentData])
     useEffect(() => {
-        console.log("useChildComment replyToken changed", replyToken)
-    }, [replyToken])
+        console.log("useChildComment nextPageToken changed", nextPageToken)
+    }, [nextPageToken])
     useEffect(() => {
         if (!buttonActive) { return }
         fetchCommentsOfParentThreadBB({ videoId: videoId, replyToken: nextPageToken ? nextPageToken : replyToken }, (res) => {
