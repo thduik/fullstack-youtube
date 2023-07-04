@@ -1,3 +1,3 @@
 export { default as baseApiUrl} from './url_config'
 
-export { normalFontColor} from './UIConfig'
+export { normalFontColor,dimmedFontColor} from './UIConfig'
