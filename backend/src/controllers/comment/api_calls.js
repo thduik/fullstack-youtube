@@ -45,16 +45,18 @@ const fetchCommentsRequestB = async ({ videoId, pageToken = false, order = 'rele
         // maxResults: '10',
         sort_by: 'top'
     }
-    if (pageToken) { paramz.pageToken = pageToken }
+    if (pageToken) { paramz.token = pageToken }
     if (order == 'newest') { paramz.sort_by = 'newest'}
     console.log("fetchCommentsOfVideo called", videoId, pageToken, order, "paramz", paramz)
     const options = {
         method: 'GET',
-        url: 'https://youtube-v3-alternative.p.rapidapi.com/comments',
+        // url: 'https://youtube-v3-alternative.p.rapidapi.com/comments',
+        url: 'https://yt-api.p.rapidapi.com/comments',
         params: paramz,
         headers: {
             'X-RapidAPI-Key': rapidApiKeyB,
-            'X-RapidAPI-Host': 'youtube-v3-alternative.p.rapidapi.com'
+            //'X-RapidAPI-Host': 'youtube-v3-alternative.p.rapidapi.com'
+            'X-RapidAPI-Host': 'yt-api.p.rapidapi.com'
         }
     };
 

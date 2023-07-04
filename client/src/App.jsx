@@ -36,10 +36,12 @@ import { getPlaylist } from "./apiFetch/playlistApi";
 import { setPlaylistArray } from "./features/appData/playlistSlice";
 
 import { fetchPopularVideos } from "./apiFetch/popularApi";
+import useWidthRedux from "./hooks/useWidthRedux";
 
 
 
 const App = () => {
+  const [setWindow] = useWidthRedux()
   const dispatch = useDispatch()
 
   const showSidebar = useSelector((state) => state.uiState.showSidebar)
@@ -50,12 +52,11 @@ const App = () => {
   const isDev = import.meta.env.DEV
   console.log("import.meta.env.DEV:", isDev)
   // const baseUrl = isDev ? '/testapp' : '/'
-
   useEffect(() => {
+    setWindow(window)
     setFeedVideos(null);
     fetchPopularVideos(false, (resItems) => {
       console.log("fetchPopularVideosApp.jsx", resItems[0])
-
       setFeedVideos(resItems)
     })
     // fetchFromAPI(`search?part=snippet&q=${'news'}`)

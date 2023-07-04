@@ -39,9 +39,12 @@ const VideoDetail = () => {
   }, [])
 
   useEffect(() => {
-    if (videoDetail?.snippet) { console.log("videoDetailSnippet description", videoDetail.snippet.description.split(/\r?\n/) ) }
+    if (videoDetail?.snippet) { 
+      console.log("videoDetailSnippet description", videoDetail.snippet.description.split(/\r?\n/) )
+      console.log("videoDetailSnippet", videoDetail.snippet)
+     }
   }, [videoDetail])
-
+ 
   useEffect(() => {
     const videoId = searchParams.get("v")
     if (!videoId) { return }

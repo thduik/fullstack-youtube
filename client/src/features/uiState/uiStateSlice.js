@@ -4,8 +4,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     showSidebar:true,
     showMiniSidebar:true,
-    showPlaylistSelectDropdown: false
-    
+    showPlaylistSelectDropdown: false,
 }
 
 export const uiStateSlice = createSlice({

@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "vite build",
+    "build": "VITE_NODE_ENV=production vite build",
     "test": "react-scripts test",
     "dev": "vite",
     "dev:docker":"VITE_ENV_DOCKER=true VITE_NODE_ENV=development vite",

@@ -1,12 +1,16 @@
 import axios from 'axios'
 import { baseApiUrl } from '../configs'
 
+const isDevelopment = import.meta.env.VITE_NODE_ENV == 'development'
+console.log('import.meta.env.VITE_NODE_ENV ',isDevelopment,import.meta.env.VITE_NODE_ENV )
 export const fetchPopularVideos = async (pageToken = false, callback) => {
     // const baseUrl = import.meta.env.VITE_BASE_API_URL
     console.log("fetchPopularVideos called", pageToken)
 
     try {
-        var searchUrl = baseApiUrl + `/youtube/videos/popular?regionCode=VN`
+        var searchUrl = baseApiUrl + `/youtube/videos/popular`
+        if (isDevelopment) {searchUrl+='/dev'}
+        searchUrl += `?regionCode=VN`
         if (pageToken) { searchUrl += `&nextPageToken=${pageToken}`}
         console.log("popularUrl", searchUrl, "pageTOken", pageToken)
         const res = await axios.get(searchUrl)

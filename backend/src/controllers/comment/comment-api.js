@@ -11,8 +11,37 @@ const rapidApiKeyB = process.env.RAPID_API_KEY_B
 
 const fetchCommentsOfVideo = (dataJson) => {
     return fetchCommentsRequestB(dataJson)
-    
+
 }
+
+const fetchCommentsOfParentThreadB = async ({ videoId, replyToken }) => {
+    //https://rapidapi.com/ytjar/api/yt-api
+    const paramz = {
+        id: videoId,
+        token: replyToken
+    }
+    const options = {
+        method: 'GET',
+        url: 'https://yt-api.p.rapidapi.com/comments',
+        params: paramz,
+        headers: {
+            'X-RapidAPI-Key':rapidApiKeyB ,
+            'X-RapidAPI-Host': 'yt-api.p.rapidapi.com'
+        }
+    };
+    console.log("fetchCommentsOfParentThreadB called paramz", paramz)
+    try {
+        const response = await axios.request(options);
+        return response.data
+        // console.log("fetchCommentsOfParentThreadB success",response.data);
+    } catch (error) {
+        console.error("fetchCommentsOfParentThreadB err",error);
+        throw(error)
+    }
+}
+
+
+
 
 const fetchCommentsOfParentThread = async ({ parentId, pageToken }) => { //child comments of parent commentThread
     var paramz = {
@@ -42,4 +71,4 @@ const fetchCommentsOfParentThread = async ({ parentId, pageToken }) => { //child
 
 }
 
-module.exports = { fetchCommentsOfVideo, fetchCommentsOfParentThread }
+module.exports = { fetchCommentsOfVideo, fetchCommentsOfParentThread, fetchCommentsOfParentThreadB }

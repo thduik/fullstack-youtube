@@ -3,7 +3,8 @@
 const axios = require('axios');
 require('dotenv').config()
 
-
+const rapidApiKeyA = process.env.RAPID_API_KEY
+const rapidApiKeyB = process.env.RAPID_API_KEY_B
 
 const fetchPopularVideos = async ( {regionCode} ) => {
     const regCode = regionCode ? regionCode : "VN"
@@ -17,7 +18,7 @@ const fetchPopularVideos = async ( {regionCode} ) => {
           part: 'id,snippet'
         },
         headers: {
-          'X-RapidAPI-Key': process.env.RAPID_API_KEY,
+          'X-RapidAPI-Key': rapidApiKeyB,
           'X-RapidAPI-Host': 'youtube-v3-lite.p.rapidapi.com'
         }
       };

@@ -25,27 +25,16 @@ const videoDetailWidth = {
 }
 const VideoCard = ({ video: { id: { videoId }, snippet }, isVideoDetail }) => {
   
-  const [width, setWidth] = useState(0) //window.innerWidth, viewport width
+  // const [width, setWidth] = useState(0) //window.innerWidth, viewport width
   const [horizontalCard, setHorizontalCard] = useState(false) //horizontal videoCard like in original youtubeapp
-  useEffect(() => {
-    if (width < 1000 && width >= 450) { setHorizontalCard(true) }
-    else { setHorizontalCard(false) }
-    // console.log("horizontalCard",horizontalCard)
-  }, [width])
-  useEffect(() => {
+  const innerWidth = useSelector((state) => state.windowRedux.innerWidth)
 
-    const updateWindowDimensions = () => {
-      const newWidth = window.innerWidth;
-      setWidth(newWidth);
-      // console.log("updating width");
-    };
-    const lolwidth = window.innerWidth;
-    if (lolwidth < 1000 && lolwidth > 440) { setHorizontalCard(true) }
+  useEffect(()=>{ 
+    console.log("videoCardReduxInnerwidth", innerWidth)
+    if (innerWidth < 1000 && innerWidth > 440) { setHorizontalCard(true) }
     else { setHorizontalCard(false) }
-    window.addEventListener("resize", updateWindowDimensions);
-    return () => window.removeEventListener("resize", updateWindowDimensions)
+  },[innerWidth])
 
-  }, []);
   const dispatch = useDispatch()
   const [showDropdown, setShowDropdown] = useState(false)
   // console.log("VideoCardisVideoDetail", isVideoDetail)
