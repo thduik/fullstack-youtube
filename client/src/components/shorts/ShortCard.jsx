@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { dimmedFontColor, normalFontColor } from "../../configs";
 
 
@@ -23,3 +23,4 @@ const ShortCard = ({snippet: {stats:{viewsText=null}, thumbnails=[], title=null,
 }
 
 export default ShortCard;
+// export default memo(ShortCard)

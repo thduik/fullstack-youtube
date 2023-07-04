@@ -43,7 +43,7 @@ import useWidthRedux from "./hooks/useWidthRedux";
 const App = () => {
   const [setWindow] = useWidthRedux()
   const dispatch = useDispatch()
-
+  
   const showSidebar = useSelector((state) => state.uiState.showSidebar)
   const showMiniSidebar = useSelector((state) => state.uiState.showMiniSidebar)
   const { showPlaylistSelectDropdown } = useSelector((state) => state.uiState)

@@ -6,8 +6,10 @@ const useShorts = () => {
     const [channelId, setChannelId] = useState(null)
     const [shorts, setShorts] = useState([])
     const [cursorNext, setCursorNext] = useState(null)
+    
     useEffect(()=>{
         fetchShortsOfChannel({channelId:channelId, cursorNext:cursorNext}, (res)=>{
+            
             console.log("fetchShortsOfChannel success", res.contents)
             if (!res || !res?.contents) {console.log("resEmptyError"); return }
             setCursorNext(res.cursorNext)
