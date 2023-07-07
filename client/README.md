@@ -1,3 +1,4 @@
+Hosted at <a href='http://holysheet2831.hopto.org/'> here </a>
 # docker-compose. for MacOS run `docker pull node:18-alpine3.17` first before `docker compose up` because fcking compose has this fcking errror with pulling image
 
 # Original project: https://github.com/adrianhajdin/project_youtube_clone

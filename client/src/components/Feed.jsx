@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 
-import { fetchFromAPI } from "../apiFetch/fetchFromAPI";
 import FeedVideos from "./feedVideos/FeedVideos";
 import Sidebar from "./sidebar/Sidebar";
 import { useSelector, useDispatch } from 'react-redux'
@@ -9,17 +8,7 @@ import { useSelector, useDispatch } from 'react-redux'
 const backgroundColor = "black"
 const Feed = ({videos}) => {
   const selectedCategory = useSelector((state)=>state.appData.selectedCategory)
-  // // const [selectedCategory, setSelectedCategory] = useState("New");
-  // const [videos, setVideos] = useState(null);
-
-  // useEffect(() => {
-  //   console.log("Feed useEffect only-once called")
-  //   setVideos(null);
-  //   console.log("selectedCategory is", selectedCategory)
-  //   fetchFromAPI(`search?part=snippet&q=${selectedCategory}`)
-  //     .then((data) => setVideos(data.items))
-  //   }, []);
-
+  
   return (
     <Stack 
     //stack of sidebar and main feed

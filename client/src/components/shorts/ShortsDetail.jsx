@@ -14,3 +14,5 @@ const ShortsDetail = () => {
         </div>
     )
 }
+
+export default ShortsDetail;

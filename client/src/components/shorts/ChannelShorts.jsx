@@ -2,21 +2,33 @@ import { useOutletContext } from "react-router-dom";
 import useShorts from "../../hooks/useShorts";
 import { useEffect, useState } from "react";
 import ShortCard from "./ShortCard";
+import { shortsApiRedux } from "../../middlewares/shortsApi";
+import { minMiniSidebarInnerWidth } from "../../configs";
+import { useSelector } from "react-redux";
 
 
 const ChannelShorts = () => {
     const [shorts, setChannelId] = useShorts()
     const [channelId] = useOutletContext()
-    useEffect(()=>{
+    const innerWidth = useSelector((state) => state.windowRedux.innerWidth)
+    const [padding, setPadding] = useState("0px 0px")
+    const { data, error, isLoading } = shortsApiRedux.endpoints.getShorts.useQuery(channelId);
+    
+    useEffect(() => {
         if (!channelId) { return }
         setChannelId(channelId)
-    },[channelId])
+    }, [channelId])
+    useEffect(() => {
+        console.log("ChannelShorts useEffect shorts", shorts)
+    }, [shorts])
     useEffect(()=>{
-        console.log("ChannelShorts useEffect", shorts)
-    },[shorts])
+        if (innerWidth >= minMiniSidebarInnerWidth) {setPadding(`20px 80px`); return }
+        setPadding(`20px 20px`)
+    },[innerWidth])
     return (
-        <div style={{display:'flex',flexDirection:"row", justifyContent:"center", flexWrap:"wrap", padding:"20px 90px 20px 90px"}}>
-            {shorts.map(s=><ShortCard snippet={s.short} channelId={channelId}/>)}
+        <div style={{ display: 'flex', flexDirection: "row", justifyContent: "center", flexWrap: "wrap"
+        , padding:padding }}>
+            {shorts.map(s => <ShortCard snippet={s.short} channelId={channelId} />)}
         </div>
     )
 }
