@@ -28,7 +28,7 @@ const ChannelShorts = () => {
     return (
         <div style={{ display: 'flex', flexDirection: "row", justifyContent: "center", flexWrap: "wrap"
         , padding:padding }}>
-            {shorts.map(s => <ShortCard snippet={s.short} channelId={channelId} />)}
+            {shorts.map((s, idx) => <ShortCard key={idx} snippet={s.short} channelId={channelId} />)}
         </div>
     )
 }

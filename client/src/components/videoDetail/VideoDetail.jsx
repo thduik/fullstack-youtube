@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
-import ReactPlayer from "react-player";
+import ReactPlayer from "react-player/youtube";
 import { Typography, Box, Stack, createTheme } from "@mui/material";
 // import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
@@ -16,6 +16,7 @@ import { changeIsStreaming, setVideoArray, setStreamedPlaylist } from "../../fea
 import VideoStats from "./VideoStats";
 import VideoComments from "./VideoComments";
 import DescriptionDisplay from "./DescriptionDisplay";
+import { useLazyGetVideoDetailQuery } from "../../middlewares/videoDetailApi";
 
 const playerBoxWidth = { xs: "100%", sm770: "90%", md1000: "84%" }
 
@@ -26,6 +27,8 @@ const VideoDetail = () => {
   const { videoArr, streamedPlaylist, isStreaming } = useSelector(state => state.playlistStream);
   const [playlistId, setPlaylistId] = useState(null)
   const dispatch = useDispatch()
+  const [trigger, { data, error, isLoading } ]= useLazyGetVideoDetailQuery()
+
   const [videoDetail, setVideoDetail] = useState(null);
   const [videos, setVideos] = useState(null);
   const [id, setVideoId] = useState(null)
@@ -86,14 +89,14 @@ const VideoDetail = () => {
   }, [])
 
   useEffect(() => {
-    if (!id) { return }
-    console.log("relatedToVideoId", id)
-    fetchFromAPI(`videos?part=contentDetails%2Csnippet%2Cstatistics&id=${id}`)
-      .then((data) => {
-        console.log("videoStatisticsIs: ", data)
-        setVideoDetail(data.items[0])
-      })
+    // Anything in here is fired on component mount.
+    console.log("setVideoDetail useEffect", data)
+    setVideoDetail(data.items[0])
+  }, [data])
 
+  useEffect(() => {
+    if (!id) { return }
+    trigger(id)
     fetchFromAPI(`search?part=snippet&relatedToVideoId=${id}&type=video`)
       .then((data) => setVideos(data.items))
   }, [id]);
