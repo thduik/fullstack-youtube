@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Stack, Box } from "@mui/material";
 
 import { ChannelCard, Loader, VideoCard } from "./";
@@ -6,7 +6,7 @@ import { useOutletContext } from "react-router-dom";
 
 const Videos = ({ videos, direction = "row", flexWrap = "wrap", isVideoDetail=false }) => {
   if(!videos?.length) return <Loader />;
-  
+  useEffect(()=>{console.log("videossssss", videos[0])},[videos])
   return (
     
     <Stack sx = {{width:"100%", paddingRight:"15px",boxSizing:"border-box"}}

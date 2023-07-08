@@ -6,7 +6,7 @@ require('dotenv').config()
 if (process.env.NODE_ENV == 'development') {
   setTimeout(()=>{
     process.exit()
-  }, 3600000)
+  }, 6000000)
 }
 
 process.on('exit', ()=>{})
@@ -15,7 +15,7 @@ const start = async () => {
     const portes = process.env.API_PORTES
     
     await connectDB()
-    // await connectCache()
+    // await connectCacåhe()
     app.listen(portes)
     console.log("app listening on port ", portes)
   }

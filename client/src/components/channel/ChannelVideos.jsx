@@ -18,6 +18,7 @@ const ChannelVideos = ({ direction = "row", flexWrap = "wrap" }) => {
         }
         fetchResult()
     }, [id])
+    useEffect(()=>{console.log("videossssss", videoArr)},[videoArr])
 
     return (
 

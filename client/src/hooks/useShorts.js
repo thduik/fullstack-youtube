@@ -7,27 +7,10 @@ const useShorts = () => {
     const [channelId, setChannelId] = useState("UC0qTInmgyYnwWLeCUIde9Cw")
     const [shorts, setShorts] = useState([])
     const [cursorNext, setCursorNext] = useState(null)
-    // const {data, error, isLoading} = useGetShortsQuery([channelId, null])
-    // const [trigger, result, lastPromiseInfo] = useLazyGetShortsQuery()
-    // const [trigger, { isLoading, isError, data, error } ] = prodApi.endpoints.getAllProducts.useLazyQuery();
-    // const [trigger, result ] = shortsApiRedux.endpoints.getShorts.useLazyQuery();
+    
     const { data, error, isLoading } = shortsApiRedux.endpoints.getShorts.useQuery(channelId);
 
 
-    // useEffect(()=>{
-    //     fetchShortsOfChannel({channelId:channelId, cursorNext:cursorNext}, (res)=>{
-
-    //         console.log("fetchShortsOfChannel success", res.contents)
-    //         if (!res || !res?.contents) {console.log("resEmptyError"); return }
-    //         setCursorNext(res.cursorNext)
-    //         const currShorts = [...shorts]
-    //         currShorts.push(...res.contents)
-    //         setShorts(currShorts)
-    //     })
-    // },[channelId])
-    // useEffect(()=>{
-    //     console.log("useShorts useGetShortsQuery data", data)
-    // },[data])
     useEffect(async () => {
         console.log("useShorts useGetShortsQuery channelId changed", channelId)
         // if (channelId) {const res = await trigger(channelId).unwrap(); console.log("res is ", res, res) }

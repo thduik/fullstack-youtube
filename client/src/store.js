@@ -8,6 +8,7 @@ import windowReducer  from './features/window'
 import { shortsApiRedux } from './middlewares/shortsApi'
 import { setupListeners } from '@reduxjs/toolkit/dist/query'
 import { videoDetailApi } from './middlewares/videoDetailApi'
+import { youtubeApi } from './middlewares/youtubeApi'
 
 export const store = configureStore({
     reducer: {
@@ -19,10 +20,11 @@ export const store = configureStore({
         windowRedux:windowReducer,
         [shortsApiRedux.reducerPath]: shortsApiRedux.reducer
         ,[videoDetailApi.reducerPath]: videoDetailApi.reducer
+        ,[youtubeApi.reducerPath]: youtubeApi.reducer
 
     },
     middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([shortsApiRedux.middleware, videoDetailApi.middleware]),
+    getDefaultMiddleware().concat([shortsApiRedux.middleware, videoDetailApi.middleware, youtubeApi.middleware]),
 })
 
 

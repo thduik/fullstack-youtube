@@ -17,12 +17,13 @@ import VideoStats from "./VideoStats";
 import VideoComments from "./VideoComments";
 import DescriptionDisplay from "./DescriptionDisplay";
 import { useLazyGetVideoDetailQuery } from "../../middlewares/videoDetailApi";
+import { useLazyGetChannelDetailQuery } from "../../middlewares/youtubeApi";
+import useChannelDetail from "../../hooks/useChannelDetail";
 
 const playerBoxWidth = { xs: "100%", sm770: "90%", md1000: "84%" }
 
 const VideoDetail = () => {
-  // const { id } = useParams() //id = videoid
-  //useEffect(() => { console.log("VideoDetail id", id) }, [id])
+  const {setChannelId, channelDetail} = useChannelDetail()
   const [searchParams, setSearchParams] = useSearchParams();
   const { videoArr, streamedPlaylist, isStreaming } = useSelector(state => state.playlistStream);
   const [playlistId, setPlaylistId] = useState(null)
@@ -34,6 +35,15 @@ const VideoDetail = () => {
   const [id, setVideoId] = useState(null)
   const [playlistVideoIdx, setPlaylistVideoIdx] = useState(null)
 
+  const { snippet: { title, channelId, channelTitle, description, publishedAt }, statistics: { viewCount, likeCount, commentCount } } = videoDetail && videoDetail.snippet ? videoDetail : 
+  { snippet: { title:"nell", channelId:null, channelTitle:"nell", description:"nell", publishedAt:null }, statistics: { viewCount:"nell", likeCount:"nell", commentCount:"nell" } };
+
+  useEffect(()=>{
+    setChannelId(channelId)
+  },[channelId])
+  useEffect(()=>{ 
+    console.log("channelDetail useEffect", channelDetail)
+  },[channelDetail])
   useEffect(() => {
     console.log("")
     return () => {//unmount 
@@ -91,6 +101,7 @@ const VideoDetail = () => {
   useEffect(() => {
     // Anything in here is fired on component mount.
     console.log("setVideoDetail useEffect", data)
+    if (!data || !data.items || data.items.length < 1) { return }
     setVideoDetail(data.items[0])
   }, [data])
 
@@ -111,7 +122,7 @@ const VideoDetail = () => {
   }
 
   const videoPlayEnded = () => {
-    if (playlistVideoIdx < videoArr.length - 1) {
+    if (videoArr && videoArr.length && playlistVideoIdx < videoArr.length - 1) {
       setVideoId(videoArr[playlistVideoIdx + 1].videoId)
       setPlaylistVideoIdx(playlistVideoIdx + 1)
     }
@@ -120,7 +131,7 @@ const VideoDetail = () => {
 
   if (!videoDetail?.snippet) return <Loader />;
 
-  const { snippet: { title, channelId, channelTitle, description, publishedAt }, statistics: { viewCount, likeCount, commentCount } } = videoDetail;
+  // const { snippet: { title, channelId, channelTitle, description, publishedAt }, statistics: { viewCount, likeCount, commentCount } } = videoDetail;
 
 
   return (

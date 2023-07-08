@@ -6,7 +6,8 @@ const getShortsOfChannel = async (req,res,next) => {
     const cursorNext = req.query.cursorNext
     try {
         const result = await fetchShortsOfChannelA({channelId:channelId, cursorNext:cursorNext})
-        console.log("getShortsOfChannel success result.items.length", result.content)
+        console.log("getShortsOfChannel success result.items.length", result.contents.length, result.contents[0])
+        // res.json(result)
         res.json(result)
     } catch (err) {
         console.log("errpr getShortsOfChannel")
