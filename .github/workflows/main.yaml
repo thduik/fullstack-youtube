@@ -20,7 +20,7 @@ jobs:
       #because our purpose is to simply copy paste from repo to build for deployment every time, just git reset --hard to avoid troubles
       - run: git reset --hard
       - run: git pull
-      - run: mkdir /var/www/fullstack-youtube/client/dist_older/dist$(date +%F)
+      # - run: mkdir /var/www/fullstack-youtube/client/dist_older/dist$(date +%F)
       - run: cp -R /var/www/fullstack-youtube/client/dist /var/www/fullstack-youtube/client/dist_older/dist$(date +%F)
       # prod deploy 
       # - run: docker compose -f /var/www/fullstack-youtube/docker-compose.prod.yaml up --build --wait --remove-orphans
