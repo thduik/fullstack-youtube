@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 
 function ArrowLeftIcon({ marginRight = "0px",
     width = "24px", height = "24px", fillColor = "white", viewBox = "0 0 24 24", borderRadius = "15px" }) {

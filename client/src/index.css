@@ -37,6 +37,11 @@ a {
   width: 100% !important;
 }
 
+.iframe-player {
+  height: 77vh !important;
+  width: 100% !important;
+}
+
 .search-bar{
   border:none;
   outline:none;
@@ -62,9 +67,9 @@ a {
     overflow: auto !important;
   }
 
-  /* .react-player {
+  .react-player {
     height: 45vh !important;
-  } */
+  }
   
 }
 

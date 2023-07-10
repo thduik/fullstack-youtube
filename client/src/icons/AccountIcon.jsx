@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import './icons.css'
 function AccountIcon({width="30px", height="30px", fillColor="white", viewBox="0 0 24 24"}) {
     return (

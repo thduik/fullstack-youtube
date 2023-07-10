@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
-import ReactPlayer from "react-player/youtube";
+// import ReactPlayer from "react-player/youtube";
 import { Typography, Box, Stack, createTheme } from "@mui/material";
 // import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
-import { Videos, Loader } from "..";
+import { Videos, Loader, VideoPlayer } from "..";
 import { fetchFromAPI } from "../../apiFetch/fetchFromAPI";
 
 import { useSelector, useDispatch } from 'react-redux'
@@ -141,7 +141,8 @@ const VideoDetail = () => {
         <Box flex={1}>
           {/* <Box sx={{ width: "100%", position: "sticky", top: "86px" }}> */}
           <Box sx={{ width: playerBoxWidth, top: "86px", margin: "auto" }}>
-            <ReactPlayer playing={id ? true : false} muted={true} onEnded={videoPlayEnded} url={`https://www.youtube.com/watch?v=${id}`} className="react-player" controls />
+            
+              <VideoPlayer className="iframe-player" videoId={id} height={'100%'} width={'100%'}/>
             <VideoStats title={title} channelTitle={channelTitle} channelId={channelId} viewCount={viewCount} likeCount={likeCount} publishedAt={publishedAt} />
             <div style={{ padding: "14px", marginTop: "10px", color: "white" }} 
             >

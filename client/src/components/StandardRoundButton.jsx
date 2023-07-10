@@ -12,6 +12,8 @@ const StandardRoundButton = ({ iconComp = null, onClick, width = "30px", height 
     , textMarginTop = "8px"
     , textFontWeight = "bold"
     , border = "none"
+    , margin = "0px"
+    , borderRadius = "15px"
 }
 ) => {
     const [hovering, setHovering] = useState(false)
@@ -26,7 +28,8 @@ const StandardRoundButton = ({ iconComp = null, onClick, width = "30px", height 
 
     return (
         <div className="hover-pointer" style={{
-            width: width, height: width, display: "flex", flexDirection: "row", justifyContent: "center", borderRadius: "15px", border: border
+            width: width, height: width, display: "flex", flexDirection: "row", justifyContent: "center", border: border
+            , margin:margin, borderRadius:borderRadius
             , backgroundColor: hovering ?
                 mouseDown ? mouseDownBColor : hoverBColor
                 : idleBColor
