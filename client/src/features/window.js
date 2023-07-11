@@ -10,11 +10,11 @@ export const windowSlice = createSlice({
     initialState,
     reducers: {
         changeInnerWidth: (state, action) => {
-            console.log("reduxDispath changeInnerWidth", action.payload)
+            // console.log("reduxDispath changeInnerWidth", action.payload)
             state.innerWidth = action.payload
         },
         changeInnerHeight: (state, action) => {
-            console.log("reduxDispath changeInnerHeight, action.payload")
+            // console.log("reduxDispath changeInnerHeight, action.payload")
             state.innerHeight = action.payload
         }
     }

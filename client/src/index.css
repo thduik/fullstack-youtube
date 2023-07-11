@@ -87,3 +87,12 @@ a {
 element:active:focus {
     outline: 0;
 }
+
+
+.ytp-show-cards-title {
+  display: none;
+}
+
+div.ytp-chrome-top {
+  display: none;
+}

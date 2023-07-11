@@ -1,5 +1,10 @@
 DOCKERISZED YOUTUBE CLONE
 
+Demo link <a href='http://holysheet2831.hopto.org/'> here </a>
+
+This is a clone of the official youtube app that i built as a way to learn web dev. Tbh trying to emulate the functionalities and design of the damn app has been extremely beneficial to learning the process. I've been stuck in tutorial and courses hell for sooo long and taking on this approach finally allowed me to drastically improive my skills by having a means of applying the knowledge that i learned hands on and having the official youtube app as a guidelines to build without having the even think about user's perspective and experience too much.
+
+\
 # support google login
 # deployed on vps
 # code splitting js build folder with vitejs

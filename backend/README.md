@@ -13,3 +13,6 @@ resources endpoints check req.auth.userid (that is set by authModule) and grant 
 
 
 jwt key generate to backend/src/jwt-keys/public.pem
+
+# dev local
+docker compose -f ../docker-compose.yaml up --build 

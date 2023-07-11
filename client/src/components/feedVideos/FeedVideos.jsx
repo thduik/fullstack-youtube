@@ -8,7 +8,7 @@ const FeedVideos = ({ videos, direction }) => {
   // if(!videos?.length) return <Loader />;
   const handleScroll = (e) => {
     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-    console.log("bottom handleScroll is", bottom)
+    // console.log("bottom handleScroll is", bottom)
     if (bottom) { 
       console.log("SeachFeed scrolled to bottom")
      }

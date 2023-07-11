@@ -31,4 +31,27 @@ const fetchShortsOfChannelA = async ({ channelId,cursorNext }) => {
     }
 }
 
-module.exports = {fetchShortsOfChannelA}
+const fetchSuggestedShorts = async({shortid, sequenceContiuation = null}) => {
+    //https://rapidapi.com/ytjar/api/yt-api
+    let paramz = {id: shortid}
+    if (sequenceContiuation) {paramz.params = sequenceContiuation} //read docs above, Shorts Sequence session
+    const options = {
+        method: 'GET',
+        url: 'https://yt-api.p.rapidapi.com/shorts/sequence',
+        params: paramz,
+        headers: {
+          'X-RapidAPI-Key': rapidApiKey,
+          'X-RapidAPI-Host': 'yt-api.p.rapidapi.com'
+        }
+      };
+      
+      try {
+          const response = await axios.request(options);
+          console.log(response.data);
+          return response.data
+      } catch (error) {
+        //   console.error(error);
+          throw(error)
+      }
+}
+module.exports = {fetchShortsOfChannelA, fetchSuggestedShorts}

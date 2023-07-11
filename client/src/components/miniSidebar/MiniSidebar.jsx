@@ -28,10 +28,11 @@ const MiniSidebar = ({backgroundColor="black",buttonBackgroundColor="rgba(0,0,0,
         }
         return mapObj[name] || "4px"
     }
-    const barButtons = miniCategories.map((obj) => {
+    const barButtons = miniCategories.map((obj, idx) => {
         //{ name: 'New', icon: <HomeIcon />, },
         return (
             <div 
+                key={idx}
                 className="buttonWrapper"
                 style={{
                 // backgroundColor:backgroundColor,

@@ -1,20 +1,17 @@
 import { useState, useEffect } from "react";
 import { fetchShortsOfChannel } from "../apiFetch/shortsApi";
-import { shortsApiRedux, useGetShortsQuery, useLazyGetShortsQuery } from "../middlewares/shortsApi";
+import { shortsApiRedux} from "../middlewares/shortsApi";
 
 
-const useShorts = () => {
-    const [channelId, setChannelId] = useState("UC0qTInmgyYnwWLeCUIde9Cw")
+const useChannelShorts = () => {
+    const [channelId, setChannelId] = useState(null)
     const [shorts, setShorts] = useState([])
     const [cursorNext, setCursorNext] = useState(null)
     
-    const { data, error, isLoading } = shortsApiRedux.endpoints.getShorts.useQuery(channelId);
-
-
-    useEffect(async () => {
-        console.log("useShorts useGetShortsQuery channelId changed", channelId)
-        // if (channelId) {const res = await trigger(channelId).unwrap(); console.log("res is ", res, res) }
-    }, [channelId])
+    const [trigger, { data, error, isLoading }] = shortsApiRedux.endpoints.getChannelShorts.useLazyQuery();
+    useEffect(()=>{
+        if (channelId) {trigger(channelId)}
+    },[channelId])
     useEffect(() => {
         console.log("useShorts useGetShortsQuery data changed", data, error, isLoading)
         //data = {contents:[short], cursorNext:string}
@@ -29,7 +26,7 @@ const useShorts = () => {
     useEffect(() => {
         console.log("shorts in useSHort changed shorts.length", shorts.length)
     }, [shorts])
-    return [shorts, setChannelId]
+    return [ setChannelId]
 }
 
-export default useShorts;
+export default useChannelShorts;

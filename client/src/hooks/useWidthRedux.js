@@ -24,11 +24,11 @@ const useWidthRedux = () => {
         return () => window.removeEventListener("resize", updateWindowDimensions)
       }, [window]);
     useEffect(()=>{
-        console.log("useWidthRedux updating width", width)
+        // console.log("useWidthRedux updating width", width)
         dispatch(changeInnerWidth(width))
     },[width])
     useEffect(()=>{
-      console.log("useWidthRedux updating height", height)
+      // console.log("useWidthRedux updating height", height)
       dispatch(changeInnerHeight(height))
   },[width])
     return [setWindow]
