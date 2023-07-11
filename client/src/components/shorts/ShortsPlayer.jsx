@@ -4,25 +4,26 @@ import VideoPlayer from "../VideoPlayer";
 
 const imgUrl = 'https://i.ytimg.com/vi/LupxMZogMnA/oar2.jpg?sqp=-oaymwEaCJUDENAFSFXyq4qpAwwIARUAAIhCcAHAAQY=&rs=AOn4CLCVNacy2Rye_0k4TPE9HQFig1Ti6g'
 
-const checkIndexOf = (arr, videoId) => {
-    // let resIdx = -1
-    if (!arr || !videoId) {return -1}
-    for (var i = 0;i < arr.length;i++) {
-        if (arr[i].short.videoId == videoId) {return i}
-    }
-    return -1
-}
+// const checkIndexOf = (arr, videoId) => {
+//     // let resIdx = -1
+//     if (!arr || !videoId) {return -1}
+//     for (var i = 0;i < arr.length;i++) {
+//         if (arr[i].short.videoId == videoId) {return i}
+//     }
+//     return -1
+// }
 
 const ShortsPlayer = ({initialVideoId = null //curr videoId when mounted
 }) => {
     const {shortsArr, isStreaming, isChannelShorts} = useSelector((state)=>state.shorts)
     const [videoId, setVideoId] = useState(null)
     const [currIdx, setCurrIdx] = useState(0)
-
+    useEffect(() => {
+        console.log("ShortsPlayer shortsArr changed", shortsArr)       
+    }, [shortsArr])
     useEffect(()=>{
         console.log("initialVideoId",initialVideoId)
         setVideoId(initialVideoId)
-        setCurrIdx(checkIndexOf(shortsArr, videoId))
     },[initialVideoId])
     useEffect(()=>{
         console.log("shortsArrShortsPlayer useEfect", shortsArr)
