@@ -8,6 +8,7 @@ import VideoPlayer from "../VideoPlayer";
 import ShortsPlayer from "./ShortsPlayer";
 import { deleteResetAll } from "../../features/appData/shortsSlice";
 import useSuggestedShorts from "../../hooks/useSuggestedShorts";
+import { shortWidth } from "./dimensions";
 
 
 
@@ -17,7 +18,7 @@ const ShortsDetail = () => {
     const [videoId, setVideoId] = useState(null)
     const [trigger, { data, error, isLoading }] = useLazyGetVideoDetailQuery()
     const innerWidth = useSelector((state) => state.windowRedux.innerWidth)
-    const [{ width, height }, setDimensions] = useState({ width: "calc(56.25vh - 63px", height: "calc(100vh - 112px)" }) //{ width: "360px", height: "640px" }
+    const [{ width, height }, setDimensions] = useState({ width: shortWidth, height: "100%" }) //({ width: "calc(56.25vh - 63px", height: "calc(100vh - 112px)" }) //{ width: "360px", height: "640px" }
     const [menuMarginRight, setMenuMarginRight] = useState('0px')
     const {shortsArr, isStreaming} = useSelector((state)=>state.shorts)
     const [setShortId] = useSuggestedShorts()
@@ -66,7 +67,8 @@ const ShortsDetail = () => {
     }
 
     return (
-        <div style={{ display: "flex", justifyContent: "center", flexDirection: "row", overflowY: 'hidden', height: "100%" }}>
+        <div style={{ display: "flex", justifyContent: "center", flexDirection: "row", overflowY: 'hidden', height: "100%"
+        ,backgroundColor:"green" }}>
             <div style={{ width: width, height: height, minWidth:"306px",minHeight:"544px",overflowY: 'hidden', position: "fixed" }}>
                 <ShortsPlayer initialVideoId={videoId}/>
                 {/* <VideoPlayer controls={0} videoId={videoId} loop={1} /> */}
