@@ -19,12 +19,14 @@ export const shortsSlice = createSlice({
             state.isStreaming = action.payload
         },
         setChannelShortsArray: (state, action) => {// change to null OR array of videos of currently streamed playlist 
+            //called when navigating from channelShorts to shortDetail
             console.log("playlistStreamSlice setVideoArray called", action.payload)
             state.shortsArr = action.payload
             state.isStreaming = true
             state.isChannelShorts = true
         },
-        setSuggestFirstShort: (state, action) => {
+        setSuggestFirstShort: (state, action) => {//called by useSuggestedShorts when NOT navigating from channelShorts to shortDetail
+            //the whole purpose is to set the short as the first element in shortsArray and normalize the shortsArray for shortDetail to use
             console.log("playlistStreamSlice setVideoArray called", action.payload)
             state.shortsArr = [action.payload]
             state.isStreaming = true

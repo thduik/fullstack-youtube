@@ -18,7 +18,7 @@ const ShortsDetail = () => {
     const [videoId, setVideoId] = useState(null)
     const [trigger, { data, error, isLoading }] = useLazyGetVideoDetailQuery()
     const innerWidth = useSelector((state) => state.windowRedux.innerWidth)
-    const [{ width, height }, setDimensions] = useState({ width: shortWidth, height: "100%" }) //({ width: "calc(56.25vh - 63px", height: "calc(100vh - 112px)" }) //{ width: "360px", height: "640px" }
+    const [{ width, height }, setDimensions] = useState({ width: "100%", height: "100%" }) //({ width: "calc(56.25vh - 63px", height: "calc(100vh - 112px)" }) //{ width: "360px", height: "640px" }
     const [menuMarginRight, setMenuMarginRight] = useState('0px')
     const {shortsArr, isStreaming} = useSelector((state)=>state.shorts)
     const [setShortId] = useSuggestedShorts()
