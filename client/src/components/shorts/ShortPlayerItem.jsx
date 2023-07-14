@@ -1,10 +1,14 @@
 import { useEffect } from "react";
+import { memo } from "react";
+
 import { shortHeight, shortMarginBottom, shortMarginTop, shortWidth } from "./dimensions";
 
 
 const ShortPlayerItem = ({ height = shortHeight, width = shortWidth
     , videoPlayer = null, imgUrl = null, videoId = null }) => {
-    useEffect(() => { console.log("ShortPlayerItem", imgUrl) }, [imgUrl])
+    // useEffect(() => { console.log("ShortPlayerItem", imgUrl) }, [imgUrl])
+    useEffect(()=>{console.log('ShortPlayerItem mounted')},[])
+    // useEffect(()=>{console.log('ShortPlayerItem updated')})
     return (
         <div style={{
             height: height
@@ -24,4 +28,4 @@ const ShortPlayerItem = ({ height = shortHeight, width = shortWidth
     )
 }
 
-export default ShortPlayerItem;
+export default memo(ShortPlayerItem);

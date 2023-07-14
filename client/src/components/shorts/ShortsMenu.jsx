@@ -30,7 +30,7 @@ const ShortsMenu = ({ onClick = () => { }, data, likeCount = "9999k", commentCou
                     onClick={() => { clickedButton('like') }} />
                 <p style={{ color: normalFontColor, fontSize: '14px', marginTop:'4px' }}>{commentCount}</p>
             </div>
-            <div style={{marginTop:'10px', marginBottom:'10px'}}>
+            <div style={{marginTop:'10px', marginTop:'10px'}}>
             <StandardRoundButton height="40px" width="40px" borderRadius="20px"
                     iconComp={<ShareIcon height="30px" width="30px" viewBox="-4 -10 40 40" />}
                     onClick={() => { clickedButton('share') }} />

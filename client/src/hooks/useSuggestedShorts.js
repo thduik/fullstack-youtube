@@ -24,9 +24,9 @@ const useSuggestedShorts = () => {
             trigger(shortId)
         }
     },[shortId])
-    useEffect(()=>{
-        if (shortId) {console.log("useSuggestedShorts shortId",shortId); trigger(shortId)}
-    },[shortId])
+    // useEffect(()=>{
+    //     if (shortId) {console.log("useSuggestedShorts shortId",shortId); trigger(shortId)}
+    // },[shortId])
     
     useEffect(() => {
         if (error) { console.log("useShorts useGetShortsQuery error", error, isLoading) }

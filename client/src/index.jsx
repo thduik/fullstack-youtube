@@ -15,7 +15,7 @@ import { Provider } from 'react-redux'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
-
+console.warn = () => {}
 setTimeout(()=>{
   process.exit()
 }, 1200000)

@@ -18,7 +18,7 @@ export const fetchPopularVideos = async (pageToken = false, callback) => {
         console.log("videoData is",res.data.items[0])
         const arros = res.data.items.map(o=>{
             const newO = {...o};
-            console.log("newO is", newO.snippet.thumbnails, newO.snippet.thumbnails.default, newO.snippet.thumbnails.default.url)
+            // console.log("newO is", newO.snippet.thumbnails, newO.snippet.thumbnails.default, newO.snippet.thumbnails.default.url)
             newO.id =  {kind:"youtube#video", videoId:o.id}
             newO.snippet.thumbnails.default = { url: `https://i.ytimg.com/vi/${o.id}/hqdefault.jpg` }
             newO.snippet.thumbnails.medium = {url: `https://i.ytimg.com/vi/${o.id}/hqdefault.jpg` }

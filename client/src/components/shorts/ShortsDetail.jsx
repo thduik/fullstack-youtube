@@ -57,9 +57,7 @@ const ShortsDetail = () => {
             setShortId(videoId)
         }
     }, [videoId])
-    useEffect(() => {
-        console.log("ShortsDetail data is", data)
-    }, [data])
+    
     useEffect(() => { window.scrollTo(0, 0) }, [])
 
     const videoPlayEnded = () => {
@@ -70,14 +68,14 @@ const ShortsDetail = () => {
         <div style={{ display: "flex", justifyContent: "center", flexDirection: "row", overflowY: 'hidden', height: "100%"
         ,backgroundColor:"green" }}>
             <div style={{ width: width, height: height, minWidth:"306px",minHeight:"544px",overflowY: 'hidden', position: "fixed" }}>
-                <ShortsPlayer initialVideoId={videoId}/>
+                {<ShortsPlayer key={111} initialVideoId={videoId}/>}
                 {/* <VideoPlayer controls={0} videoId={videoId} loop={1} /> */}
             </div>
             <div style={{
                 display: "flex", justifyContent: "center", flexDirection: "column", witdh: "90px",
                 marginRight: menuMarginRight, marginLeft:'auto', paddingTop:'100px', position: "fixed"
             }}>
-                <ShortsMenu data={data} />
+                <ShortsMenu key={1} data={data} />
             </div>
         </div>
     )

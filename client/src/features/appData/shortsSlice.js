@@ -27,7 +27,7 @@ export const shortsSlice = createSlice({
         },
         setSuggestFirstShort: (state, action) => {//called by useSuggestedShorts when NOT navigating from channelShorts to shortDetail
             //the whole purpose is to set the short as the first element in shortsArray and normalize the shortsArray for shortDetail to use
-            console.log("playlistStreamSlice setVideoArray called", action.payload)
+            console.log("setSuggestFirstShort called", action.payload)
             state.shortsArr = [action.payload]
             state.isStreaming = true
             state.isChannelShorts = false
@@ -50,7 +50,7 @@ export const shortsSlice = createSlice({
             state.isChannelShorts = true
           })
           .addMatcher(shortsApiRedux.endpoints.getSuggestedShorts.matchFulfilled, (state, action) => {
-            console.log('extraReducers getSuggestedShorts fulfilled', action.payload)
+            // console.log('extraReducers getSuggestedShorts fulfilled', action.payload)
             let currShortArr = state.shortsArr
             const newArr = action.payload.data.map(o=>{return { 
                 short:{  videoId:o.videoId, thumbnails:[{url:o.thumbnail[0].url}] }  // {short:{videoId:...}}

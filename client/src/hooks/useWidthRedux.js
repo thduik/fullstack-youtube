@@ -15,9 +15,12 @@ const useWidthRedux = () => {
           const newWidth = window.innerWidth;
           const newHeight = window.innerHeight;
           setWidth(newWidth);
+          setHeight(newHeight)
         };
         // console.log("window.innerWidth",window.innerWidth)
         setWidth(window.innerWidth)
+        setHeight(window.innerHeight)
+
         // const removeEvLis = () => window.removeEventList ener("resize", updateWindowDimensions)
         // const addEvLis = () => window.addEventListener("resize", updateWindowDimensions);
         window.addEventListener("resize", updateWindowDimensions);
@@ -30,7 +33,7 @@ const useWidthRedux = () => {
     useEffect(()=>{
       // console.log("useWidthRedux updating height", height)
       dispatch(changeInnerHeight(height))
-  },[width])
+  },[height])
     return [setWindow]
 }
 

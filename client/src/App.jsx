@@ -20,6 +20,7 @@ const PlaylistSelectMenu = loadable(() => import('./components/videoCard/Playlis
 // import PlaylistsPage from "./components/playlist/PlaylistsPage";
 const PlaylistsPage = loadable(() => import('./components/playlist/PlaylistsPage'));
 const ChannelShorts = loadable(() => import('./components/shorts/ChannelShorts'));
+const ShortsDetail = loadable(() => import('./components/shorts/ShortsDetail'));
 
 // import ChannelShorts from "./shorts/ChannelShorts";
 
@@ -36,7 +37,7 @@ import { setPlaylistArray } from "./features/appData/playlistSlice";
 
 import { fetchPopularVideos } from "./apiFetch/popularApi";
 import useWidthRedux from "./hooks/useWidthRedux";
-import ShortsDetail from "./components/shorts/ShortsDetail";
+// import ShortsDetail from "./components/shorts/ShortsDetail";
 
 
 

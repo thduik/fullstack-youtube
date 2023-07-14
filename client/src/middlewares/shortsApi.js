@@ -22,7 +22,7 @@ export const shortsApiRedux = createApi({
         }),
         getSuggestedShorts: builder.query({
             query: (shortlId) => {
-                console.log("getSuggestedShorts endpoints RTK", shortlId)
+                // console.log("getSuggestedShorts endpoints RTK", shortlId)
                 // if (!channelId || !cursorNext) { return null }
                 return  `youtube/shorts/suggested?shortid=${shortlId}`
             },

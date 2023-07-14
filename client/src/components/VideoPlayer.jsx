@@ -10,6 +10,7 @@ const VideoPlayer = ({ videoId=null, loop = 0, autoplay = 1, height = '100%', wi
         setVideoUrl(urlString)
         
     },[videoId])
+    useEffect(()=>{console.log('videoPlayer height is',height)},[height])
     return (
         videoUrl ?
             <iframe className={className} src={videoUrl}
