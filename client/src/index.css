@@ -90,9 +90,13 @@ element:active:focus {
 
 
 .ytp-show-cards-title {
-  display: none;
+  display: none !important;
 }
 
-div.ytp-chrome-top {
-  display: none;
+div.ytp-chrome-top, div.ytp-chrome-bottom {
+  display: none !important;
+}
+
+ytp-chrome-top, .ytp-chrome-bottom {
+  display: none !important;
 }

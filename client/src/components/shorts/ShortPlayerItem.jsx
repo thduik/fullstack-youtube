@@ -13,13 +13,17 @@ const ShortPlayerItem = ({ height = shortHeight, width = shortWidth
     const [showVideo, setShowVideo] = useState(false)
     const [playOnReady, setPlayOnReady] = useState(false)
     const [preventChange, setPreventChange] = useState(false)
-   
+
+    useEffect(()=>{
+        
+    })
+    
     useEffect(()=>{ //render iframe for the selected shortPLayerItem and 2 adjacent ones as well, to enhance user experience
+        console.log('ShortPlayerItem curridx', currIdx, 'idx', idx)
         const cond1 = currIdx == idx || currIdx == idx -1 || currIdx == idx + 1
         if (cond1 && !preventChange) {
-            if (currIdx == idx ) {//make sure the main iframe is played immediately, the other 2 adjacent iframes will be paused
-                setPlayOnReady(true)
-            }
+           //make sure the main iframe is played immediately, the other 2 adjacent iframes will be paused
+            setPlayOnReady(currIdx == idx)
             setPreventChange(true)
             setShowVideo(true)
             setTimeout(() => {
