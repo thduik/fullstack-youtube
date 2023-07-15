@@ -6,13 +6,13 @@ import { heightPerShort, shortHeight, shortMarginTop, shortWidth, calcVideoPlaye
 import { arrayFirst, createDivArrFromShortArr, createShortItem } from "./utils";
 import { useSearchParams } from "react-router-dom";
 import ShortPlayerItem from "./ShortPlayerItem";
-import ShortVideoPlayer from "./ShortVideoPlayer";
 
 
 const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId when mounted
     const { shortsArr, isStreaming, isChannelShorts } = useSelector((state) => state.shorts)
     const [myShortArr, setMyShortArr] = useState([])
     const [searchParams, setSearchParams] = useSearchParams();
+
 
     const [snapType, setSnapType] = useState('none')
     const [videoId, setVideoId] = useState(null)
@@ -23,6 +23,8 @@ const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId w
     const [videoPlayer, setVideoPlayer] = useState(null)
     const ref = useRef(null)
     const [blockNewShort, setBlockNewShort] = useState(false)
+
+    const [allowChangeIdx, setAllowChangeIdx] = useState(true)
     useEffect(() => {
         const currVidId = searchParams.get("v")
         if (!initialVideoId) {console.log('settingVideoIdsearchParams',currVidId);setVideoId(currVidId);setCurrIdx(-1);setCurrIdx(0)} //3 lines to activate videoPLayer workflow
@@ -69,19 +71,23 @@ const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId w
         // divArre[currIdx] = createShortItem({ shortObj: shortArre[currIdx], idx: currIdx, currIdx: currIdx, videoPlayer: videoPlayer })
         // if (currIdx > 0) { divArre[currIdx - 1] = createShortItem({ shortObj: shortArre[currIdx-1], idx: currIdx - 1, currIdx: currIdx, videoPlayer: null }) }
         // if (currIdx < divArre.length - 1) { divArre[currIdx + 1] = createShortItem({ shortObj: shortArre[currIdx+1], idx: currIdx + 1, currIdx: currIdx, videoPlayer: null }) }
-        setTimeout(()=>{divArre[currIdx] = videoPlayer},100)
-        setTimeout(()=>{
-            setDivArr(divArre)
-            setBlockNewShort(true)
-            setTimeout(()=>{setBlockNewShort(false)},500)
-        },100)
+        // setTimeout(()=>{divArre[currIdx] = videoPlayer},100)
+        // setTimeout(()=>{
+        //     setDivArr(divArre)
+        //     setBlockNewShort(true)
+        //     setTimeout(()=>{setBlockNewShort(false)},500)
+        // },100)
+
+        setAllowChangeIdx(false)
+        setTimeout(()=>{setAllowChangeIdx(true)},500)
 
     }, [currIdx])
     
     const handleScroll = (e) => {
-        let currentIdx = (e.target.scrollTop + 300) / heightPerShort(innerHeight)
+        if (!allowChangeIdx) {return}
+        let currentIdx = (e.target.scrollTop + 200) / heightPerShort(innerHeight)
         currentIdx = Math.floor(currentIdx)
-        if (currentIdx != currIdx) { setCurrIdx(currentIdx) }
+        if (currentIdx != currIdx && allowChangeIdx) { setCurrIdx(currentIdx) }
         // console.log("ShortsPlayer handleScroll is",e.target.scrollTop, heightPerShort(innerHeight), innerHeight,currentIdx)
         // setShowVideo(false)
     }
@@ -100,11 +106,7 @@ const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId w
     }, [shortsArr])
     return (
         <div  style={{ width: "100%", height: "100%", overflowY: 'auto', position:'fixed' }} key={key} >
-
-
             {/* <VideoPlayer controls={1} videoId={videoId} loop={1} showInfo={0}/> */}
-
-
             <div ref={ref}
              className='short-item-wrapper'
                 style={{
@@ -115,14 +117,8 @@ const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId w
 
                 {/* {divArr} */}
                 {shortsArr.map((o, idx) => {
-                    
-                    if (idx == currIdx && !blockNewShort) { 
-                        // setBlockNewShort(true)
-                        // setTimeout(()=>{setBlockNewShort(false)},500)
-                        return <ShortVideoPlayer videoId={videoId} />
-                    }
                     const imgUrl = o?.short?.thumbnails?.length ? o.short.thumbnails[0].url : createShortThumbnailUrl(o?.short?.videoId)
-                    return < ShortPlayerItem key={idx} imgUrl={imgUrl} /> 
+                    return < ShortPlayerItem idx={idx} currIdx={currIdx} videoId={o.short.videoId} key={idx} imgUrl={imgUrl} /> 
                 })}
                 <div style={{ scrollSnapStop: 'normal', scrollSnapAlign: 'start', height: '400px', width: '100%' }}><p>LOLLLL</p></div>
             </div>

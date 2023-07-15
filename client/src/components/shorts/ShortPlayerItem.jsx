@@ -1,14 +1,35 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { memo } from "react";
+import loadable from '@loadable/component'
 
 import { shortHeight, shortMarginBottom, shortMarginTop, shortWidth } from "./dimensions";
+// import ShortVideoPlayer from "./ShortVideoPlayer";
+const ShortVideoPlayer = loadable(() => import('./ShortVideoPlayer'));
 
 
 const ShortPlayerItem = ({ height = shortHeight, width = shortWidth
-    , videoPlayer = null, imgUrl = null, videoId = null }) => {
-    // useEffect(() => { console.log("ShortPlayerItem", imgUrl) }, [imgUrl])
-    useEffect(()=>{console.log('ShortPlayerItem mounted')},[])
-    // useEffect(()=>{console.log('ShortPlayerItem updated')})
+    , videoPlayer = null, imgUrl = null, videoId = null ,
+    currIdx = null, idx}) => {
+    const [showVideo, setShowVideo] = useState(false)
+    const [playOnReady, setPlayOnReady] = useState(false)
+    const [preventChange, setPreventChange] = useState(false)
+   
+    useEffect(()=>{ //render iframe for the selected shortPLayerItem and 2 adjacent ones as well, to enhance user experience
+        const cond1 = currIdx == idx || currIdx == idx -1 || currIdx == idx + 1
+        if (cond1 && !preventChange) {
+            if (currIdx == idx ) {//make sure the main iframe is played immediately, the other 2 adjacent iframes will be paused
+                setPlayOnReady(true)
+            }
+            setPreventChange(true)
+            setShowVideo(true)
+            setTimeout(() => {
+                setPreventChange(false)
+            }, 800);
+            return
+        }
+        setShowVideo(false)
+    },[currIdx, idx])
+
     return (
         <div style={{
             height: height
@@ -19,8 +40,8 @@ const ShortPlayerItem = ({ height = shortHeight, width = shortWidth
             , scrollSnapAlign:'start'
             , scrollSnapStop:'always'
         }}>
-            {videoPlayer ? 
-            null 
+            {showVideo ? 
+            <ShortVideoPlayer controls={1} videoId={videoId} playOnReady={playOnReady}/> 
             :
             <img src={imgUrl} height={'100%'} width={'100%'} style={{borderRadius:'20px'}}/>
             }
