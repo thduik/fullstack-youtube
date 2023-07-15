@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import YouTube from 'react-youtube';
 
 const VideoPlayer = ({ videoId = null, loop = 0, autoplay = 1, height = '100%', width = '100%', className = "", controls = 1, showInfo = 1
  ,iframeRef, changeIframeRef}) => {
@@ -31,7 +30,6 @@ const VideoPlayer = ({ videoId = null, loop = 0, autoplay = 1, height = '100%', 
     
     useEffect(() => { console.log('videoPlayer height is', height) }, [height])
     return (
-        //https://www.npmjs.com/package/react-youtube
         <div>
             {/* <YouTube videoId="2g811Eo7K8U" /> */}
 
