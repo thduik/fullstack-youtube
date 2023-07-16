@@ -31,13 +31,14 @@ const ShortVideoPlayer = ({ videoId, autoplay = 0, controls = 0, playOnReady = f
         setTimeout(() => {
             //https://stackoverflow.com/questions/15164942/stop-embedded-youtube-iframe
             console.log("ShortVideoPlayer iframeRefis", iframeRef)
+            if (!iframeRef) {console.log("error iframeRef null"); return}
             if (playOnReady) {
                 iframeRef.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*')
                 return
             }
             iframeRef.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*')
 
-        }, 1000)
+        }, 400)
     }, [iframeRef, playOnReady])
     return (
         <div style={{

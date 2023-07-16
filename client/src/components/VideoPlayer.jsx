@@ -1,20 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 
 const VideoPlayer = ({ videoId = null, loop = 0, autoplay = 1, height = '100%', width = '100%', className = "", controls = 1, showInfo = 1
- ,iframeRef, changeIframeRef}) => {
+    , iframeRef, changeIframeRef = null, qualitly = 360 }) => {
     // const ref = useRef(null)
     // const [iframeRef, setIframeRef] = useState(null)
     const iRef = useRef(null)
     const [videoUrl, setVideoUrl] = useState(null)
     const ref = useRef(null)
-    useEffect(()=>{console.log("refVideoPlayer is ", ref.current)
-        changeIframeRef(ref.current)},[ref])
+    useEffect(
+
+        () => {
+            if (!changeIframeRef) {return}
+            console.log("refVideoPlayer is ", ref.current)
+            changeIframeRef(ref.current)
+        }, [ref, changeIframeRef])
 
     useEffect(() => {
         if (!videoId) { return }
         let urlString = `https://www.youtube.com/embed/${videoId}?controls=${controls}&autoplay=${autoplay}&enablejsapi=1&loop=${loop}`
         console.log(urlString)
         if (loop) { urlString += `&playlist=${videoId}` }
+        if (qualitly == 360) { urlString += '&vq=medium' }
         if (!showInfo) { urlString += '&showinfo=0' }
         setVideoUrl(urlString)
         //
@@ -27,7 +33,7 @@ const VideoPlayer = ({ videoId = null, loop = 0, autoplay = 1, height = '100%', 
     //             console.log("command event heard", event)
     //         })
     // }, [])
-    
+
     useEffect(() => { console.log('videoPlayer height is', height) }, [height])
     return (
         <div>
