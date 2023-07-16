@@ -19,8 +19,6 @@ const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId w
     const [divArr, setDivArr] = useState([])
     const {innerWidth , innerHeight} = useSelector((state) => state.windowRedux)
     const ref = useRef(null)
-    const [blockNewShort, setBlockNewShort] = useState(false)
-
     const [allowChangeIdx, setAllowChangeIdx] = useState(true)
     useEffect(() => {
         const currVidId = searchParams.get("v")
@@ -46,7 +44,6 @@ const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId w
         setVideoId(initialVideoId)
     }, [initialVideoId])
     useEffect(() => {
-        if (blockNewShort) {return}
         if (!shortsArr || !shortsArr.length || currIdx < 0 || currIdx >= shortsArr.length) { 
             console.log("currIdxShortsPlayer useEfect ", currIdx, shortsArr.length, shortsArr)
             return }
