@@ -21,12 +21,13 @@ const PlaylistSelectMenu = loadable(() => import('./components/videoCard/Playlis
 const PlaylistsPage = loadable(() => import('./components/playlist/PlaylistsPage'));
 const ChannelShorts = loadable(() => import('./components/shorts/ChannelShorts'));
 const ShortsDetail = loadable(() => import('./components/shorts/ShortsDetail'));
+// import MiniSidebar from './components/miniSidebar/MiniSidebar'
+const MiniSidebar = loadable(() => import('./components/miniSidebar/MiniSidebar'));
 
 // import ChannelShorts from "./shorts/ChannelShorts";
 
 import { changeShowSidebar } from './features/uiState/uiStateSlice.js'
 
-import MiniSidebar from './components/miniSidebar/MiniSidebar'
 import { useEffect } from "react";
 import { login } from "./features/user/userSlice";
 import { cookieLogin } from "./utils/testApi";

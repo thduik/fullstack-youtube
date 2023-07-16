@@ -10,7 +10,6 @@ import ShortPlayerItem from "./ShortPlayerItem";
 
 const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId when mounted
     const { shortsArr, isStreaming, isChannelShorts } = useSelector((state) => state.shorts)
-    const [myShortArr, setMyShortArr] = useState([])
     const [searchParams, setSearchParams] = useSearchParams();
 
 
@@ -18,9 +17,7 @@ const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId w
     const [videoId, setVideoId] = useState(null)
     const [currIdx, setCurrIdx] = useState(0)
     const [divArr, setDivArr] = useState([])
-    const [showVideo, setShowVideo] = useState(true)
     const {innerWidth , innerHeight} = useSelector((state) => state.windowRedux)
-    const [videoPlayer, setVideoPlayer] = useState(null)
     const ref = useRef(null)
     const [blockNewShort, setBlockNewShort] = useState(false)
 
@@ -29,15 +26,6 @@ const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId w
         const currVidId = searchParams.get("v")
         if (!initialVideoId) {console.log('settingVideoIdsearchParams',currVidId);setVideoId(currVidId);setCurrIdx(-1);setCurrIdx(0)} //3 lines to activate videoPLayer workflow
     },[searchParams])
-
-    useEffect(()=>{
-        const playerHeight = calcVideoPlayerHeight(innerHeight)
-        setVideoPlayer(<div style={{height:`${playerHeight}px`, //videoPlayerHeight(innerHeight),
-        width:shortWidth,  scrollSnapAlign:'start', scrollSnapStop:'always', display:'block'
-        , borderRadius:'20px'}}>
-        <VideoPlayer height={`${playerHeight}px`} controls={0} videoId={videoId} loop={1} showInfo={0} />
-    </div>)
-    },[videoId])
     
     useEffect(() => {
         //trigger videoPlayer change workflow
@@ -45,10 +33,10 @@ const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId w
         console.log("useEffect shortsArr changed")
         
         if (shortsArr.length > 1) {//default snapType = 'none' to prevent bug. This bug makes
-            //page scroll to bottoms as soon as divArr is rendered. It is not default/normal behavior when array of components
+            //page scroll to bottoms as soon as divArr is rendered (mounted). It is not default/normal behavior when array of components
             //is rendered with scrollSnapTyp parent and scrollSnapAlign children. 
-            //this workaround of defaulting snapType to 'none' is by far the best
-            setTimeout(()=>{setSnapType('y mandatory')},200) 
+            //this workaround of defaulting snapType to 'none' initially is by far the best solution available
+            setTimeout(()=>{setSnapType('y mandatory')},200)  
         }
         return () => {
         }
@@ -63,21 +51,7 @@ const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId w
             console.log("currIdxShortsPlayer useEfect ", currIdx, shortsArr.length, shortsArr)
             return }
         console.log("currIdxShortsPlayer useEfect ", currIdx, arrayFirst(shortsArr[currIdx]?.short?.thumbnails),shortsArr[currIdx])
-    
-        let divArre = createDivArrFromShortArr(shortsArr, currIdx)
-        let shortArre = shortsArr
         setVideoId(shortsArr[currIdx].short.videoId)
-        
-        // divArre[currIdx] = createShortItem({ shortObj: shortArre[currIdx], idx: currIdx, currIdx: currIdx, videoPlayer: videoPlayer })
-        // if (currIdx > 0) { divArre[currIdx - 1] = createShortItem({ shortObj: shortArre[currIdx-1], idx: currIdx - 1, currIdx: currIdx, videoPlayer: null }) }
-        // if (currIdx < divArre.length - 1) { divArre[currIdx + 1] = createShortItem({ shortObj: shortArre[currIdx+1], idx: currIdx + 1, currIdx: currIdx, videoPlayer: null }) }
-        // setTimeout(()=>{divArre[currIdx] = videoPlayer},100)
-        // setTimeout(()=>{
-        //     setDivArr(divArre)
-        //     setBlockNewShort(true)
-        //     setTimeout(()=>{setBlockNewShort(false)},500)
-        // },100)
-
         setAllowChangeIdx(false)
         setTimeout(()=>{setAllowChangeIdx(true)},500)
 
