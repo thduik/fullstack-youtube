@@ -6,15 +6,13 @@ import { heightPerShort, shortHeight, shortMarginTop, shortWidth, calcVideoPlaye
 import { arrayFirst, createDivArrFromShortArr, createShortItem } from "./utils";
 import { useSearchParams } from "react-router-dom";
 import ShortPlayerItem from "./ShortPlayerItem";
+import useShortsPlayerData from "../../hooks/useShortsPlayerData";
 
 
 const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId when mounted
     const { shortsArr, isStreaming, isChannelShorts } = useSelector((state) => state.shorts)
     const [searchParams, setSearchParams] = useSearchParams();
-
-
-    const [snapType, setSnapType] = useState('none')
-    const [videoId, setVideoId] = useState(null)
+    const {snapType} = useShortsPlayerData()
     const [currIdx, setCurrIdx] = useState(0)
     const [divArr, setDivArr] = useState([])
     const {innerWidth , innerHeight} = useSelector((state) => state.windowRedux)
@@ -25,20 +23,7 @@ const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId w
         if (!initialVideoId) {console.log('settingVideoIdsearchParams',currVidId);setVideoId(currVidId);setCurrIdx(-1);setCurrIdx(0)} //3 lines to activate videoPLayer workflow
     },[searchParams])
     
-    useEffect(() => {
-        //trigger videoPlayer change workflow
-        // setCurrIdx(0)
-        console.log("useEffect shortsArr changed")
-        
-        if (shortsArr.length > 1) {//default snapType = 'none' to prevent bug. This bug makes
-            //page scroll to bottoms as soon as divArr is rendered (mounted). It is not default/normal behavior when array of components
-            //is rendered with scrollSnapTyp parent and scrollSnapAlign children. 
-            //this workaround of defaulting snapType to 'none' initially is by far the best solution available
-            setTimeout(()=>{setSnapType('y mandatory')},200)  
-        }
-        return () => {
-        }
-    }, [shortsArr])
+    
     useEffect(() => {
         console.log("initialVideoId", initialVideoId)
         setVideoId(initialVideoId)
