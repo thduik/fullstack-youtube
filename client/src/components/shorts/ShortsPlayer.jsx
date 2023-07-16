@@ -20,23 +20,18 @@ const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId w
     const [allowChangeIdx, setAllowChangeIdx] = useState(true)
     useEffect(() => {
         const currVidId = searchParams.get("v")
-        if (!initialVideoId) {console.log('settingVideoIdsearchParams',currVidId);setVideoId(currVidId);setCurrIdx(-1);setCurrIdx(0)} //3 lines to activate videoPLayer workflow
+        if (!initialVideoId) {console.log('settingVideoIdsearchParams',currVidId);setCurrIdx(-1);setCurrIdx(0)} //3 lines to activate videoPLayer workflow
     },[searchParams])
     
     
-    useEffect(() => {
-        console.log("initialVideoId", initialVideoId)
-        setVideoId(initialVideoId)
-    }, [initialVideoId])
+   
     useEffect(() => {
         if (!shortsArr || !shortsArr.length || currIdx < 0 || currIdx >= shortsArr.length) { 
             console.log("currIdxShortsPlayer useEfect ", currIdx, shortsArr.length, shortsArr)
             return }
         console.log("currIdxShortsPlayer useEfect ", currIdx, arrayFirst(shortsArr[currIdx]?.short?.thumbnails),shortsArr[currIdx])
-        setVideoId(shortsArr[currIdx].short.videoId)
         setAllowChangeIdx(false)
         setTimeout(()=>{setAllowChangeIdx(true)},500)
-
     }, [currIdx])
     
     const handleScroll = (e) => {
@@ -44,8 +39,6 @@ const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId w
         let currentIdx = (e.target.scrollTop + 200) / heightPerShort(innerHeight)
         currentIdx = Math.floor(currentIdx)
         if (currentIdx != currIdx && allowChangeIdx) { setCurrIdx(currentIdx) }
-        // console.log("ShortsPlayer handleScroll is",e.target.scrollTop, heightPerShort(innerHeight), innerHeight,currentIdx)
-        // setShowVideo(false)
     }
     useEffect(()=>{console.log('divArr', divArr)},[divArr])
     const handleMouseUp = (e) => { }
