@@ -11,7 +11,7 @@ const VideoPlayer = ({ videoId = null, loop = 0, autoplay = 1, height = '100%', 
 
         () => {
             if (!changeIframeRef) {return}
-            console.log("refVideoPlayer is ", ref.current)
+            // console.log("refVideoPlayer is ", ref.current)
             changeIframeRef(ref.current)
         }, [ref, changeIframeRef])
 

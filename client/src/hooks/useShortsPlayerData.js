@@ -1,10 +1,29 @@
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
+import { arrayFirst } from "../components/shorts/utils"
+import { heightPerShort } from "../components/shorts/dimensions"
 
 const useShortsPlayerData = () => {
     const { shortsArr, isStreaming, isChannelShorts } = useSelector((state) => state.shorts)
     const [snapType, setSnapType] = useState('none')
+    const [currIdx, setCurrIdx] = useState(0)
+    const [allowChangeIdx, setAllowChangeIdx] = useState(true)
 
+    useEffect(() => {
+        if (!shortsArr || !shortsArr.length || currIdx < 0 || currIdx >= shortsArr.length) { 
+            console.log("currIdxShortsPlayer useEfect ", currIdx, shortsArr.length, shortsArr)
+            return }
+        console.log("currIdxShortsPlayer useEfect ", currIdx, arrayFirst(shortsArr[currIdx]?.short?.thumbnails),shortsArr[currIdx])
+        setAllowChangeIdx(false)
+        setTimeout(()=>{setAllowChangeIdx(true)},500)
+    }, [currIdx])
+    
+    const hookHandleScroll = (e) => {
+        if (!allowChangeIdx) {return}
+        let currentIdx = (e.target.scrollTop + 200) / heightPerShort(innerHeight)
+        currentIdx = Math.floor(currentIdx)
+        if (currentIdx != currIdx && allowChangeIdx) { setCurrIdx(currentIdx) }
+    }
     useEffect(() => {
         //trigger videoPlayer change workflow
         // setCurrIdx(0)
@@ -19,7 +38,7 @@ const useShortsPlayerData = () => {
         return () => {
         }
     }, [shortsArr])
-    return {snapType}
+    return {snapType,currIdx, setCurrIdx,allowChangeIdx, hookHandleScroll}
 
 }
 
