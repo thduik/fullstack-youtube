@@ -20,9 +20,14 @@ const useShortsPlayerData = () => {
     
     const hookHandleScroll = (e) => {
         if (!allowChangeIdx) {return}
-        let currentIdx = (e.target.scrollTop + 200) / heightPerShort(innerHeight)
+        setAllowChangeIdx(false)
+        let currentIdx = (e.target.scrollTop + 320) / heightPerShort(innerHeight)
+        console.log('currentIdxFloat', currentIdx)
         currentIdx = Math.floor(currentIdx)
         if (currentIdx != currIdx && allowChangeIdx) { setCurrIdx(currentIdx) }
+        setTimeout(() => {
+            setAllowChangeIdx(true)
+        }, 400);
     }
     useEffect(() => {
         //trigger videoPlayer change workflow

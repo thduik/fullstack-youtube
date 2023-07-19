@@ -6,6 +6,10 @@ import './index.css'
 import MySearchButton from './MySearchButton';
 import { Box } from '@mui/system';
 import ArrowLeftIcon from '../../icons/ArrowLeftIcon';
+import useSearchField from '../../hooks/useSearchField';
+import useAutoSuggest from '../../hooks/useAutoSuggest';
+import SearchSuggestions from './SearchSuggestions';
+import useSuggestMargin from '../../hooks/useSuggestMargin';
 
 const maginifierIconColor = 'white'
 const iconBackgroundColor = '#707070'
@@ -24,18 +28,14 @@ const SmSearchBar = ({ changeSmallSearchBarDisplay,
   width = {
     xs: '0px', sm: '200px', md: '300px', lg: '450px',
   } }) => {
-
-  const [searchTerm, setSearchTerm] = useState('');
+  const {searchTerm, handleOnChange, onhandleSubmit} = useSearchField()
+  const {suggestArr} = useAutoSuggest({searchTerm:searchTerm})
+  const {suggMarginLeft} = useSuggestMargin()
+  const [isFocused, setIsFocused] = useState(false)
   const navigate = useNavigate();
-  const onhandleSubmit = (e) => {
-    e.preventDefault();
-
-    if (searchTerm) {
-      navigate(`/search/${searchTerm}`);
-
-      setSearchTerm('');
-    }
-  };
+  const inputFocus = () => {
+    console.log('input focus'); setIsFocused(true)
+  }
 
   return (
     <Stack direction="row"
@@ -43,7 +43,7 @@ const SmSearchBar = ({ changeSmallSearchBarDisplay,
         display: display, position: position, width: "100%", backgroundColor: "black"
         , flexDirection: "row", paddingBottom:"4px"
       }}>
-
+      
       <IconButton onClick={changeSmallSearchBarDisplay}
         sx={{
            marginTop: "7px", backgroundColor: "none"
@@ -70,7 +70,7 @@ const SmSearchBar = ({ changeSmallSearchBarDisplay,
           , width: paperWidth,
         }}
       >
-
+        <SearchSuggestions suggestArr={suggestArr} marginLeft={suggMarginLeft} isFocused = {isFocused}/>
         <Stack direction="row" sx={{
 
         }}>
@@ -79,7 +79,8 @@ const SmSearchBar = ({ changeSmallSearchBarDisplay,
             placeholder='Search...'
             style={{ color: "white", backgroundColor: searchfieldBackgroundColor }}
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleOnChange}
+            onFocus={inputFocus}
           />
 
           <MySearchButton iconBackgroundColor={iconBackgroundColor} marginLeft={{ xs: '0px', md: '0', lg: '0px' }} />

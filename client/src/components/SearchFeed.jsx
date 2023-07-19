@@ -79,7 +79,7 @@ const SearchFeed = () => {
       // setVideos(videoOnlyArr)
       filterAndSetVideos(videoOnlyArr)
       const pTokenLol = res.nextPageToken; setNextPageToken(pTokenLol)
-      if (pTokenLol) { setNextPageToken(pTokenLol); console.log("pageTokenNext oke", pageTokenNext) }
+      if (pTokenLol) { setNextPageToken(pTokenLol); console.log("nextPageToken oke", pTokenLol) }
 
     } catch (err) {
       console.log("SearchFeed fetch error: ", err)

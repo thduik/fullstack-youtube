@@ -1,14 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import VideoPlayer from "../VideoPlayer";
+import loadable from '@loadable/component'
+
 // import ShortPlayerItem from "./ShortPlayerItem";
 // import { heightPerShort, shortHeight, shortMarginTop, shortWidth, calcVideoPlayerHeight } from "./dimensions";
 // import { arrayFirst, createDivArrFromShortArr, createShortItem } from "./utils";
 import { useSearchParams } from "react-router-dom";
 import ShortPlayerItem from "./ShortPlayerItem";
 import useShortsPlayerData from "../../hooks/useShortsPlayerData";
+import { isDevelopment } from "../../configs/appConfig";
+const TestShorts = loadable(() => import('../testComponent/testShorts'));
 
-
+const scrollSnapAlign = 'end'
 const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId when mounted
     const { shortsArr } = useSelector((state) => state.shorts)
     const [searchParams, setSearchParams] = useSearchParams();
@@ -31,8 +35,9 @@ const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId w
     const handleMouseUp = (e) => { }
    
     return (
-        <div  style={{ width: "100%", height: "100%", overflowY: 'auto', position:'fixed' }} key={key} >
-            {/* <VideoPlayer controls={1} videoId={videoId} loop={1} showInfo={0}/> */}
+        <div  style={{ width: "100%", height: "100%", overflowY: 'auto', position:'relative' }} key={key} >
+            
+            {/* {isDevelopment ? <TestShorts currIdx={currIdx}/> : null} */}
             <div 
              className='short-item-wrapper'
                 style={{
@@ -45,7 +50,7 @@ const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId w
                     const imgUrl = o?.short?.thumbnails?.length ? o.short.thumbnails[0].url : createShortThumbnailUrl(o?.short?.videoId)
                     return < ShortPlayerItem idx={idx} currIdx={currIdx} videoId={o.short.videoId} key={idx} imgUrl={imgUrl} /> 
                 })}
-                <div style={{ scrollSnapStop: 'normal', scrollSnapAlign: 'start', height: '400px', width: '100%' }}><p>LOLLLL</p></div>
+                {/* <div style={{ scrollSnapStop: 'always', scrollSnapAlign: scrollSnapAlign, minHeight: '100px', width: '100%' }}><p>LOLLLL</p></div> */}
             </div>
         </div>
 

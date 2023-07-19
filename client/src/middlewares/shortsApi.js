@@ -30,6 +30,12 @@ export const shortsApiRedux = createApi({
             // transformErrorResponse: (response, meta, arg) => response.status,
             // providesTags: (result, error, id) => [{ type: 'Post', id }]
         }),
+        getPopularShorts: builder.query({
+            query: () => {
+                console.log("getPopularShorts endpoints RTK")
+                return `youtube/shorts/popular`
+            }
+        })
         
     }),
 })

@@ -6,6 +6,7 @@ import { shortHeight, shortMarginBottom, shortMarginTop, shortWidth } from "./di
 // import ShortVideoPlayer from "./ShortVideoPlayer";
 const ShortVideoPlayer = loadable(() => import('./ShortVideoPlayer'));
 
+const scrollSnapAlign = 'start'
 
 const ShortPlayerItem = ({ height = shortHeight, width = shortWidth
     , videoPlayer = null, imgUrl = null, videoId = null ,
@@ -41,7 +42,7 @@ const ShortPlayerItem = ({ height = shortHeight, width = shortWidth
             , backgroundColor: 'rgba(0,0,0,0)'
             ,marginTop:shortMarginTop
             ,marginBottom: shortMarginBottom
-            , scrollSnapAlign:'start'
+            , scrollSnapAlign:scrollSnapAlign
             , scrollSnapStop:'always'
         }}>
             {showVideo ? 
@@ -54,4 +55,4 @@ const ShortPlayerItem = ({ height = shortHeight, width = shortWidth
     )
 }
 
-export default memo(ShortPlayerItem);
+export default ShortPlayerItem;

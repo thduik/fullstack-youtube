@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import { shortHeight } from "./shorts/dimensions";
 
-const VideoPlayer = ({ videoId = null, loop = 0, autoplay = 1, height = '100%', width = '100%', className = "", controls = 1, showInfo = 1
-    , iframeRef, changeIframeRef = null, qualitly = 360 }) => {
+const VideoPlayer = ({ videoId = null, loop = 0, autoplay = 1, width = '100%', className = "", controls = 1, showInfo = 1
+    , iframeRef, changeIframeRef = null, qualitly = 360
+    , height = shortHeight }) => {
     // const ref = useRef(null)
     // const [iframeRef, setIframeRef] = useState(null)
     const iRef = useRef(null)
@@ -17,7 +19,7 @@ const VideoPlayer = ({ videoId = null, loop = 0, autoplay = 1, height = '100%', 
 
     useEffect(() => {
         if (!videoId) { return }
-        let urlString = `https://www.youtube.com/embed/${videoId}?controls=${controls}&autoplay=${autoplay}&enablejsapi=1&loop=${loop}`
+        let urlString = `https://www.youtube-nocookie.com/embed/${videoId}?controls=${controls}&autoplay=${autoplay}&enablejsapi=1&loop=${loop}`
         console.log(urlString)
         if (loop) { urlString += `&playlist=${videoId}` }
         if (qualitly == 360) { urlString += '&vq=medium' }
@@ -36,7 +38,7 @@ const VideoPlayer = ({ videoId = null, loop = 0, autoplay = 1, height = '100%', 
 
     useEffect(() => { console.log('videoPlayer height is', height) }, [height])
     return (
-        <div>
+        <div height={'100%'} style={{height:'100%',minHeight:'100%'}}>
             {/* <YouTube videoId="2g811Eo7K8U" /> */}
 
 

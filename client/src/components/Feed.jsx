@@ -4,6 +4,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import FeedVideos from "./feedVideos/FeedVideos";
 import Sidebar from "./sidebar/Sidebar";
 import { useSelector, useDispatch } from 'react-redux'
+import FeedShorts from "./shorts/FeedShorts";
 
 const backgroundColor = "black"
 const Feed = ({videos}) => {
@@ -16,7 +17,7 @@ const Feed = ({videos}) => {
     sx={{ flexDirection: "row",backgroundColor:backgroundColor }}>
       <Box style={{backgroundColor:backgroundColor, border:"0px solid blue"
         }} p={2} sx={{ overflowY: "auto", height: "90vh", flex: 2 }}>
-      
+          <FeedShorts />
         <FeedVideos videos={videos} />
       </Box>
     </Stack>

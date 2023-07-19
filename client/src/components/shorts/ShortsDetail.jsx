@@ -8,7 +8,6 @@ import VideoPlayer from "../VideoPlayer";
 import ShortsPlayer from "./ShortsPlayer";
 import { deleteResetAll } from "../../features/appData/shortsSlice";
 import useSuggestedShorts from "../../hooks/useSuggestedShorts";
-import { shortWidth } from "./dimensions";
 
 
 
@@ -66,10 +65,11 @@ const ShortsDetail = () => {
 
     return (
         <div style={{ display: "flex", justifyContent: "center", flexDirection: "row", overflowY: 'hidden', height: "100%"
-        ,backgroundColor:"green" }}>
-            <div style={{ width: width, height: height, minWidth:"306px",minHeight:"544px",overflowY: 'hidden', position: "fixed" }}>
+        ,backgroundColor:"rgba(0,0,0,0)" }}>
+            
+            <div style={{ width: width, height: height, minWidth:"306px",minHeight:"544px",overflowY: 'hidden', position: "fixed", zIndex:0 }}>
+                
                 {<ShortsPlayer key={111} initialVideoId={videoId}/>}
-                {/* <VideoPlayer controls={0} videoId={videoId} loop={1} /> */}
             </div>
             <div style={{
                 display: "flex", justifyContent: "center", flexDirection: "column", witdh: "90px",

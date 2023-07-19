@@ -1,6 +1,6 @@
 const express = require('express')
 const { searchVideos, getPopularVideos, getChannelVideos } = require('../controllers/search/search')
-const { getShortsOfChannel, getSuggestedShorts } = require('../controllers/shorts/shorts')
+const { getShortsOfChannel, getSuggestedShorts, getPopularShorts } = require('../controllers/shorts/shorts')
 const { getPopularVideosDev } = require('../dev-only')
 const { getChannelDetails } = require('../controllers/channel/channelDetails')
 const youtubeRouter = express.Router()
@@ -19,4 +19,5 @@ youtubeRouter.get('/videos/popular/dev',getPopularVideosDev)
 youtubeRouter.get('/channel/shorts', getShortsOfChannel)
 youtubeRouter.get('/channel/details', getChannelDetails)
 youtubeRouter.get('/shorts/suggested', getSuggestedShorts)
+youtubeRouter.get('/shorts/popular', getPopularShorts)
 module.exports = {youtubeRouter}

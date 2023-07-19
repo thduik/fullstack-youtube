@@ -15,6 +15,7 @@ const { playlistRouter } = require('./routes/playlist-router');
 const { commentRouter } = require('./routes/comment-router');
 const { setCorsHeaders } = require('./utils/corsFunctions');
 const { fetchFromApiRouter } = require('./routes/fetchFromApiRouter');
+const { getAutoCompleteSuggestions } = require('./controllers/autoComplete/getAutoCompleteSuggestions');
 
 
 console.log("env vars NODE_ENV == development", process.env.NODE_ENV == "development", "MOCK_AUTH == true", process.env.MOCK_AUTH == "true")
@@ -41,6 +42,7 @@ app.use('/', sanitizeRequest)
 
 app.use('/', verifyJwtAccessTokenRequest)
 
+
 app.use('/cookies',(req,res,next)=>{console.log("req.cookies are", req.cookies);res.send("1")})
 
 app.use('/test', testRouter)
@@ -52,6 +54,8 @@ app.use('/auth', authRouter)
 app.use('/youtube', youtubeRouter)
 app.use('/comment', commentRouter)
 app.use('/rapid/api', fetchFromApiRouter)
+app.use('/auto/complete', getAutoCompleteSuggestions)
+
 // you need to set mergeParams: true on the router,
 // if you want to access params from the parent router
 

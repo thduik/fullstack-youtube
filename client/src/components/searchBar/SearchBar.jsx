@@ -4,6 +4,9 @@ import { Paper, IconButton, Stack } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import './index.css'
 import MySearchButton from './MySearchButton';
+import useSearchField from '../../hooks/useSearchField';
+import useAutoSuggest from '../../hooks/useAutoSuggest';
+import SearchSuggestions from './SearchSuggestions';
 
 const maginifierIconColor = 'white'
 const iconBackgroundColor = '#707070'
@@ -14,19 +17,11 @@ const searchFieldBorderColor = 'gray'
 
 const SearchBar = ({display,position="default", 
   width={ xs: '0px', sm:'200px', md: '300px', lg: '450px' }}) => {
-
-  const [searchTerm, setSearchTerm] = useState('');
-  const navigate = useNavigate();
-  const onhandleSubmit = (e) => {
-    e.preventDefault();
-
-    if (searchTerm) {
-      navigate(`/search/${searchTerm}`);
-
-      setSearchTerm('');
-    }
-  };
-
+  const {searchTerm, handleOnChange, onhandleSubmit} = useSearchField()
+  const {suggestArr} = useAutoSuggest({searchTerm:searchTerm})
+  const inputFocus = () => {
+    console.log('input focus')
+  }
   return (
     <Paper
 
@@ -44,7 +39,11 @@ const SearchBar = ({display,position="default",
         display:display,
         position:position
       }}
-    >
+    > 
+      {/* <div style={{position:'fixed', width:'100%', flexDirection:'column', marginTop:'40px'
+      ,display:suggestArr.length ? 'flex' : 'none'}}> */}
+        <SearchSuggestions suggestArr={suggestArr} inputFocus = {inputFocus}/>
+      {/* </div> */}
       <Stack direction="row" sx={{
         
       }}>
@@ -53,11 +52,14 @@ const SearchBar = ({display,position="default",
           placeholder='Search...'
           style={{ color: "white", backgroundColor: searchfieldBackgroundColor }}
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={handleOnChange}
+          onFocus={inputFocus}
         />
         
         <MySearchButton iconBackgroundColor={iconBackgroundColor} marginLeft={ {xs: '-30px', md: '0', lg:'150px'} } />
       </Stack>
+
+      
     </Paper>
   );
 };

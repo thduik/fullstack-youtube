@@ -1,4 +1,4 @@
-const { fetchShortsOfChannelA, fetchSuggestedShorts } = require("./shorts-api")
+const { fetchShortsOfChannelA, fetchSuggestedShorts, fetchPopularShorts } = require("./shorts-api")
 
 const getShortsOfChannel = async (req,res,next) => {
     console.log("getShortsOfChannel called", req.query)
@@ -29,4 +29,15 @@ const getSuggestedShorts = async (req,res,next) => {
         res.status(405).send("errorBITCHH")
     }
 } 
-module.exports = {getShortsOfChannel, getSuggestedShorts}
+
+const getPopularShorts =  async (req, res, next) => {
+
+    try {
+        const result = await fetchPopularShorts()
+        res.json(result)
+    } catch (error) {
+        console.log('getPopularShorts err', error)
+        res.status(404).send('error bnitch')
+    }
+}
+module.exports = {getShortsOfChannel, getSuggestedShorts, getPopularShorts}

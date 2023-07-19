@@ -1,5 +1,7 @@
 //  https://rapidapi.com/Glavier/api/youtube138
 const axios = require('axios');
+const { zachKing, mrBeast } = require('../../dev-only/popularShorts');
+const { daFuqBoom } = require('../../dev-only/popularShorts2');
 require('dotenv').config()
 
 const rapidApiKey = process.env.RAPID_API_KEY
@@ -50,8 +52,18 @@ const fetchSuggestedShorts = async({shortid, sequenceContiuation = null}) => {
           console.log(response.data);
           return response.data
       } catch (error) {
-        //   console.error(error);
+            //   console.error(error);
           throw(error)
       }
 }
-module.exports = {fetchShortsOfChannelA, fetchSuggestedShorts}
+
+
+const fetchPopularShorts = async () => {
+    let res = {data:[]}
+    res.data.push(...daFuqBoom.data)
+    res.data.push(...zachKing.data)
+    res.data.push(...mrBeast.data)
+    console.log(res)
+    return res
+}
+module.exports = {fetchShortsOfChannelA, fetchSuggestedShorts, fetchPopularShorts}

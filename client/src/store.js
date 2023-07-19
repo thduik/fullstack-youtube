@@ -10,6 +10,7 @@ import { shortsApiRedux } from './middlewares/shortsApi'
 import { setupListeners } from '@reduxjs/toolkit/dist/query'
 import { videoDetailApi } from './middlewares/videoDetailApi'
 import { youtubeApi } from './middlewares/youtubeApi'
+import { autoSuggestApi } from './middlewares/autoSuggestApi'
 
 export const store = configureStore({
     reducer: {
@@ -23,10 +24,15 @@ export const store = configureStore({
         ,[shortsApiRedux.reducerPath]: shortsApiRedux.reducer
         ,[videoDetailApi.reducerPath]: videoDetailApi.reducer
         ,[youtubeApi.reducerPath]: youtubeApi.reducer
+        ,[autoSuggestApi.reducerPath]:autoSuggestApi.reducer
 
     },
     middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([shortsApiRedux.middleware, videoDetailApi.middleware, youtubeApi.middleware]),
+    getDefaultMiddleware().concat(
+        [
+            shortsApiRedux.middleware, videoDetailApi.middleware, youtubeApi.middleware
+            ,autoSuggestApi.middleware
+        ])
 })
 
 
