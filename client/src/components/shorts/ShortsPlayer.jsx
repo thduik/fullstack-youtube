@@ -10,6 +10,7 @@ import { useSearchParams } from "react-router-dom";
 import ShortPlayerItem from "./ShortPlayerItem";
 import useShortsPlayerData from "../../hooks/useShortsPlayerData";
 import { isDevelopment } from "../../configs/appConfig";
+import ShortsMenu from "./ShortsMenu";
 const TestShorts = loadable(() => import('../testComponent/testShorts'));
 
 const scrollSnapAlign = 'end'
@@ -35,7 +36,7 @@ const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId w
     const handleMouseUp = (e) => { }
    
     return (
-        <div  style={{ width: "100%", height: "100%", overflowY: 'auto', position:'relative' }} key={key} >
+        <div  style={{ width: "100%", height: "100%", overflowY: 'auto', position:'fixed', backgroundColor:'green', zIndex:-1 }} key={key} >
             
             {/* {isDevelopment ? <TestShorts currIdx={currIdx}/> : null} */}
             <div 
@@ -51,6 +52,7 @@ const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId w
                     return < ShortPlayerItem idx={idx} currIdx={currIdx} videoId={o.short.videoId} key={idx} imgUrl={imgUrl} /> 
                 })}
                 {/* <div style={{ scrollSnapStop: 'always', scrollSnapAlign: scrollSnapAlign, minHeight: '100px', width: '100%' }}><p>LOLLLL</p></div> */}
+                <ShortsMenu key={1} data={null} />
             </div>
         </div>
 

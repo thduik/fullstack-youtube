@@ -46,7 +46,7 @@ const ShortPlayerItem = ({ height = shortHeight, width = shortWidth
             , scrollSnapStop:'always'
         }}>
             {showVideo ? 
-            <ShortVideoPlayer controls={1} videoId={videoId} playOnReady={playOnReady}/> 
+            <ShortVideoPlayer controls={1} videoId={videoId} playOnReady={playOnReady} autoplay={0}/> 
             :
             <div  style={{ minHeight:shortHeight}}></div>
             // <img src={imgUrl} height={'100%'} width={'100%'} style={{borderRadius:'20px'}}/>

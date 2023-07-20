@@ -5,9 +5,10 @@ import { minMiniSidebarInnerWidth } from "../../configs";
 import { useSelector } from "react-redux";
 import ShortCard from "./ShortCard";
 import usePopularShorts from "../../hooks/usePopularShorts";
+import ShortCardB from "./ShortCardB";
 
 
-const FeedShorts = () => {
+const   FeedShorts = () => {
     // const [shorts, setChannelId] = useChannelShorts()
     const {shortsArr, loadMoreShorts} = usePopularShorts()
     // const [setChannelId] = useChannelShorts()
@@ -17,16 +18,18 @@ const FeedShorts = () => {
     const [padding, setPadding] = useState("0px 0px")
     
     useEffect(()=>{
-
+        console.log('FeedShorts shortsArr', shortsArr)
     },[shortsArr])
     useEffect(()=>{
         if (innerWidth >= minMiniSidebarInnerWidth) {setPadding(`20px 80px`); return }
-        setPadding(`20px 20px`)
+        setPadding(`20px 160px`)
     },[innerWidth])
     return (
-        <div style={{ display: 'flex', flexDirection: "row", justifyContent: "center", flexWrap: "wrap"
-        , padding:padding }}>
-            {shortsArr.map((s, idx) => <ShortCard key={idx} snippet={s.short} channelId={channelId} />)}
+        <div style={{ display: 'flex', flexDirection: "row", justifyContent: "normal", overflowY:'scroll'
+        , padding:padding, margin:'0px 50px 20px 100px', paddingLeft:'0' }}>
+            {/* <div> */}
+            {shortsArr.map((s, idx) => <ShortCardB key={idx} short = {s} />)}
+            {/* </div> */}
         </div>
     )
 }

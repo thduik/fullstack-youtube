@@ -64,18 +64,19 @@ const ShortsDetail = () => {
     }
 
     return (
-        <div style={{ display: "flex", justifyContent: "center", flexDirection: "row", overflowY: 'hidden', height: "100%"
+        <div style={{ display: "flex", justifyContent: "center", flexDirection: "row", overflowY: 'hidden', height: "100%", position:'fixed', zIndex:0
         ,backgroundColor:"rgba(0,0,0,0)" }}>
             
-            <div style={{ width: width, height: height, minWidth:"306px",minHeight:"544px",overflowY: 'hidden', position: "fixed", zIndex:0 }}>
+            <div style={{ width: width, height: height, minWidth:"306px",minHeight:"544px",overflowY: 'hidden', position: "relative", zIndex:0 }}>
                 
                 {<ShortsPlayer key={111} initialVideoId={videoId}/>}
+                <ShortsMenu key={1} data={data} />
             </div>
             <div style={{
-                display: "flex", justifyContent: "center", flexDirection: "column", witdh: "90px",
+                display: "flex", justifyContent: "center", flexDirection: "column", witdh: "90px", backgroundColor:'red',
                 marginRight: menuMarginRight, marginLeft:'auto', paddingTop:'100px', position: "fixed"
             }}>
-                <ShortsMenu key={1} data={data} />
+                {/* <ShortsMenu key={1} data={data} /> */}
             </div>
         </div>
     )

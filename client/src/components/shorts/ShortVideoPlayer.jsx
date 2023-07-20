@@ -50,7 +50,7 @@ const ShortVideoPlayer = ({ videoId, autoplay = 0, controls = 0, playOnReady = f
             , borderRadius: '20px'
         }}>
             <VideoPlayer iframeRef={setIframeRef} changeIframeRef={changeIframeRef} height={`${playerHeight}px`}
-                 controls={controls} videoId={videoId} loop={1} showInfo={0} autoplay={1} />
+                 controls={controls} videoId={videoId} loop={1} showInfo={0} autoplay={autoplay} />
         </div>
     )
 }

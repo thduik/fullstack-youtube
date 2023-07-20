@@ -17,7 +17,7 @@ const Feed = ({videos}) => {
     sx={{ flexDirection: "row",backgroundColor:backgroundColor }}>
       <Box style={{backgroundColor:backgroundColor, border:"0px solid blue"
         }} p={2} sx={{ overflowY: "auto", height: "90vh", flex: 2 }}>
-          <FeedShorts />
+        <FeedShorts />
         <FeedVideos videos={videos} />
       </Box>
     </Stack>

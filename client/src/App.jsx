@@ -38,14 +38,13 @@ import { setPlaylistArray } from "./features/appData/playlistSlice";
 
 import { fetchPopularVideos } from "./apiFetch/popularApi";
 import useWidthRedux from "./hooks/useWidthRedux";
-// import ShortsDetail from "./components/shorts/ShortsDetail";
 
 
 
 const App = () => {
   const [setWindow] = useWidthRedux()
   const dispatch = useDispatch()
-  
+
   const showSidebar = useSelector((state) => state.uiState.showSidebar)
   const showMiniSidebar = useSelector((state) => state.uiState.showMiniSidebar)
   const { showPlaylistSelectDropdown } = useSelector((state) => state.uiState)
@@ -108,7 +107,7 @@ const App = () => {
 
             {/* <Route path='/video/:id' element={<VideoDetail />} /> */}
             <Route path='/watch' element={<VideoDetail />} />
-            <Route path='/shorts' element={<ShortsDetail /> } />
+              <Route path='/shorts' element={<ShortsDetail />} />
             <Route path='/channel/:id' element={<ChannelDetail basePath={"/channel/"} />}>
               <Route path={`videos`} element={<ChannelVideos />} />
               <Route path={`shorts`} element={<ChannelShorts />} />

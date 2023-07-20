@@ -12,12 +12,14 @@ const usePopularShorts = () => {
     useEffect(()=>{
         if (!data || !data?.data?.length) { return }
         console.log('usePopularShorts data', data.data)
-        setShortsArr(data)
+        setShortsArr(data.data)
     },[data])
     useEffect(()=>{
         if (!shortsArr.length) { return }
-        setVisibleShorts(shortsArr.slice(currSlide * shortsPerSlide, currSlide * shortsPerSlide + shortsPerSlide))
-    },[data, currSlide])
+        const arrSHots = shortsArr.slice(currSlide * shortsPerSlide, currSlide * shortsPerSlide + shortsPerSlide)
+        console.log("calculating visibleShorts", arrSHots, currSlide)
+        setVisibleShorts(arrSHots)
+    },[shortsArr, currSlide])
 
     const loadMoreShorts = () => {
         if (currSlide * shortsPerSlide > shortsArr.length) { return }

@@ -33,7 +33,7 @@ export const shortsApiRedux = createApi({
         getPopularShorts: builder.query({
             query: () => {
                 console.log("getPopularShorts endpoints RTK")
-                return `youtube/shorts/popular`
+                return `youtube/shorts/popular` //result is {data:[short]}
             }
         })
         

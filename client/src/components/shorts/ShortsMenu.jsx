@@ -10,7 +10,7 @@ const ShortsMenu = ({ onClick = () => { }, data, likeCount = "9999k", commentCou
     const clickedButton = (e) => { console.log("clickedShortsMenu", e); onClick(e) }
 
     return (
-        <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", marginTop:'30px' }}>
+        <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", marginTop:'30px', position:'relative' }}>
             <div style={{marginTop:'10px', marginBottom:'10px'}}>
                 <StandardRoundButton height="40px" width="40px" borderRadius="20px"
                     iconComp={<LikeIconB height="30px" width="30px" viewBox="-5 -9 40 40" />}
