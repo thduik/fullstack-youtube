@@ -49,8 +49,8 @@ const Navbar = (props) => {
     console.log("clickedAccountIcon called")
   }
   return (
-    <Stack direction="row" alignItems="center" p={2} sx={{
-      position: "fixed",
+    <Stack direction="row" alignItems="center" p={2} sx={{ height:'30px', 
+      position: "fixed", zIndex:100,
       width: "100%", background: '#000', top: 0, justifyContent: "space-between",
       paddingRight: "10px", paddingLeft: "10pxa"
     }}>

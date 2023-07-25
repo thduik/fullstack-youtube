@@ -95,7 +95,7 @@ const App = () => {
       <Box sx={{ backgroundColor: '#000', height: "auto" }}>
 
         <Navbar />
-        <div style={{ paddingTop: '80px', height: "auto" }}>
+        <div style={{ paddingTop: '40px', height: "auto" }}>
           {showPlaylistSelectDropdown ? <PlaylistSelectMenu /> : null}
           <Routes>
 

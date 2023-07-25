@@ -6,7 +6,7 @@ import { shortHeight, shortMarginBottom, shortMarginTop, shortWidth } from "./di
 // import ShortVideoPlayer from "./ShortVideoPlayer";
 const ShortVideoPlayer = loadable(() => import('./ShortVideoPlayer'));
 
-const scrollSnapAlign = 'start'
+const scrollSnapAlign = 'center'
 
 const ShortPlayerItem = ({ height = shortHeight, width = shortWidth
     , videoPlayer = null, imgUrl = null, videoId = null ,
@@ -44,11 +44,13 @@ const ShortPlayerItem = ({ height = shortHeight, width = shortWidth
             ,marginBottom: shortMarginBottom
             , scrollSnapAlign:scrollSnapAlign
             , scrollSnapStop:'always'
+            , minHeight: '600px'
         }}>
             {showVideo ? 
             <ShortVideoPlayer controls={1} videoId={videoId} playOnReady={playOnReady} autoplay={0}/> 
             :
             <div  style={{ minHeight:shortHeight}}></div>
+            
             // <img src={imgUrl} height={'100%'} width={'100%'} style={{borderRadius:'20px'}}/>
             }
         </div>

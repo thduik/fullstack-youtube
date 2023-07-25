@@ -31,7 +31,7 @@ const getSuggestedShorts = async (req,res,next) => {
 } 
 
 const getPopularShorts =  async (req, res, next) => {
-
+    
     try {
         const result = await fetchPopularShorts()
         res.json(result)

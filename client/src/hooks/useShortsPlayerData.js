@@ -13,7 +13,7 @@ const useShortsPlayerData = () => {
         if (!shortsArr || !shortsArr.length || currIdx < 0 || currIdx >= shortsArr.length) { 
             console.log("currIdxShortsPlayer useEfect ", currIdx, shortsArr.length, shortsArr)
             return }
-        console.log("currIdxShortsPlayer useEfect ", currIdx, arrayFirst(shortsArr[currIdx]?.short?.thumbnails),shortsArr[currIdx])
+        //console.log("currIdxShortsPlayer useEfect ", currIdx, arrayFirst(shortsArr[currIdx]?.short?.thumbnails),shortsArr[currIdx])
         setAllowChangeIdx(false)
         setTimeout(()=>{setAllowChangeIdx(true)},500)
     }, [currIdx])

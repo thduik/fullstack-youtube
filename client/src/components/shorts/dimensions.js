@@ -1,3 +1,5 @@
+export const mainPaddingTop = '0px'
+
 const shortMarginTopInt = 5
 const shortMarginBottomInt = 35
 
