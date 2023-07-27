@@ -24,5 +24,7 @@ const useShortsVideoPlayer = () => {
         setcommentClassName(commentClassNameArr[currStateIdx])
     },[currStateIdx])
 
-    return {playerClassName, commentClassName, toggleCommentShow}
+    return {playerClassName:playerClassName, commentClassName:commentClassName, toggleCommentShow:toggleCommentShow}
 }
+
+export default useShortsVideoPlayer;
