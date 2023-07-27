@@ -9,6 +9,7 @@ const ShortVideoPlayer = ({ videoId, autoplay = 0, controls = 0, playOnReady = f
     const { innerWidth, innerHeight } = useSelector((state) => state.windowRedux)
     const [playerHeight, setPlayerHeight] = useState(calcVideoPlayerHeight(innerHeight))
     const {menuMarginRight} = {menuMarginRight:'10px'} //useMenuMarginRight
+    
     // const iframeRef = useRef(null)
     const [iframeRef, setIframeRef] = useState(null)
     // const ref = useRef(null) 
@@ -21,15 +22,6 @@ const ShortVideoPlayer = ({ videoId, autoplay = 0, controls = 0, playOnReady = f
         console.log("changeIframeRef", refobj)
         setIframeRef(refobj)
     }
-    useEffect(() => {
-        // window.addEventListener(
-        //     "command",
-        //     (event) => {
-        //         //if (event.origin !== "http://example.org:8080") return;
-        //         console.log("command event heard", event)
-        //     })
-        return (()=>{console.log('ShortVideoPlayer unmounted')})
-    }, [])
     useEffect(() => {
         if (iframeRef?.contentWindow?.postMessage ) {console.log("error iframeRef null"); return}
         setTimeout(() => {
@@ -59,6 +51,9 @@ const ShortVideoPlayer = ({ videoId, autoplay = 0, controls = 0, playOnReady = f
                 <div style={{width:'45px', position:'relative', backgroundColor:'blue', marginRight:'auto', marginLeft:`calc(${shortWidth} + 10px)`}}>
                     <ShortsMenu key={1} videoId={videoId}/>
                 </div>
+            </div>
+            <div className={'temp'}>
+
             </div>
 
         </div>

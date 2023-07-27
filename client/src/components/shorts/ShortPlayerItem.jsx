@@ -19,6 +19,7 @@ const ShortPlayerItem = ({ height = shortHeight, width = shortWidth
         
     })
     
+    
     useEffect(()=>{ //render iframe for the selected shortPLayerItem and 2 adjacent ones as well, to enhance user experience
         console.log('ShortPlayerItem curridx', currIdx, 'idx', idx)
         const cond1 = currIdx == idx || currIdx == idx -1 || currIdx == idx + 1

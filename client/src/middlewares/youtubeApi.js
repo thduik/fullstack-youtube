@@ -12,14 +12,19 @@ export const youtubeApi = createApi({
     endpoints: (builder) => ({
         getChannelDetail: builder.query({
             query: (channelId) => {
-                console.log("getChannelDetail endpoints RTK", channelId)
+                // console.log("getChannelDetail endpoints RTK", channelId)
                 return  `channel/details?channelid=${channelId}`
             },
             transformResponse: (response, meta, arg) => {console.log("transformResponse", response) ;return response},
             // transformErrorResponse: (response, meta, arg) => response.status,
             // providesTags: (result, error, id) => [{ type: 'Post', id }]
         }),
-        
+        getCommentsOfVideo: builder.query({
+            query: (videoId) => {
+                console.log("getCommentsOfVideo endpoints RTK called", channelId)
+                return `/comment/threads/video/${videoId}`
+            }
+        })
     }),
 })
 

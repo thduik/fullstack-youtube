@@ -31,6 +31,7 @@ const ShortsPlayer = ({ initialVideoId   = null, key = 1}) => { //curr videoId w
 
    
     const handleScroll = (e) => {
+        console.log('scroll handle called ShortsPlayer')
         hookHandleScroll(e)
         setAllowScroll(false)
         setTimeout(()=>{setAllowScroll(true)},1000)
